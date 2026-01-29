@@ -34,9 +34,8 @@ export default {
 
       if (path === '/api/v1/employees' && request.method === 'GET') {
         try {
-          // Query directo a D1
+          if (!env.DB) throw new Error("DB binding not configured");
           const result = await env.DB.prepare('SELECT id, nombreCompleto, numeroDocumento, estado FROM employees LIMIT 5').all();
-          
           return new Response(
             JSON.stringify({
               success: true,
@@ -51,11 +50,11 @@ export default {
           return new Response(
             JSON.stringify({
               success: false,
-              error: 'Database error',
-              message: error instanceof Error ? error.message : 'Unknown error'
+              error: 'DB_UNAVAILABLE',
+              message: error instanceof Error ? error.message : 'DB not available'
             }),
             { 
-              status: 500,
+              status: 503,
               headers: { 'Content-Type': 'application/json', ...corsHeaders }
             }
           );
