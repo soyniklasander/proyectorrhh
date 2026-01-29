@@ -19,6 +19,24 @@ export default {
       const path = url.pathname;
 
       if (path === '/api/v1/health') {
+        // Quick DB health probe to ensure DB binding is alive
+        try {
+          if (env.DB) {
+            await env.DB.prepare('SELECT 1').all();
+          }
+        } catch {
+          return new Response(
+            JSON.stringify({
+              success: false,
+              error: 'DB_UNAVAILABLE',
+              message: 'Database not accessible'
+            }),
+            {
+              status: 503,
+              headers: { 'Content-Type': 'application/json', ...corsHeaders }
+            }
+          );
+        }
         return new Response(
           JSON.stringify({ 
             success: true, 
