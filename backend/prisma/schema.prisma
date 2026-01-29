@@ -1,0 +1,399 @@
+// Client para Cloudflare D1
+generator client {
+  provider = "prisma-client-js"
+}
+
+// Esquema para la base de datos
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+// Tabla de Empleados
+model Employee {
+  id                        String   @id @default(cuid())
+  nombres                   String
+  apellidoPaterno           String
+  apellidoMaterno           String
+  nombreCompleto            String
+  tipoDocumento             String   // 'DNI' | 'CARNET_EXTRANJERIA' | 'PASAPORTE'
+  numeroDocumento           String   @unique
+  fechaNacimiento          DateTime
+  lugarNacimiento          String?
+  sexo                      String?  // 'M' | 'F'
+  estadoCivil              String?  // 'SOLTERO' | 'CASADO' | 'DIVORCIADO' | 'VIUDO' | 'CONVIVIENTE'
+  nacionalidad             String?
+  direccion                String?
+  departamento              String?  // Lima, Arequipa, etc.
+  provincia                String?
+  distrito                 String?
+  telefono                 String?
+  email                    String?
+  emailCorporativo         String?
+  nivelEducativo           String?  // 'PRIMARIA' | 'SECUNDARIA' | 'TECNICO' | 'UNIVERSITARIO' | 'POSTGRADO'
+  profesion                String?
+  licenciaConducir         String?
+  hijos                    Int      @default(0)
+  
+  // Datos bancarios
+  banco                    String?
+  tipoCuenta               String?  // 'AHORROS' | 'CORRIENTE'
+  numeroCuenta             String?
+  numeroCCI                String?
+  
+  // Datos familiares
+  nombreConyuge            String?
+  dniConyuge               String?
+  nombrePadre              String?
+  nombreMadre              String?
+  
+  // Fotos y documentos
+  foto                     String?  // URL
+  fotoDNI                  String?  // URL
+  fotoRUC                  String?  // URL
+  
+  // Control
+  estado                   String   @default("ACTIVO")
+  fechaIngreso             DateTime
+  fechaCese                DateTime?
+  motivoCese               String?
+  createdAt                DateTime @default(now())
+  updatedAt                DateTime @updatedAt
+  
+  // Relaciones
+  contracts                Contract[]
+  overtimeHours            OvertimeHour[]
+  employeeLoans            EmployeeLoan[]
+  deductions               Deduction[]
+  payroll                  Payroll[]
+  leavesPermissions        LeavesPermission[]
+  attendanceControl        AttendanceControl[]
+  withholdings             Withholding[]
+  
+  @@map("employees")
+}
+
+// Tabla de Contratos
+model Contract {
+  id                        String   @id @default(cuid())
+  empleadoId                String
+  tipoContrato             String   // 'INDETERMINADO' | 'PLAZO_FIJO' | 'TIEMPO_PARCIAL' | 'CAS' | 'LOCACION_SERVICIOS' | 'PRACTICAS' | 'CAPACITACION'
+  regimenLaboral           String   // 'GENERAL' | 'MICROEMPRESA' | 'PEQUENA_EMPRESA' | 'CAS' | 'AGRARIO' | 'PESQUERO' | 'CONSTRUCCION'
+  modalidadContrato        String?  // 'NUEVO' | 'RENOVACION' | 'SUSPENSION' | 'EXTENSION'
+  fechaInicio              DateTime
+  fechaFin                 DateTime?
+  duracionMeses            Int?
+  cargo                    String
+  puesto                   String?
+  categoriaOcupacional     String?  // 'GERENTE' | 'JEFE' | 'SUPERVISOR' | 'EMPLEADO' | 'OBRERO' | 'PRACTICANTE'
+  nivel                    String?  // 1-20 según SUNAT
+  centroCostos             String?
+  departamentoTrabajo       String?
+  areaTrabajo              String?
+  turno                    String?  // 'DIURNO' | 'NOCTURNO' | 'MIXTO'
+  horarioTrabajo           String?
+  diasTrabajo              Int      @default(6)
+  horasSemanales           Int      @default(48)
+  salarioBase              Float
+  tipoMoneda               String   @default("PEN")
+  formaPago                String   @default("MENSUAL")
+  medioPago                String   @default("DEPOSITO")
+  
+  // Asignaciones
+  asignacionFamiliar       Float    @default(93.00)
+  bonificacionProductividad Float?
+  bonificacionPuesto       Float?
+  movilidad                Float?
+  refrigerio               Float?
+  
+  // Beneficios sociales
+  seguroSalud             String?  // 'ESSALUD' | 'EPS' | 'SIS' | 'PARTICULAR'
+  nombreEPS               String?
+  afp                     String?  // 'AFP' | 'ONP'
+  nombreAFP               String?  // PRIMA, PROFUTURO, INTEGRA, HABITAT
+  cuspp                   String?  // 12 caracteres
+  tipoSeguro              String?  // 'SCTR_PENSION' | 'SCTR_SALUD' | 'AMBOS'
+  
+  // Contingencias
+  tieneCTS                Boolean  @default(true)
+  tieneVacaciones         Boolean  @default(true)
+  tieneGratificaciones    Boolean  @default(true)
+  tieneUtilidades         Boolean  @default(true)
+  
+  // Estado
+  estado                  String   @default("VIGENTE")
+  motivoSuspension        String?
+  archivoContrato         String?  // URL
+  archivoAddendum         String?  // URL
+  
+  // Auditoría
+  createdById             String?
+  createdAt               DateTime @default(now())
+  updatedAt               DateTime @updatedAt
+  
+  // Relaciones
+  employee                Employee @relation(fields: [empleadoId], references: [id])
+  employeeLoans           EmployeeLoan[]
+  overtimeHours           OvertimeHour[]
+  deductions              Deduction[]
+  payroll                 Payroll[]
+  leavesPermissions       LeavesPermission[]
+  attendanceControl       AttendanceControl[]
+  withholdings            Withholding[]
+  
+  @@map("contracts")
+}
+
+// Tabla de Horas Extras
+model OvertimeHour {
+  id                        String   @id @default(cuid())
+  empleadoId                String
+  contratoId               String
+  fecha                    DateTime
+  diaSemana                Int      // 1-7
+  horaInicio               String   // HH:mm
+  horaFin                  String   // HH:mm
+  totalHoras               Float
+  tipoHora                 String   // 'HORA_25' | 'HORA_35' | 'HORA_100' | 'FERIADO_25' | 'FERIADO_35' | 'FERIADO_100'
+  motivo                   String?
+  supervisorId             String?
+  estado                   String   @default("SOLICITADO")
+  montoCalculado           Float?
+  fechaAprobacion          DateTime?
+  aprobadoPor              String?
+  comentarios              String?
+  createdAt                DateTime @default(now())
+  updatedAt                DateTime @updatedAt
+  
+  // Relaciones
+  employee                 Employee @relation(fields: [empleadoId], references: [id])
+  contract                 Contract @relation(fields: [contratoId], references: [id])
+  
+  @@map("overtime_hours")
+}
+
+// Tabla de Préstamos a Personal
+model EmployeeLoan {
+  id                        String   @id @default(cuid())
+  empleadoId                String
+  contratoId               String
+  tipoPrestamo             String   // 'LIQUIDACION' | 'QUITAS' | 'ADICIONAL' | 'EMERGENCIA'
+  montoSolicitado           Float
+  montoAprobado            Float
+  tasaInteresMensual       Float    // %
+  cantidadCuotas           Int
+  fechaOtorgamiento        DateTime
+  fechaPrimerDescuento     DateTime
+  cuotaMensual             Float
+  saldoPendiente           Float
+  estado                   String   @default("SOLICITADO")
+  garantia                 String?
+  // Plan de pagos
+  cuotasPagadas            Int      @default(0)
+  proximaCuota             Int      @default(1)
+  fechaUltimoPago          DateTime?
+  // Aprobación
+  aprobadoPor              String?
+  fechaAprobacion          DateTime?
+  observaciones            String?
+  archivoSolicitud         String?  // URL
+  archivoContrato          String?  // URL
+  createdAt                DateTime @default(now())
+  updatedAt                DateTime @updatedAt
+  
+  // Relaciones
+  employee                 Employee @relation(fields: [empleadoId], references: [id])
+  contract                 Contract @relation(fields: [contratoId], references: [id])
+  loanInstallments         LoanInstallment[]
+  
+  @@map("employee_loans")
+}
+
+// Tabla de Detalle Cuotas Préstamo
+model LoanInstallment {
+  id                        String   @id @default(cuid())
+  prestamoId               String
+  numeroCuota              Int
+  fechaVencimiento         DateTime
+  montoCuota               Float
+  interes                  Float
+  capital                  Float
+  saldoCapital             Float
+  estado                   String   @default("PENDIENTE") // 'PENDIENTE' | 'PAGADO' | 'ATRASADO' | 'CONDONADO'
+  fechaPago                DateTime?
+  montoPagado              Float?
+  mora                     Float    @default(0)
+  createdAt                DateTime @default(now())
+  updatedAt                DateTime @updatedAt
+  
+  // Relaciones
+  employeeLoan             EmployeeLoan @relation(fields: [prestamoId], references: [id])
+  
+  @@map("loan_installments")
+}
+
+// Tabla de Descuentos y Deducciones
+model Deduction {
+  id                        String   @id @default(cuid())
+  empleadoId                String
+  contratoId               String
+  periodo                  String   // YYYY-MM
+  tipoDescuento            String   // 'AFP' | 'ONP' | 'ESSALUD' | 'SCTR' | 'PRÉSTAMO' | 'ADELANTO' | 'FALTA' | 'TARDANZA' | 'OTRO'
+  concepto                 String
+  monto                    Float
+  porcentaje               Float?   // %
+  baseCalculo              Float?
+  descripcion              String?
+  referencia               String?
+  estado                   String   @default("PENDIENTE")
+  // Auditoría
+  creadoPor                String?
+  fechaCreacion            DateTime @default(now())
+  autorizadoPor            String?
+  fechaAutorizacion        DateTime?
+  createdAt                DateTime @default(now())
+  updatedAt                DateTime @updatedAt
+  
+  // Relaciones
+  employee                 Employee @relation(fields: [empleadoId], references: [id])
+  contract                 Contract @relation(fields: [contratoId], references: [id])
+  
+  @@map("deductions")
+}
+
+// Tabla de Remuneraciones y Planilla
+model Payroll {
+  id                        String   @id @default(cuid())
+  empleadoId                String
+  contratoId               String
+  periodo                  String   // YYYY-MM
+  
+  // Ingresos
+  salarioBase              Float
+  horasExtras25            Float    @default(0)
+  horasExtras35            Float    @default(0)
+  horasExtras100           Float    @default(0)
+  bonificacionProductividad Float    @default(0)
+  bonificacionPuesto       Float    @default(0)
+  asignacionFamiliar       Float    @default(93.00)
+  movilidad                Float    @default(0)
+  refrigerio               Float    @default(0)
+  vacacionesTruncas       Float    @default(0)
+  CTS                      Float    @default(0)
+  gratificacion            Float    @default(0)
+  utilidades               Float    @default(0)
+  
+  // Descuentos
+  totalAFP_ONP             Float    @default(0)
+  totalEssalud            Float    @default(0)
+  totalSCTR               Float    @default(0)
+  quintaCategoria         Float    @default(0)
+  prestamos               Float    @default(0)
+  adelantos               Float    @default(0)
+  faltasInjustificadas    Float    @default(0)
+  tardanzas               Float    @default(0)
+  otrosDescuentos         Float    @default(0)
+  
+  // Detalles AFP
+  aporteObligatorio       Float    @default(0)
+  comisionFlujo           Float    @default(0)
+  primaSeguro             Float    @default(0)
+  
+  // Totales
+  totalIngresos           Float
+  totalDescuentos         Float
+  netoPagar               Float
+  
+  // Control
+  estado                  String   @default("BORRADOR")
+  fechaProceso            DateTime @default(now())
+  procesadoPor            String?
+  aprobadoPor              String?
+  fechaPago               DateTime?
+  bancoPago               String?
+  numeroReferencia        String?
+  createdAt                DateTime @default(now())
+  updatedAt                DateTime @updatedAt
+  
+  // Relaciones
+  employee                 Employee @relation(fields: [empleadoId], references: [id])
+  contract                 Contract @relation(fields: [contratoId], references: [id])
+  
+  @@map("payroll")
+}
+
+// Tabla de Vacaciones y Permisos
+model LeavesPermission {
+  id                        String   @id @default(cuid())
+  empleadoId                String
+  contratoId               String
+  tipoPermiso              String   // 'VACACION_PROGRAMADA' | 'VACACION_TRUNCA' | 'ENFERMEDAD' | 'LICENCIA_MATERNIDAD' | 'LICENCIA_PATERNIDAD' | 'PERMISO_PERSONAL' | 'DUELLO' | 'MATRIMONIO'
+  fechaInicio              DateTime
+  fechaFin                 DateTime
+  cantidadDias             Int
+  motivo                   String?
+  soporteMedico            String?
+  estado                   String   @default("SOLICITADO")
+  aprobadoPor              String?
+  fechaAprobacion          DateTime?
+  comentarios              String?
+  diasDisponibles          Int?
+  diasUtilizados           Int?
+  createdAt                DateTime @default(now())
+  updatedAt                DateTime @updatedAt
+  
+  // Relaciones
+  employee                 Employee @relation(fields: [empleadoId], references: [id])
+  contract                 Contract @relation(fields: [contratoId], references: [id])
+  
+  @@map("leaves_permissions")
+}
+
+// Tabla de Faltas y Tardanzas
+model AttendanceControl {
+  id                        String   @id @default(cuid())
+  empleadoId                String
+  contratoId               String
+  fecha                    DateTime
+  horaEntrada              String?  // HH:mm
+  horaSalida               String?  // HH:mm
+  tipoControl              String   // 'FALTA' | 'TARDANZA' | 'SALIDA_ANTICIPADA' | 'PERMISO' | 'VACACION'
+  minutosTardanza          Int      @default(0)
+  minutosFalta             Int      @default(0)
+  motivo                   String?
+  justificado               Boolean  @default(false)
+  documentoJustificacion   String?
+  estado                   String   @default("PENDIENTE")
+  createdAt                DateTime @default(now())
+  updatedAt                DateTime @updatedAt
+  
+  // Relaciones
+  employee                 Employee @relation(fields: [empleadoId], references: [id])
+  contract                 Contract @relation(fields: [contratoId], references: [id])
+  
+  @@map("attendance_control")
+}
+
+// Tabla de Detracciones
+model Withholding {
+  id                        String   @id @default(cuid())
+  empleadoId                String
+  contratoId               String
+  periodo                  String   // YYYY-MM
+  tipoDetraccion           String   // 'RENTA_4TA' | 'RENTA_5TA' | 'ESSALUD_VIDA' | 'SCTR_PENSION' | 'SCTR_SALUD'
+  baseImponible           Float
+  porcentaje               Float    // 6.75%, 10%, 13%, etc.
+  montoDetraccion         Float
+  estado                   String   @default("PENDIENTE")
+  fechaDeclaracion         DateTime?
+  fechaPago                DateTime?
+  numeroConstancia         String?  // 50 caracteres
+  createdAt                DateTime @default(now())
+  updatedAt                DateTime @updatedAt
+  
+  // Relaciones
+  employee                 Employee @relation(fields: [empleadoId], references: [id])
+  contract                 Contract @relation(fields: [contratoId], references: [id])
+  
+  @@map("withholdings")
+}

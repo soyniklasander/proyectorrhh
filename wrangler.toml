@@ -1,0 +1,29 @@
+name = "rrhhmod-backend"
+main = "src/worker.ts"
+compatibility_date = "2024-01-01"
+
+# Variables de entorno
+[env.production.vars]
+JWT_SECRET = "your-production-jwt-secret"
+ENVIRONMENT = "production"
+
+[env.development.vars]
+JWT_SECRET = "your-dev-jwt-secret"
+ENVIRONMENT = "development"
+
+# Base de datos D1 (actualizado con tu configuración)
+[[d1_databases]]
+binding = "DB"
+database_name = "db_mchk"
+database_id = "29660806-f166-4150-b5f1-51d4a3aafe59"
+
+# KV namespace para cache (actualizado con tu configuración)
+[[kv_namespaces]]
+binding = "KV_BINDING"
+id = "fc77679cb6c94ffbb09a750902e853cc"
+
+# Variables para Workers
+[vars]
+ENVIRONMENT = "development"
+API_VERSION = "v1"
+CORS_ORIGIN = "*"
