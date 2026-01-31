@@ -123,10 +123,10 @@
             </div>
             <div class="employee-list">
               <div v-for="employee in filteredEmployees" :key="employee.id" :class="['employee-card', { selected: selectedEmployee?.id === employee.id }]" @click="selectEmployee(employee)">
-                <div class="employee-avatar">{{ getInitials(employee.fullName) }}</div>
+                <div class="employee-avatar">{{ getEmployeeInitials(employee) }}</div>
                 <div class="employee-info">
-                  <div class="employee-name">{{ employee.fullName }}</div>
-                  <div class="employee-details"><span>DNI: {{ employee.dni }}</span><span>Email: {{ employee.email }}</span></div>
+                  <div class="employee-name">{{ employee.nombreCompleto }}</div>
+                  <div class="employee-details"><span>DNI: {{ employee.numeroDocumento }}</span><span>Email: {{ employee.email }}</span></div>
                 </div>
                 <div v-if="selectedEmployee?.id === employee.id" class="check-icon">✓</div>
               </div>
@@ -138,10 +138,15 @@
             <h4>Seleccionar Plantilla de Contrato</h4>
             <div class="template-grid">
               <div v-for="template in templates" :key="template.id" :class="['template-card', { selected: selectedTemplate?.id === template.id }]" @click="selectTemplate(template)">
-                <div class="template-icon">{{ getTemplateIcon(template.regimen) }}</div>
-                <div class="template-name">{{ template.name }}</div>
-                <div class="template-regimen">{{ formatRegimen(template.regimen) }}</div>
-                <div class="template-desc">{{ template.description }}</div>
+                <div class="template-icon">{{ getTemplateIcon(template.regimenLaboral) }}</div>
+                <div class="template-name">{{ template.nombre }}</div>
+                <div class="template-regimen">{{ formatRegimen(template.regimenLaboral) }} - {{ template.tipoContrato }}</div>
+                <div class="template-desc">{{ template.descripcion }}</div>
+                <div class="template-benefits">
+                  <span v-if="template.tieneCTS" class="benefit-badge">CTS</span>
+                  <span v-if="template.tieneVacaciones" class="benefit-badge">Vacaciones</span>
+                  <span v-if="template.tieneGratificaciones" class="benefit-badge">Gratificaciones</span>
+                </div>
                 <div v-if="selectedTemplate?.id === template.id" class="selected-badge">✓ Seleccionado</div>
               </div>
             </div>
@@ -165,7 +170,7 @@
             <h4>Vista Previa del Contrato</h4>
             <div class="contract-preview">
               <div class="preview-header"><h2>{{ selectedTemplate?.name || 'Contrato de Trabajo' }}</h2><p class="regimen">Régimen: {{ formatRegimen(selectedTemplate?.regimen || 'General') }}</p></div>
-              <div class="preview-section"><h5>DATOS DEL EMPLEADO</h5><div class="preview-grid"><div><strong>Nombre:</strong> {{ selectedEmployee?.fullName }}</div><div><strong>DNI:</strong> {{ selectedEmployee?.dni }}</div><div><strong>Email:</strong> {{ selectedEmployee?.email }}</div><div><strong>Dirección:</strong> {{ selectedEmployee?.address }}</div></div></div>
+              <div class="preview-section"><h5>DATOS DEL EMPLEADO</h5><div class="preview-grid"><div><strong>Nombre:</strong> {{ selectedEmployee?.nombreCompleto }}</div><div><strong>DNI:</strong> {{ selectedEmployee?.numeroDocumento }}</div><div><strong>Email:</strong> {{ selectedEmployee?.email }}</div><div><strong>Dirección:</strong> {{ selectedEmployee?.direccion || 'No especificada' }}</div></div></div>
               <div class="preview-section"><h5>CONDICIONES LABORALES</h5><div class="preview-grid"><div><strong>Cargo:</strong> {{ contractForm.position }}</div><div><strong>Área:</strong> {{ contractForm.department }}</div><div><strong>Sueldo:</strong> S/ {{ formatSalary(contractForm.salary) }}</div><div><strong>Fecha Inicio:</strong> {{ formatDate(contractForm.startDate) }}</div><div><strong>Fecha Fin:</strong> {{ contractForm.endDate ? formatDate(contractForm.endDate) : 'Indefinido' }}</div><div><strong>AFP:</strong> {{ contractForm.afp || 'No aplica' }}</div><div><strong>CUSPP:</strong> {{ contractForm.cuspp || 'No aplica' }}</div></div></div>
               <div class="preview-section" v-if="contractForm.observations"><h5>OBSERVACIONES</h5><p>{{ contractForm.observations }}</p></div>
               <div class="preview-footer"><p class="disclaimer">Este contrato se regirá por las leyes laborales del Perú, específicamente por el régimen {{ formatRegimen(selectedTemplate?.regimen) }}.</p></div>
@@ -186,7 +191,7 @@
         <div class="modal-header"><h3>Detalle del Contrato</h3><button class="close-btn" @click="showViewModal = false">&times;</button></div>
         <div class="modal-body">
           <div v-if="viewingContract" class="contract-detail">
-            <div class="detail-section"><h4>Empleado</h4><p><strong>Nombre:</strong> {{ viewingContract.employee?.fullName }}</p><p><strong>DNI:</strong> {{ viewingContract.employee?.dni }}</p><p><strong>Email:</strong> {{ viewingContract.employee?.email }}</p></div>
+            <div class="detail-section"><h4>Empleado</h4><p><strong>Nombre:</strong> {{ viewingContract.nombreCompleto }}</p><p><strong>DNI:</strong> {{ viewingContract.numeroDocumento }}</p><p><strong>Email:</strong> {{ viewingContract.email }}</p></div>
             <div class="detail-section"><h4>Contrato</h4><p><strong>Tipo:</strong> {{ viewingContract.tipoContrato }}</p><p><strong>Régimen:</strong> {{ formatRegimen(viewingContract.regimenLaboral) }}</p><p><strong>Cargo:</strong> {{ viewingContract.cargo }}</p><p><strong>Sueldo:</strong> S/ {{ formatSalary(viewingContract.salarioBase) }}</p><p><strong>Período:</strong> {{ formatDate(viewingContract.fechaInicio) }} - {{ viewingContract.fechaFin ? formatDate(viewingContract.fechaFin) : 'Indefinido' }}</p></div>
           </div>
         </div>
@@ -229,21 +234,23 @@ const contractForm = ref({
   observations: ''
 })
 
-const activeCount = computed(() => contracts.value.filter(c => getStatus(c) === 'Vigente').length)
-const expiringCount = computed(() => contracts.value.filter(c => getStatus(c) === 'Por Vencer').length)
-const expiredCount = computed(() => contracts.value.filter(c => getStatus(c) === 'Vencido').length)
+const activeCount = computed(() => (contracts.value || []).filter(c => getStatus(c) === 'Vigente').length)
+const expiringCount = computed(() => (contracts.value || []).filter(c => getStatus(c) === 'Por Vencer').length)
+const expiredCount = computed(() => (contracts.value || []).filter(c => getStatus(c) === 'Vencido').length)
 
 const filteredContracts = computed(() => {
+  if (!contracts.value || contracts.value.length === 0) return []
   if (filter.value === 'all') return contracts.value
   return contracts.value.filter(c => getStatus(c).toLowerCase() === filter.value)
 })
 
 const filteredEmployees = computed(() => {
+  if (!employees.value || employees.value.length === 0) return []
   if (!employeeSearch.value) return employees.value
   const search = employeeSearch.value.toLowerCase()
   return employees.value.filter(e => 
-    e.fullName?.toLowerCase().includes(search) ||
-    e.dni?.includes(search) ||
+    e.nombreCompleto?.toLowerCase().includes(search) ||
+    e.numeroDocumento?.includes(search) ||
     e.email?.toLowerCase().includes(search)
   )
 })
@@ -284,6 +291,11 @@ const getInitials = (name: string) => {
   return name?.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2) || '?'
 }
 
+const getEmployeeInitials = (employee: any) => {
+  const name = employee.nombreCompleto || employee.fullName || ''
+  return name.split(' ').map((n: string) => n[0]).join('').toUpperCase().slice(0, 2) || '?'
+}
+
 const getTemplateIcon = (regimen: string) => {
   const icons: Record<string, string> = {
     GENERAL: '📋',
@@ -321,7 +333,8 @@ const loadContracts = async () => {
   loading.value = true
   try {
     const res = await fetch(`${API_URL}/contracts`)
-    contracts.value = await res.json()
+    const json = await res.json()
+    contracts.value = json.data || []
   } catch (e) {
     console.error('Error loading contracts:', e)
     contracts.value = []
@@ -333,7 +346,8 @@ const loadContracts = async () => {
 const loadEmployees = async () => {
   try {
     const res = await fetch(`${API_URL}/employees`)
-    employees.value = await res.json()
+    const json = await res.json()
+    employees.value = json.data || []
   } catch (e) {
     console.error('Error loading employees:', e)
     employees.value = []
@@ -343,7 +357,8 @@ const loadEmployees = async () => {
 const loadTemplates = async () => {
   try {
     const res = await fetch(`${API_URL}/contract-templates`)
-    templates.value = await res.json()
+    const json = await res.json()
+    templates.value = json.data || []
   } catch (e) {
     console.error('Error loading templates:', e)
     templates.value = []
@@ -815,6 +830,23 @@ onMounted(() => {
 .template-desc {
   font-size: 13px;
   color: #6b7280;
+  margin-bottom: 8px;
+}
+
+.template-benefits {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-top: 8px;
+}
+
+.benefit-badge {
+  font-size: 10px;
+  padding: 2px 8px;
+  border-radius: 12px;
+  background: #e0f2fe;
+  color: #0369a1;
+  font-weight: 500;
 }
 
 .selected-badge {
