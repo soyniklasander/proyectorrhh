@@ -283,6 +283,9 @@ html, body, #app {
 .stat-card.contracts { background: linear-gradient(135deg, #10b981 0%, #059669 100%); }
 .stat-card.payroll { background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%); }
 .stat-card.overtime { background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%); }
+.stat-card.active { background: linear-gradient(135deg, #10b981 0%, #059669 100%); }
+.stat-card.expiring { background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%); }
+.stat-card.expired { background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%); }
 
 .stat-value {
   font-size: 32px;
