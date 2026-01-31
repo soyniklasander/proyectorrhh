@@ -168,12 +168,23 @@
           
           <div v-if="wizardStep === 4" class="wizard-step">
             <h4>Vista Previa del Contrato</h4>
-            <div class="contract-preview">
-              <div class="preview-header"><h2>{{ selectedTemplate?.name || 'Contrato de Trabajo' }}</h2><p class="regimen">Régimen: {{ formatRegimen(selectedTemplate?.regimen || 'General') }}</p></div>
-              <div class="preview-section"><h5>DATOS DEL EMPLEADO</h5><div class="preview-grid"><div><strong>Nombre:</strong> {{ selectedEmployee?.nombreCompleto }}</div><div><strong>DNI:</strong> {{ selectedEmployee?.numeroDocumento }}</div><div><strong>Email:</strong> {{ selectedEmployee?.email }}</div><div><strong>Dirección:</strong> {{ selectedEmployee?.direccion || 'No especificada' }}</div></div></div>
-              <div class="preview-section"><h5>CONDICIONES LABORALES</h5><div class="preview-grid"><div><strong>Cargo:</strong> {{ contractForm.position }}</div><div><strong>Área:</strong> {{ contractForm.department }}</div><div><strong>Sueldo:</strong> S/ {{ formatSalary(contractForm.salary) }}</div><div><strong>Fecha Inicio:</strong> {{ formatDate(contractForm.startDate) }}</div><div><strong>Fecha Fin:</strong> {{ contractForm.endDate ? formatDate(contractForm.endDate) : 'Indefinido' }}</div><div><strong>AFP:</strong> {{ contractForm.afp || 'No aplica' }}</div><div><strong>CUSPP:</strong> {{ contractForm.cuspp || 'No aplica' }}</div></div></div>
-              <div class="preview-section" v-if="contractForm.observations"><h5>OBSERVACIONES</h5><p>{{ contractForm.observations }}</p></div>
-              <div class="preview-footer"><p class="disclaimer">Este contrato se regirá por las leyes laborales del Perú, específicamente por el régimen {{ formatRegimen(selectedTemplate?.regimen) }}.</p></div>
+            <div class="contract-preview-full">
+              <div class="preview-header">
+                <h2>{{ selectedTemplate?.nombre || 'Contrato de Trabajo' }}</h2>
+                <p class="regimen">{{ formatRegimen(selectedTemplate?.regimenLaboral || 'General') }} - {{ selectedTemplate?.tipoContrato }}</p>
+                <div class="signature-option">
+                  <span class="signature-badge">✓ Requiere Firma Física</span>
+                  <span class="signature-note">Firma digital disponible en futura actualización</span>
+                </div>
+              </div>
+              
+              <div class="contract-text">
+                <pre>{{ generateContractText() }}</pre>
+              </div>
+              
+              <div class="preview-footer">
+                <p class="disclaimer">Este contrato se regirá por las leyes laborales del Perú, específicamente por el régimen {{ formatRegimen(selectedTemplate?.regimenLaboral) }}.</p>
+              </div>
             </div>
           </div>
         </div>
@@ -285,6 +296,139 @@ const formatRegimen = (regimen: string) => {
     AGRARIO: 'Régimen Agrario DL 1053'
   }
   return map[regimen] || regimen || 'General'
+}
+
+const generateContractText = () => {
+  if (!selectedTemplate.value || !selectedTemplate.value.plantillaTexto) {
+    return 'Plantilla no disponible'
+  }
+  
+  let text = selectedTemplate.value.plantillaTexto
+  
+  const replacements: Record<string, string> = {
+    '{{NOMBRE_COMPLETO}}': selectedEmployee.value?.nombreCompleto || '',
+    '{{NUMERO_DOCUMENTO}}': selectedEmployee.value?.numeroDocumento || '',
+    '{{DIRECCION}}': selectedEmployee.value?.direccion || 'No especificada',
+    '{{EMAIL}}': selectedEmployee.value?.email || '',
+    '{{CARGO}}': contractForm.value.position || '',
+    '{{AREA_TRABAJO}}': contractForm.value.department || '',
+    '{{SALARIO_BASE}}': formatSalary(contractForm.value.salary),
+    '{{MONTO_LETRAS}}': numberToWords(parseFloat(contractForm.value.salary) || 0),
+    '{{FECHA_INICIO}}': formatDate(contractForm.value.startDate),
+    '{{FECHA_FIN}}': contractForm.value.endDate ? formatDate(contractForm.value.endDate) : 'Indefinido',
+    '{{DURACION_MESES}}': calculateMonths(contractForm.value.startDate, contractForm.value.endDate),
+    '{{BANCO}}': selectedEmployee.value?.banco || '',
+    '{{NUMERO_CUENTA}}': selectedEmployee.value?.numeroCuenta || '',
+    '{{NUMERO_CCI}}': selectedEmployee.value?.numeroCCI || '',
+    '{{AFP}}': contractForm.value.afp || 'No aplica',
+    '{{CUSPP}}': contractForm.value.cuspp || 'No aplica',
+    '{{MEDIO_PAGO}}': 'Depósito Bancario',
+    '{{HORAS_SEMANALES}}': selectedTemplate.value?.horasSemanales?.toString() || '48',
+    '{{DIAS_TRABAJO}}': selectedTemplate.value?.diasLaborales?.toString() || '6',
+    '{{REQUIERE_FIRMA_DIGITAL}}': 'true',
+    '{{NOMBRE_EMPRESA}}': 'RRHHMod S.A.C.',
+    '{{RUC_EMPRESA}}': '20123456789',
+    '{{NOMBRE_GERENTE}}': 'Gerente General',
+    '{{DNI_GERENTE}}': '12345678',
+    '{{DIRECCION_EMPRESA}}': 'Av. Empresarial 123, Lima',
+    '{{LUGAR_FIRMA}}': 'Lima',
+    '{{DIA_FIRMA}}': new Date().getDate().toString(),
+    '{{MES_FIRMA}}': getMonthName(new Date().getMonth()),
+    '{{AÑO_FIRMA}}': new Date().getFullYear().toString(),
+    '{{FECHA_GENERACION}}': new Date().toLocaleDateString('es-PE'),
+    '{{SERVICIO}}': contractForm.value.position || 'Servicios profesionales',
+    '{{CARRERA}}': 'Carrera profesional',
+    '{{UNIVERSIDAD}}': 'Universidad',
+    '{{PROFESION}}': 'Profesión',
+    '{{UBICACION_CAMPO}}': contractForm.value.department || 'Campo agrícola',
+  }
+  
+  for (const [key, value] of Object.entries(replacements)) {
+    text = text.replace(new RegExp(key, 'g'), value)
+  }
+  
+  return text
+}
+
+const numberToWords = (num: number): string => {
+  const units = ['', 'UNO', 'DOS', 'TRES', 'CUATRO', 'CINCO', 'SEIS', 'SIETE', 'OCHO', 'NUEVE']
+  const tens = ['', 'DIEZ', 'VEINTE', 'TREINTA', 'CUARENTA', 'CINCUENTA', 'SESENTA', 'SETENTA', 'OCHENTA', 'NOVENTA']
+  const scales = ['', 'MIL', 'MILLÓN', 'MIL MILLONES', 'BILLÓN']
+  
+  if (num === 0) return 'CERO'
+  
+  let result = ''
+  let isDecimal = false
+  
+  const parts = num.toString().split('.')
+  const integerPart = parseInt(parts[0]) || 0
+  const decimalPart = parts[1] ? parseInt(parts[1].substring(0, 2)) : 0
+  
+  function convertToWords(n: number): string {
+    if (n === 0) return ''
+    let words = ''
+    let remaining = n
+    
+    if (n >= 1000000) {
+      const millions = Math.floor(n / 1000000)
+      words += convertToWords(millions) + ' MILLÓN '
+      remaining = n % 1000000
+    }
+    
+    if (remaining >= 1000) {
+      const thousands = Math.floor(remaining / 1000)
+      words += (thousands === 1 ? '' : convertToWords(thousands)) + ' MIL '
+      remaining = remaining % 1000
+    }
+    
+    if (remaining >= 100) {
+      const hundreds = Math.floor(remaining / 100)
+      words += (hundreds === 1 ? 'CIENTO' : hundreds === 5 ? 'QUINIENTOS' : hundreds === 9 ? 'NOVECIENTOS' : units[hundreds] + 'CIENTOS') + ' '
+      remaining = remaining % 100
+    }
+    
+    if (remaining >= 10) {
+      const tensDigit = Math.floor(remaining / 10)
+      const unitsDigit = remaining % 10
+      
+      if (remaining >= 10 && remaining <= 15) {
+        words += ['DIEZ', 'ONCE', 'DOCE', 'TRECE', 'CATORCE', 'QUINCE'][remaining - 10] + ' '
+      } else if (remaining >= 16 && remaining <= 19) {
+        words += 'DIECI' + units[unitsDigit].toLowerCase() + ' '
+      } else if (remaining >= 20 && remaining <= 29) {
+        words += (remaining === 20 ? 'VEINTE' : 'VEINTI' + units[unitsDigit].toLowerCase()) + ' '
+      } else {
+        words += tens[tensDigit] + (unitsDigit > 0 ? ' Y ' + units[unitsDigit] : '') + ' '
+      }
+    } else if (remaining > 0) {
+      words += units[remaining] + ' '
+    }
+    
+    return words.trim()
+  }
+  
+  result = convertToWords(integerPart) + ' SOLES'
+  
+  if (decimalPart > 0) {
+    result += ' CON ' + convertToWords(decimalPart) + ' CÉNTIMOS'
+  }
+  
+  return result.trim()
+}
+
+const calculateMonths = (start: string, end: string): string => {
+  if (!start) return '0'
+  const startDate = new Date(start)
+  const endDate = end ? new Date(end) : new Date(start)
+  const diffTime = Math.abs(endDate.getTime() - startDate.getTime())
+  const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24))
+  const months = Math.floor(diffDays / 30)
+  return months.toString()
+}
+
+const getMonthName = (month: number): string => {
+  const months = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre']
+  return months[month]
 }
 
 const getInitials = (name: string) => {
@@ -883,6 +1027,78 @@ onMounted(() => {
   border: 1px solid #e5e7eb;
   border-radius: 12px;
   padding: 32px;
+}
+
+.contract-preview-full {
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  max-height: 65vh;
+  overflow-y: auto;
+}
+
+.contract-preview-full .preview-header {
+  text-align: center;
+  margin-bottom: 24px;
+  padding-bottom: 20px;
+  border-bottom: 2px solid #3b82f6;
+  background: linear-gradient(135deg, #f8fafc 0%, #eff6ff 100%);
+  padding: 24px;
+  margin: -20px -20px 20px -20px;
+}
+
+.contract-preview-full .preview-header h2 {
+  color: #1f2937;
+  margin-bottom: 8px;
+  font-size: 20px;
+}
+
+.contract-preview-full .preview-header .regimen {
+  color: #3b82f6;
+  font-weight: 500;
+  margin-bottom: 12px;
+}
+
+.signature-option {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  margin-top: 12px;
+}
+
+.signature-badge {
+  background: #dcfce7;
+  color: #166534;
+  padding: 6px 16px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.signature-note {
+  font-size: 11px;
+  color: #6b7280;
+  font-style: italic;
+}
+
+.contract-text {
+  padding: 20px;
+}
+
+.contract-text pre {
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 12px;
+  line-height: 1.6;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  color: #374151;
+  background: #f9fafb;
+  padding: 20px;
+  border-radius: 8px;
+  border: 1px solid #e5e7eb;
+  max-height: 400px;
+  overflow-y: auto;
 }
 
 .preview-header {

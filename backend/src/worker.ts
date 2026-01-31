@@ -241,6 +241,104 @@ export default {
         }
       }
 
+      // CUSTOM TEMPLATES ENDPOINTS
+      // ============================================
+      if (path === '/api/v1/custom-templates' && request.method === 'GET') {
+        try {
+          const result = await env.DB.prepare(`
+            SELECT id, nombre, tipo, regimenLaboral, contenido, campos, 
+                   requiresSignature, esEditable, estado, createdAt
+            FROM custom_templates
+            WHERE estado = 'ACTIVO'
+            ORDER BY createdAt DESC
+          `).all();
+          return new Response(
+            JSON.stringify({
+              success: true,
+              data: result.results,
+              timestamp: new Date().toISOString()
+            }),
+            { headers: { 'Content-Type': 'application/json', ...corsHeaders } }
+          );
+        } catch (error) {
+          return new Response(
+            JSON.stringify({ success: false, error: 'DB_ERROR', message: error instanceof Error ? error.message : 'Unknown error' }),
+            { status: 500, headers: { 'Content-Type': 'application/json', ...corsHeaders } }
+          );
+        }
+      }
+
+      // Create custom template
+      if (path === '/api/v1/custom-templates' && request.method === 'POST') {
+        try {
+          const body = await request.json();
+          const id = 'ctmpl-' + Date.now().toString(36) + Math.random().toString(36).substr(2, 5);
+          
+          await env.DB.prepare(`
+            INSERT INTO custom_templates (id, nombre, tipo, regimenLaboral, contenido, campos, requiresSignature, esEditable, estado, createdAt, updatedAt)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, 'ACTIVO', datetime('now'), datetime('now'))
+          `).bind(
+            id, body.nombre, body.tipo || 'CUSTOM', body.regimenLaboral, 
+            body.contenido, JSON.stringify(body.campos || []), 
+            body.requiresSignature !== false, body.esEditable !== false
+          ).run();
+          
+          return new Response(
+            JSON.stringify({ success: true, id, message: 'Custom template created' }),
+            { status: 201, headers: { 'Content-Type': 'application/json', ...corsHeaders } }
+          );
+        } catch (error) {
+          return new Response(
+            JSON.stringify({ success: false, error: 'DB_ERROR', message: error instanceof Error ? error.message : 'Unknown error' }),
+            { status: 500, headers: { 'Content-Type': 'application/json', ...corsHeaders } }
+          );
+        }
+      }
+
+      // Update custom template
+      const customTmplMatch = path.match(/^\/api\/v1\/custom-templates\/(.+)$/);
+      if (customTmplMatch && request.method === 'PUT') {
+        try {
+          const body = await request.json();
+          await env.DB.prepare(`
+            UPDATE custom_templates SET 
+              nombre = ?, regimenLaboral = ?, contenido = ?, campos = ?,
+              requiresSignature = ?, updatedAt = datetime('now')
+            WHERE id = ?
+          `).bind(
+            body.nombre, body.regimenLaboral, body.contenido, 
+            JSON.stringify(body.campos || []), body.requiresSignature, customTmplMatch[1]
+          ).run();
+          
+          return new Response(
+            JSON.stringify({ success: true, message: 'Custom template updated' }),
+            { headers: { 'Content-Type': 'application/json', ...corsHeaders } }
+          );
+        } catch (error) {
+          return new Response(
+            JSON.stringify({ success: false, error: 'DB_ERROR', message: error instanceof Error ? error.message : 'Unknown error' }),
+            { status: 500, headers: { 'Content-Type': 'application/json', ...corsHeaders } }
+          );
+        }
+      }
+
+      // Delete custom template (soft delete)
+      if (customTmplMatch && request.method === 'DELETE') {
+        try {
+          await env.DB.prepare(`UPDATE custom_templates SET estado = 'ELIMINADO', updatedAt = datetime('now') WHERE id = ?`)
+            .bind(customTmplMatch[1]).run();
+          return new Response(
+            JSON.stringify({ success: true, message: 'Custom template deleted' }),
+            { headers: { 'Content-Type': 'application/json', ...corsHeaders } }
+          );
+        } catch (error) {
+          return new Response(
+            JSON.stringify({ success: false, error: 'DB_ERROR', message: error instanceof Error ? error.message : 'Unknown error' }),
+            { status: 500, headers: { 'Content-Type': 'application/json', ...corsHeaders } }
+          );
+        }
+      }
+
       // ============================================
       // CONTRACTS ENDPOINTS
       // ============================================
