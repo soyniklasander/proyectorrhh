@@ -141,11 +141,12 @@
                 <div class="template-icon">{{ getTemplateIcon(template.regimenLaboral) }}</div>
                 <div class="template-name">{{ template.nombre }}</div>
                 <div class="template-regimen">{{ formatRegimen(template.regimenLaboral) }} - {{ template.tipoContrato }}</div>
-                <div class="template-desc">{{ template.descripcion }}</div>
+                <div class="template-preview">{{ getTemplatePreview(template) }}</div>
                 <div class="template-benefits">
                   <span v-if="template.tieneCTS" class="benefit-badge">CTS</span>
                   <span v-if="template.tieneVacaciones" class="benefit-badge">Vacaciones</span>
                   <span v-if="template.tieneGratificaciones" class="benefit-badge">Gratificaciones</span>
+                  <span v-if="template.tieneUtilidades" class="benefit-badge">Utilidades</span>
                 </div>
                 <div v-if="selectedTemplate?.id === template.id" class="selected-badge">✓ Seleccionado</div>
               </div>
@@ -453,6 +454,43 @@ const getTemplateIcon = (regimen: string) => {
     AGRARIO: '🌾'
   }
   return icons[regimen] || '📄'
+}
+
+const getTemplatePreview = (template: any) => {
+  if (!template.plantillaTexto) return template.descripcion || 'Sin contenido'
+  
+  let text = template.plantillaTexto
+  
+  const replacements: Record<string, string> = {
+    '{{NOMBRE_COMPLETO}}': '[NOMBRE]',
+    '{{NUMERO_DOCUMENTO}}': '[DNI]',
+    '{{DIRECCION}}': '[DIRECCIÓN]',
+    '{{CARGO}}': '[CARGO]',
+    '{{AREA_TRABAJO}}': '[ÁREA]',
+    '{{SALARIO_BASE}}': '[SUELDO]',
+    '{{FECHA_INICIO}}': '[FECHA INICIO]',
+    '{{FECHA_FIN}}': '[FECHA FIN]',
+    '{{DURACION_MESES}}': '[MESES]',
+    '{{BANCO}}': '[BANCO]',
+    '{{NUMERO_CUENTA}}': '[CUENTA]',
+    '{{NUMERO_CCI}}': '[CCI]',
+    '{{SERVICIO}}': '[SERVICIO]',
+    '{{CARRERA}}': '[CARRERA]',
+    '{{UNIVERSIDAD}}': '[UNIVERSIDAD]',
+    '{{PROFESION}}': '[PROFESIÓN]',
+    '{{UBICACION_CAMPO}}': '[UBICACIÓN]',
+    '{{NOMBRE_EMPRESA}}': '[EMPRESA]',
+    '{{RUC_EMPRESA}}': '[RUC]',
+    '{{NOMBRE_GERENTE}}': '[GERENTE]',
+    '{{DNI_GERENTE}}': '[DNI GERENTE]',
+    '{{DIRECCION_EMPRESA}}': '[DIRECCIÓN EMPRESA]',
+  }
+  
+  for (const [key, value] of Object.entries(replacements)) {
+    text = text.replace(new RegExp(key, 'g'), value)
+  }
+  
+  return text.length > 300 ? text.substring(0, 300) + '...' : text
 }
 
 const getStatus = (contract: any) => {
@@ -975,6 +1013,19 @@ onMounted(() => {
   font-size: 13px;
   color: #6b7280;
   margin-bottom: 8px;
+}
+
+.template-preview {
+  font-size: 11px;
+  color: #4b5563;
+  margin-bottom: 8px;
+  padding: 8px;
+  background: #f9fafb;
+  border-radius: 6px;
+  line-height: 1.5;
+  max-height: 100px;
+  overflow-y: auto;
+  font-family: 'Courier New', monospace;
 }
 
 .template-benefits {
