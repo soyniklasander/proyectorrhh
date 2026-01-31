@@ -59,12 +59,12 @@
           </thead>
           <tbody>
             <tr v-for="contract in filteredContracts" :key="contract.id">
-              <td>{{ contract.employee?.fullName || contract.employeeName || 'No asignado' }}</td>
-              <td>{{ contract.template?.name || contract.tipoContrato || 'Plazo Fijo' }}</td>
-              <td>{{ contract.template?.regimen || contract.regimen || 'General' }}</td>
-              <td>S/ {{ formatSalary(contract.salary) }}</td>
-              <td>{{ formatDate(contract.startDate) }}</td>
-              <td>{{ contract.endDate ? formatDate(contract.endDate) : 'Indefinido' }}</td>
+              <td>{{ contract.nombreCompleto || contract.employeeName || 'No asignado' }}</td>
+              <td>{{ contract.tipoContrato || 'Plazo Fijo' }}</td>
+              <td>{{ contract.regimenLaboral || contract.regimen || 'General' }}</td>
+              <td>S/ {{ formatSalary(contract.salarioBase) }}</td>
+              <td>{{ formatDate(contract.fechaInicio) }}</td>
+              <td>{{ contract.fechaFin ? formatDate(contract.fechaFin) : 'Indefinido' }}</td>
               <td>
                 <span :class="['status-badge', getStatusClass(contract)]">
                   {{ getStatus(contract) }}
@@ -187,7 +187,7 @@
         <div class="modal-body">
           <div v-if="viewingContract" class="contract-detail">
             <div class="detail-section"><h4>Empleado</h4><p><strong>Nombre:</strong> {{ viewingContract.employee?.fullName }}</p><p><strong>DNI:</strong> {{ viewingContract.employee?.dni }}</p><p><strong>Email:</strong> {{ viewingContract.employee?.email }}</p></div>
-            <div class="detail-section"><h4>Contrato</h4><p><strong>Tipo:</strong> {{ viewingContract.template?.name }}</p><p><strong>Régimen:</strong> {{ formatRegimen(viewingContract.template?.regimen) }}</p><p><strong>Cargo:</strong> {{ viewingContract.position }}</p><p><strong>Sueldo:</strong> S/ {{ formatSalary(viewingContract.salary) }}</p><p><strong>Período:</strong> {{ formatDate(viewingContract.startDate) }} - {{ viewingContract.endDate ? formatDate(viewingContract.endDate) : 'Indefinido' }}</p></div>
+            <div class="detail-section"><h4>Contrato</h4><p><strong>Tipo:</strong> {{ viewingContract.tipoContrato }}</p><p><strong>Régimen:</strong> {{ formatRegimen(viewingContract.regimenLaboral) }}</p><p><strong>Cargo:</strong> {{ viewingContract.cargo }}</p><p><strong>Sueldo:</strong> S/ {{ formatSalary(viewingContract.salarioBase) }}</p><p><strong>Período:</strong> {{ formatDate(viewingContract.fechaInicio) }} - {{ viewingContract.fechaFin ? formatDate(viewingContract.fechaFin) : 'Indefinido' }}</p></div>
           </div>
         </div>
         <div class="modal-footer">
@@ -300,9 +300,9 @@ const getTemplateIcon = (regimen: string) => {
 }
 
 const getStatus = (contract: any) => {
-  if (!contract.endDate) return 'Vigente'
+  if (!contract.fechaFin) return 'Vigente'
   const today = new Date()
-  const end = new Date(contract.endDate)
+  const end = new Date(contract.fechaFin)
   const daysLeft = Math.ceil((end.getTime() - today.getTime()) / (1000 * 60 * 60 * 24))
   
   if (daysLeft < 0) return 'Vencido'
@@ -433,8 +433,8 @@ const viewContract = (contract: any) => {
 
 const renewContract = (contract: any) => {
   startWizard()
-  selectedEmployee.value = contract.employee
-  contractForm.value.startDate = contract.endDate || new Date().toISOString().split('T')[0]
+  selectedEmployee.value = { id: contract.empleadoId, fullName: contract.nombreCompleto, dni: contract.numeroDocumento, email: contract.email, address: '' }
+  contractForm.value.startDate = contract.fechaFin || new Date().toISOString().split('T')[0]
   contractForm.value.endDate = ''
 }
 
