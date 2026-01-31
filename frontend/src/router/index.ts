@@ -1,16 +1,6 @@
 import { RouteRecordRaw } from 'vue-router'
-import { useAuthStore } from '@/store/auth'
 
 const routes: RouteRecordRaw[] = [
-  {
-    path: '/login',
-    name: 'Login',
-    component: () => import('@/views/auth/Login.vue'),
-    meta: {
-      requiresAuth: false,
-      title: 'Iniciar Sesión'
-    }
-  },
   {
     path: '/',
     redirect: '/dashboard'
@@ -18,101 +8,52 @@ const routes: RouteRecordRaw[] = [
   {
     path: '/dashboard',
     name: 'Dashboard',
-    component: () => import('@/views/Dashboard.vue'),
-    meta: {
-      requiresAuth: true,
-      title: 'Panel Principal'
-    }
+    component: () => import('@/views/Dashboard.vue')
   },
   {
-    path: '/empleados',
+    path: '/employees',
     name: 'Employees',
-    component: () => import('@/views/employees/EmployeesList.vue'),
-    meta: {
-      requiresAuth: true,
-      title: 'Empleados'
-    }
+    component: () => import('@/views/employees/index.vue')
   },
   {
-    path: '/empleados/nuevo',
-    name: 'NewEmployee',
-    component: () => import('@/views/employees/EmployeeForm.vue'),
-    meta: {
-      requiresAuth: true,
-      title: 'Nuevo Empleado'
-    }
-  },
-  {
-    path: '/empleados/:id',
-    name: 'EmployeeDetail',
-    component: () => import('@/views/employees/EmployeeDetail.vue'),
-    meta: {
-      requiresAuth: true,
-      title: 'Detalle de Empleado'
-    }
-  },
-  {
-    path: '/contratos',
+    path: '/contracts',
     name: 'Contracts',
-    component: () => import('@/views/contracts/ContractsList.vue'),
-    meta: {
-      requiresAuth: true,
-      title: 'Contratos'
-    }
+    component: () => import('@/views/contracts/index.vue')
   },
   {
-    path: '/horas-extras',
-    name: 'Overtime',
-    component: () => import('@/views/overtime/OvertimeList.vue'),
-    meta: {
-      requiresAuth: true,
-      title: 'Horas Extras'
-    }
-  },
-  {
-    path: '/prestamos',
-    name: 'Loans',
-    component: () => import('@/views/loans/LoansList.vue'),
-    meta: {
-      requiresAuth: true,
-      title: 'Préstamos'
-    }
-  },
-  {
-    path: '/planilla',
+    path: '/payroll',
     name: 'Payroll',
-    component: () => import('@/views/payroll/PayrollList.vue'),
-    meta: {
-      requiresAuth: true,
-      title: 'Planilla'
-    }
+    component: () => import('@/views/payroll/index.vue')
   },
   {
-    path: '/vacaciones',
+    path: '/overtime',
+    name: 'Overtime',
+    component: () => import('@/views/overtime/index.vue')
+  },
+  {
+    path: '/loans',
+    name: 'Loans',
+    component: () => import('@/views/loans/index.vue')
+  },
+  {
+    path: '/leaves',
     name: 'Leaves',
-    component: () => import('@/views/leaves/LeavesList.vue'),
-    meta: {
-      requiresAuth: true,
-      title: 'Vacaciones y Permisos'
-    }
+    component: () => import('@/views/leaves/index.vue')
   },
   {
-    path: '/asistencia',
-    name: 'Attendance',
-    component: () => import('@/views/attendance/AttendanceList.vue'),
-    meta: {
-      requiresAuth: true,
-      title: 'Control de Asistencia'
-    }
+    path: '/reports',
+    name: 'Reports',
+    component: () => import('@/views/NotFound.vue')
+  },
+  {
+    path: '/settings',
+    name: 'Settings',
+    component: () => import('@/views/NotFound.vue')
   },
   {
     path: '/:pathMatch(.*)*',
     name: 'NotFound',
-    component: () => import('@/views/NotFound.vue'),
-    meta: {
-      requiresAuth: false,
-      title: 'Página no encontrada'
-    }
+    component: () => import('@/views/NotFound.vue')
   }
 ]
 

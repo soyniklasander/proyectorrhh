@@ -65,11 +65,29 @@ export default {
             }
           );
         } catch (error) {
+          const msg = error instanceof Error ? error.message : String(error)
+          // Fallback local mock data if DB binding is not configured (for development/demo)
+          if (msg.includes('DB binding not configured')) {
+            const sample = [
+              { id: 'demo-1', nombreCompleto: 'Juan Pérez García', numeroDocumento: '12345678', estado: 'ACTIVO' }
+            ]
+            return new Response(
+              JSON.stringify({
+                success: true,
+                data: sample,
+                timestamp: new Date().toISOString()
+              }),
+              { 
+                headers: { 'Content-Type': 'application/json', ...corsHeaders }
+              }
+            );
+          }
+          // Si es otro error, reportar DB_MISSING/UNAVAILABLE
           return new Response(
             JSON.stringify({
               success: false,
               error: 'DB_UNAVAILABLE',
-              message: error instanceof Error ? error.message : 'DB not available'
+              message: msg
             }),
             { 
               status: 503,
