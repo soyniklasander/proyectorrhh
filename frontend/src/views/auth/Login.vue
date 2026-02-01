@@ -74,6 +74,12 @@
             {{ error }}
           </n-alert>
         </div>
+
+        <div class="demo-setup text-center" style="margin-top: 2rem; border-top: 1px dashed #eee; padding-top: 1rem;">
+          <n-button text size="tiny" @click="runSeed" :loading="seeding" type="warning">
+            ⚙️ Restaurar Datos Demo
+          </n-button>
+        </div>
       </div>
 
       <div class="footer-copy">
@@ -97,6 +103,7 @@ const authStore = useAuthStore()
 
 const formRef = ref<FormInst | null>(null)
 const loading = ref(false)
+const seeding = ref(false)
 const error = ref('')
 
 const formData = reactive({
@@ -139,6 +146,28 @@ const handleLogin = async () => {
     // Validation error
   } finally {
     loading.value = false
+  }
+}
+
+const runSeed = async () => {
+  seeding.value = true
+  try {
+    // Using explicit URL or rely on proxy?
+    // Proxy '/api' -> backend.
+    // Endpoint: /api/v1/system/seed
+    const res = await fetch('/api/v1/system/seed?secret=setup_demo', {
+      method: 'POST'
+    })
+    const json = await res.json()
+    if (json.success) {
+      message.success('Datos demo cargados. Puedes iniciar sesión con admin@rickcorp.com / password123')
+    } else {
+      message.error('Error al cargar datos: ' + (json.error || 'Unknown'))
+    }
+  } catch (e) {
+    message.error('Error de conexión con el servidor')
+  } finally {
+    seeding.value = false
   }
 }
 </script>
