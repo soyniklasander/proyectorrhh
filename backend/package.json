@@ -5,7 +5,7 @@
   "main": "dist/main.js",
   "scripts": {
     "dev": "wrangler dev",
-    "build": "nest build",
+    "build": "echo 'Building with Wrangler during deploy'",
     "deploy": "wrangler deploy",
     "test": "jest",
     "test:watch": "jest --watch",
