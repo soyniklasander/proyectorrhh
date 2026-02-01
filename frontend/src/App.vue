@@ -4,7 +4,8 @@
       <n-dialog-provider>
         <n-notification-provider>
           <n-message-provider>
-            <n-layout has-sider class="app-layout">
+
+            <n-layout has-sider class="app-layout" v-if="!isFullScreen">
               <n-layout-sider
                 bordered
                 collapse-mode="width"
@@ -18,13 +19,13 @@
                 class="sidebar"
               >
                 <div class="logo" v-if="!collapsed">
-                  <n-icon size="24" color="#3b82f6">
+                  <n-icon size="24" color="#ffffff">
                     <PeopleOutline />
                   </n-icon>
-                  <span class="logo-text">RRHHMod</span>
+                  <span class="logo-text">RickERP</span>
                 </div>
                 <div class="logo" v-else>
-                  <n-icon size="24" color="#3b82f6">
+                  <n-icon size="24" color="#ffffff">
                     <PeopleOutline />
                   </n-icon>
                 </div>
@@ -50,10 +51,10 @@
                     </n-breadcrumb>
                   </div>
                   <div class="header-right">
-                    <n-tag type="info" size="small">D1 Conectado</n-tag>
+                    <n-tag type="success" size="small" round>En Línea</n-tag>
                     <n-button quaternary circle @click="toggleTheme">
                       <template #icon>
-                        <n-icon><{{ isDark ? 'SunnyOutline' : 'MoonOutline' }} /></n-icon>
+                        <n-icon><component :is="isDark ? SunnyOutline : MoonOutline" /></n-icon>
                       </template>
                     </n-button>
                   </div>
@@ -64,6 +65,11 @@
                 </n-layout-content>
               </n-layout>
             </n-layout>
+
+            <div v-else class="fullscreen-layout">
+               <router-view />
+            </div>
+
           </n-message-provider>
         </n-notification-provider>
       </n-dialog-provider>
@@ -90,6 +96,10 @@ const route = useRoute()
 const collapsed = ref(false)
 const isDark = ref(false)
 const activeKey = ref('dashboard')
+
+const isFullScreen = computed(() => {
+  return route.name === 'Login' || route.path === '/login' || route.meta?.guest
+})
 
 const theme = computed(() => isDark.value ? darkTheme : null)
 
