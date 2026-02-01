@@ -2,6 +2,13 @@ import { createMiddleware } from 'hono/factory';
 import { Env, Variables } from '../types';
 
 export const tenantMiddleware = createMiddleware<{ Bindings: Env; Variables: Variables }>(async (c, next) => {
+  // Public paths exclusion
+  const path = c.req.path;
+  if (path.includes('/auth/login') || path.includes('/health')) {
+    await next();
+    return;
+  }
+
   const user = c.get('user');
 
   if (!user) {

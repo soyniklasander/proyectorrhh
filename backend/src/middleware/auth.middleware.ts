@@ -3,6 +3,13 @@ import { verify } from 'hono/jwt';
 import { Env, Variables } from '../types';
 
 export const authMiddleware = createMiddleware<{ Bindings: Env; Variables: Variables }>(async (c, next) => {
+  // Public paths exclusion
+  const path = c.req.path;
+  if (path.includes('/auth/login') || path.includes('/health')) {
+    await next();
+    return;
+  }
+
   const authHeader = c.req.header('Authorization');
   if (!authHeader || !authHeader.startsWith('Bearer ')) {
     return c.json({ success: false, error: 'UNAUTHORIZED', message: 'Missing or invalid Authorization header' }, 401);
