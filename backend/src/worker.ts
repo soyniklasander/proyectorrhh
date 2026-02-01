@@ -1,5 +1,7 @@
 import { Hono } from 'hono';
 import { cors } from 'hono/cors';
+import { sign } from 'hono/jwt';
+import * as bcrypt from 'bcryptjs';
 import { Env, Variables } from './types';
 import { authMiddleware } from './middleware/auth.middleware';
 import { tenantMiddleware } from './middleware/tenant.middleware';
@@ -20,6 +22,42 @@ app.get('/api/v1/health', async (c) => {
     return c.json({ success: false, message: 'DB Binding missing' }, 503);
   } catch (e) {
     return c.json({ success: false, message: 'Database error', error: String(e) }, 503);
+  }
+});
+
+// Auth Login (Public)
+app.post('/api/v1/auth/login', async (c) => {
+  try {
+    const { email, password } = await c.req.json();
+    if (!email || !password) return c.json({ success: false, error: 'MISSING_CREDENTIALS' }, 400);
+
+    const user = await c.env.DB.prepare('SELECT * FROM users WHERE email = ?').bind(email).first();
+    if (!user) return c.json({ success: false, error: 'INVALID_CREDENTIALS' }, 401);
+
+    const isValid = await bcrypt.compare(password, user.password_hash as string);
+    if (!isValid) return c.json({ success: false, error: 'INVALID_CREDENTIALS' }, 401);
+
+    const payload = {
+      userId: user.id,
+      companyId: user.company_id,
+      role: user.role,
+      exp: Math.floor(Date.now() / 1000) + 60 * 60 * 24 // 24h
+    };
+
+    const token = await sign(payload, c.env.JWT_SECRET, 'HS256');
+
+    return c.json({
+      success: true,
+      token,
+      user: {
+        id: user.id,
+        email: user.email,
+        role: user.role,
+        companyId: user.company_id
+      }
+    });
+  } catch (error) {
+    return c.json({ success: false, error: 'AUTH_ERROR', message: String(error) }, 500);
   }
 });
 
