@@ -2,6 +2,7 @@
   "name": "rrhhmod-backend",
   "version": "1.0.0",
   "description": "Backend para ERP de Gestión de Personal - Perú",
+  "type": "module",
   "main": "dist/main.js",
   "scripts": {
     "dev": "wrangler dev",
