@@ -169,22 +169,37 @@
           
           <div v-if="wizardStep === 4" class="wizard-step">
             <h4>Vista Previa del Contrato</h4>
-            <div class="contract-preview-full">
-              <div class="preview-header">
-                <h2>{{ selectedTemplate?.nombre || 'Contrato de Trabajo' }}</h2>
-                <p class="regimen">{{ formatRegimen(selectedTemplate?.regimenLaboral || 'General') }} - {{ selectedTemplate?.tipoContrato }}</p>
-                <div class="signature-option">
-                  <span class="signature-badge">✓ Requiere Firma Física</span>
-                  <span class="signature-note">Firma digital disponible en futura actualización</span>
+            <p class="preview-info">👇 Vista previa del documento antes de guardar</p>
+            
+            <div class="preview-actions">
+              <button class="btn btn-primary" @click="downloadPDF">
+                📄 Descargar PDF
+              </button>
+            </div>
+            
+            <div id="contract-printable" class="contract-document">
+              <div class="document-header">
+                <h2>{{ selectedTemplate?.nombre || 'CONTRATO DE TRABAJO' }}</h2>
+                <p class="regimen-badge">{{ formatRegimen(selectedTemplate?.regimenLaboral || 'General') }}</p>
+              </div>
+              
+              <div class="document-body" v-html="formatContractForDisplay(generateContractText())"></div>
+              
+              <div class="document-footer">
+                <div class="signature-area">
+                  <div class="signature-box">
+                    <p class="signature-line">________________________________</p>
+                    <p><strong>{{ selectedEmployee?.nombreCompleto || 'TRABAJADOR' }}</strong></p>
+                    <p>DNI: {{ selectedEmployee?.numeroDocumento || '_______' }}</p>
+                  </div>
+                  <div class="signature-box">
+                    <p class="signature-line">________________________________</p>
+                    <p><strong>RRHHMod S.A.C.</strong></p>
+                    <p>GERENTE GENERAL</p>
+                    <p>DNI: 12345678</p>
+                  </div>
                 </div>
-              </div>
-              
-              <div class="contract-text">
-                <pre>{{ generateContractText() }}</pre>
-              </div>
-              
-              <div class="preview-footer">
-                <p class="disclaimer">Este contrato se regirá por las leyes laborales del Perú, específicamente por el régimen {{ formatRegimen(selectedTemplate?.regimenLaboral) }}.</p>
+                <p class="legal-note">* Este documento requiere firma física. La firma digital estará disponible próximamente.</p>
               </div>
             </div>
           </div>
@@ -637,6 +652,38 @@ const renewContract = (contract: any) => {
 
 const printContract = () => {
   window.print()
+}
+
+const downloadPDF = () => {
+  window.print()
+}
+
+const formatContractForDisplay = (text: string) => {
+  if (!text) return ''
+  let html = text
+    .replace(/\n/g, '<br>')
+    .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+    .replace(/__(.*?)__/g, '<u>$1</u>')
+    .replace(/\*(.*?)\*/g, '<em>$1</em>')
+  
+  html = html.replace(/CONTRATO DE TRABAJO/g, '<h3 style="text-align:center;margin:20px 0;">CONTRATO DE TRABAJO</h3>')
+  html = html.replace(/QUESES/g, 'QUE SE')
+  html = html.replace(/CON LA EMPRESA/g, '<br><br>CON LA EMPRESA')
+  html = html.replace(/EL TRABAJADOR/g, '<br><br>EL TRABAJADOR')
+  html = html.replace(/PRIMERA/g, '<br><br><strong>PRIMERA</strong>')
+  html = html.replace(/SEGUNDA/g, '<br><br><strong>SEGUNDA</strong>')
+  html = html.replace(/TERCERA/g, '<br><br><strong>TERCERA</strong>')
+  html = html.replace(/CUARTA/g, '<br><br><strong>CUARTA</strong>')
+  html = html.replace(/QUINTA/g, '<br><br><strong>QUINTA</strong>')
+  html = html.replace(/SEXTA/g, '<br><br><strong>SEXTA</strong>')
+  html = html.replace(/SÉPTIMA/g, '<br><br><strong>SÉPTIMA</strong>')
+  html = html.replace(/OCTAVA/g, '<br><br><strong>OCTAVA</strong>')
+  html = html.replace(/NOVENA/g, '<br><br><strong>NOVENA</strong>')
+  html = html.replace(/DÉCIMA/g, '<br><br><strong>DÉCIMA</strong>')
+  html = html.replace(/EN CONSECUENCIA/g, '<br><br>EN CONSECUENCIA')
+  html = html.replace(/FIRMA/g, '<br><br>FIRMA')
+  
+  return html
 }
 
 onMounted(() => {
@@ -1193,6 +1240,153 @@ onMounted(() => {
   margin-top: 32px;
   padding-top: 24px;
   border-top: 1px solid #e5e7eb;
+}
+
+.preview-info {
+  color: #6b7280;
+  font-size: 14px;
+  margin-bottom: 16px;
+  text-align: center;
+}
+
+.preview-actions {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.contract-document {
+  background: white;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  padding: 40px;
+  max-height: 500px;
+  overflow-y: auto;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  font-family: 'Times New Roman', serif;
+  line-height: 1.8;
+  font-size: 14px;
+  color: #1f2937;
+}
+
+.document-header {
+  text-align: center;
+  margin-bottom: 30px;
+  padding-bottom: 20px;
+  border-bottom: 2px solid #3b82f6;
+}
+
+.document-header h2 {
+  font-size: 18px;
+  color: #1f2937;
+  margin-bottom: 10px;
+}
+
+.regimen-badge {
+  display: inline-block;
+  background: #eff6ff;
+  color: #3b82f6;
+  padding: 6px 16px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.document-body {
+  text-align: justify;
+  margin-bottom: 30px;
+}
+
+.document-body :deep(p) {
+  margin: 12px 0;
+  text-indent: 2em;
+}
+
+.document-body :deep(h3) {
+  text-align: center;
+  margin: 20px 0;
+  font-size: 16px;
+}
+
+.document-body :deep(strong) {
+  font-weight: bold;
+}
+
+.document-footer {
+  margin-top: 40px;
+  padding-top: 20px;
+  border-top: 1px solid #e5e7eb;
+}
+
+.signature-area {
+  display: flex;
+  justify-content: space-around;
+  margin: 40px 0;
+  gap: 40px;
+}
+
+.signature-box {
+  text-align: center;
+  width: 200px;
+}
+
+.signature-line {
+  border-bottom: 1px solid #1f2937;
+  margin-bottom: 8px;
+  padding-bottom: 4px;
+}
+
+.signature-box p {
+  margin: 4px 0;
+  font-size: 13px;
+}
+
+.legal-note {
+  text-align: center;
+  font-size: 11px;
+  color: #9ca3af;
+  font-style: italic;
+  margin-top: 20px;
+}
+
+@media print {
+  .contracts-page > *:not(.contract-document) {
+    display: none !important;
+  }
+  
+  .modal-overlay {
+    background: white !important;
+  }
+  
+  .modal,
+  .modal-wizard {
+    width: 100% !important;
+    max-width: 100% !important;
+    max-height: none !important;
+    border-radius: 0 !important;
+  }
+  
+  .modal-body {
+    padding: 0 !important;
+  }
+  
+  .wizard-progress,
+  .modal-footer {
+    display: none !important;
+  }
+  
+  .contract-document {
+    box-shadow: none !important;
+    border: none !important;
+    max-height: none !important;
+    overflow: visible !important;
+    padding: 20px;
+  }
+  
+  .preview-actions {
+    display: none !important;
+  }
 }
 
 .disclaimer {

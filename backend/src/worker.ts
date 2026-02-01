@@ -182,7 +182,7 @@ export default {
         try {
           const result = await env.DB.prepare(`
             SELECT id, nombre, codigo, regimenLaboral, tipoContrato, descripcion,
-                   diasLaborales, horasSemanales, tieneCTS, tieneVacaciones, 
+                   plantillaTexto, diasLaborales, horasSemanales, tieneCTS, tieneVacaciones, 
                    tieneGratificaciones, tieneUtilidades, tieneAsignacionFamiliar,
                    essaludPorcentaje, camposRequeridos, camposOpcionales, estado
             FROM contract_templates
@@ -398,10 +398,10 @@ export default {
               formaPago, medioPago, asignacionFamiliar, bonificacionProductividad,
               bonificacionPuesto, movilidad, refrigerio, seguroSalud, nombreEPS,
               afp, nombreAFP, cuspp, tipoSeguro, tieneCTS, tieneVacaciones,
-              tieneGratificaciones, tieneUtilidades, estado, archivoContrato,
-              createdById, createdAt, updatedAt
+              tieneGratificaciones, tieneUtilidades, estado, motivoSuspension,
+              archivoContrato, archivoAddendum, createdById, createdAt, updatedAt
             ) VALUES (
-              ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, datetime('now'), datetime('now')
+              ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, datetime('now'), datetime('now')
             )
           `).bind(
             id, body.empleadoId, body.tipoContrato, body.regimenLaboral,
@@ -411,7 +411,7 @@ export default {
             body.nivel || null, body.centroCostos || null,
             body.departamentoTrabajo || null, body.areaTrabajo || null,
             body.turno || null, body.horarioTrabajo || null,
-            body.diasTrabajo || 5, body.horasSemanales || 48,
+            body.diasTrabajo || 6, body.horasSemanales || 48,
             body.salarioBase, body.tipoMoneda || 'PEN',
             body.formaPago || 'MENSUAL', body.medioPago || 'DEPOSITO',
             body.asignacionFamiliar || 0, body.bonificacionProductividad || 0,
@@ -419,9 +419,10 @@ export default {
             body.refrigerio || 0, body.seguroSalud || 'ESSALUD',
             body.nombreEPS || null, body.afp || null, body.nombreAFP || null,
             body.cuspp || null, body.tipoSeguro || null,
-            body.tieneCTS !== false, body.tieneVacaciones !== false,
-            body.tieneGratificaciones !== false, body.tieneUtilidades !== false,
-            body.estado || 'VIGENTE', body.archivoContrato || null,
+            body.tieneCTS !== false ? 1 : 0, body.tieneVacaciones !== false ? 1 : 0,
+            body.tieneGratificaciones !== false ? 1 : 0, body.tieneUtilidades !== false ? 1 : 0,
+            body.estado || 'VIGENTE', body.motivoSuspension || null,
+            body.archivoContrato || null, body.archivoAddendum || null,
             body.createdById || 'system'
           ).run();
 
