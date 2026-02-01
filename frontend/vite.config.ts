@@ -38,7 +38,7 @@ export default defineConfig({
     port: 3000,
     proxy: {
       '/api': {
-        target: 'https://proyectorrhh.rchavezza.workers.dev',
+        target: 'https://rrhhmod-backend.rchavezza.workers.dev',
         changeOrigin: true
       }
     }

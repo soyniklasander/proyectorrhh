@@ -3,7 +3,7 @@ import { useAuthStore } from '@/store/auth';
 
 // Configuración base de Axios
 const api: AxiosInstance = axios.create({
-    baseURL: import.meta.env.VITE_API_URL || 'https://proyectorrhh.rchavezza.workers.dev/api/v1',
+    baseURL: import.meta.env.VITE_API_URL || 'https://rrhhmod-backend.rchavezza.workers.dev/api/v1',
     timeout: 10000,
     headers: {
         'Content-Type': 'application/json',
