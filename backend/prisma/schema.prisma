@@ -1,6 +1,7 @@
 // Client para Cloudflare D1
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
+  previewFeatures = ["driverAdapters"]
 }
 
 // Esquema para la base de datos
