@@ -106,6 +106,27 @@ protectedRoutes.get('/employees', async (c) => {
   return c.json({ success: true, data: result.results });
 });
 
+// Dashboard Summary Endpoint (Optimized)
+protectedRoutes.get('/dashboard/summary', async (c) => {
+  const tenantId = c.get('tenantId');
+
+  // Parallelize queries for better performance
+  const [employeesCount, activeContractsCount, recentEmployees] = await Promise.all([
+    c.env.DB.prepare('SELECT COUNT(*) as total FROM employees WHERE company_id = ?').bind(tenantId).first('total'),
+    c.env.DB.prepare("SELECT COUNT(*) as total FROM contracts WHERE company_id = ? AND estado = 'VIGENTE'").bind(tenantId).first('total'),
+    c.env.DB.prepare('SELECT id, nombreCompleto, numeroDocumento, estado FROM employees WHERE company_id = ? ORDER BY createdAt DESC LIMIT 5').bind(tenantId).all()
+  ]);
+
+  return c.json({
+    success: true,
+    data: {
+      totalEmployees: employeesCount || 0,
+      activeContracts: activeContractsCount || 0,
+      recentEmployees: recentEmployees.results || []
+    }
+  });
+});
+
 // Mount Protected Routes
 app.route('/api/v1', protectedRoutes);
 

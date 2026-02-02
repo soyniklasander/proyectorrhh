@@ -76,6 +76,7 @@
 
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
+import { api } from '@/services/api'
 
 const stats = ref({
   totalEmployees: 0,
@@ -88,13 +89,12 @@ const recentEmployees = ref<any[]>([])
 
 const fetchDashboardData = async () => {
   try {
-    const response = await fetch('https://rrhhmod-backend.rchavezza.workers.dev/api/v1/employees')
-    const data = await response.json()
+    const { data } = await api.get('/dashboard/summary')
     
     if (data.success) {
-      recentEmployees.value = data.data
-      stats.value.totalEmployees = data.data.length
-      stats.value.activeContracts = data.data.length
+      recentEmployees.value = data.data.recentEmployees
+      stats.value.totalEmployees = data.data.totalEmployees
+      stats.value.activeContracts = data.data.activeContracts
     }
   } catch (error) {
     console.error('Error fetching data:', error)
