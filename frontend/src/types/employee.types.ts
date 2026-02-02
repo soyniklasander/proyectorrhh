@@ -1,4 +1,5 @@
 import { BaseEntity, SelectOption } from './index'
+import type { Payroll } from './payroll.types'
 
 // Enums para tipos de datos
 export enum TipoDocumento {

@@ -69,8 +69,14 @@ const routes: RouteRecordRaw[] = [
   {
     path: '/settings',
     name: 'Settings',
-    component: () => import('@/views/NotFound.vue'),
+    component: () => import('@/views/settings/index.vue'),
     meta: { requiresAuth: true }
+  },
+  {
+    path: '/admin/companies',
+    name: 'AdminCompanies',
+    component: () => import('@/views/admin/Companies.vue'),
+    meta: { requiresAuth: true, roles: ['SUPER_ADMIN'] }
   },
   {
     path: '/:pathMatch(.*)*',
@@ -84,7 +90,7 @@ const router = createRouter({
   routes
 })
 
-router.beforeEach((to, from, next) => {
+router.beforeEach((to, _from, next) => {
   const authStore = useAuthStore()
 
   // Try to recover session if not present in memory but present in localstorage
@@ -95,7 +101,23 @@ router.beforeEach((to, from, next) => {
   if (to.meta.requiresAuth && !authStore.isAuthenticated) {
     next('/login')
   } else if (to.path === '/login' && authStore.isAuthenticated) {
-    next('/dashboard')
+    if (authStore.isSuperAdmin) {
+      next('/admin/companies')
+    } else {
+      next('/dashboard')
+    }
+  } else if (to.meta.roles && Array.isArray(to.meta.roles)) {
+    // Check role access
+    const requiredRoles = to.meta.roles as string[]
+    if (authStore.user && requiredRoles.includes(authStore.user.role)) {
+      next()
+    } else {
+      // Redirect unauthorized to dashboard or login
+      next('/dashboard')
+    }
+  } else if ((to.path === '/dashboard' || to.path === '/') && authStore.isSuperAdmin) {
+      // Redirect Super Admin away from tenant dashboard to their main view
+      next('/admin/companies')
   } else {
     next()
   }

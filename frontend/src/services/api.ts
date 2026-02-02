@@ -1,29 +1,16 @@
 import axios, { type AxiosInstance, type InternalAxiosRequestConfig, type AxiosError } from 'axios';
-import { useAuthStore } from '@/store/auth';
 
-// Configuración base de Axios
+// Base configuration
 const api: AxiosInstance = axios.create({
     baseURL: import.meta.env.VITE_API_URL || 'https://rrhhmod-backend.rchavezza.workers.dev/api/v1',
-    timeout: 10000,
+    timeout: 30000, // Increased timeout for industrial operations (reports, payroll)
     headers: {
         'Content-Type': 'application/json',
     },
 });
 
-// Interceptor para añadir token de autorización
+// Request Interceptor
 api.interceptors.request.use((config: InternalAxiosRequestConfig) => {
-    // Need to defer accessing store to avoid circular dependency if store uses api?
-    // In Pinia, it's usually fine if called inside interceptor (runtime).
-    // But be careful.
-    // Ideally pass token manually or access store instance here.
-    // Pinia store should be used inside functions.
-    // However, `useAuthStore()` requires active Pinia instance.
-    // If api.ts is imported before main.ts runs, `useAuthStore()` might fail.
-    // But interceptor runs later.
-
-    // To be safe, we can check if pinia is active, but usually this works in Vue 3 apps.
-    // If it fails, we can use a getter or simple localStorage for the token here.
-
     const token = localStorage.getItem('access_token');
     if (token) {
         config.headers.Authorization = `Bearer ${token}`;
@@ -33,25 +20,34 @@ api.interceptors.request.use((config: InternalAxiosRequestConfig) => {
     return Promise.reject(error);
 });
 
-// Interceptor para manejar respuestas y refrescar token
+// Response Interceptor
 api.interceptors.response.use((response) => {
     return response;
 }, async (error: AxiosError) => {
     const originalRequest = error.config as InternalAxiosRequestConfig & { _retry?: boolean };
 
-    // Si el error es 401 y no hemos intentado refrescar el token
+    // Handle 401 Unauthorized
     if (error.response?.status === 401 && originalRequest && !originalRequest._retry) {
         originalRequest._retry = true;
 
-        // Handle logout
+        // Clear session
         localStorage.removeItem('access_token');
         localStorage.removeItem('user');
-        window.location.href = '/login';
 
-        // Refresh logic would go here
+        // Redirect to login if not already there
+        if (window.location.pathname !== '/login') {
+            window.location.href = '/login';
+        }
     }
+
+    // Handle 403 Forbidden (Permission denied)
+    if (error.response?.status === 403) {
+        console.warn('Access denied:', error.response.data);
+        // Optional: Trigger a global notification here via a dedicated event bus or store if available
+    }
+
     return Promise.reject(error);
 });
 
-export { api as default };
 export { api };
+export default api;

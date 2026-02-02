@@ -88,11 +88,13 @@ import {
 import {
   PeopleOutline, DocumentTextOutline, WalletOutline, TimeOutline,
   CardOutline, AirplaneOutline, BarChartOutline, SettingsOutline,
-  HomeOutline, SunnyOutline, MoonOutline, PeopleSharp
+  HomeOutline, SunnyOutline, MoonOutline, BusinessOutline
 } from '@vicons/ionicons5'
+import { useAuthStore } from '@/store/auth'
 
 const router = useRouter()
 const route = useRoute()
+const authStore = useAuthStore()
 const collapsed = ref(false)
 const isDark = ref(false)
 const activeKey = ref('dashboard')
@@ -107,53 +109,72 @@ const toggleTheme = () => {
   isDark.value = !isDark.value
 }
 
-const menuOptions = [
-  {
-    label: 'Dashboard',
-    key: 'dashboard',
-    icon: () => h(NIcon, null, { default: () => h(HomeOutline) })
-  },
-  {
-    label: 'Empleados',
-    key: 'employees',
-    icon: () => h(NIcon, null, { default: () => h(PeopleOutline) })
-  },
-  {
-    label: 'Contratos',
-    key: 'contracts',
-    icon: () => h(NIcon, null, { default: () => h(DocumentTextOutline) })
-  },
-  {
-    label: 'Nómina',
-    key: 'payroll',
-    icon: () => h(NIcon, null, { default: () => h(WalletOutline) })
-  },
-  {
-    label: 'Horas Extras',
-    key: 'overtime',
-    icon: () => h(NIcon, null, { default: () => h(TimeOutline) })
-  },
-  {
-    label: 'Préstamos',
-    key: 'loans',
-    icon: () => h(NIcon, null, { default: () => h(CardOutline) })
-  },
-  {
-    label: 'Vacaciones',
-    key: 'leaves',
-    icon: () => h(NIcon, null, { default: () => h(AirplaneOutline) })
-  },
-  {
-    label: 'Reportes',
-    key: 'reports',
-    icon: () => h(NIcon, null, { default: () => h(BarChartOutline) })
-  },
-  {
-    label: 'Configuración',
-    key: 'settings',
-    icon: () => h(NIcon, null, { default: () => h(SettingsOutline) })
+const menuOptions = computed(() => {
+  if (authStore.isSuperAdmin) {
+    return [
+      {
+        label: 'Empresas',
+        key: 'admin/companies',
+        icon: () => h(NIcon, null, { default: () => h(BusinessOutline) })
+      },
+      // Super admin might still want to see settings or other global stats
+      {
+        label: 'Configuración',
+        key: 'settings',
+        icon: () => h(NIcon, null, { default: () => h(SettingsOutline) })
+      }
+    ]
   }
-]
+
+  // Tenant / Regular User Menu
+  return [
+    {
+      label: 'Dashboard',
+      key: 'dashboard',
+      icon: () => h(NIcon, null, { default: () => h(HomeOutline) })
+    },
+    {
+      label: 'Empleados',
+      key: 'employees',
+      icon: () => h(NIcon, null, { default: () => h(PeopleOutline) })
+    },
+    {
+      label: 'Contratos',
+      key: 'contracts',
+      icon: () => h(NIcon, null, { default: () => h(DocumentTextOutline) })
+    },
+    {
+      label: 'Nómina',
+      key: 'payroll',
+      icon: () => h(NIcon, null, { default: () => h(WalletOutline) })
+    },
+    {
+      label: 'Horas Extras',
+      key: 'overtime',
+      icon: () => h(NIcon, null, { default: () => h(TimeOutline) })
+    },
+    {
+      label: 'Préstamos',
+      key: 'loans',
+      icon: () => h(NIcon, null, { default: () => h(CardOutline) })
+    },
+    {
+      label: 'Vacaciones',
+      key: 'leaves',
+      icon: () => h(NIcon, null, { default: () => h(AirplaneOutline) })
+    },
+    {
+      label: 'Reportes',
+      key: 'reports',
+      icon: () => h(NIcon, null, { default: () => h(BarChartOutline) })
+    },
+    {
+      label: 'Configuración',
+      key: 'settings',
+      icon: () => h(NIcon, null, { default: () => h(SettingsOutline) })
+    }
+  ]
+})
 
 const currentPageTitle = computed(() => {
   const titles: Record<string, string> = {
@@ -172,7 +193,12 @@ const currentPageTitle = computed(() => {
 
 const handleMenuClick = (key: string) => {
   activeKey.value = key
-  router.push(`/${key === 'dashboard' ? '' : key}`)
+  // Handle special cases or default routing
+  if (key === 'dashboard') {
+    router.push('/')
+  } else {
+    router.push(`/${key}`)
+  }
 }
 </script>
 

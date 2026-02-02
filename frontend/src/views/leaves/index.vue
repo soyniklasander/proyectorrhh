@@ -90,7 +90,7 @@
         <div class="calendar-month" v-for="month in calendarMonths" :key="month.name">
           <div class="month-name">{{ month.name }}</div>
           <div class="month-days">
-            <span v-for="day in month.days" :key="day" :class="['day', day.status]">
+            <span v-for="day in month.days" :key="day.date" :class="['day', day.status]">
               {{ day.date }}
             </span>
           </div>

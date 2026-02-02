@@ -21,6 +21,7 @@ export const useAuthStore = defineStore('auth', () => {
     const isDarkMode = ref(localStorage.getItem('dark_mode') === 'true');
 
     const isAuthenticated = computed(() => !!accessToken.value);
+    const isSuperAdmin = computed(() => user.value?.role === 'SUPER_ADMIN');
 
     const checkAuth = () => {
         const storedToken = localStorage.getItem('access_token');
@@ -89,6 +90,7 @@ export const useAuthStore = defineStore('auth', () => {
         accessToken,
         isDarkMode,
         isAuthenticated,
+        isSuperAdmin,
         login,
         logout,
         checkAuth,

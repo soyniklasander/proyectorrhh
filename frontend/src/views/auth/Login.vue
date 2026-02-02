@@ -89,7 +89,7 @@ import { useRouter } from 'vue-router'
 import { useMessage } from 'naive-ui'
 import { MailOutline, LockClosedOutline } from '@vicons/ionicons5'
 import { useAuthStore } from '@/store/auth'
-import type { FormInst, FormValidationError } from 'naive-ui'
+import type { FormInst, FormRules } from 'naive-ui'
 
 const router = useRouter()
 const message = useMessage()
@@ -105,7 +105,7 @@ const formData = reactive({
   rememberMe: false
 })
 
-const rules = {
+const rules: FormRules = {
   email: [
     { required: true, message: 'Ingrese su correo', trigger: 'blur' },
     { type: 'email', message: 'Correo inválido', trigger: 'blur' }
