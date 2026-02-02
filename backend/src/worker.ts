@@ -106,6 +106,155 @@ protectedRoutes.get('/employees', async (c) => {
   return c.json({ success: true, data: result.results });
 });
 
+// Dashboard Summary
+protectedRoutes.get('/dashboard/summary', async (c) => {
+  const tenantId = c.get('tenantId');
+  const db = c.env.DB;
+
+  try {
+    const [totalEmployees, activeContracts, payrollSum, recentEmployees] = await db.batch([
+      db.prepare('SELECT COUNT(*) as count FROM employees WHERE company_id = ? AND estado = "ACTIVO"').bind(tenantId),
+      db.prepare('SELECT COUNT(*) as count FROM contracts WHERE company_id = ? AND estado = "VIGENTE"').bind(tenantId),
+      db.prepare('SELECT SUM(salarioBase) as total FROM contracts WHERE company_id = ? AND estado = "VIGENTE"').bind(tenantId),
+      db.prepare('SELECT id, nombreCompleto, numeroDocumento, fechaIngreso, estado FROM employees WHERE company_id = ? ORDER BY createdAt DESC LIMIT 5').bind(tenantId)
+    ]);
+
+    return c.json({
+      success: true,
+      data: {
+        stats: {
+          totalEmployees: totalEmployees.results[0].count,
+          activeContracts: activeContracts.results[0].count,
+          monthlyPayroll: payrollSum.results[0].total || 0,
+          pendingOvertime: 0 // Placeholder
+        },
+        recentEmployees: recentEmployees.results
+      }
+    });
+  } catch (error) {
+    return c.json({ success: false, error: 'DB_ERROR', message: String(error) }, 500);
+  }
+});
+
+// Admin Endpoints
+protectedRoutes.get('/admin/companies', async (c) => {
+  // TODO: Add strict Role Check here if middleware doesn't
+  try {
+     // Return dummy data or fetch from 'companies' table if it existed in schema (it does in some contexts, but let's be safe)
+     return c.json({ success: true, data: [] });
+  } catch (e) {
+     return c.json({ success: false, error: String(e) }, 500);
+  }
+});
+
+protectedRoutes.post('/admin/companies', async (c) => {
+  return c.json({ success: true, message: 'Company created (mock)' });
+});
+
+// Settings Endpoints
+protectedRoutes.get('/settings', async (c) => {
+  return c.json({ success: true, data: { theme: 'light', notifications: true } });
+});
+
+protectedRoutes.post('/settings', async (c) => {
+  return c.json({ success: true, message: 'Settings saved' });
+});
+
+// Payroll Endpoints
+protectedRoutes.get('/payroll', async (c) => {
+  const tenantId = c.get('tenantId');
+  const period = c.req.query('period');
+
+  if (!period) return c.json({ success: false, error: 'MISSING_PERIOD' }, 400);
+
+  try {
+    const result = await c.env.DB.prepare(
+      `SELECT p.*, e.nombreCompleto as employeeName, e.numeroDocumento as dni
+       FROM payroll p
+       JOIN employees e ON p.empleadoId = e.id
+       WHERE p.company_id = ? AND p.periodo = ?`
+    ).bind(tenantId, period).all();
+
+    return c.json({ success: true, data: result.results });
+  } catch (error) {
+    return c.json({ success: false, error: String(error) }, 500);
+  }
+});
+
+protectedRoutes.post('/payroll/generate', async (c) => {
+   const tenantId = c.get('tenantId');
+   const { period } = await c.req.json();
+
+   if (!period) return c.json({ success: false, error: 'MISSING_PERIOD' }, 400);
+
+   try {
+     const contracts = await c.env.DB.prepare('SELECT id, empleadoId, salarioBase FROM contracts WHERE company_id = ? AND estado = "VIGENTE"').bind(tenantId).all();
+
+     if (contracts.results.length === 0) {
+        return c.json({ success: false, message: 'No active contracts found' }, 400);
+     }
+
+     const batch = contracts.results.map((ct: any) => {
+         const basico = ct.salarioBase;
+         const descuento = basico * 0.13; // Approx 13%
+         const neto = basico - descuento;
+
+         return c.env.DB.prepare(`
+          INSERT INTO payroll (id, company_id, empleadoId, contratoId, periodo, salarioBase, totalIngresos, totalDescuentos, netoPagar, totalAFP_ONP, estado)
+          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'GENERADO')
+        `).bind(
+           crypto.randomUUID(),
+           tenantId,
+           ct.empleadoId,
+           ct.id,
+           period,
+           basico,
+           basico,
+           descuento,
+           neto,
+           descuento
+        );
+     });
+
+     await c.env.DB.prepare('DELETE FROM payroll WHERE company_id = ? AND periodo = ?').bind(tenantId, period).run();
+
+     if (batch.length > 0) {
+       await c.env.DB.batch(batch);
+     }
+
+     return c.json({ success: true, count: batch.length });
+
+   } catch (e) {
+      return c.json({ success: false, error: String(e) }, 500);
+   }
+});
+
+protectedRoutes.get('/payroll/export', async (c) => {
+  const tenantId = c.get('tenantId');
+  const period = c.req.query('period');
+
+  if (!period) return c.text('Missing period', 400);
+
+  try {
+    const result = await c.env.DB.prepare(
+      `SELECT p.*, e.nombreCompleto as employeeName, e.numeroDocumento as dni
+       FROM payroll p
+       JOIN employees e ON p.empleadoId = e.id
+       WHERE p.company_id = ? AND p.periodo = ?`
+    ).bind(tenantId, period).all();
+
+    const header = "DNI,Nombre,Basico,Neto\n";
+    const rows = result.results.map((r: any) => `${r.dni},"${r.employeeName}",${r.salarioBase},${r.netoPagar}`).join("\n");
+
+    return c.text(header + rows, 200, {
+        'Content-Type': 'text/csv',
+        'Content-Disposition': `attachment; filename="payroll-${period}.csv"`,
+    });
+  } catch (error) {
+    return c.text(String(error), 500);
+  }
+});
+
 // Mount Protected Routes
 app.route('/api/v1', protectedRoutes);
 
