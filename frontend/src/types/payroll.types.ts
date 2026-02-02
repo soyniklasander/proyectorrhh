@@ -1,4 +1,5 @@
 import { BaseEntity, SelectOption } from './index'
+import type { Employee, Contract } from './employee.types'
 
 // Enums para nómina
 export enum EstadoPayroll {
@@ -137,14 +138,6 @@ export interface OvertimeHour {
   totalHoras: number
   tipoHora: string
   montoCalculado: number
-}
-
-export interface Contract {
-  id: string
-  empleadoId: string
-  cargo: string
-  salarioBase: number
-  // ... otras propiedades del contrato
 }
 
 // Interfaces para exportación Excel
