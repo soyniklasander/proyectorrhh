@@ -53,4 +53,4 @@ jobs:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
         run: |
           cd frontend
-          npx wrangler pages deploy dist --project proyectorrhh --branch main
+          npx wrangler pages deploy dist --project-name proyectorrhh --branch main
