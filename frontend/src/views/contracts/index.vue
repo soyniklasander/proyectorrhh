@@ -64,7 +64,19 @@ const loading = ref(false)
 const pagination = { pageSize: 10 }
 
 const activeCount = computed(() => contracts.value.filter(c => c.estado === 'VIGENTE').length)
-const expiringCount = computed(() => 0) // TODO: Implement expiration logic based on fechaFin
+const expiringCount = computed(() => {
+  const now = new Date()
+  now.setHours(0, 0, 0, 0)
+  const thirtyDaysFromNow = new Date(now)
+  thirtyDaysFromNow.setDate(now.getDate() + 30)
+
+  return contracts.value.filter(c => {
+    if (c.estado !== 'VIGENTE' || !c.fechaFin) return false
+    const endDate = new Date(c.fechaFin)
+    endDate.setHours(0, 0, 0, 0)
+    return endDate >= now && endDate <= thirtyDaysFromNow
+  }).length
+})
 
 const columns: DataTableColumns<Contract> = [
   {
