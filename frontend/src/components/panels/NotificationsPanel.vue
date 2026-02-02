@@ -22,7 +22,7 @@
               :style="{ backgroundColor: getNotificationColor(notification.type) }"
               round
             >
-              <n-icon :color="white">
+              <n-icon color="white">
                 <component :is="getNotificationIcon(notification.type)" />
               </n-icon>
             </n-avatar>
@@ -44,7 +44,7 @@
                   <n-button
                     v-for="action in notification.actions"
                     :key="action.key"
-                    :type="action.type || 'default'"
+                    :type="action.type as any || 'default'"
                     size="small"
                     @click="handleAction(action, notification)"
                   >
@@ -96,11 +96,19 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { ref } from 'vue'
+import { useRouter } from 'vue-router'
 import { useMessage } from 'naive-ui'
 import {
-  NotificationsIcon, PersonIcon, DocumentIcon, TimeIcon,
-  MoneyIcon, CalendarIcon, CheckIcon, WarningIcon, CloseIcon
+  Notifications as NotificationsIcon,
+  Person as PersonIcon,
+  Document as DocumentIcon,
+  Time as TimeIcon,
+  Cash as MoneyIcon,
+  Calendar as CalendarIcon,
+  Checkmark as CheckIcon,
+  Warning as WarningIcon,
+  Close as CloseIcon
 } from '@vicons/ionicons5'
 import dayjs from 'dayjs'
 import 'dayjs/locale/es'
@@ -110,6 +118,7 @@ dayjs.extend(relativeTime)
 dayjs.locale('es')
 
 const emit = defineEmits(['close'])
+const router = useRouter()
 const message = useMessage()
 
 // Reactive data
@@ -226,11 +235,28 @@ const removeNotification = (id: string) => {
 const handleAction = (action: any, notification: any) => {
   switch (action.key) {
     case 'view':
-      // TODO: Implementar navegación según el tipo
-      message.info(`Viendo ${notification.title.toLowerCase()}`)
+      const routeMap: Record<string, string> = {
+        employee: 'Employees',
+        contract: 'Contracts',
+        payroll: 'Payroll',
+        overtime: 'Overtime',
+        leave: 'Leaves',
+        warning: 'Loans'
+      }
+
+      const routeName = routeMap[notification.type]
+      if (routeName) {
+        router.push({ name: routeName })
+      } else {
+        message.info(`Viendo ${notification.title.toLowerCase()}`)
+      }
       break
     case 'renew':
-      message.info('Abriendo formulario de renovación')
+      if (notification.type === 'contract') {
+        router.push({ name: 'Contracts' })
+      } else {
+        message.info('Abriendo formulario de renovación')
+      }
       break
     case 'export':
       message.info('Exportando archivo...')
@@ -258,7 +284,8 @@ const loadMore = async () => {
         title: 'Empleado actualizado',
         description: 'Los datos de Roberto Sánchez han sido actualizados',
         timestamp: new Date(Date.now() - 1000 * 60 * 60 * 96).toISOString(),
-        read: true
+        read: true,
+        actions: []
       }
     ]
     
