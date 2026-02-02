@@ -303,35 +303,5 @@ CREATE TABLE "withholdings" (
 -- CreateIndex
 CREATE UNIQUE INDEX "employees_numeroDocumento_key" ON "employees"("numeroDocumento");
 
-
--- CreateTable
-CREATE TABLE "companies" (
-    "id" TEXT NOT NULL PRIMARY KEY,
-    "name" TEXT NOT NULL,
-    "ruc" TEXT,
-    "address" TEXT,
-    "config" TEXT,
-    "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "updatedAt" DATETIME NOT NULL
-);
-
--- CreateTable
-CREATE TABLE "users" (
-    "id" TEXT NOT NULL PRIMARY KEY,
-    "email" TEXT NOT NULL,
-    "password_hash" TEXT NOT NULL,
-    "role" TEXT NOT NULL DEFAULT 'EMPLOYEE',
-    "company_id" TEXT,
-    "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "updatedAt" DATETIME NOT NULL,
-    CONSTRAINT "users_company_id_fkey" FOREIGN KEY ("company_id") REFERENCES "companies" ("id") ON DELETE SET NULL ON UPDATE CASCADE
-);
-
 -- CreateIndex
-CREATE UNIQUE INDEX "users_email_key" ON "users"("email");
-
--- Seed Super Admin
--- Password: admin123
--- Hash generated via bcryptjs (salt rounds 10)
-INSERT INTO "users" ("id", "email", "password_hash", "role", "createdAt", "updatedAt")
-VALUES ('super-admin-id', 'super@rickerp.com', '$2a$10$EixZaYVK1fsbw1ZfbX3OXePaWxw96pBal.QMZyv.GAzdy8/Cz4eNW', 'SUPER_ADMIN', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+CREATE INDEX "employees_company_id_idx" ON "employees"("company_id");
