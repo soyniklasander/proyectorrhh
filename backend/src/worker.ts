@@ -34,6 +34,9 @@ app.post('/api/v1/auth/login', async (c) => {
     const user = await c.env.DB.prepare('SELECT * FROM users WHERE email = ?').bind(email).first();
     if (!user) return c.json({ success: false, error: 'INVALID_CREDENTIALS' }, 401);
 
+    // console.log('User found:', user.email);
+    // console.log('Hash:', user.password_hash);
+
     const isValid = await bcrypt.compare(password, user.password_hash as string);
     if (!isValid) return c.json({ success: false, error: 'INVALID_CREDENTIALS' }, 401);
 
@@ -56,8 +59,9 @@ app.post('/api/v1/auth/login', async (c) => {
         companyId: user.company_id
       }
     });
-  } catch (error) {
-    return c.json({ success: false, error: 'AUTH_ERROR', message: String(error) }, 500);
+  } catch (error: any) {
+    console.error(error);
+    return c.json({ success: false, error: 'AUTH_ERROR', message: String(error), stack: error.stack }, 500);
   }
 });
 
