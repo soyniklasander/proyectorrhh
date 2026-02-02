@@ -1,3 +1,4 @@
+/// <reference types="jest" />
 import { NotificationService } from './notification.service';
 import { Env } from '../types';
 
