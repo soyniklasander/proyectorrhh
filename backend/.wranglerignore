@@ -1,0 +1,11 @@
+node_modules
+dist
+test
+coverage
+.git
+.gitignore
+tsconfig.spec.json
+jest.config.js
+*.spec.ts
+*.test.ts
+README.md
