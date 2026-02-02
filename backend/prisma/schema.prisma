@@ -397,3 +397,39 @@ model Withholding {
   
   @@map("withholdings")
 }
+
+// Tabla de Usuarios
+model User {
+  id            String    @id @default(cuid())
+  companyId     String?   @map("company_id")
+  email         String    @unique
+  passwordHash  String    @map("password_hash")
+  nombres       String
+  role          String
+  estado        String    @default("ACTIVO")
+  lastLogin     DateTime? @map("last_login")
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  company       Company?  @relation(fields: [companyId], references: [id])
+
+  @@map("users")
+}
+
+// Tabla de Empresas
+model Company {
+  id                       String   @id @default(cuid())
+  ruc                      String   @unique
+  razonSocial              String   @map("razon_social")
+  direccionFiscal          String   @map("direccion_fiscal") // JSON
+  representanteLegalNombre String   @map("representante_legal_nombre")
+  representanteLegalDni    String   @map("representante_legal_dni")
+  config                   String?  // JSON
+  estado                   String   @default("ACTIVO")
+  createdAt                DateTime @default(now())
+  updatedAt                DateTime @updatedAt
+
+  users                    User[]
+
+  @@map("companies")
+}

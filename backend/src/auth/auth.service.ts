@@ -1,19 +1,25 @@
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
+import * as bcrypt from 'bcryptjs';
+import { DatabaseService } from '../database.service';
 
 @Injectable()
 export class AuthService {
   constructor(
     private readonly jwtService: JwtService,
     private readonly configService: ConfigService,
+    private readonly databaseService: DatabaseService,
   ) {}
 
   async validateUser(email: string, password: string): Promise<any> {
-    // TODO: Implementar validación con Prisma
-    // Por ahora, lógica básica para demostración
-    if (email && password) {
-      return { email, id: '1', role: 'admin' };
+    const user = await this.databaseService.user.findUnique({
+      where: { email },
+    });
+
+    if (user && (await bcrypt.compare(password, user.passwordHash))) {
+      const { passwordHash, ...result } = user;
+      return result;
     }
     return null;
   }

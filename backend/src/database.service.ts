@@ -1,33 +1,13 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, OnModuleInit, OnModuleDestroy } from '@nestjs/common';
+import { PrismaClient } from '@prisma/client';
 
 @Injectable()
-export class DatabaseService {
-  constructor() {
-    this.initializePrisma();
+export class DatabaseService extends PrismaClient implements OnModuleInit, OnModuleDestroy {
+  async onModuleInit() {
+    await this.$connect();
   }
 
-  private async initializePrisma() {
-    try {
-      const { PrismaClient } = await import('@prisma/client');
-      
-      // Para Cloudflare Workers, usamos el binding de la base de datos
-      if (typeof globalThis.DB !== 'undefined') {
-        const prisma = new PrismaClient({
-          datasources: {
-            db: {
-              url: 'file:./db_mchk.db'
-            }
-          }
-        });
-        return prisma;
-      } else {
-        // Para desarrollo local
-        const prisma = new PrismaClient();
-        return prisma;
-      }
-    } catch (error) {
-      console.error('Error initializing Prisma:', error);
-      throw error;
-    }
+  async onModuleDestroy() {
+    await this.$disconnect();
   }
 }
