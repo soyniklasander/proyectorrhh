@@ -8,7 +8,6 @@
     "dev": "wrangler dev",
     "build": "echo 'Building with Wrangler during deploy'",
     "deploy": "wrangler deploy",
-    "postinstall": "prisma generate",
     "test": "jest",
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
