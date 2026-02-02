@@ -2,13 +2,16 @@
   "name": "rrhhmod-root",
   "private": true,
   "scripts": {
+    "postinstall": "cd backend && npm install && npm run prisma:generate",
     "build": "cd frontend && npm ci && npm run build",
     "deploy": "npm run build",
     "postinstall": "cd backend && npm install"
   },
   "dependencies": {
-    "bcryptjs": "^3.0.3",
+    "@prisma/client": "^5.0.0",
+    "bcryptjs": "^2.4.3",
     "hono": "^4.11.7",
+    "prisma": "^5.0.0",
     "zod": "^4.3.6"
   },
   "devDependencies": {
