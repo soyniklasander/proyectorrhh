@@ -19,5 +19,8 @@
     "ENVIRONMENT": "production",
     "API_VERSION": "v1",
     "CORS_ORIGIN": "*"
-  }
+  },
+  "compatibility_flags": [
+    "nodejs_compat"
+  ]
 }
