@@ -160,16 +160,16 @@ debugger; /* PartiallyEnd: #3632/scriptSetup.vue */
 const __VLS_ctx = {};
 let __VLS_components;
 let __VLS_directives;
-/** @type {__VLS_StyleScopedClasses['unread']} */ ;
-/** @type {__VLS_StyleScopedClasses['notification-header']} */ ;
-/** @type {__VLS_StyleScopedClasses['n-list-item']} */ ;
+/** @type {__VLS_StyleScopedClasses['unread']} */
+/** @type {__VLS_StyleScopedClasses['notification-header']} */
+/** @type {__VLS_StyleScopedClasses['n-list-item']} */
 // CSS variable injection 
 // CSS variable injection end 
 __VLS_asFunctionalElement(__VLS_intrinsicElements.div, __VLS_intrinsicElements.div)({
     ...{ class: "notifications-panel" },
 });
 const __VLS_0 = {}.NSpace;
-/** @type {[typeof __VLS_components.NSpace, typeof __VLS_components.nSpace, typeof __VLS_components.NSpace, typeof __VLS_components.nSpace, ]} */ ;
+/** @type {[typeof __VLS_components.NSpace, typeof __VLS_components.nSpace, typeof __VLS_components.NSpace, typeof __VLS_components.nSpace, ]} */
 // @ts-ignore
 const __VLS_1 = __VLS_asFunctionalComponent(__VLS_0, new __VLS_0({
     vertical: true,
@@ -181,7 +181,7 @@ const __VLS_2 = __VLS_1({
 }, ...__VLS_functionalComponentArgsRest(__VLS_1));
 __VLS_3.slots.default;
 const __VLS_4 = {}.NSpace;
-/** @type {[typeof __VLS_components.NSpace, typeof __VLS_components.nSpace, typeof __VLS_components.NSpace, typeof __VLS_components.nSpace, ]} */ ;
+/** @type {[typeof __VLS_components.NSpace, typeof __VLS_components.nSpace, typeof __VLS_components.NSpace, typeof __VLS_components.nSpace, ]} */
 // @ts-ignore
 const __VLS_5 = __VLS_asFunctionalComponent(__VLS_4, new __VLS_4({
     justify: "space-between",
@@ -193,7 +193,7 @@ const __VLS_6 = __VLS_5({
 }, ...__VLS_functionalComponentArgsRest(__VLS_5));
 __VLS_7.slots.default;
 const __VLS_8 = {}.NText;
-/** @type {[typeof __VLS_components.NText, typeof __VLS_components.nText, typeof __VLS_components.NText, typeof __VLS_components.nText, ]} */ ;
+/** @type {[typeof __VLS_components.NText, typeof __VLS_components.nText, typeof __VLS_components.NText, typeof __VLS_components.nText, ]} */
 // @ts-ignore
 const __VLS_9 = __VLS_asFunctionalComponent(__VLS_8, new __VLS_8({
     strong: true,
@@ -204,7 +204,7 @@ const __VLS_10 = __VLS_9({
 __VLS_11.slots.default;
 var __VLS_11;
 const __VLS_12 = {}.NButton;
-/** @type {[typeof __VLS_components.NButton, typeof __VLS_components.nButton, typeof __VLS_components.NButton, typeof __VLS_components.nButton, ]} */ ;
+/** @type {[typeof __VLS_components.NButton, typeof __VLS_components.nButton, typeof __VLS_components.NButton, typeof __VLS_components.nButton, ]} */
 // @ts-ignore
 const __VLS_13 = __VLS_asFunctionalComponent(__VLS_12, new __VLS_12({
     ...{ 'onClick': {} },
@@ -227,14 +227,14 @@ var __VLS_15;
 var __VLS_7;
 if (__VLS_ctx.notifications.length > 0) {
     const __VLS_20 = {}.NList;
-    /** @type {[typeof __VLS_components.NList, typeof __VLS_components.nList, typeof __VLS_components.NList, typeof __VLS_components.nList, ]} */ ;
+    /** @type {[typeof __VLS_components.NList, typeof __VLS_components.nList, typeof __VLS_components.NList, typeof __VLS_components.nList, ]} */
     // @ts-ignore
     const __VLS_21 = __VLS_asFunctionalComponent(__VLS_20, new __VLS_20({}));
     const __VLS_22 = __VLS_21({}, ...__VLS_functionalComponentArgsRest(__VLS_21));
     __VLS_23.slots.default;
     for (const [notification] of __VLS_getVForSourceType((__VLS_ctx.notifications))) {
         const __VLS_24 = {}.NListItem;
-        /** @type {[typeof __VLS_components.NListItem, typeof __VLS_components.nListItem, typeof __VLS_components.NListItem, typeof __VLS_components.nListItem, ]} */ ;
+        /** @type {[typeof __VLS_components.NListItem, typeof __VLS_components.nListItem, typeof __VLS_components.NListItem, typeof __VLS_components.nListItem, ]} */
         // @ts-ignore
         const __VLS_25 = __VLS_asFunctionalComponent(__VLS_24, new __VLS_24({
             key: (notification.id),
@@ -246,7 +246,7 @@ if (__VLS_ctx.notifications.length > 0) {
         }, ...__VLS_functionalComponentArgsRest(__VLS_25));
         __VLS_27.slots.default;
         const __VLS_28 = {}.NSpace;
-        /** @type {[typeof __VLS_components.NSpace, typeof __VLS_components.nSpace, typeof __VLS_components.NSpace, typeof __VLS_components.nSpace, ]} */ ;
+        /** @type {[typeof __VLS_components.NSpace, typeof __VLS_components.nSpace, typeof __VLS_components.NSpace, typeof __VLS_components.nSpace, ]} */
         // @ts-ignore
         const __VLS_29 = __VLS_asFunctionalComponent(__VLS_28, new __VLS_28({
             align: "start",
@@ -258,7 +258,7 @@ if (__VLS_ctx.notifications.length > 0) {
         }, ...__VLS_functionalComponentArgsRest(__VLS_29));
         __VLS_31.slots.default;
         const __VLS_32 = {}.NAvatar;
-        /** @type {[typeof __VLS_components.NAvatar, typeof __VLS_components.nAvatar, typeof __VLS_components.NAvatar, typeof __VLS_components.nAvatar, ]} */ ;
+        /** @type {[typeof __VLS_components.NAvatar, typeof __VLS_components.nAvatar, typeof __VLS_components.NAvatar, typeof __VLS_components.nAvatar, ]} */
         // @ts-ignore
         const __VLS_33 = __VLS_asFunctionalComponent(__VLS_32, new __VLS_32({
             size: (40),
@@ -272,7 +272,7 @@ if (__VLS_ctx.notifications.length > 0) {
         }, ...__VLS_functionalComponentArgsRest(__VLS_33));
         __VLS_35.slots.default;
         const __VLS_36 = {}.NIcon;
-        /** @type {[typeof __VLS_components.NIcon, typeof __VLS_components.nIcon, typeof __VLS_components.NIcon, typeof __VLS_components.nIcon, ]} */ ;
+        /** @type {[typeof __VLS_components.NIcon, typeof __VLS_components.nIcon, typeof __VLS_components.NIcon, typeof __VLS_components.nIcon, ]} */
         // @ts-ignore
         const __VLS_37 = __VLS_asFunctionalComponent(__VLS_36, new __VLS_36({
             color: (__VLS_ctx.white),
@@ -294,7 +294,7 @@ if (__VLS_ctx.notifications.length > 0) {
             ...{ class: "notification-header" },
         });
         const __VLS_44 = {}.NText;
-        /** @type {[typeof __VLS_components.NText, typeof __VLS_components.nText, typeof __VLS_components.NText, typeof __VLS_components.nText, ]} */ ;
+        /** @type {[typeof __VLS_components.NText, typeof __VLS_components.nText, typeof __VLS_components.NText, typeof __VLS_components.nText, ]} */
         // @ts-ignore
         const __VLS_45 = __VLS_asFunctionalComponent(__VLS_44, new __VLS_44({
             strong: true,
@@ -306,7 +306,7 @@ if (__VLS_ctx.notifications.length > 0) {
         (notification.title);
         var __VLS_47;
         const __VLS_48 = {}.NText;
-        /** @type {[typeof __VLS_components.NText, typeof __VLS_components.nText, typeof __VLS_components.NText, typeof __VLS_components.nText, ]} */ ;
+        /** @type {[typeof __VLS_components.NText, typeof __VLS_components.nText, typeof __VLS_components.NText, typeof __VLS_components.nText, ]} */
         // @ts-ignore
         const __VLS_49 = __VLS_asFunctionalComponent(__VLS_48, new __VLS_48({
             depth: "3",
@@ -320,7 +320,7 @@ if (__VLS_ctx.notifications.length > 0) {
         (__VLS_ctx.formatRelativeTime(notification.timestamp));
         var __VLS_51;
         const __VLS_52 = {}.NText;
-        /** @type {[typeof __VLS_components.NText, typeof __VLS_components.nText, typeof __VLS_components.NText, typeof __VLS_components.nText, ]} */ ;
+        /** @type {[typeof __VLS_components.NText, typeof __VLS_components.nText, typeof __VLS_components.NText, typeof __VLS_components.nText, ]} */
         // @ts-ignore
         const __VLS_53 = __VLS_asFunctionalComponent(__VLS_52, new __VLS_52({
             depth: "2",
@@ -338,7 +338,7 @@ if (__VLS_ctx.notifications.length > 0) {
                 ...{ class: "notification-actions" },
             });
             const __VLS_56 = {}.NSpace;
-            /** @type {[typeof __VLS_components.NSpace, typeof __VLS_components.nSpace, typeof __VLS_components.NSpace, typeof __VLS_components.nSpace, ]} */ ;
+            /** @type {[typeof __VLS_components.NSpace, typeof __VLS_components.nSpace, typeof __VLS_components.NSpace, typeof __VLS_components.nSpace, ]} */
             // @ts-ignore
             const __VLS_57 = __VLS_asFunctionalComponent(__VLS_56, new __VLS_56({
                 size: "small",
@@ -349,7 +349,7 @@ if (__VLS_ctx.notifications.length > 0) {
             __VLS_59.slots.default;
             for (const [action] of __VLS_getVForSourceType((notification.actions))) {
                 const __VLS_60 = {}.NButton;
-                /** @type {[typeof __VLS_components.NButton, typeof __VLS_components.nButton, typeof __VLS_components.NButton, typeof __VLS_components.nButton, ]} */ ;
+                /** @type {[typeof __VLS_components.NButton, typeof __VLS_components.nButton, typeof __VLS_components.NButton, typeof __VLS_components.nButton, ]} */
                 // @ts-ignore
                 const __VLS_61 = __VLS_asFunctionalComponent(__VLS_60, new __VLS_60({
                     ...{ 'onClick': {} },
@@ -382,7 +382,7 @@ if (__VLS_ctx.notifications.length > 0) {
             var __VLS_59;
         }
         const __VLS_68 = {}.NButton;
-        /** @type {[typeof __VLS_components.NButton, typeof __VLS_components.nButton, typeof __VLS_components.NButton, typeof __VLS_components.nButton, ]} */ ;
+        /** @type {[typeof __VLS_components.NButton, typeof __VLS_components.nButton, typeof __VLS_components.NButton, typeof __VLS_components.nButton, ]} */
         // @ts-ignore
         const __VLS_69 = __VLS_asFunctionalComponent(__VLS_68, new __VLS_68({
             ...{ 'onClick': {} },
@@ -408,13 +408,13 @@ if (__VLS_ctx.notifications.length > 0) {
         {
             const { icon: __VLS_thisSlot } = __VLS_71.slots;
             const __VLS_76 = {}.NIcon;
-            /** @type {[typeof __VLS_components.NIcon, typeof __VLS_components.nIcon, typeof __VLS_components.NIcon, typeof __VLS_components.nIcon, ]} */ ;
+            /** @type {[typeof __VLS_components.NIcon, typeof __VLS_components.nIcon, typeof __VLS_components.NIcon, typeof __VLS_components.nIcon, ]} */
             // @ts-ignore
             const __VLS_77 = __VLS_asFunctionalComponent(__VLS_76, new __VLS_76({}));
             const __VLS_78 = __VLS_77({}, ...__VLS_functionalComponentArgsRest(__VLS_77));
             __VLS_79.slots.default;
             const __VLS_80 = {}.CloseIcon;
-            /** @type {[typeof __VLS_components.CloseIcon, ]} */ ;
+            /** @type {[typeof __VLS_components.CloseIcon, ]} */
             // @ts-ignore
             const __VLS_81 = __VLS_asFunctionalComponent(__VLS_80, new __VLS_80({}));
             const __VLS_82 = __VLS_81({}, ...__VLS_functionalComponentArgsRest(__VLS_81));
@@ -428,7 +428,7 @@ if (__VLS_ctx.notifications.length > 0) {
 }
 else {
     const __VLS_84 = {}.NEmpty;
-    /** @type {[typeof __VLS_components.NEmpty, typeof __VLS_components.nEmpty, typeof __VLS_components.NEmpty, typeof __VLS_components.nEmpty, ]} */ ;
+    /** @type {[typeof __VLS_components.NEmpty, typeof __VLS_components.nEmpty, typeof __VLS_components.NEmpty, typeof __VLS_components.nEmpty, ]} */
     // @ts-ignore
     const __VLS_85 = __VLS_asFunctionalComponent(__VLS_84, new __VLS_84({
         description: "No tienes notificaciones nuevas",
@@ -442,7 +442,7 @@ else {
     {
         const { icon: __VLS_thisSlot } = __VLS_87.slots;
         const __VLS_88 = {}.NIcon;
-        /** @type {[typeof __VLS_components.NIcon, typeof __VLS_components.nIcon, typeof __VLS_components.NIcon, typeof __VLS_components.nIcon, ]} */ ;
+        /** @type {[typeof __VLS_components.NIcon, typeof __VLS_components.nIcon, typeof __VLS_components.NIcon, typeof __VLS_components.nIcon, ]} */
         // @ts-ignore
         const __VLS_89 = __VLS_asFunctionalComponent(__VLS_88, new __VLS_88({
             size: "48",
@@ -454,7 +454,7 @@ else {
         }, ...__VLS_functionalComponentArgsRest(__VLS_89));
         __VLS_91.slots.default;
         const __VLS_92 = {}.NotificationsIcon;
-        /** @type {[typeof __VLS_components.NotificationsIcon, ]} */ ;
+        /** @type {[typeof __VLS_components.NotificationsIcon, ]} */
         // @ts-ignore
         const __VLS_93 = __VLS_asFunctionalComponent(__VLS_92, new __VLS_92({}));
         const __VLS_94 = __VLS_93({}, ...__VLS_functionalComponentArgsRest(__VLS_93));
@@ -467,7 +467,7 @@ if (__VLS_ctx.hasMore) {
         ...{ class: "load-more" },
     });
     const __VLS_96 = {}.NButton;
-    /** @type {[typeof __VLS_components.NButton, typeof __VLS_components.nButton, typeof __VLS_components.NButton, typeof __VLS_components.nButton, ]} */ ;
+    /** @type {[typeof __VLS_components.NButton, typeof __VLS_components.nButton, typeof __VLS_components.NButton, typeof __VLS_components.nButton, ]} */
     // @ts-ignore
     const __VLS_97 = __VLS_asFunctionalComponent(__VLS_96, new __VLS_96({
         ...{ 'onClick': {} },
@@ -491,11 +491,11 @@ if (__VLS_ctx.hasMore) {
     var __VLS_99;
 }
 var __VLS_3;
-/** @type {__VLS_StyleScopedClasses['notifications-panel']} */ ;
-/** @type {__VLS_StyleScopedClasses['notification-content']} */ ;
-/** @type {__VLS_StyleScopedClasses['notification-header']} */ ;
-/** @type {__VLS_StyleScopedClasses['notification-actions']} */ ;
-/** @type {__VLS_StyleScopedClasses['load-more']} */ ;
+/** @type {__VLS_StyleScopedClasses['notifications-panel']} */
+/** @type {__VLS_StyleScopedClasses['notification-content']} */
+/** @type {__VLS_StyleScopedClasses['notification-header']} */
+/** @type {__VLS_StyleScopedClasses['notification-actions']} */
+/** @type {__VLS_StyleScopedClasses['load-more']} */
 var __VLS_dollars;
 const __VLS_self = (await import('vue')).defineComponent({
     setup() {
@@ -522,4 +522,4 @@ export default (await import('vue')).defineComponent({
     },
     emits: {},
 });
-; /* PartiallyEnd: #4569/main.vue */
+ /* PartiallyEnd: #4569/main.vue */
