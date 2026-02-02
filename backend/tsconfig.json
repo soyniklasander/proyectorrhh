@@ -27,6 +27,11 @@
       "@/common/*": ["src/common/*"]
     }
   },
-  "include": ["src/**/*"],
+  "include": [
+    "src/worker.ts",
+    "src/types.ts",
+    "src/middleware/**/*",
+    "src/services/contract.service.ts"
+  ],
   "exclude": ["node_modules", "dist", "test", "src/main.ts"]
 }
