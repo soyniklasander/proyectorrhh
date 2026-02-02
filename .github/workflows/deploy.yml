@@ -36,25 +36,24 @@ jobs:
 
       - name: Install backend dependencies
         working-directory: backend
-        run: npm ci
+        run: npm install
 
       - name: Generate Prisma Client
         working-directory: backend
         run: npm run prisma:generate
 
-      - name: Install Wrangler
-        run: npm i -g wrangler@4.61.0
-
       - name: Deploy Backend to Cloudflare Workers
         env:
           CLOUDFLARE_API_TOKEN: yAA9jVMKedwEXACiZK3sTA9lSeEW0DfH6ocRXU8F
+          CLOUDFLARE_ACCOUNT_ID: d69bcb9a616ebb79cbda95fb21c8af53
         working-directory: backend
-        run: npx wrangler publish
+        run: npm run deploy
 
       - name: Deploy Frontend to Cloudflare Pages
         if: always()
         env:
           CLOUDFLARE_API_TOKEN: yAA9jVMKedwEXACiZK3sTA9lSeEW0DfH6ocRXU8F
+          CLOUDFLARE_ACCOUNT_ID: d69bcb9a616ebb79cbda95fb21c8af53
         run: |
           cd frontend
           npx wrangler pages deploy dist --project proyectorrhh --branch main
