@@ -1,15 +1,23 @@
 {
   "name": "rrhhmod-root",
   "private": true,
+  "workspaces": [
+    "backend",
+    "frontend"
+  ],
   "scripts": {
-    "build": "cd frontend && npm ci && npm run build",
-    "deploy": "npm run build"
+    "build": "npm run build --workspaces",
+    "deploy": "npm run deploy --workspaces",
+    "test": "npm run test --workspaces"
   },
   "dependencies": {
     "hono": "^4.11.7",
-    "zod": "^4.3.6"
+    "zod": "3.23.8"
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^4.20260131.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
   }
 }
