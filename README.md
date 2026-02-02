@@ -110,23 +110,52 @@ VITE_API_URL="https://your-worker.your-subdomain.workers.dev"
 
 ## 🌐 Deploy en Cloudflare
 
-### 1. Crear Base de Datos D1
+### Deploy Automático (Recomendado) ⚡
+
+El proyecto está configurado para deploy automático usando GitHub Actions.
+
+**Configuración rápida:**
+1. Ve a **Settings** → **Secrets and variables** → **Actions** en GitHub
+2. Agrega el secreto `CLOUDFLARE_API_TOKEN` con tu API Token de Cloudflare
+3. Haz push a la rama `main` y el deploy se ejecutará automáticamente
+
+**📖 Documentación completa**: Ver [docs/CLOUDFLARE_SETUP.md](./docs/CLOUDFLARE_SETUP.md)
+
+### Deploy Manual
+
+#### 1. Crear Base de Datos D1
 ```bash
 wrangler d1 create rrhhmod-db
 # Copiar el ID y configurar en wrangler.toml
 ```
 
-### 2. Deploy Backend
+#### 2. Deploy Backend
 ```bash
 cd backend
-wrangler deploy
+npm run deploy
 ```
 
-### 3. Deploy Frontend
+#### 3. Deploy Frontend
 ```bash
 cd frontend
 npm run build
-# Subir carpeta dist a Cloudflare Pages
+npx wrangler pages deploy dist --project-name proyectorrhh --branch main
+```
+
+### Gestión de Workers
+
+```bash
+# Desarrollo local con hot reload
+cd backend && npm run dev
+
+# Ver logs en tiempo real
+npx wrangler tail
+
+# Ver versiones desplegadas
+npx wrangler versions list
+
+# Rollback a versión anterior
+npx wrangler rollback [version-id]
 ```
 
 ## 📋 Migración de Datos

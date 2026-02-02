@@ -44,14 +44,14 @@ jobs:
 
       - name: Deploy Backend to Cloudflare Workers
         env:
-          CLOUDFLARE_API_TOKEN: yAA9jVMKedwEXACiZK3sTA9lSeEW0DfH6ocRXU8F
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
         working-directory: backend
         run: npm run deploy
 
       - name: Deploy Frontend to Cloudflare Pages
         if: always()
         env:
-          CLOUDFLARE_API_TOKEN: yAA9jVMKedwEXACiZK3sTA9lSeEW0DfH6ocRXU8F
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
         run: |
           cd frontend
-          npx wrangler pages deploy dist --project proyectorrhh --branch main
+          npx wrangler pages deploy dist --project-name proyectorrhh --branch main
