@@ -6,6 +6,7 @@ import { Env, Variables } from './types';
 import { authMiddleware } from './middleware/auth.middleware';
 import { tenantMiddleware } from './middleware/tenant.middleware';
 import { ContractService, OnboardingSchema } from './services/contract.service';
+import { SettingsService, SettingsSchema } from './services/settings.service';
 
 const app = new Hono<{ Bindings: Env; Variables: Variables }>();
 
@@ -104,6 +105,41 @@ protectedRoutes.get('/employees', async (c) => {
   ).bind(tenantId).all();
 
   return c.json({ success: true, data: result.results });
+});
+
+// Settings Endpoints
+protectedRoutes.get('/settings', async (c) => {
+  try {
+    const tenantId = c.get('tenantId');
+    const service = new SettingsService(c.env, tenantId);
+    const settings = await service.getSettings();
+    return c.json({ success: true, data: settings });
+  } catch (error: any) {
+    return c.json({ success: false, error: error.message }, 500);
+  }
+});
+
+protectedRoutes.put('/settings', async (c) => {
+  try {
+    const body = await c.req.json();
+    const tenantId = c.get('tenantId');
+
+    // Validation
+    const validation = SettingsSchema.safeParse(body);
+    if (!validation.success) {
+      return c.json({
+        success: false,
+        error: 'VALIDATION_ERROR',
+        details: validation.error.flatten()
+      }, 400);
+    }
+
+    const service = new SettingsService(c.env, tenantId);
+    const result = await service.updateSettings(validation.data);
+    return c.json(result);
+  } catch (error: any) {
+    return c.json({ success: false, error: error.message }, 500);
+  }
 });
 
 // Mount Protected Routes

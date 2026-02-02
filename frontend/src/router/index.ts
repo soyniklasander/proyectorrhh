@@ -69,7 +69,7 @@ const routes: RouteRecordRaw[] = [
   {
     path: '/settings',
     name: 'Settings',
-    component: () => import('@/views/NotFound.vue'),
+    component: () => import('@/views/settings/index.vue'),
     meta: { requiresAuth: true }
   },
   {
