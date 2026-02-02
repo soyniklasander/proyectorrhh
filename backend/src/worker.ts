@@ -76,7 +76,7 @@ protectedRoutes.post('/contracts/onboarding', async (c) => {
     // Validate Body using Zod directly here or inside Service (Service handles logic)
     // We can do a quick check here or let Service throw
     const validation = OnboardingSchema.safeParse(body);
-    if (!validation.success) {
+    if (validation.success === false) {
       return c.json({
         success: false,
         error: 'VALIDATION_ERROR',
