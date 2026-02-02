@@ -18,6 +18,35 @@ Ya he actualizado los archivos de configuración con tus datos de Cloudflare:
 
 ## 🔐 Configuración de Secretos
 
+### ⚠️ Configurar GitHub Secrets (Requerido para Deploy Automático)
+
+Para habilitar el deploy automático desde GitHub Actions, debes configurar el siguiente secreto:
+
+1. Ve a tu repositorio: `https://github.com/soyniklasander/proyectorrhh`
+2. Click en **Settings** (Configuración)
+3. En el menú lateral: **Secrets and variables** → **Actions**
+4. Click en **New repository secret**
+5. Agregar el secreto:
+   - **Name**: `CLOUDFLARE_API_TOKEN`
+   - **Value**: Tu API Token de Cloudflare (ejemplo: `wHBWTglTPpEs8jzDfBEXmqbZr9AQwlP1hYYSvdnt`)
+
+> **⚠️ IMPORTANTE**: NUNCA expongas tu API Token en el código. Siempre usa GitHub Secrets.
+
+### Obtener tu Cloudflare API Token
+
+Si necesitas crear o regenerar tu API Token:
+
+1. Ve a [Cloudflare Dashboard](https://dash.cloudflare.com)
+2. **My Profile** → **API Tokens**
+3. **Create Token** → Selecciona **Edit Cloudflare Workers** template
+4. O crea un token personalizado con permisos:
+   - Account Settings: Read
+   - Workers Scripts: Edit
+   - Workers Routes: Edit
+   - D1: Edit
+   - Pages: Edit
+   - KV Storage: Edit
+
 ### Para el backend (.env):
 ```env
 JWT_SECRET=your-super-secret-jwt-key-here
@@ -32,7 +61,21 @@ VITE_API_URL=https://proyectorrhh.rchavezza.workers.dev/api/v1
 
 ## 🚀 Pasos para Deploy
 
-### 1. Configurar Variables en Cloudflare Dashboard
+### Deploy Automático (Recomendado)
+
+1. **Configura GitHub Secret** (ver sección anterior)
+2. **Push a la rama main**:
+   ```bash
+   git add .
+   git commit -m "tu mensaje"
+   git push origin main
+   ```
+3. El deployment se ejecutará automáticamente vía GitHub Actions
+4. Monitorea el progreso en: `https://github.com/soyniklasander/proyectorrhh/actions`
+
+### Deploy Manual
+
+#### 1. Configurar Variables en Cloudflare Dashboard
 1. Ir a: https://dash.cloudflare.com/workers
 2. Seleccionar el Worker `proyectorrhh`
 3. Ir a Settings → Variables and Secrets
@@ -40,7 +83,7 @@ VITE_API_URL=https://proyectorrhh.rchavezza.workers.dev/api/v1
    - **JWT_SECRET**: Clave secreta para JWT (generar una nueva)
    - **ENVIRONMENT**: `production`
 
-### 2. Deploy del Backend
+#### 2. Deploy del Backend
 ```bash
 cd backend
 npm install
@@ -48,7 +91,7 @@ npm run prisma:generate
 npm run deploy
 ```
 
-### 3. Deploy del Frontend
+#### 3. Deploy del Frontend
 ```bash
 cd frontend
 npm install
@@ -56,11 +99,47 @@ npm run build
 # Subir la carpeta dist a Cloudflare Pages o tu hosting preferido
 ```
 
-### 4. Migrar Base de Datos
+#### 4. Migrar Base de Datos
 ```bash
 cd backend
 wrangler d1 execute db_mchk --file=./prisma/migrations.sql
 ```
+
+## 🛠️ Gestión de Workers con Wrangler
+
+### Comandos Útiles para Modificar Workers Fácilmente
+
+```bash
+# Ver versiones desplegadas
+npx wrangler versions list
+
+# Crear nueva versión (después de hacer cambios)
+cd backend
+npm run versions
+
+# Ver logs en tiempo real
+npx wrangler tail
+
+# Ejecutar rollback a versión anterior
+npx wrangler rollback [version-id]
+
+# Ver estado actual del Worker
+npx wrangler deployments list
+
+# Ejecutar migraciones de D1
+npx wrangler d1 execute db_mchk --file=./schema.sql
+```
+
+### Desarrollo Local con Hot Reload
+
+Para hacer cambios y verlos inmediatamente:
+
+```bash
+cd backend
+npm run dev
+```
+
+Esto inicia el Worker en `http://localhost:8787` con recarga automática.
 
 ## 🔗 Configuración del Repositorio
 
