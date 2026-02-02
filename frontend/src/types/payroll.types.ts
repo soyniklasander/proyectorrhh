@@ -1,4 +1,5 @@
 import { BaseEntity, SelectOption } from './index'
+import type { Employee } from './employee.types'
 
 // Enums para nómina
 export enum EstadoPayroll {
