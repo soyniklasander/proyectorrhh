@@ -103,6 +103,7 @@ import { ref, computed, h } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import { useMessage } from 'naive-ui'
 import { useAuthStore } from '@/store/auth'
+import { usePayrollStore } from '@/store/payroll'
 import {
   BusinessIcon, HomeIcon, PeopleIcon, DocumentIcon, TimeIcon,
   MoneyIcon, CalendarIcon, CheckIcon, DownloadIcon,
@@ -115,6 +116,7 @@ const router = useRouter()
 const route = useRoute()
 const message = useMessage()
 const authStore = useAuthStore()
+const payrollStore = usePayrollStore()
 
 // Reactive data
 const showUserMenu = ref(false)
@@ -285,9 +287,15 @@ const handleLogout = () => {
 
 const exportPayroll = async () => {
   try {
-    // TODO: Implementar exportación real
-    message.success('Exportando nómina...')
+    // Por defecto exportamos el mes actual
+    const now = new Date()
+    const period = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}`
+
+    message.loading('Exportando nómina...')
+    await payrollStore.exportPayrollExcel(period)
+    message.success('Nómina exportada correctamente')
   } catch (error) {
+    console.error(error)
     message.error('Error al exportar nómina')
   }
 }

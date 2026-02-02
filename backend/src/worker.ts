@@ -6,6 +6,7 @@ import { Env, Variables } from './types';
 import { authMiddleware } from './middleware/auth.middleware';
 import { tenantMiddleware } from './middleware/tenant.middleware';
 import { ContractService, OnboardingSchema } from './services/contract.service';
+import { PayrollService } from './services/payroll.service';
 
 const app = new Hono<{ Bindings: Env; Variables: Variables }>();
 
@@ -104,6 +105,38 @@ protectedRoutes.get('/employees', async (c) => {
   ).bind(tenantId).all();
 
   return c.json({ success: true, data: result.results });
+});
+
+// Payroll Export Endpoint
+protectedRoutes.get('/payroll/export/excel', async (c) => {
+  try {
+    const tenantId = c.get('tenantId');
+    const period = c.req.query('period');
+
+    if (!period) {
+      return c.json({ success: false, error: 'MISSING_PERIOD' }, 400);
+    }
+
+    const service = new PayrollService(c.env, tenantId);
+    const csvContent = await service.exportPayroll(period);
+
+    if (!csvContent) {
+      return c.json({ success: false, message: 'NO_DATA_FOUND' }, 404);
+    }
+
+    return new Response(csvContent, {
+      headers: {
+        'Content-Type': 'text/csv',
+        'Content-Disposition': `attachment; filename="planilla_${period}.csv"`,
+      },
+    });
+  } catch (error: any) {
+    return c.json({
+      success: false,
+      error: 'INTERNAL_ERROR',
+      message: error.message
+    }, 500);
+  }
 });
 
 // Mount Protected Routes
