@@ -28,5 +28,14 @@
     }
   },
   "include": ["src/**/*"],
-  "exclude": ["node_modules", "dist", "test", "**/*spec.ts", "src/main.ts"]
+  "exclude": [
+    "node_modules",
+    "dist",
+    "test",
+    "**/*spec.ts",
+    "src/main.ts",
+    "src/app.module.ts",
+    "src/auth/**/*",
+    "src/common/**/*"
+  ]
 }
