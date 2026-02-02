@@ -26,7 +26,8 @@
             <n-input
               v-model:value="formData.email"
               placeholder="ej. usuario@empresa.com"
-              type="email"
+              type="text"
+              :input-props="{ type: 'email' }"
             >
               <template #prefix>
                 <n-icon><MailOutline /></n-icon>

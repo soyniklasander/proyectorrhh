@@ -9,6 +9,38 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+// Tabla de Empresas (Tenants)
+model Company {
+  id          String   @id @default(cuid())
+  name        String
+  ruc         String?
+  address     String?
+  config      String?  // JSON con configuraciones
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  users       User[]
+
+  @@map("companies")
+}
+
+// Tabla de Usuarios
+model User {
+  id            String   @id @default(cuid())
+  email         String   @unique
+  password_hash String
+  role          String   @default("EMPLOYEE") // 'SUPER_ADMIN' | 'ADMIN' | 'EMPLOYEE'
+
+  // Relación con Empresa
+  company_id    String?
+  company       Company? @relation(fields: [company_id], references: [id])
+
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  @@map("users")
+}
+
 // Tabla de Empleados
 model Employee {
   id                        String   @id @default(cuid())

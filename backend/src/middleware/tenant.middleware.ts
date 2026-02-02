@@ -3,8 +3,9 @@ import { Env, Variables } from '../types';
 
 export const tenantMiddleware = createMiddleware<{ Bindings: Env; Variables: Variables }>(async (c, next) => {
   // Public paths exclusion
-  const path = c.req.path;
-  if (path.includes('/auth/login') || path.includes('/health')) {
+  const path = c.req.path || "";
+  // Check specifically for admin routes to bypass tenant check for Super Admin
+  if (path.includes('/auth/login') || path.includes('/health') || path.startsWith('/api/v1/admin/')) {
     await next();
     return;
   }

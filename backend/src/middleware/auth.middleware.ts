@@ -4,7 +4,7 @@ import { Env, Variables } from '../types';
 
 export const authMiddleware = createMiddleware<{ Bindings: Env; Variables: Variables }>(async (c, next) => {
   // Public paths exclusion
-  const path = c.req.path;
+  const path = c.req.path || "";
   if (path.includes('/auth/login') || path.includes('/health')) {
     await next();
     return;
