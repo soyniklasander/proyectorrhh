@@ -303,3 +303,50 @@ CREATE TABLE "withholdings" (
 -- CreateIndex
 CREATE UNIQUE INDEX "employees_numeroDocumento_key" ON "employees"("numeroDocumento");
 
+-- CreateIndex
+CREATE INDEX "contracts_empleadoId_idx" ON "contracts"("empleadoId");
+
+-- CreateIndex
+CREATE INDEX "overtime_hours_empleadoId_idx" ON "overtime_hours"("empleadoId");
+
+-- CreateIndex
+CREATE INDEX "overtime_hours_contratoId_idx" ON "overtime_hours"("contratoId");
+
+-- CreateIndex
+CREATE INDEX "employee_loans_empleadoId_idx" ON "employee_loans"("empleadoId");
+
+-- CreateIndex
+CREATE INDEX "employee_loans_contratoId_idx" ON "employee_loans"("contratoId");
+
+-- CreateIndex
+CREATE INDEX "loan_installments_prestamoId_idx" ON "loan_installments"("prestamoId");
+
+-- CreateIndex
+CREATE INDEX "deductions_empleadoId_idx" ON "deductions"("empleadoId");
+
+-- CreateIndex
+CREATE INDEX "deductions_contratoId_idx" ON "deductions"("contratoId");
+
+-- CreateIndex
+CREATE INDEX "payroll_empleadoId_idx" ON "payroll"("empleadoId");
+
+-- CreateIndex
+CREATE INDEX "payroll_contratoId_idx" ON "payroll"("contratoId");
+
+-- CreateIndex
+CREATE INDEX "leaves_permissions_empleadoId_idx" ON "leaves_permissions"("empleadoId");
+
+-- CreateIndex
+CREATE INDEX "leaves_permissions_contratoId_idx" ON "leaves_permissions"("contratoId");
+
+-- CreateIndex
+CREATE INDEX "attendance_control_empleadoId_idx" ON "attendance_control"("empleadoId");
+
+-- CreateIndex
+CREATE INDEX "attendance_control_contratoId_idx" ON "attendance_control"("contratoId");
+
+-- CreateIndex
+CREATE INDEX "withholdings_empleadoId_idx" ON "withholdings"("empleadoId");
+
+-- CreateIndex
+CREATE INDEX "withholdings_contratoId_idx" ON "withholdings"("contratoId");
