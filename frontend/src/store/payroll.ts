@@ -1,14 +1,17 @@
 import { defineStore } from 'pinia';
 import { ref } from 'vue';
 import { api } from '@/services/api';
+import type { Payroll } from '@/types/payroll.types';
+
 export const usePayrollStore = defineStore('payroll', () => {
     // State
-    const payrollList = ref([]);
-    const currentPayroll = ref(null);
+    const payrollList = ref<Payroll[]>([]);
+    const currentPayroll = ref<Payroll | null>(null);
     const loading = ref(false);
-    const error = ref(null);
+    const error = ref<string | null>(null);
+
     // Actions
-    const fetchPayrollList = async (filters) => {
+    const fetchPayrollList = async (filters: any) => {
         loading.value = true;
         error.value = null;
         try {
@@ -22,7 +25,7 @@ export const usePayrollStore = defineStore('payroll', () => {
             const response = await api.get(`/payroll?${params.toString()}`);
             payrollList.value = response.data.data;
         }
-        catch (err) {
+        catch (err: any) {
             error.value = err.message || 'Error al cargar planilla';
             console.error('Error fetching payroll:', err);
         }
@@ -30,7 +33,8 @@ export const usePayrollStore = defineStore('payroll', () => {
             loading.value = false;
         }
     };
-    const generatePayroll = async (period, employeeIds) => {
+
+    const generatePayroll = async (period: string, employeeIds?: string[]) => {
         loading.value = true;
         error.value = null;
         try {
@@ -40,7 +44,7 @@ export const usePayrollStore = defineStore('payroll', () => {
             });
             return response.data.data;
         }
-        catch (err) {
+        catch (err: any) {
             error.value = err.message || 'Error al generar planilla';
             console.error('Error generating payroll:', err);
             throw err;
@@ -49,7 +53,8 @@ export const usePayrollStore = defineStore('payroll', () => {
             loading.value = false;
         }
     };
-    const exportPayrollExcel = async (period, employeeIds) => {
+
+    const exportPayrollExcel = async (period: string, employeeIds?: string[]) => {
         loading.value = true;
         error.value = null;
         try {
@@ -72,7 +77,7 @@ export const usePayrollStore = defineStore('payroll', () => {
             window.URL.revokeObjectURL(url);
             return true;
         }
-        catch (err) {
+        catch (err: any) {
             error.value = err.message || 'Error al exportar planilla';
             console.error('Error exporting payroll:', err);
             throw err;
@@ -81,7 +86,8 @@ export const usePayrollStore = defineStore('payroll', () => {
             loading.value = false;
         }
     };
-    const approvePayroll = async (payrollIds) => {
+
+    const approvePayroll = async (payrollIds: string[]) => {
         loading.value = true;
         error.value = null;
         try {
@@ -90,7 +96,7 @@ export const usePayrollStore = defineStore('payroll', () => {
             });
             return response.data.data;
         }
-        catch (err) {
+        catch (err: any) {
             error.value = err.message || 'Error al aprobar planilla';
             console.error('Error approving payroll:', err);
             throw err;
@@ -99,9 +105,11 @@ export const usePayrollStore = defineStore('payroll', () => {
             loading.value = false;
         }
     };
+
     const clearCurrentPayroll = () => {
         currentPayroll.value = null;
     };
+
     return {
         // State
         payrollList,
