@@ -48,6 +48,46 @@ export const OnboardingSchema = z.object({
 
 export type OnboardingInput = z.infer<typeof OnboardingSchema>;
 
+const CONTRACT_TEMPLATE = `
+      CONTRATO DE TRABAJO
+
+      Conste por el presente documento, el Contrato de Trabajo que celebran:
+
+      EL EMPLEADOR: {{EMPRESA_RAZON_SOCIAL}}, con RUC N° {{EMPRESA_RUC}},
+      con domicilio fiscal en {{EMPRESA_DOMICILIO}}, debidamente representada por
+      {{REPRESENTANTE_NOMBRE}}, identificado con DNI N° {{REPRESENTANTE_DNI}}.
+
+      EL TRABAJADOR: {{TRABAJADOR_NOMBRE}}, identificado con {{TRABAJADOR_TIPO_DOC}} N° {{TRABAJADOR_NUM_DOC}},
+      con domicilio en {{TRABAJADOR_DOMICILIO}}.
+
+      CLÁUSULAS:
+      1. El TRABAJADOR desempeñará el cargo de {{CARGO}}.
+      2. La remuneración será de S/ {{SALARIO}}.
+      3. El régimen laboral es {{REGIMEN}}.
+
+      Firmado en {{CIUDAD}}, a los {{DIA}} días del mes de {{MES}} del {{ANIO}}.
+    `;
+
+function precompileTemplate(tpl: string): string[] {
+  const parts: string[] = [];
+  let lastIndex = 0;
+  const regex = /{{([A-Z_]+)}}/g;
+  let match;
+  while ((match = regex.exec(tpl)) !== null) {
+    if (match.index > lastIndex) {
+      parts.push(tpl.substring(lastIndex, match.index));
+    }
+    parts.push(`VAR:${match[1]}`);
+    lastIndex = regex.lastIndex;
+  }
+  if (lastIndex < tpl.length) {
+    parts.push(tpl.substring(lastIndex));
+  }
+  return parts;
+}
+
+const COMPILED_CONTRACT_TEMPLATE = precompileTemplate(CONTRACT_TEMPLATE);
+
 export class ContractService {
   constructor(private env: Env, private tenantId: string) {}
 
@@ -112,53 +152,38 @@ export class ContractService {
   }
 
   private generateContractPreview(employee: OnboardingInput, company: any, companyAddress: any) {
-    // Simple Template
-    const template = `
-      CONTRATO DE TRABAJO
-
-      Conste por el presente documento, el Contrato de Trabajo que celebran:
-
-      EL EMPLEADOR: {{EMPRESA_RAZON_SOCIAL}}, con RUC N° {{EMPRESA_RUC}},
-      con domicilio fiscal en {{EMPRESA_DOMICILIO}}, debidamente representada por
-      {{REPRESENTANTE_NOMBRE}}, identificado con DNI N° {{REPRESENTANTE_DNI}}.
-
-      EL TRABAJADOR: {{TRABAJADOR_NOMBRE}}, identificado con {{TRABAJADOR_TIPO_DOC}} N° {{TRABAJADOR_NUM_DOC}},
-      con domicilio en {{TRABAJADOR_DOMICILIO}}.
-
-      CLÁUSULAS:
-      1. El TRABAJADOR desempeñará el cargo de {{CARGO}}.
-      2. La remuneración será de S/ {{SALARIO}}.
-      3. El régimen laboral es {{REGIMEN}}.
-
-      Firmado en {{CIUDAD}}, a los {{DIA}} días del mes de {{MES}} del {{ANIO}}.
-    `;
-
-    // Fusion Logic
-    let content = template
-      .replace('{{EMPRESA_RAZON_SOCIAL}}', company.razon_social)
-      .replace('{{EMPRESA_RUC}}', company.ruc)
-      .replace('{{EMPRESA_DOMICILIO}}', typeof companyAddress === 'object' ?
-        `${companyAddress.direccion}, ${companyAddress.distrito}, ${companyAddress.provincia}` :
-        String(companyAddress)
-      )
-      .replace('{{REPRESENTANTE_NOMBRE}}', company.representante_legal_nombre)
-      .replace('{{REPRESENTANTE_DNI}}', company.representante_legal_dni)
-      .replace('{{TRABAJADOR_NOMBRE}}', `${employee.nombres} ${employee.apellidoPaterno} ${employee.apellidoMaterno}`)
-      .replace('{{TRABAJADOR_TIPO_DOC}}', employee.tipoDocumento)
-      .replace('{{TRABAJADOR_NUM_DOC}}', employee.numeroDocumento)
-      .replace('{{TRABAJADOR_DOMICILIO}}', employee.direccion)
-      .replace('{{CARGO}}', employee.cargo)
-      .replace('{{SALARIO}}', employee.salarioBase.toFixed(2))
-      .replace('{{REGIMEN}}', employee.regimenLaboral);
-
-    // Date formatting (simple)
     const now = new Date();
-    content = content
-      .replace('{{CIUDAD}}', 'Lima') // Default or from Company
-      .replace('{{DIA}}', now.getDate().toString())
-      .replace('{{MES}}', (now.getMonth() + 1).toString())
-      .replace('{{ANIO}}', now.getFullYear().toString());
+    let result = '';
 
-    return content;
+    for (const part of COMPILED_CONTRACT_TEMPLATE) {
+      if (part.startsWith('VAR:')) {
+        const key = part.substring(4);
+        switch (key) {
+          case 'EMPRESA_RAZON_SOCIAL': result += company.razon_social; break;
+          case 'EMPRESA_RUC': result += company.ruc; break;
+          case 'EMPRESA_DOMICILIO': result += (typeof companyAddress === 'object' ?
+            `${companyAddress.direccion}, ${companyAddress.distrito}, ${companyAddress.provincia}` :
+            String(companyAddress)); break;
+          case 'REPRESENTANTE_NOMBRE': result += company.representante_legal_nombre; break;
+          case 'REPRESENTANTE_DNI': result += company.representante_legal_dni; break;
+          case 'TRABAJADOR_NOMBRE': result += `${employee.nombres} ${employee.apellidoPaterno} ${employee.apellidoMaterno}`; break;
+          case 'TRABAJADOR_TIPO_DOC': result += employee.tipoDocumento; break;
+          case 'TRABAJADOR_NUM_DOC': result += employee.numeroDocumento; break;
+          case 'TRABAJADOR_DOMICILIO': result += employee.direccion; break;
+          case 'CARGO': result += employee.cargo; break;
+          case 'SALARIO': result += employee.salarioBase.toFixed(2); break;
+          case 'REGIMEN': result += employee.regimenLaboral; break;
+          case 'CIUDAD': result += 'Lima'; break;
+          case 'DIA': result += now.getDate().toString(); break;
+          case 'MES': result += (now.getMonth() + 1).toString(); break;
+          case 'ANIO': result += now.getFullYear().toString(); break;
+          default: result += `{{${key}}}`;
+        }
+      } else {
+        result += part;
+      }
+    }
+
+    return result;
   }
 }

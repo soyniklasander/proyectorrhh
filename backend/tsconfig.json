@@ -18,7 +18,7 @@
     "strictBindCallApply": false,
     "forceConsistentCasingInFileNames": false,
     "noFallthroughCasesInSwitch": false,
-    "types": ["@cloudflare/workers-types", "node"],
+    "types": ["@cloudflare/workers-types", "node", "jest"],
     "paths": {
       "@/*": ["src/*"],
       "@/auth/*": ["src/auth/*"],
@@ -28,5 +28,5 @@
     }
   },
   "include": ["src/**/*"],
-  "exclude": ["node_modules", "dist", "test", "**/*spec.ts", "src/main.ts"]
+  "exclude": ["node_modules", "dist", "test", "src/main.ts"]
 }
