@@ -44,7 +44,7 @@ jobs:
 
       - name: Deploy Backend to Cloudflare Workers
         env:
-          CLOUDFLARE_API_TOKEN: yAA9jVMKedwEXACiZK3sTA9lSeEW0DfH6ocRXU8F
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: d69bcb9a616ebb79cbda95fb21c8af53
         working-directory: backend
         run: npm run deploy
@@ -52,7 +52,7 @@ jobs:
       - name: Deploy Frontend to Cloudflare Pages
         if: always()
         env:
-          CLOUDFLARE_API_TOKEN: yAA9jVMKedwEXACiZK3sTA9lSeEW0DfH6ocRXU8F
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: d69bcb9a616ebb79cbda95fb21c8af53
         run: |
           cd frontend
