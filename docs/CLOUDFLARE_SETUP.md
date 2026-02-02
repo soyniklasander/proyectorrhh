@@ -28,7 +28,7 @@ Para habilitar el deploy automático desde GitHub Actions, debes configurar el s
 4. Click en **New repository secret**
 5. Agregar el secreto:
    - **Name**: `CLOUDFLARE_API_TOKEN`
-   - **Value**: Tu API Token de Cloudflare (ejemplo: `wHBWTglTPpEs8jzDfBEXmqbZr9AQwlP1hYYSvdnt`)
+   - **Value**: Tu API Token de Cloudflare (ejemplo: `xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx`)
 
 > **⚠️ IMPORTANTE**: NUNCA expongas tu API Token en el código. Siempre usa GitHub Secrets.
 

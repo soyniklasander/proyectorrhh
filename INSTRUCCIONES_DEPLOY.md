@@ -25,7 +25,7 @@ Tu API Key de Cloudflare **NO** debe estar en el código por seguridad. Debes ag
    
 5. **Llenar el formulario**:
    - **Name** (Nombre): Escribe exactamente esto: `CLOUDFLARE_API_TOKEN`
-   - **Secret** (Valor): Pega tu API key: `wHBWTglTPpEs8jzDfBEXmqbZr9AQwlP1hYYSvdnt`
+   - **Secret** (Valor): Pega tu API key de Cloudflare (obtenla de tu Cloudflare Dashboard)
    - Click en "Add secret"
 
 ## ✅ Paso 2: Verificar que todo funciona
