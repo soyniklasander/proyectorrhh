@@ -1,6 +1,6 @@
 
-import { ContractService, OnboardingInput } from './contract.service';
-import { Env } from '../types';
+import { ContractService, OnboardingInput } from '../../src/services/contract.service';
+import { Env } from '../../src/types';
 
 // Mock crypto.randomUUID if not available (e.g. in older Jest envs)
 if (!global.crypto) {
