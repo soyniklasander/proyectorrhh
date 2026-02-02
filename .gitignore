@@ -9,6 +9,3 @@ coverage/
 .tmp/
 .cache/
 tsconfig.tsbuildinfo
-.wrangler/
-test-results/
-local.db
