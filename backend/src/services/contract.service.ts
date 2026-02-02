@@ -58,7 +58,7 @@ export class ContractService {
     // 2. Fetch Company Data (Tenant)
     const company = await this.env.DB.prepare(
       'SELECT * FROM companies WHERE id = ?'
-    ).bind(this.tenantId).first();
+    ).bind(this.tenantId).first<any>();
 
     if (!company) {
       throw new Error('Company not found for current tenant context');

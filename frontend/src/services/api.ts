@@ -1,5 +1,5 @@
+/// <reference types="vite/client" />
 import axios, { type AxiosInstance, type InternalAxiosRequestConfig, type AxiosError } from 'axios';
-import { useAuthStore } from '@/store/auth';
 
 // Configuración base de Axios
 const api: AxiosInstance = axios.create({
