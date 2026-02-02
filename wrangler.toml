@@ -1,0 +1,17 @@
+name = "rrhhmod-backend"
+main = "backend/src/worker.ts"
+compatibility_date = "2024-01-01"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "db_mchk"
+database_id = "29660806-f166-4150-b5f1-51d4a3aafe59"
+
+[[kv_namespaces]]
+binding = "KV_BINDING"
+id = "fc77679cb6c94ffbb09a750902e853cc"
+
+[vars]
+ENVIRONMENT = "production"
+API_VERSION = "v1"
+CORS_ORIGIN = "*"
