@@ -61,6 +61,28 @@ app.post('/api/v1/auth/login', async (c) => {
   }
 });
 
+// Super Admin Routes (No Tenant Isolation)
+const superAdminRoutes = new Hono<{ Bindings: Env; Variables: Variables }>();
+superAdminRoutes.use('*', authMiddleware);
+superAdminRoutes.use('*', async (c, next) => {
+  const user = c.get('user');
+  if (user?.role !== 'SUPER_ADMIN') {
+    return c.json({ success: false, error: 'FORBIDDEN', message: 'Access restricted to Super Admins' }, 403);
+  }
+  await next();
+});
+
+superAdminRoutes.get('/companies', async (c) => {
+  try {
+    const result = await c.env.DB.prepare('SELECT * FROM companies').all();
+    return c.json({ success: true, data: result.results });
+  } catch (error) {
+    return c.json({ success: false, error: 'DB_ERROR', message: String(error) }, 500);
+  }
+});
+
+app.route('/api/v1/admin', superAdminRoutes);
+
 // Protected Routes Group
 const protectedRoutes = new Hono<{ Bindings: Env; Variables: Variables }>();
 protectedRoutes.use('*', authMiddleware);

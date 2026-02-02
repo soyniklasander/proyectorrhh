@@ -19,6 +19,12 @@ const routes: RouteRecordRaw[] = [
     meta: { requiresAuth: true }
   },
   {
+    path: '/admin/companies',
+    name: 'AdminCompanies',
+    component: () => import('@/views/admin/Companies.vue'),
+    meta: { requiresAuth: true }
+  },
+  {
     path: '/employees',
     name: 'Employees',
     component: () => import('@/views/employees/index.vue'),
@@ -95,7 +101,11 @@ router.beforeEach((to, from, next) => {
   if (to.meta.requiresAuth && !authStore.isAuthenticated) {
     next('/login')
   } else if (to.path === '/login' && authStore.isAuthenticated) {
-    next('/dashboard')
+    if (authStore.user?.role === 'SUPER_ADMIN') {
+      next('/admin/companies')
+    } else {
+      next('/dashboard')
+    }
   } else {
     next()
   }

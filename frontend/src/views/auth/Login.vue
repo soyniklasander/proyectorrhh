@@ -131,7 +131,11 @@ const handleLogin = async () => {
     
     if (success) {
       message.success('Sesión iniciada correctamente')
-      router.push('/dashboard')
+      if (authStore.user?.role === 'SUPER_ADMIN') {
+        router.push('/admin/companies')
+      } else {
+        router.push('/dashboard')
+      }
     } else {
       error.value = 'Credenciales incorrectas o usuario no activo.'
     }
