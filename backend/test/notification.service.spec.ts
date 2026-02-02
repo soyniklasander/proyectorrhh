@@ -1,6 +1,6 @@
 /// <reference types="jest" />
-import { NotificationService } from './notification.service';
-import { Env } from '../types';
+import { NotificationService } from '../src/services/notification.service';
+import { Env } from '../src/types';
 
 // Mock D1Database
 const mockD1 = {
