@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "Frontend para ERP de Gestión de Personal - Perú",
   "type": "module",
+  "engines": {
+    "node": ">=18.0.0"
+  },
   "scripts": {
     "dev": "vite",
     "build": "vite build",
