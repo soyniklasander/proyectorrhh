@@ -1,0 +1,7 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "types": ["node", "jest", "@cloudflare/workers-types"]
+  },
+  "include": ["src/**/*", "test/**/*", "**/*.spec.ts"]
+}
