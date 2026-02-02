@@ -10,10 +10,10 @@ INSERT INTO companies (id, ruc, razon_social, direccion_fiscal, representante_le
 -- 2. Users (Password: password123)
 -- Hash: $2a$10$1z0BIE41nAkJJ1m9H6yKcueUMkZ0fr11f4bxXLf46tYD5OoF1Ecpi
 INSERT INTO users (id, company_id, email, password_hash, nombres, role) VALUES
-('user-super', NULL, 'super@rickerp.com', '$2a$10$1z0BIE41nAkJJ1m9H6yKcueUMkZ0fr11f4bxXLf46tYD5OoF1Ecpi', 'Super Admin', 'SUPER_ADMIN'),
-('user-admin-a', 'comp-a', 'admin@rickcorp.com', '$2a$10$1z0BIE41nAkJJ1m9H6yKcueUMkZ0fr11f4bxXLf46tYD5OoF1Ecpi', 'Rick Admin', 'TENANT_ADMIN'),
-('user-hr-a', 'comp-a', 'hr@rickcorp.com', '$2a$10$1z0BIE41nAkJJ1m9H6yKcueUMkZ0fr11f4bxXLf46tYD5OoF1Ecpi', 'Birdperson HR', 'OPERATOR'),
-('user-admin-b', 'comp-b', 'admin@morty.com', '$2a$10$1z0BIE41nAkJJ1m9H6yKcueUMkZ0fr11f4bxXLf46tYD5OoF1Ecpi', 'Morty Admin', 'TENANT_ADMIN');
+('user-super', NULL, 'super@rickerp.com', '$2b$10$.GbIz.a8KO5gPWvZCDV0FepIne1zTyLi/OCmYSRjxw0X.siZ8aCYe', 'Super Admin', 'SUPER_ADMIN'),
+('user-admin-a', 'comp-a', 'admin@rickcorp.com', '$2b$10$.GbIz.a8KO5gPWvZCDV0FepIne1zTyLi/OCmYSRjxw0X.siZ8aCYe', 'Rick Admin', 'TENANT_ADMIN'),
+('user-hr-a', 'comp-a', 'hr@rickcorp.com', '$2b$10$.GbIz.a8KO5gPWvZCDV0FepIne1zTyLi/OCmYSRjxw0X.siZ8aCYe', 'Birdperson HR', 'OPERATOR'),
+('user-admin-b', 'comp-b', 'admin@morty.com', '$2b$10$.GbIz.a8KO5gPWvZCDV0FepIne1zTyLi/OCmYSRjxw0X.siZ8aCYe', 'Morty Admin', 'TENANT_ADMIN');
 
 -- 3. Contract Templates (Basic)
 INSERT INTO contract_templates (id, company_id, nombre, codigo, regimenLaboral, plantillaTexto, estado) VALUES
