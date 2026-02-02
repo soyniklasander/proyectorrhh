@@ -1,6 +1,10 @@
 {
   "name": "rrhhmod-root",
   "private": true,
+  "workspaces": [
+    "backend",
+    "frontend"
+  ],
   "scripts": {
     "build": "cd frontend && npm ci && npm run build",
     "deploy": "npm run build"
