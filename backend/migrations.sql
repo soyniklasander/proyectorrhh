@@ -303,3 +303,5 @@ CREATE TABLE "withholdings" (
 -- CreateIndex
 CREATE UNIQUE INDEX "employees_numeroDocumento_key" ON "employees"("numeroDocumento");
 
+-- CreateIndex
+CREATE INDEX "employees_company_id_idx" ON "employees"("company_id");
