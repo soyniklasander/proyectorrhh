@@ -1,5 +1,5 @@
 /// <reference types="jest" />
-import { NotificationService } from '../src/services/notification.service';
+import { NotificationService } from '../src/services/notifications.service';
 import { Env } from '../src/types';
 
 // Mock D1Database

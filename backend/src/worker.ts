@@ -6,7 +6,7 @@ import { Env, Variables } from './types';
 import { authMiddleware } from './middleware/auth.middleware';
 import { tenantMiddleware } from './middleware/tenant.middleware';
 import { ContractService, OnboardingSchema } from './services/contract.service';
-// import { NotificationService } from './services/notification.service';
+import { NotificationService } from './services/notifications.service';
 
 const app = new Hono<{ Bindings: Env; Variables: Variables }>();
 
@@ -108,39 +108,39 @@ protectedRoutes.get('/employees', async (c) => {
 });
 
 // Notifications
-// protectedRoutes.get('/notifications', async (c) => {
-//   const user = c.get('user');
-//   const page = Number(c.req.query('page')) || 1;
-//   const limit = Number(c.req.query('limit')) || 20;
+protectedRoutes.get('/notifications', async (c) => {
+  const user = c.get('user');
+  const page = Number(c.req.query('page')) || 1;
+  const limit = Number(c.req.query('limit')) || 20;
 
-//   const service = new NotificationService(c.env);
-//   const result = await service.findAll(user.userId, page, limit);
+  const service = new NotificationService(c.env);
+  const result = await service.findAll(user.userId, page, limit);
 
-//   return c.json({ success: true, ...result });
-// });
+  return c.json({ success: true, ...result });
+});
 
-// protectedRoutes.put('/notifications/read-all', async (c) => {
-//   const user = c.get('user');
-//   const service = new NotificationService(c.env);
-//   await service.markAllAsRead(user.userId);
-//   return c.json({ success: true });
-// });
+protectedRoutes.put('/notifications/read-all', async (c) => {
+  const user = c.get('user');
+  const service = new NotificationService(c.env);
+  await service.markAllAsRead(user.userId);
+  return c.json({ success: true });
+});
 
-// protectedRoutes.put('/notifications/:id/read', async (c) => {
-//   const user = c.get('user');
-//   const id = c.req.param('id');
-//   const service = new NotificationService(c.env);
-//   await service.markAsRead(id, user.userId);
-//   return c.json({ success: true });
-// });
+protectedRoutes.put('/notifications/:id/read', async (c) => {
+  const user = c.get('user');
+  const id = c.req.param('id');
+  const service = new NotificationService(c.env);
+  await service.markAsRead(id, user.userId);
+  return c.json({ success: true });
+});
 
-// protectedRoutes.delete('/notifications/:id', async (c) => {
-//   const user = c.get('user');
-//   const id = c.req.param('id');
-//   const service = new NotificationService(c.env);
-//   await service.delete(id, user.userId);
-//   return c.json({ success: true });
-// });
+protectedRoutes.delete('/notifications/:id', async (c) => {
+  const user = c.get('user');
+  const id = c.req.param('id');
+  const service = new NotificationService(c.env);
+  await service.delete(id, user.userId);
+  return c.json({ success: true });
+});
 
 // Mount Protected Routes
 app.route('/api/v1', protectedRoutes);
