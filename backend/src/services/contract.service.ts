@@ -69,7 +69,7 @@ export class ContractService {
     const companyAddress = typeof company.direccion_fiscal === 'string' ? JSON.parse(company.direccion_fiscal) : company.direccion_fiscal || {};
 
     // 3. Create Employee
-    const employeeId = crypto.randomUUID();
+    const employeeId = globalThis.crypto.randomUUID();
     const fullName = `${validData.nombres} ${validData.apellidoPaterno} ${validData.apellidoMaterno}`;
 
     // Note: In real app, check if exists first
@@ -86,7 +86,7 @@ export class ContractService {
     ).run();
 
     // 4. Create Contract
-    const contractId = crypto.randomUUID();
+    const contractId = globalThis.crypto.randomUUID();
     await this.env.DB.prepare(`
       INSERT INTO contracts (
         id, company_id, empleadoId, cargo, salarioBase, fechaInicio,
