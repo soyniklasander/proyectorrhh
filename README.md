@@ -139,7 +139,7 @@ npm run deploy
 ```bash
 cd frontend
 npm run build
-npx wrangler pages deploy dist --project proyectorrhh --branch main
+npx wrangler pages deploy dist --project-name proyectorrhh --branch main
 ```
 
 ### Gestión de Workers
