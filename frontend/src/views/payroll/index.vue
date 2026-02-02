@@ -212,18 +212,39 @@ const filteredPayroll = computed(() => {
   return payrollData.value.filter(p => p.employeeName.toLowerCase().includes(s) || p.dni.includes(s))
 })
 
-const employeeCount = computed(() => payrollData.value.length)
-const totalPayroll = computed(() => payrollData.value.reduce((sum, p) => sum + p.neto, 0))
-const avgSalary = computed(() => totalPayroll.value / employeeCount.value)
-const totalDeductions = computed(() => payrollData.value.reduce((sum, p) => sum + p.afp + p.otrosDescuentos, 0))
+const payrollTotals = computed(() => {
+  return payrollData.value.reduce((acc, p) => {
+    acc.basico += p.basico
+    acc.extras += p.horasExtras
+    acc.bonos += p.bonificaciones
+    acc.ingresos += p.totalIngresos
+    acc.afp += p.afp
+    acc.descuentos += p.otrosDescuentos
+    acc.neto += p.neto
+    return acc
+  }, {
+    basico: 0,
+    extras: 0,
+    bonos: 0,
+    ingresos: 0,
+    afp: 0,
+    descuentos: 0,
+    neto: 0
+  })
+})
 
-const totalBasico = computed(() => payrollData.value.reduce((sum, p) => sum + p.basico, 0))
-const totalExtras = computed(() => payrollData.value.reduce((sum, p) => sum + p.horasExtras, 0))
-const totalBonos = computed(() => payrollData.value.reduce((sum, p) => sum + p.bonificaciones, 0))
-const totalIngresos = computed(() => payrollData.value.reduce((sum, p) => sum + p.totalIngresos, 0))
-const totalAfp = computed(() => payrollData.value.reduce((sum, p) => sum + p.afp, 0))
-const totalDescuentos = computed(() => payrollData.value.reduce((sum, p) => sum + p.otrosDescuentos, 0))
-const totalNeto = computed(() => payrollData.value.reduce((sum, p) => sum + p.neto, 0))
+const employeeCount = computed(() => payrollData.value.length)
+const totalPayroll = computed(() => payrollTotals.value.neto)
+const avgSalary = computed(() => employeeCount.value ? totalPayroll.value / employeeCount.value : 0)
+const totalDeductions = computed(() => payrollTotals.value.afp + payrollTotals.value.descuentos)
+
+const totalBasico = computed(() => payrollTotals.value.basico)
+const totalExtras = computed(() => payrollTotals.value.extras)
+const totalBonos = computed(() => payrollTotals.value.bonos)
+const totalIngresos = computed(() => payrollTotals.value.ingresos)
+const totalAfp = computed(() => payrollTotals.value.afp)
+const totalDescuentos = computed(() => payrollTotals.value.descuentos)
+const totalNeto = computed(() => payrollTotals.value.neto)
 
 const essaludEmployer = computed(() => totalBasico.value * 0.09)
 const quintaCategoria = computed(() => totalBasico.value * 0.08)
