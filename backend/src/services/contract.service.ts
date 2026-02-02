@@ -73,7 +73,7 @@ export class ContractService {
     const fullName = `${validData.nombres} ${validData.apellidoPaterno} ${validData.apellidoMaterno}`;
 
     // Note: In real app, check if exists first
-    await this.env.DB.prepare(`
+    const insertEmployee = this.env.DB.prepare(`
       INSERT INTO employees (
         id, company_id, nombres, apellidoPaterno, apellidoMaterno, nombreCompleto,
         tipoDocumento, numeroDocumento, direccion, banco, tipoCuenta, numeroCuenta, numeroCCI,
@@ -83,11 +83,11 @@ export class ContractService {
       employeeId, this.tenantId, validData.nombres, validData.apellidoPaterno, validData.apellidoMaterno, fullName,
       validData.tipoDocumento, validData.numeroDocumento, validData.direccion, validData.banco, validData.tipoCuenta, validData.numeroCuenta, validData.numeroCCI,
       validData.fechaInicio
-    ).run();
+    );
 
     // 4. Create Contract
     const contractId = crypto.randomUUID();
-    await this.env.DB.prepare(`
+    const insertContract = this.env.DB.prepare(`
       INSERT INTO contracts (
         id, company_id, empleadoId, cargo, salarioBase, fechaInicio,
         tipoContrato, regimenLaboral, asignacionFamiliar, afp, cuspp,
@@ -96,7 +96,9 @@ export class ContractService {
     `).bind(
       contractId, this.tenantId, employeeId, validData.cargo, validData.salarioBase, validData.fechaInicio,
       validData.tipoContrato, validData.regimenLaboral, validData.asignacionFamiliar ? 1 : 0, validData.sistemaPensiones, validData.cuspp || null
-    ).run();
+    );
+
+    await this.env.DB.batch([insertEmployee, insertContract]);
 
     // 5. Generate Document Preview (Fusion)
     const contractPreview = this.generateContractPreview(validData, company, companyAddress);
