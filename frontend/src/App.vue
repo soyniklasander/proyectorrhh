@@ -52,6 +52,11 @@
                   </div>
                   <div class="header-right">
                     <n-tag type="success" size="small" round>En Línea</n-tag>
+                    <n-button quaternary circle @click="showNotifications = true">
+                      <template #icon>
+                        <n-icon><NotificationsOutline /></n-icon>
+                      </template>
+                    </n-button>
                     <n-button quaternary circle @click="toggleTheme">
                       <template #icon>
                         <n-icon><component :is="isDark ? SunnyOutline : MoonOutline" /></n-icon>
@@ -70,6 +75,12 @@
                <router-view />
             </div>
 
+            <n-drawer v-model:show="showNotifications" width="400" placement="right">
+              <n-drawer-content title="Notificaciones" closable>
+                <NotificationsPanel />
+              </n-drawer-content>
+            </n-drawer>
+
           </n-message-provider>
         </n-notification-provider>
       </n-dialog-provider>
@@ -83,19 +94,21 @@ import { useRouter, useRoute } from 'vue-router'
 import {
   NConfigProvider, darkTheme, NLayout, NLayoutSider, NLayoutHeader, NLayoutContent,
   NLoadingBarProvider, NDialogProvider, NNotificationProvider, NMessageProvider,
-  NMenu, NIcon, NButton, NBreadcrumb, NBreadcrumbItem, NTag
+  NMenu, NIcon, NButton, NBreadcrumb, NBreadcrumbItem, NTag, NDrawer, NDrawerContent
 } from 'naive-ui'
 import {
   PeopleOutline, DocumentTextOutline, WalletOutline, TimeOutline,
   CardOutline, AirplaneOutline, BarChartOutline, SettingsOutline,
-  HomeOutline, SunnyOutline, MoonOutline, PeopleSharp
+  HomeOutline, SunnyOutline, MoonOutline, PeopleSharp, NotificationsOutline
 } from '@vicons/ionicons5'
+import NotificationsPanel from '@/components/panels/NotificationsPanel.vue'
 
 const router = useRouter()
 const route = useRoute()
 const collapsed = ref(false)
 const isDark = ref(false)
 const activeKey = ref('dashboard')
+const showNotifications = ref(false)
 
 const isFullScreen = computed(() => {
   return route.name === 'Login' || route.path === '/login' || route.meta?.guest

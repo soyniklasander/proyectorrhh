@@ -69,7 +69,7 @@
 
       <!-- Estado vacío -->
       <n-empty
-        v-else
+        v-else-if="!loading"
         description="No tienes notificaciones nuevas"
         size="large"
       >
@@ -81,30 +81,36 @@
       </n-empty>
 
       <!-- Botón cargar más -->
-      <div class="load-more" v-if="hasMore">
+      <div class="load-more" v-if="hasMore || loading">
         <n-button
           block
           quaternary
           :loading="loading"
           @click="loadMore"
+          v-if="hasMore"
         >
           Cargar más notificaciones
         </n-button>
+        <div v-else-if="loading" style="text-align: center; padding: 10px;">
+           <n-spin size="small" />
+        </div>
       </div>
     </n-space>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { ref, onMounted } from 'vue'
 import { useMessage } from 'naive-ui'
 import {
-  NotificationsIcon, PersonIcon, DocumentIcon, TimeIcon,
-  MoneyIcon, CalendarIcon, CheckIcon, WarningIcon, CloseIcon
+  NotificationsOutline as NotificationsIcon, PersonOutline as PersonIcon, DocumentTextOutline as DocumentIcon, TimeOutline as TimeIcon,
+  CashOutline as MoneyIcon, CalendarOutline as CalendarIcon, CheckmarkOutline as CheckIcon, WarningOutline as WarningIcon, CloseOutline as CloseIcon
 } from '@vicons/ionicons5'
 import dayjs from 'dayjs'
 import 'dayjs/locale/es'
 import relativeTime from 'dayjs/plugin/relativeTime'
+import { notificationService } from '@/services/notificationService'
+import type { Notification, NotificationAction } from '@/types/notification.types'
 
 dayjs.extend(relativeTime)
 dayjs.locale('es')
@@ -115,67 +121,10 @@ const message = useMessage()
 // Reactive data
 const loading = ref(false)
 const hasMore = ref(false)
-
-// Mock notifications (reemplazar con API real)
-const notifications = ref([
-  {
-    id: '1',
-    type: 'employee',
-    title: 'Nuevo empleado registrado',
-    description: 'Juan Pérez García ha sido agregado al sistema',
-    timestamp: new Date(Date.now() - 1000 * 60 * 5).toISOString(),
-    read: false,
-    actions: [
-      { key: 'view', label: 'Ver', type: 'primary' }
-    ]
-  },
-  {
-    id: '2',
-    type: 'contract',
-    title: 'Contrato por vencer',
-    description: 'El contrato de María López Martínez vence en 7 días',
-    timestamp: new Date(Date.now() - 1000 * 60 * 60 * 2).toISOString(),
-    read: false,
-    actions: [
-      { key: 'view', label: 'Ver Contrato', type: 'primary' },
-      { key: 'renew', label: 'Renovar', type: 'default' }
-    ]
-  },
-  {
-    id: '3',
-    type: 'payroll',
-    title: 'Planilla generada',
-    description: 'La planilla de Enero 2024 ha sido generada exitosamente',
-    timestamp: new Date(Date.now() - 1000 * 60 * 60 * 24).toISOString(),
-    read: true,
-    actions: [
-      { key: 'view', label: 'Ver', type: 'primary' },
-      { key: 'export', label: 'Exportar', type: 'default' }
-    ]
-  },
-  {
-    id: '4',
-    type: 'overtime',
-    title: 'Horas extras aprobadas',
-    description: 'Se han aprobado 8 horas extras para Carlos Rodríguez',
-    timestamp: new Date(Date.now() - 1000 * 60 * 60 * 48).toISOString(),
-    read: true,
-    actions: [
-      { key: 'view', label: 'Ver Detalles', type: 'primary' }
-    ]
-  },
-  {
-    id: '5',
-    type: 'warning',
-    title: 'Límite de préstamos alcanzado',
-    description: 'Ana Martínez ha alcanzado el límite de préstamos permitidos',
-    timestamp: new Date(Date.now() - 1000 * 60 * 60 * 72).toISOString(),
-    read: true,
-    actions: [
-      { key: 'view', label: 'Ver', type: 'primary' }
-    ]
-  }
-])
+const notifications = ref<Notification[]>([])
+const page = ref(1)
+const limit = 10
+const white = '#ffffff'
 
 // Methods
 const getNotificationIcon = (type: string) => {
@@ -208,25 +157,55 @@ const formatRelativeTime = (timestamp: string) => {
   return dayjs(timestamp).fromNow()
 }
 
-const markAllAsRead = () => {
-  notifications.value.forEach(notification => {
-    notification.read = true
-  })
-  message.success('Todas las notificaciones marcadas como leídas')
-}
+const fetchNotifications = async (currentPage: number, append = false) => {
+  loading.value = true
+  try {
+    const response = await notificationService.getAll(currentPage, limit)
+    const { data, meta } = response.data
 
-const removeNotification = (id: string) => {
-  const index = notifications.value.findIndex(n => n.id === id)
-  if (index > -1) {
-    notifications.value.splice(index, 1)
-    message.success('Notificación eliminada')
+    if (append) {
+      notifications.value.push(...data)
+    } else {
+      notifications.value = data
+    }
+
+    hasMore.value = currentPage < meta.totalPages
+  } catch (error) {
+    message.error('Error al cargar notificaciones')
+    console.error(error)
+  } finally {
+    loading.value = false
   }
 }
 
-const handleAction = (action: any, notification: any) => {
+const markAllAsRead = async () => {
+  try {
+    await notificationService.markAllAsRead()
+    notifications.value.forEach(notification => {
+      notification.read = true
+    })
+    message.success('Todas las notificaciones marcadas como leídas')
+  } catch (error) {
+    message.error('Error al marcar notificaciones como leídas')
+  }
+}
+
+const removeNotification = async (id: string) => {
+  try {
+    await notificationService.delete(id)
+    const index = notifications.value.findIndex(n => n.id === id)
+    if (index > -1) {
+      notifications.value.splice(index, 1)
+      message.success('Notificación eliminada')
+    }
+  } catch (error) {
+    message.error('Error al eliminar la notificación')
+  }
+}
+
+const handleAction = async (action: NotificationAction, notification: Notification) => {
   switch (action.key) {
     case 'view':
-      // TODO: Implementar navegación según el tipo
       message.info(`Viendo ${notification.title.toLowerCase()}`)
       break
     case 'renew':
@@ -239,37 +218,26 @@ const handleAction = (action: any, notification: any) => {
       break
   }
   
-  // Marcar como leída
-  notification.read = true
+  // Marcar como leída si no lo está
+  if (!notification.read) {
+    try {
+        await notificationService.markAsRead(notification.id)
+        notification.read = true
+    } catch (e) {
+        // Ignorar error de red si falla el marcado
+    }
+  }
 }
 
 const loadMore = async () => {
-  loading.value = true
-  
-  try {
-    // TODO: Implementar carga de más notificaciones
-    await new Promise(resolve => setTimeout(resolve, 1000))
-    
-    // Mock de más notificaciones
-    const moreNotifications = [
-      {
-        id: '6',
-        type: 'employee',
-        title: 'Empleado actualizado',
-        description: 'Los datos de Roberto Sánchez han sido actualizados',
-        timestamp: new Date(Date.now() - 1000 * 60 * 60 * 96).toISOString(),
-        read: true
-      }
-    ]
-    
-    notifications.value.push(...moreNotifications)
-    
-  } catch (error) {
-    message.error('Error al cargar más notificaciones')
-  } finally {
-    loading.value = false
-  }
+  if (loading.value) return
+  page.value++
+  await fetchNotifications(page.value, true)
 }
+
+onMounted(() => {
+  fetchNotifications(page.value)
+})
 </script>
 
 <style scoped>
