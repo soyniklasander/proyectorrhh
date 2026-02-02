@@ -3,7 +3,8 @@
   "private": true,
   "scripts": {
     "build": "cd frontend && npm ci && npm run build",
-    "deploy": "npm run build"
+    "deploy": "npm run build",
+    "postinstall": "cd backend && npm install"
   },
   "dependencies": {
     "hono": "^4.11.7",
