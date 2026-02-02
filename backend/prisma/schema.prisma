@@ -12,6 +12,7 @@ datasource db {
 // Tabla de Empleados
 model Employee {
   id                        String   @id @default(cuid())
+  company_id                String
   nombres                   String
   apellidoPaterno           String
   apellidoMaterno           String
@@ -76,6 +77,7 @@ model Employee {
 // Tabla de Contratos
 model Contract {
   id                        String   @id @default(cuid())
+  company_id                String
   empleadoId                String
   tipoContrato             String   // 'INDETERMINADO' | 'PLAZO_FIJO' | 'TIEMPO_PARCIAL' | 'CAS' | 'LOCACION_SERVICIOS' | 'PRACTICAS' | 'CAPACITACION'
   regimenLaboral           String   // 'GENERAL' | 'MICROEMPRESA' | 'PEQUENA_EMPRESA' | 'CAS' | 'AGRARIO' | 'PESQUERO' | 'CONSTRUCCION'
@@ -147,6 +149,7 @@ model Contract {
 // Tabla de Horas Extras
 model OvertimeHour {
   id                        String   @id @default(cuid())
+  company_id                String
   empleadoId                String
   contratoId               String
   fecha                    DateTime
@@ -175,6 +178,7 @@ model OvertimeHour {
 // Tabla de Préstamos a Personal
 model EmployeeLoan {
   id                        String   @id @default(cuid())
+  company_id                String
   empleadoId                String
   contratoId               String
   tipoPrestamo             String   // 'LIQUIDACION' | 'QUITAS' | 'ADICIONAL' | 'EMERGENCIA'
@@ -212,6 +216,7 @@ model EmployeeLoan {
 // Tabla de Detalle Cuotas Préstamo
 model LoanInstallment {
   id                        String   @id @default(cuid())
+  company_id                String
   prestamoId               String
   numeroCuota              Int
   fechaVencimiento         DateTime
@@ -235,6 +240,7 @@ model LoanInstallment {
 // Tabla de Descuentos y Deducciones
 model Deduction {
   id                        String   @id @default(cuid())
+  company_id                String
   empleadoId                String
   contratoId               String
   periodo                  String   // YYYY-MM
@@ -264,6 +270,7 @@ model Deduction {
 // Tabla de Remuneraciones y Planilla
 model Payroll {
   id                        String   @id @default(cuid())
+  company_id                String
   empleadoId                String
   contratoId               String
   periodo                  String   // YYYY-MM
@@ -325,6 +332,7 @@ model Payroll {
 // Tabla de Vacaciones y Permisos
 model LeavesPermission {
   id                        String   @id @default(cuid())
+  company_id                String
   empleadoId                String
   contratoId               String
   tipoPermiso              String   // 'VACACION_PROGRAMADA' | 'VACACION_TRUNCA' | 'ENFERMEDAD' | 'LICENCIA_MATERNIDAD' | 'LICENCIA_PATERNIDAD' | 'PERMISO_PERSONAL' | 'DUELLO' | 'MATRIMONIO'
@@ -352,6 +360,7 @@ model LeavesPermission {
 // Tabla de Faltas y Tardanzas
 model AttendanceControl {
   id                        String   @id @default(cuid())
+  company_id                String
   empleadoId                String
   contratoId               String
   fecha                    DateTime
@@ -377,6 +386,7 @@ model AttendanceControl {
 // Tabla de Detracciones
 model Withholding {
   id                        String   @id @default(cuid())
+  company_id                String
   empleadoId                String
   contratoId               String
   periodo                  String   // YYYY-MM

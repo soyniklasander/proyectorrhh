@@ -1,5 +1,6 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
+import { PrismaModule } from './prisma/prisma.module';
 import { AuthModule } from './auth/auth.module';
 import { EmployeesModule } from './employees/employees.module';
 import { ContractsModule } from './contracts/contracts.module';
@@ -18,6 +19,7 @@ import { WithholdingsModule } from './withholdings/withholdings.module';
       isGlobal: true,
       envFilePath: '.env',
     }),
+    PrismaModule,
     AuthModule,
     EmployeesModule,
     ContractsModule,

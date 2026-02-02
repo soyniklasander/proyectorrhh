@@ -1,14 +1,7 @@
 name = "rrhhmod-backend"
 main = "backend/src/worker.ts"
 compatibility_date = "2024-01-01"
-
-[env.production.vars]
-JWT_SECRET = "tu-jwt-secret-production"
-ENVIRONMENT = "production"
-
-[env.development.vars]
-JWT_SECRET = "tu-jwt-secret-dev"
-ENVIRONMENT = "development"
+account_id = "d69bcb9a616ebb79cbda95fb21c8af53"
 
 [[d1_databases]]
 binding = "DB"
@@ -20,6 +13,6 @@ binding = "KV_BINDING"
 id = "fc77679cb6c94ffbb09a750902e853cc"
 
 [vars]
-ENVIRONMENT = "development"
+ENVIRONMENT = "production"
 API_VERSION = "v1"
 CORS_ORIGIN = "*"
