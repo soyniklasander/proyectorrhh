@@ -1,40 +1,23 @@
 import { test, expect } from '@playwright/test';
 
-test('Super Admin Login Smoke Test', async ({ page }) => {
-  // 1. Go to Login Page
-  try {
-    await page.goto('http://localhost:3000/login');
-    console.log('Navigated to login page');
+test('Smoke Test: User Login', async ({ page }) => {
+  // 1. Ir a la página de login
+  await page.goto('http://localhost:3000/login');
 
-    // Debug: Print page content if selector fails
-    // await page.waitForSelector('input[type="text"]', { timeout: 5000 });
+  // 2. Verificar que se cargó el formulario
+  await expect(page.getByRole('heading', { name: 'Iniciar Sesión' })).toBeVisible();
 
-    // 2. Fill Credentials
-    // Naive UI inputs are complex. They might be inside .n-input__input-el
-    await page.getByPlaceholder('ej. usuario@empresa.com').fill('super@rickerp.com');
-    console.log('Filled email');
+  // 3. Llenar credenciales
+  await page.getByPlaceholder('ej. usuario@empresa.com').fill('super@rickerp.com');
+  await page.getByPlaceholder('••••••••').fill('admin123');
 
-    await page.getByPlaceholder('••••••••').fill('admin123');
-    console.log('Filled password');
+  // 4. Click en ingresar
+  await page.getByRole('button', { name: 'Ingresar al Sistema' }).click();
 
-    // 3. Click Login
-    await page.getByRole('button', { name: 'Ingresar al Sistema' }).click();
-    console.log('Clicked login');
+  // 5. Esperar navegación al dashboard o admin
+  // Super Admin redirige a /admin/companies
+  await page.waitForURL('**/admin/companies');
 
-    // 4. Wait for Navigation (expect to be redirected to /admin/companies)
-    await page.waitForURL('**/admin/companies', { timeout: 10000 });
-    console.log('Redirected to admin');
-
-    // 5. Verify Admin UI Element
-    await expect(page.getByText('Gestión de Empresas')).toBeVisible();
-    console.log('Verified Admin UI');
-
-    // 6. Screenshot
-    await page.screenshot({ path: 'smoke-login-success.png', fullPage: true });
-  } catch (e) {
-    console.error('Test failed', e);
-    await page.screenshot({ path: 'smoke-login-failed.png', fullPage: true });
-    // console.log(await page.content());
-    throw e;
-  }
+  // 6. Verificar elemento clave del dashboard
+  await expect(page.getByText('Gestión de Empresas')).toBeVisible();
 });

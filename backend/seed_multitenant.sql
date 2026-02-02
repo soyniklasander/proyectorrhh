@@ -8,9 +8,10 @@ INSERT INTO companies (id, ruc, razon_social, direccion_fiscal, representante_le
 ('comp-b', '20200000002', 'Morty Imports S.R.L.', '{"direccion": "Jr. Citadel 456", "distrito": "San Isidro", "provincia": "Lima", "departamento": "Lima"}', 'Morty Smith', '12345678', '{"logo": "https://example.com/morty.png"}');
 
 -- 2. Users (Password: password123)
--- Hash: $2a$10$1z0BIE41nAkJJ1m9H6yKcueUMkZ0fr11f4bxXLf46tYD5OoF1Ecpi
+-- 2. Users (Password: admin123)
+-- Hash: $2a$10$UryCmbqs3PbXS/bcqNK7buJ9bhOm.HKfd2hT1C98Kc4CQfw7JcY4S
 INSERT INTO users (id, company_id, email, password_hash, nombres, role) VALUES
-('user-super', NULL, 'super@rickerp.com', '$2a$10$1z0BIE41nAkJJ1m9H6yKcueUMkZ0fr11f4bxXLf46tYD5OoF1Ecpi', 'Super Admin', 'SUPER_ADMIN'),
+('user-super', NULL, 'super@rickerp.com', '$2a$10$UryCmbqs3PbXS/bcqNK7buJ9bhOm.HKfd2hT1C98Kc4CQfw7JcY4S', 'Super Admin', 'SUPER_ADMIN'),
 ('user-admin-a', 'comp-a', 'admin@rickcorp.com', '$2a$10$1z0BIE41nAkJJ1m9H6yKcueUMkZ0fr11f4bxXLf46tYD5OoF1Ecpi', 'Rick Admin', 'TENANT_ADMIN'),
 ('user-hr-a', 'comp-a', 'hr@rickcorp.com', '$2a$10$1z0BIE41nAkJJ1m9H6yKcueUMkZ0fr11f4bxXLf46tYD5OoF1Ecpi', 'Birdperson HR', 'OPERATOR'),
 ('user-admin-b', 'comp-b', 'admin@morty.com', '$2a$10$1z0BIE41nAkJJ1m9H6yKcueUMkZ0fr11f4bxXLf46tYD5OoF1Ecpi', 'Morty Admin', 'TENANT_ADMIN');
