@@ -60,10 +60,10 @@ export class PayrollService {
       escapeCsv(row.numeroDocumento),
       escapeCsv(row.banco),
       escapeCsv(row.numeroCuenta),
-      row.salarioBase.toFixed(2),
-      row.totalIngresos.toFixed(2),
-      row.totalDescuentos.toFixed(2),
-      row.netoPagar.toFixed(2),
+      Number(row.salarioBase || 0).toFixed(2),
+      Number(row.totalIngresos || 0).toFixed(2),
+      Number(row.totalDescuentos || 0).toFixed(2),
+      Number(row.netoPagar || 0).toFixed(2),
       escapeCsv(row.fechaPago),
       escapeCsv(row.estado)
     ]);
