@@ -32,6 +32,8 @@ jobs:
 
       - name: Build frontend
         working-directory: frontend
+        env:
+          VITE_API_URL: https://rrhhmod-backend.rchavezza.workers.dev/api/v1
         run: npm run build
 
       - name: Install backend dependencies
