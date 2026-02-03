@@ -54,6 +54,7 @@ jobs:
         if: always()
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
         run: |
           cd frontend
-          npx wrangler pages deploy dist --project-name proyectorrhh --branch main --account-id d69bcb9a616ebb79cbda95fb21c8af53
+          npx wrangler pages deploy dist --project-name proyectorrhh --branch main --account-id "$CLOUDFLARE_ACCOUNT_ID"

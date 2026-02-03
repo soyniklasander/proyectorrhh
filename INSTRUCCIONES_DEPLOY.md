@@ -28,6 +28,12 @@ Tu API Key de Cloudflare **NO** debe estar en el código por seguridad. Debes ag
    - **Secret** (Valor): Pega tu API key de Cloudflare (obtenla de tu Cloudflare Dashboard)
    - Click en "Add secret"
 
+6. **Agregar el Account ID**:
+   - Click en el botón verde "New repository secret"
+   - **Name** (Nombre): Escribe exactamente esto: `CLOUDFLARE_ACCOUNT_ID`
+   - **Secret** (Valor): Pega tu Account ID de Cloudflare (lo encuentras en la página principal del Dashboard)
+   - Click en "Add secret"
+
 ## ✅ Paso 2: Verificar que todo funciona
 
 Una vez que hayas agregado el secreto, haz lo siguiente:
