@@ -103,6 +103,29 @@ protectedRoutes.post('/contracts/onboarding', async (c) => {
 // Example: List Employees (Tenant Isolated)
 protectedRoutes.get('/employees', async (c) => {
   const tenantId = c.get('tenantId');
+  const user = c.get('user');
+  
+  // Super Admin can see all employees or filter by X-Tenant-ID
+  if (user?.role === 'SUPER_ADMIN') {
+    const explicitTenant = c.req.header('X-Tenant-ID');
+    if (explicitTenant) {
+      const result = await c.env.DB.prepare(
+        'SELECT * FROM employees WHERE company_id = ? ORDER BY createdAt DESC'
+      ).bind(explicitTenant).all();
+      return c.json({ success: true, data: result.results, tenant: explicitTenant });
+    }
+    // No tenant specified - list all or return message
+    const result = await c.env.DB.prepare(
+      'SELECT * FROM employees ORDER BY createdAt DESC LIMIT 100'
+    ).all();
+    return c.json({ success: true, data: result.results, message: 'Showing all employees. Use X-Tenant-ID header to filter.' });
+  }
+  
+  // Regular users need tenant
+  if (!tenantId) {
+    return c.json({ success: false, error: 'TENANT_REQUIRED', message: 'Tenant required' }, 403);
+  }
+  
   const result = await c.env.DB.prepare(
     'SELECT * FROM employees WHERE company_id = ? ORDER BY createdAt DESC'
   ).bind(tenantId).all();
@@ -113,7 +136,42 @@ protectedRoutes.get('/employees', async (c) => {
 // Dashboard Summary
 protectedRoutes.get('/dashboard/summary', async (c) => {
   const tenantId = c.get('tenantId');
+  const user = c.get('user');
   const db = c.env.DB;
+
+  // Super Admin handling
+  if (user?.role === 'SUPER_ADMIN') {
+    const explicitTenant = c.req.header('X-Tenant-ID');
+    if (explicitTenant) {
+      try {
+        const [totalEmployees, activeContracts, payrollSum, recentEmployees] = await db.batch([
+          db.prepare('SELECT COUNT(*) as count FROM employees WHERE company_id = ? AND estado = "ACTIVO"').bind(explicitTenant),
+          db.prepare('SELECT COUNT(*) as count FROM contracts WHERE company_id = ? AND estado = "VIGENTE"').bind(explicitTenant),
+          db.prepare('SELECT SUM(salarioBase) as total FROM contracts WHERE company_id = ? AND estado = "VIGENTE"').bind(explicitTenant),
+          db.prepare('SELECT id, nombreCompleto, numeroDocumento, fechaIngreso, estado FROM employees WHERE company_id = ? ORDER BY createdAt DESC LIMIT 5').bind(explicitTenant)
+        ]);
+        return c.json({ success: true, data: { stats: { totalEmployees: totalEmployees.results[0]?.count || 0, activeContracts: activeContracts.results[0]?.count || 0, monthlyPayroll: payrollSum.results[0]?.total || 0, pendingOvertime: 0 }, recentEmployees: recentEmployees.results }, tenant: explicitTenant });
+      } catch (error) {
+        return c.json({ success: false, error: String(error) }, 500);
+      }
+    }
+    // No tenant specified - return summary for all
+    try {
+      const [totalEmployees, activeContracts, payrollSum] = await db.batch([
+        db.prepare('SELECT COUNT(*) as count FROM employees WHERE estado = "ACTIVO"'),
+        db.prepare('SELECT COUNT(*) as count FROM contracts WHERE estado = "VIGENTE"'),
+        db.prepare('SELECT SUM(salarioBase) as total FROM contracts WHERE estado = "VIGENTE"')
+      ]);
+      return c.json({ success: true, data: { stats: { totalEmployees: totalEmployees.results[0]?.count || 0, activeContracts: activeContracts.results[0]?.count || 0, monthlyPayroll: payrollSum.results[0]?.total || 0, pendingOvertime: 0 }, message: 'Showing all data. Use X-Tenant-ID header to filter by company.' } });
+    } catch (error) {
+      return c.json({ success: false, error: String(error) }, 500);
+    }
+  }
+
+  // Regular users need tenant
+  if (!tenantId) {
+    return c.json({ success: false, error: 'TENANT_REQUIRED', message: 'Tenant required' }, 403);
+  }
 
   try {
     const [totalEmployees, activeContracts, payrollSum, recentEmployees] = await db.batch([
@@ -127,10 +185,10 @@ protectedRoutes.get('/dashboard/summary', async (c) => {
       success: true,
       data: {
         stats: {
-          totalEmployees: totalEmployees.results[0].count,
-          activeContracts: activeContracts.results[0].count,
-          monthlyPayroll: payrollSum.results[0].total || 0,
-          pendingOvertime: 0 // Placeholder
+          totalEmployees: totalEmployees.results[0]?.count || 0,
+          activeContracts: activeContracts.results[0]?.count || 0,
+          monthlyPayroll: payrollSum.results[0]?.total || 0,
+          pendingOvertime: 0
         },
         recentEmployees: recentEmployees.results
       }
@@ -155,24 +213,175 @@ protectedRoutes.post('/admin/companies', async (c) => {
   return c.json({ success: true, message: 'Company created (mock)' });
 });
 
-// Settings Endpoints
+// Admin Settings - Global settings (Super Admin only)
+protectedRoutes.get('/admin/settings', async (c) => {
+  const user = c.get('user');
+  if (user?.role !== 'SUPER_ADMIN') {
+    return c.json({ success: false, error: 'FORBIDDEN', message: 'Super Admin only' }, 403);
+  }
+  return c.json({ 
+    success: true, 
+    data: { 
+      globalTheme: 'system',
+      maintenanceMode: false,
+      allowSelfRegistration: false,
+      defaultCurrency: 'PEN'
+    } 
+  });
+});
+
+protectedRoutes.post('/admin/settings', async (c) => {
+  const user = c.get('user');
+  if (user?.role !== 'SUPER_ADMIN') {
+    return c.json({ success: false, error: 'FORBIDDEN', message: 'Super Admin only' }, 403);
+  }
+  return c.json({ success: true, message: 'Global settings updated' });
+});
+
+// Settings - Tenant-specific (works with X-Tenant-ID header for Super Admin)
 protectedRoutes.get('/settings', async (c) => {
-  return c.json({ success: true, data: { theme: 'light', notifications: true } });
+  const tenantId = c.get('tenantId');
+  const user = c.get('user');
+  
+  // If Super Admin with explicit tenant via header
+  const explicitTenant = c.req.header('X-Tenant-ID');
+  const targetTenant = explicitTenant || tenantId;
+  
+  if (!targetTenant) {
+    // Super Admin without tenant - return message
+    if (user?.role === 'SUPER_ADMIN') {
+      return c.json({ 
+        success: true, 
+        data: { 
+          message: 'Select a company to view settings',
+          availableCompanies: ['comp-a', 'comp-b']
+        }
+      });
+    }
+    return c.json({ success: false, error: 'TENANT_REQUIRED' }, 403);
+  }
+  
+  return c.json({ success: true, data: { theme: 'light', notifications: true, companyId: targetTenant } });
 });
 
 protectedRoutes.post('/settings', async (c) => {
-  return c.json({ success: true, message: 'Settings saved' });
+  const tenantId = c.get('tenantId');
+  const user = c.get('user');
+  const explicitTenant = c.req.header('X-Tenant-ID');
+  const targetTenant = explicitTenant || tenantId;
+  
+  if (!targetTenant && user?.role !== 'SUPER_ADMIN') {
+    return c.json({ success: false, error: 'TENANT_REQUIRED' }, 403);
+  }
+  
+  return c.json({ success: true, message: 'Settings saved for: ' + (targetTenant || 'global') });
+});
+
+// Contracts Endpoints
+protectedRoutes.get('/contracts', async (c) => {
+  const tenantId = c.get('tenantId');
+  const user = c.get('user');
+  
+  try {
+    let result;
+    
+    if (user?.role === 'SUPER_ADMIN') {
+      const explicitTenant = c.req.header('X-Tenant-ID');
+      if (explicitTenant) {
+        result = await c.env.DB.prepare(
+          'SELECT c.*, e.nombreCompleto, e.numeroDocumento FROM contracts c JOIN employees e ON c.empleadoId = e.id WHERE c.company_id = ? ORDER BY c.createdAt DESC'
+        ).bind(explicitTenant).all();
+        return c.json({ success: true, data: result.results, tenant: explicitTenant });
+      }
+      result = await c.env.DB.prepare(
+        'SELECT c.*, e.nombreCompleto, e.numeroDocumento FROM contracts c JOIN employees e ON c.empleadoId = e.id ORDER BY c.createdAt DESC LIMIT 100'
+      ).all();
+      return c.json({ success: true, data: result.results, message: 'Showing all contracts' });
+    }
+    
+    if (!tenantId) {
+      return c.json({ success: false, error: 'TENANT_REQUIRED' }, 403);
+    }
+    
+    result = await c.env.DB.prepare(
+      'SELECT c.*, e.nombreCompleto, e.numeroDocumento FROM contracts c JOIN employees e ON c.empleadoId = e.id WHERE c.company_id = ? ORDER BY c.createdAt DESC'
+    ).bind(tenantId).all();
+    
+    return c.json({ success: true, data: result.results });
+  } catch (error) {
+    return c.json({ success: false, error: String(error) }, 500);
+  }
+});
+
+protectedRoutes.post('/contracts', async (c) => {
+  const tenantId = c.get('tenantId');
+  const user = c.get('user');
+  
+  try {
+    const body = await c.req.json();
+    
+    if (user?.role === 'SUPER_ADMIN' && !tenantId) {
+      const explicitTenant = c.req.header('X-Tenant-ID');
+      if (explicitTenant) {
+        body.company_id = explicitTenant;
+      }
+    }
+    
+    if (!tenantId && !body.company_id) {
+      return c.json({ success: false, error: 'TENANT_REQUIRED' }, 403);
+    }
+    
+    const id = crypto.randomUUID();
+    await c.env.DB.prepare(
+      `INSERT INTO contracts (id, company_id, empleadoId, tipoContrato, regimenLaboral, cargo, salarioBase, fechaInicio, estado, createdAt, updatedAt)
+       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, datetime('now'), datetime('now'))`
+    ).bind(
+      id, body.company_id || tenantId, body.empleadoId, body.tipoContrato || 'PLAZO_FIJO',
+      body.regimenLaboral || 'GENERAL', body.cargo, body.salarioBase, body.fechaInicio, body.estado || 'VIGENTE'
+    ).run();
+    
+    return c.json({ success: true, id, message: 'Contract created' });
+  } catch (error) {
+    return c.json({ success: false, error: String(error) }, 500);
+  }
 });
 
 // Payroll Endpoints
 protectedRoutes.get('/payroll', async (c) => {
   const tenantId = c.get('tenantId');
+  const user = c.get('user');
   const period = c.req.query('period');
 
   if (!period) return c.json({ success: false, error: 'MISSING_PERIOD' }, 400);
 
   try {
-    const result = await c.env.DB.prepare(
+    let result;
+    
+    if (user?.role === 'SUPER_ADMIN') {
+      const explicitTenant = c.req.header('X-Tenant-ID');
+      if (explicitTenant) {
+        result = await c.env.DB.prepare(
+          `SELECT p.*, e.nombreCompleto as employeeName, e.numeroDocumento as dni
+           FROM payroll p
+           JOIN employees e ON p.empleadoId = e.id
+           WHERE p.company_id = ? AND p.periodo = ?`
+        ).bind(explicitTenant, period).all();
+        return c.json({ success: true, data: result.results, tenant: explicitTenant });
+      }
+      result = await c.env.DB.prepare(
+        `SELECT p.*, e.nombreCompleto as employeeName, e.numeroDocumento as dni
+         FROM payroll p
+         JOIN employees e ON p.empleadoId = e.id
+         WHERE p.periodo = ?`
+      ).bind(period).all();
+      return c.json({ success: true, data: result.results, message: 'Showing all payroll' });
+    }
+    
+    if (!tenantId) {
+      return c.json({ success: false, error: 'TENANT_REQUIRED' }, 403);
+    }
+    
+    result = await c.env.DB.prepare(
       `SELECT p.*, e.nombreCompleto as employeeName, e.numeroDocumento as dni
        FROM payroll p
        JOIN employees e ON p.empleadoId = e.id
