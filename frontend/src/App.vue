@@ -113,6 +113,11 @@ const menuOptions = computed(() => {
   if (authStore.isSuperAdmin) {
     return [
       {
+        label: 'Personal',
+        key: 'personal',
+        icon: () => h(NIcon, null, { default: () => h(PeopleOutline) })
+      },
+      {
         label: 'Empresas',
         key: 'admin/companies',
         icon: () => h(NIcon, null, { default: () => h(BusinessOutline) })
