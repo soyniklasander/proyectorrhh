@@ -139,8 +139,8 @@ const menuOptions = computed(() => {
       icon: () => h(NIcon, null, { default: () => h(HomeOutline) })
     },
     {
-      label: 'Empleados',
-      key: 'employees',
+      label: 'Personal',
+      key: 'personal',
       icon: () => h(NIcon, null, { default: () => h(PeopleOutline) })
     },
     {
@@ -154,24 +154,9 @@ const menuOptions = computed(() => {
       icon: () => h(NIcon, null, { default: () => h(WalletOutline) })
     },
     {
-      label: 'Horas Extras',
-      key: 'overtime',
+      label: 'Tiempo',
+      key: 'time',
       icon: () => h(NIcon, null, { default: () => h(TimeOutline) })
-    },
-    {
-      label: 'Préstamos',
-      key: 'loans',
-      icon: () => h(NIcon, null, { default: () => h(CardOutline) })
-    },
-    {
-      label: 'Vacaciones',
-      key: 'leaves',
-      icon: () => h(NIcon, null, { default: () => h(AirplaneOutline) })
-    },
-    {
-      label: 'Reportes',
-      key: 'reports',
-      icon: () => h(NIcon, null, { default: () => h(BarChartOutline) })
     },
     {
       label: 'Configuración',
@@ -184,9 +169,11 @@ const menuOptions = computed(() => {
 const currentPageTitle = computed(() => {
   const titles: Record<string, string> = {
     dashboard: 'Panel Principal',
+    personal: 'Gestión de Personal',
     employees: 'Gestión de Personal',
     contracts: 'Contratos Laborales',
     payroll: 'Planilla y Nómina',
+    time: 'Tiempo y Asistencia',
     overtime: 'Control de Horas Extras',
     loans: 'Préstamos al Personal',
     leaves: 'Vacaciones y Permisos',
