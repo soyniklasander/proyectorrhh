@@ -2,7 +2,7 @@
   <div class="personal-list">
     <div class="list-header">
       <div class="header-left">
-        <n-tag type="info">{{ employees.length }} empleados</n-tag>
+        <n-tag type="info">{{ (employees || []).length }} empleados</n-tag>
         <n-tag type="success">{{ activeCount }} activos</n-tag>
         <n-tag type="warning">{{ inactiveCount }} inactivos</n-tag>
       </div>
@@ -40,17 +40,23 @@
 <script setup lang="ts">
 import { ref, computed, onMounted, h } from 'vue'
 import { useMessage } from 'naive-ui'
-import { NAvatar, NTag, NButton } from 'naive-ui'
+import { NAvatar, NTag, NButton, NInput, NSelect, NDataTable } from 'naive-ui'
+import { api } from '@/services/api'
 
 const message = useMessage()
 
-const activeCount = computed(() => employees.value.filter((e: any) => e.estado === 'ACTIVO').length)
-const inactiveCount = computed(() => employees.value.filter((e: any) => e.estado === 'INACTIVO').length)
+const employees = ref<any[]>([])
+const loading = ref(false)
+const search = ref('')
+const filterStatus = ref('todos')
 const pagination = ref({
   page: 1,
   pageSize: 10,
   itemCount: 0
 })
+
+const activeCount = computed(() => employees.value.filter((e: any) => e.estado === 'ACTIVO').length)
+const inactiveCount = computed(() => employees.value.filter((e: any) => e.estado === 'INACTIVO').length)
 
 const statusOptions = [
   { label: 'Todos', value: 'todos' },
@@ -59,7 +65,7 @@ const statusOptions = [
   { label: 'Suspendidos', value: 'SUSPENDIDO' }
 ]
 
-const getStatusType = (status) => {
+const getStatusType = (status: string) => {
   switch (status) {
     case 'ACTIVO': return 'success'
     case 'INACTIVO': return 'default'
@@ -109,7 +115,7 @@ const createColumns = () => [
   {
     title: 'Régimen',
     key: 'regimenLaboral',
-    width: 120,
+    width: 140,
     render(row: any) {
       return h(NTag, { type: 'info', size: 'small' }, () => row.regimenLaboral || '')
     }
@@ -125,7 +131,7 @@ const createColumns = () => [
   {
     title: 'Estado',
     key: 'estado',
-    width: 100,
+    width: 110,
     render(row: any) {
       return h(NTag, { 
         type: getStatusType(row.estado), 
@@ -137,14 +143,9 @@ const createColumns = () => [
   {
     title: 'Acciones',
     key: 'actions',
-    width: 180,
+    width: 200,
     render(row: any) {
       return h('div', { class: 'actions' }, [
-        h(NButton, { 
-          size: 'small', 
-          type: 'primary',
-          onClick: () => viewEmployee(row.id)
-        }, () => 'Ver'),
         h(NButton, { 
           size: 'small', 
           type: 'info',
@@ -167,7 +168,7 @@ const filteredEmployees = computed(() => {
   
   if (search.value) {
     const s = search.value.toLowerCase()
-    data = data.filter(emp => 
+    data = data.filter((emp: any) => 
       emp.nombreCompleto?.toLowerCase().includes(s) ||
       emp.numeroDocumento?.includes(search.value) ||
       emp.email?.toLowerCase().includes(s)
@@ -175,7 +176,7 @@ const filteredEmployees = computed(() => {
   }
   
   if (filterStatus.value !== 'todos') {
-    data = data.filter(emp => emp.estado === filterStatus.value)
+    data = data.filter((emp: any) => emp.estado === filterStatus.value)
   }
   
   return data
@@ -189,33 +190,16 @@ const handlePagination = (newPagination: any) => {
 const loadEmployees = async () => {
   loading.value = true
   try {
-    const params = new URLSearchParams({
-      page: (pagination.value.page - 1).toString(),
-      limit: pagination.value.pageSize.toString(),
-      search: search.value,
-      status: filterStatus.value
-    })
-    
-    const response = await fetch(`/api/v1/employees?${params}`, {
-      headers: {
-        'Authorization': `Bearer ${localStorage.getItem('access_token')}`
-      }
-    })
-    
-    const data = await response.json()
-    if (data.success) {
-      employees.value = data.data
-      pagination.value.itemCount = data.total || data.data.length
+    const response = await api.get('/employees')
+    if (response.data.success) {
+      employees.value = response.data.data
+      pagination.value.itemCount = response.data.data.length
     }
   } catch (error) {
-    message.error('Error al cargar empleados')
+    message.error('Error al cargar empleados: ' + (error as any)?.message)
   } finally {
     loading.value = false
   }
-}
-
-const viewEmployee = (id: string) => {
-  console.log('View employee:', id)
 }
 
 const editEmployee = (id: string) => {
@@ -276,6 +260,6 @@ onMounted(() => {
 
 .actions {
   display: flex;
-  gap: 6px;
+  gap: 8px;
 }
 </style>

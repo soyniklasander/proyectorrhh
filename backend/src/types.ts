@@ -11,6 +11,7 @@ export interface Variables {
   user: {
     userId: string;
     companyId: string | null;
+    email: string;
     role: 'SUPER_ADMIN' | 'TENANT_ADMIN' | 'OPERATOR';
   };
 }

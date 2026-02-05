@@ -1,9 +1,10 @@
 import axios, { type AxiosInstance, type InternalAxiosRequestConfig, type AxiosError } from 'axios';
 
 // Base configuration
+const API_BASE = 'https://rrhhmod-backend.rchavezza.workers.dev/api/v1'
 const api: AxiosInstance = axios.create({
-    baseURL: import.meta.env.VITE_API_URL || 'https://rrhhmod-backend.rchavezza.workers.dev/api/v1',
-    timeout: 30000, // Increased timeout for industrial operations (reports, payroll)
+    baseURL: API_BASE,
+    timeout: 30000,
     headers: {
         'Content-Type': 'application/json',
     },
@@ -15,6 +16,23 @@ api.interceptors.request.use((config: InternalAxiosRequestConfig) => {
     if (token) {
         config.headers.Authorization = `Bearer ${token}`;
     }
+    
+    const userStr = localStorage.getItem('user');
+    if (userStr) {
+        try {
+            const user = JSON.parse(userStr);
+            if (user.companyId) {
+                config.headers['X-Tenant-ID'] = user.companyId;
+            } else {
+                config.headers['X-Tenant-ID'] = 'comp-default';
+            }
+        } catch (e) {
+            config.headers['X-Tenant-ID'] = 'comp-default';
+        }
+    } else {
+        config.headers['X-Tenant-ID'] = 'comp-default';
+    }
+    
     return config;
 }, (error: AxiosError) => {
     return Promise.reject(error);

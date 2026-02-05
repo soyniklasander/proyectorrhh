@@ -2,7 +2,7 @@
   <div class="onboarding-wizard">
     <div class="wizard-header">
       <h3>Nuevo Ingreso al Personal</h3>
-      <p>Incorporación completa: Datos personales → Contrato → Laboral → Configuración</p>
+      <p>Incorporación completa: Datos personales → Contrato → Régimen → Banco → Resumen</p>
     </div>
 
     <n-steps :current="currentStep" size="large" status="process">
@@ -79,7 +79,7 @@
           <n-form-item label="Fecha Inicio" required>
             <n-date-picker v-model:value="formData.fechaInicio" type="date" style="width: 100%" />
           </n-form-item>
-          <n-form-item label="Fecha Fin (si es plazo fijo)">
+          <n-form-item label="Fecha Fin (plazo fijo)">
             <n-date-picker v-model:value="formData.fechaFin" type="date" style="width: 100%" />
           </n-form-item>
           <n-form-item label="Sueldo Base (S/)" required>
@@ -94,6 +94,9 @@
           <n-form-item label="Modalidad" required>
             <n-select v-model:value="formData.modalidadContrato" :options="modalidadOptions" />
           </n-form-item>
+          <n-form-item label="Centro de Costos">
+            <n-input v-model:value="formData.centroCostos" placeholder="Código de centro de costos" />
+          </n-form-item>
         </div>
       </div>
 
@@ -101,7 +104,7 @@
       <div v-if="currentStep === 2" class="step-content">
         <h4>Sistema de Pensiones y Beneficios</h4>
         <div class="form-grid">
-          <n-form-item label="Sistema de Pensione" required>
+          <n-form-item label="Sistema Pensionario" required>
             <n-select v-model:value="formData.sistemaPension" :options="afpOptions" />
           </n-form-item>
           <n-form-item label="CUSPP (AFP)" v-if="formData.sistemaPension === 'AFP'">
@@ -113,6 +116,9 @@
               <n-radio value="Flujo">Comisión por Flujo</n-radio>
             </n-radio-group>
           </n-form-item>
+          <n-form-item label="Essalud">
+            <n-tag type="success">Automático (9%)</n-tag>
+          </n-form-item>
           <n-form-item label="Asignación Familiar">
             <n-switch v-model:value="formData.asignacionFamiliar" />
             <span style="margin-left: 8px">¿Tiene hijos menores de 18 años?</span>
@@ -120,9 +126,6 @@
           <n-form-item label="Régimen 5ta Categoría">
             <n-switch v-model:value="formData.quintaCategoria" />
             <span style="margin-left: 8px">¿Renta de 5ta categoría?</span>
-          </n-form-item>
-          <n-form-item label="ESSALUD">
-            <n-tag type="success">Automático (9%)</n-tag>
           </n-form-item>
         </div>
       </div>
@@ -140,7 +143,7 @@
           <n-form-item label="Número de Cuenta" required>
             <n-input v-model:value="formData.numeroCuenta" placeholder="Número de cuenta" />
           </n-form-item>
-          <n-form-item label="CCI (Código de Cuenta Interbancaria)">
+          <n-form-item label="CCI (Código Cuenta Interbancaria)">
             <n-input v-model:value="formData.cci" placeholder="20 dígitos" />
           </n-form-item>
         </div>
@@ -172,7 +175,7 @@
             S/ {{ formData.salarioBase?.toLocaleString() }}
           </n-descriptions-item>
           <n-descriptions-item label="Sistema Pensionario">
-            {{ formData.sistemaPension }}
+            {{ formData.sistemaPension }} {{ formData.cuspp ? '- CUSPP: ' + formData.cuspp : '' }}
           </n-descriptions-item>
           <n-descriptions-item label="Banco">
             {{ formData.banco }} - {{ formData.numeroCuenta }}
@@ -201,7 +204,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, watch } from 'vue'
+import { ref, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { useMessage } from 'naive-ui'
 
@@ -218,9 +221,9 @@ const formData = ref({
   apellidoMaterno: '',
   tipoDocumento: 'DNI',
   numeroDocumento: '',
-  fechaNacimiento: null,
+  fechaNacimiento: null as number | null,
   sexo: 'M',
-  estadoCivil: null,
+  estadoCivil: null as string | null,
   nacionalidad: 'PERUANA',
   email: '',
   telefono: '',
@@ -229,12 +232,13 @@ const formData = ref({
   regimenLaboral: 'GENERAL',
   cargo: '',
   areaTrabajo: '',
-  fechaInicio: null,
-  fechaFin: null,
+  fechaInicio: null as number | null,
+  fechaFin: null as number | null,
   salarioBase: 0,
   horasSemanales: 48,
   diasLaborales: 6,
   modalidadContrato: 'Presencial',
+  centroCostos: '',
   sistemaPension: 'AFP',
   cuspp: '',
   tipoComision: 'Mixta',
@@ -353,7 +357,7 @@ const submitOnboarding = async () => {
         estadoCivil: formData.value.estadoCivil,
         nacionalidad: formData.value.nacionalidad,
         email: formData.value.email,
-        emailCorporativo: formData.value.email + '@empresa.com',
+        emailCorporativo: formData.value.email.split('@')[0] + '@empresa.com',
         telefono: formData.value.telefono,
         direccion: formData.value.direccion
       },
@@ -368,6 +372,7 @@ const submitOnboarding = async () => {
         horasSemanales: formData.value.horasSemanales,
         diasLaborales: formData.value.diasLaborales,
         modalidadContrato: formData.value.modalidadContrato,
+        centroCostos: formData.value.centroCostos,
         sistemaPension: formData.value.sistemaPension,
         cuspp: formData.value.cuspp,
         tipoComision: formData.value.tipoComision,

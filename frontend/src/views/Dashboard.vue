@@ -1,5 +1,8 @@
 <template>
   <div class="page-container">
+    <!-- Overtime Alerts Bar -->
+    <OvertimeAlerts />
+
     <div class="welcome-section">
       <h1 class="page-title">Bienvenido a RickERP</h1>
       <p class="subtitle">Panel de control general y métricas clave.</p>
@@ -115,6 +118,7 @@ import {
 } from '@vicons/ionicons5'
 import { api } from '@/services/api'
 import dayjs from 'dayjs'
+import OvertimeAlerts from '@/components/OvertimeAlerts.vue'
 
 interface DashboardStats {
   totalEmployees: number

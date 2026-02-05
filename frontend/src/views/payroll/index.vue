@@ -211,9 +211,22 @@ const fetchPayroll = async () => {
   loading.value = true
   const period = dayjs(selectedDate.value).format('YYYY-MM')
   try {
-    const { data } = await api.get(`/payroll?period=${period}`)
+    const { data } = await api.get(`/payroll/payslips?period=${period}`)
     if (data.success) {
-      payrollData.value = data.data
+      payrollData.value = data.data.map((item: any) => ({
+        id: item.id,
+        employeeName: item.empleado_codigo || 'Sin nombre',
+        dni: item.empleado_codigo || '-',
+        basico: item.salario_base || 0,
+        asignacionFamiliar: item.asignacion_familiar || 0,
+        horasExtras: item.horas_extras || 0,
+        bonificaciones: (item.bonificaciones || 0) + (item.comisiones || 0),
+        totalIngresos: item.total_ingresos || 0,
+        afp: item.afp_descuento || 0,
+        adelantos: item.adelantos || 0,
+        otrosDescuentos: (item.prestamos || 0) + (item.descuentos_judiciales || 0) + (item.otros_descuentos || 0),
+        neto: item.neto_pagar || 0
+      }))
     } else {
       payrollData.value = []
     }
@@ -230,9 +243,9 @@ const generatePayroll = async () => {
   generating.value = true
   const period = dayjs(selectedDate.value).format('YYYY-MM')
   try {
-    const { data } = await api.post('/payroll/generate', { period })
+    const { data } = await api.post('/payroll/payslips/generate', { periodo: period })
     if (data.success) {
-      message.success('Planilla generada correctamente')
+      message.success(`Planilla generada: ${data.count} boletas creadas`)
       fetchPayroll()
     }
   } catch (error) {
@@ -246,7 +259,7 @@ const exportPayroll = async () => {
   exporting.value = true
   const period = dayjs(selectedDate.value).format('YYYY-MM')
   try {
-    const response = await api.get(`/payroll/export?period=${period}`, { responseType: 'blob' })
+    const response = await api.post('/payroll/payslips/export', { periodo: period }, { responseType: 'blob' })
     const url = window.URL.createObjectURL(new Blob([response.data]))
     const link = document.createElement('a')
     link.href = url

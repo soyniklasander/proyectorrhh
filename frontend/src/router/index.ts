@@ -49,15 +49,58 @@ const routes: RouteRecordRaw[] = [
     meta: { requiresAuth: true }
   },
   {
-    path: '/overtime',
-    name: 'Overtime',
-    component: () => import('@/views/overtime/index.vue'),
+    path: '/time',
+    name: 'Time',
+    component: () => import('@/views/time/index.vue'),
+    meta: { requiresAuth: true }
+  },
+  {
+    path: '/time/overtime/import',
+    name: 'OvertimeImport',
+    component: () => import('@/views/time/OvertimeImport.vue'),
+    meta: { requiresAuth: true }
+  },
+  {
+    path: '/time/overtime/review',
+    name: 'OvertimeReview',
+    component: () => import('@/views/time/OvertimeReview.vue'),
+    meta: { requiresAuth: true }
+  },
+  {
+    path: '/time/overtime/settings',
+    name: 'OvertimeSettings',
+    component: () => import('@/views/time/OvertimeSettings.vue'),
     meta: { requiresAuth: true }
   },
   {
     path: '/loans',
     name: 'Loans',
     component: () => import('@/views/loans/index.vue'),
+    meta: { requiresAuth: true }
+  },
+  // FASE 3: NÓMINA Y BENEFICIOS
+  {
+    path: '/payroll/loans',
+    name: 'PayrollLoans',
+    component: () => import('@/views/payroll/loans/index.vue'),
+    meta: { requiresAuth: true }
+  },
+  {
+    path: '/payroll/discounts',
+    name: 'PayrollDiscounts',
+    component: () => import('@/views/payroll/discounts/index.vue'),
+    meta: { requiresAuth: true }
+  },
+  {
+    path: '/payroll/payslips',
+    name: 'PayrollPayslips',
+    component: () => import('@/views/payroll/payslips/index.vue'),
+    meta: { requiresAuth: true }
+  },
+  {
+    path: '/payroll/liquidations',
+    name: 'PayrollLiquidations',
+    component: () => import('@/views/payroll/liquidations/index.vue'),
     meta: { requiresAuth: true }
   },
   {
@@ -69,7 +112,13 @@ const routes: RouteRecordRaw[] = [
   {
     path: '/reports',
     name: 'Reports',
-    component: () => import('@/views/NotFound.vue'),
+    component: () => import('@/views/reports/index.vue'),
+    meta: { requiresAuth: true }
+  },
+  {
+    path: '/legal/templates',
+    name: 'LegalTemplates',
+    component: () => import('@/views/legal/templates/index.vue'),
     meta: { requiresAuth: true }
   },
   {
