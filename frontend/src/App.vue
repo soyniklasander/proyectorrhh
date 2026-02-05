@@ -1,11 +1,12 @@
 <template>
-  <n-config-provider :theme="theme">
+  <n-config-provider :theme="theme" :theme-overrides="themeOverrides">
     <n-loading-bar-provider>
       <n-dialog-provider>
         <n-notification-provider>
           <n-message-provider>
 
             <n-layout has-sider class="app-layout" v-if="!isFullScreen">
+              <!-- Sidebar Apple Style -->
               <n-layout-sider
                 bordered
                 collapse-mode="width"
@@ -16,20 +17,17 @@
                 @collapse="collapsed = true"
                 @expand="collapsed = false"
                 :native-scrollbar="false"
-                class="sidebar"
+                class="apple-sidebar"
               >
-                <div class="logo" v-if="!collapsed">
-                  <n-icon size="24" color="#ffffff">
-                    <PeopleOutline />
-                  </n-icon>
-                  <span class="logo-text">RickERP</span>
-                </div>
-                <div class="logo" v-else>
-                  <n-icon size="24" color="#ffffff">
-                    <PeopleOutline />
-                  </n-icon>
+                <!-- Logo -->
+                <div class="apple-sidebar-logo" :class="{ 'collapsed': collapsed }">
+                  <div class="apple-sidebar-logo-icon">
+                    <n-icon size="18"><PeopleOutline /></n-icon>
+                  </div>
+                  <span v-if="!collapsed" class="apple-sidebar-logo-text">RickERP</span>
                 </div>
                 
+                <!-- Navigation -->
                 <n-menu
                   v-model:value="activeKey"
                   :collapsed="collapsed"
@@ -37,11 +35,14 @@
                   :collapsed-icon-size="22"
                   :options="menuOptions"
                   @update:value="handleMenuClick"
+                  class="apple-nav"
                 />
               </n-layout-sider>
               
-              <n-layout>
-                <n-layout-header bordered class="header">
+              <!-- Main Content -->
+              <n-layout class="main-layout">
+                <!-- Header -->
+                <n-layout-header bordered class="apple-header">
                   <div class="header-left">
                     <n-breadcrumb>
                       <n-breadcrumb-item>
@@ -51,8 +52,25 @@
                     </n-breadcrumb>
                   </div>
                   <div class="header-right">
-                    <n-tag type="success" size="small" round>En Línea</n-tag>
-                    <n-button quaternary circle @click="toggleTheme">
+                    <!-- Company Selector for Super Admin -->
+                    <n-select
+                      v-if="authStore.isSuperAdmin"
+                      v-model:value="selectedCompany"
+                      :options="companyOptions"
+                      size="small"
+                      style="width: 180px"
+                      placeholder="Seleccionar empresa"
+                      @update:value="handleCompanyChange"
+                    />
+                    
+                    <n-tag type="success" size="small" round class="apple-badge-success">
+                      <template #icon>
+                        <n-icon><CheckmarkCircleOutline /></n-icon>
+                      </template>
+                      En Línea
+                    </n-tag>
+                    
+                    <n-button quaternary circle @click="toggleTheme" class="apple-btn-ghost">
                       <template #icon>
                         <n-icon><component :is="isDark ? SunnyOutline : MoonOutline" /></n-icon>
                       </template>
@@ -60,12 +78,14 @@
                   </div>
                 </n-layout-header>
                 
-                <n-layout-content class="content">
+                <!-- Content -->
+                <n-layout-content class="apple-content">
                   <router-view />
                 </n-layout-content>
               </n-layout>
             </n-layout>
 
+            <!-- Fullscreen Layout (Login) -->
             <div v-else class="fullscreen-layout">
                <router-view />
             </div>
@@ -83,12 +103,13 @@ import { useRouter, useRoute } from 'vue-router'
 import {
   NConfigProvider, darkTheme, NLayout, NLayoutSider, NLayoutHeader, NLayoutContent,
   NLoadingBarProvider, NDialogProvider, NNotificationProvider, NMessageProvider,
-  NMenu, NIcon, NButton, NBreadcrumb, NBreadcrumbItem, NTag
+  NMenu, NIcon, NButton, NBreadcrumb, NBreadcrumbItem, NTag, NSelect
 } from 'naive-ui'
+import type { MenuOption } from 'naive-ui'
 import {
   PeopleOutline, DocumentTextOutline, WalletOutline, TimeOutline,
-  CardOutline, AirplaneOutline, BarChartOutline, SettingsOutline,
-  HomeOutline, SunnyOutline, MoonOutline, BusinessOutline
+  CardOutline, BarChartOutline, SettingsOutline, HomeOutline, 
+  SunnyOutline, MoonOutline, BusinessOutline, CheckmarkCircleOutline
 } from '@vicons/ionicons5'
 import { useAuthStore } from '@/store/auth'
 
@@ -98,10 +119,38 @@ const authStore = useAuthStore()
 const collapsed = ref(false)
 const isDark = ref(false)
 const activeKey = ref('dashboard')
+const selectedCompany = ref<string | null>(null)
 
 const isFullScreen = computed(() => {
   return route.name === 'Login' || route.path === '/login' || route.meta?.guest
 })
+
+// Apple-inspired theme overrides
+const themeOverrides = computed(() => ({
+  common: {
+    primaryColor: '#007AFF',
+    primaryColorHover: '#0051D5',
+    primaryColorPressed: '#0043B0',
+    borderRadius: '10px',
+    fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, sans-serif',
+  },
+  Button: {
+    borderRadiusMedium: '10px',
+    borderRadiusSmall: '8px',
+  },
+  Card: {
+    borderRadius: '16px',
+  },
+  Input: {
+    borderRadius: '10px',
+  },
+  Select: {
+    borderRadius: '10px',
+  },
+  Tag: {
+    borderRadius: '6px',
+  },
+}))
 
 const theme = computed(() => isDark.value ? darkTheme : null)
 
@@ -109,9 +158,26 @@ const toggleTheme = () => {
   isDark.value = !isDark.value
 }
 
-const menuOptions = computed(() => {
+// Company options for Super Admin
+const companyOptions = ref([
+  { label: 'Empresa A', value: 'comp-a' },
+  { label: 'Empresa B', value: 'comp-b' },
+])
+
+const handleCompanyChange = (value: string) => {
+  // Set X-Tenant-ID header for subsequent requests
+  localStorage.setItem('x-tenant-id', value)
+  window.location.reload()
+}
+
+const menuOptions = computed((): MenuOption[] => {
   if (authStore.isSuperAdmin) {
     return [
+      {
+        label: 'Dashboard',
+        key: 'dashboard',
+        icon: () => h(NIcon, null, { default: () => h(HomeOutline) })
+      },
       {
         label: 'Personal',
         key: 'personal',
@@ -122,7 +188,6 @@ const menuOptions = computed(() => {
         key: 'admin/companies',
         icon: () => h(NIcon, null, { default: () => h(BusinessOutline) })
       },
-      // Super admin might still want to see settings or other global stats
       {
         label: 'Configuración',
         key: 'settings',
@@ -131,7 +196,6 @@ const menuOptions = computed(() => {
     ]
   }
 
-  // Tenant / Regular User Menu
   return [
     {
       label: 'Dashboard',
@@ -174,18 +238,13 @@ const currentPageTitle = computed(() => {
     contracts: 'Contratos Laborales',
     payroll: 'Planilla y Nómina',
     time: 'Tiempo y Asistencia',
-    overtime: 'Control de Horas Extras',
-    loans: 'Préstamos al Personal',
-    leaves: 'Vacaciones y Permisos',
-    reports: 'Reportes y Estadísticas',
     settings: 'Configuración del Sistema'
   }
-  return titles[activeKey.value] || 'RRHHMod'
+  return titles[activeKey.value] || 'RickERP'
 })
 
 const handleMenuClick = (key: string) => {
   activeKey.value = key
-  // Handle special cases or default routing
   if (key === 'dashboard') {
     router.push('/')
   } else {
@@ -195,54 +254,99 @@ const handleMenuClick = (key: string) => {
 </script>
 
 <style>
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
+@import './assets/styles/apple-design.css';
 
-html, body, #app {
-  height: 100%;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-}
-
+/* App Layout */
 .app-layout {
   height: 100vh;
+  background: #F5F5F7;
 }
 
-.sidebar {
-  background: #fff;
+.main-layout {
+  background: #F5F5F7;
 }
 
-.sidebar .n-layout-sider-scroll-container {
+/* Apple Sidebar */
+.apple-sidebar {
+  background: #FFFFFF !important;
+  border-right: 1px solid rgba(0, 0, 0, 0.08) !important;
+}
+
+.apple-sidebar .n-scrollbar-content {
   display: flex;
   flex-direction: column;
 }
 
-.logo {
+.apple-sidebar-logo {
   height: 64px;
   display: flex;
   align-items: center;
-  justify-content: center;
   gap: 12px;
-  border-bottom: 1px solid #eee;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 0 20px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  background: #FFFFFF;
 }
 
-.logo-text {
+.apple-sidebar-logo.collapsed {
+  justify-content: center;
+  padding: 0;
+}
+
+.apple-sidebar-logo-icon {
+  width: 32px;
+  height: 32px;
+  background: linear-gradient(135deg, #007AFF 0%, #5856D6 100%);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  flex-shrink: 0;
+}
+
+.apple-sidebar-logo-text {
   font-size: 20px;
   font-weight: 700;
-  color: white;
-  letter-spacing: -0.5px;
+  letter-spacing: -0.03em;
+  color: #1D1D1F;
 }
 
-.header {
+/* Apple Navigation */
+.apple-nav .n-menu-item {
+  margin: 4px 12px !important;
+  border-radius: 10px !important;
+}
+
+.apple-nav .n-menu-item-content {
+  border-radius: 10px !important;
+  padding: 10px 16px !important;
+}
+
+.apple-nav .n-menu-item-content--selected {
+  background: #007AFF !important;
+  color: white !important;
+  border-radius: 10px !important;
+}
+
+.apple-nav .n-menu-item-content--selected .n-icon {
+  color: white !important;
+}
+
+.apple-nav .n-menu-item:hover .n-menu-item-content:not(.n-menu-item-content--selected) {
+  background: #F5F5F7 !important;
+}
+
+/* Apple Header */
+.apple-header {
   height: 64px;
   padding: 0 24px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background: white;
+  background: rgba(255, 255, 255, 0.8) !important;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08) !important;
 }
 
 .header-left {
@@ -253,166 +357,79 @@ html, body, #app {
 .header-right {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 16px;
 }
 
-.content {
+/* Apple Content */
+.apple-content {
   padding: 24px;
-  background: #f5f7fa;
+  background: #F5F5F7;
   height: calc(100vh - 64px);
   overflow-y: auto;
 }
 
-.page-title {
-  font-size: 24px;
-  font-weight: 600;
-  color: #1a1a2e;
-  margin-bottom: 24px;
+/* Override Naive UI to match Apple Design */
+.n-button:not(.n-button--text) {
+  border-radius: 10px !important;
 }
 
-.card {
-  background: white;
-  border-radius: 12px;
-  padding: 20px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-  margin-bottom: 20px;
+.n-input {
+  border-radius: 10px !important;
 }
 
-.card-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 16px;
-  padding-bottom: 12px;
-  border-bottom: 1px solid #eee;
+.n-select .n-base-selection {
+  border-radius: 10px !important;
 }
 
-.card-title {
-  font-size: 16px;
-  font-weight: 600;
-  color: #1a1a2e;
+.n-card {
+  border-radius: 16px !important;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04) !important;
+  border: 1px solid rgba(0, 0, 0, 0.08) !important;
 }
 
-.stats-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 20px;
-  margin-bottom: 24px;
+.n-card:hover {
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08) !important;
 }
 
-.stat-card {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
-  padding: 24px;
-  border-radius: 12px;
+.n-tag {
+  border-radius: 6px !important;
 }
 
-.stat-card.employees { background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%); }
-.stat-card.contracts { background: linear-gradient(135deg, #10b981 0%, #059669 100%); }
-.stat-card.payroll { background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%); }
-.stat-card.overtime { background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%); }
-.stat-card.active { background: linear-gradient(135deg, #10b981 0%, #059669 100%); }
-.stat-card.expiring { background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%); }
-.stat-card.expired { background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%); }
-
-.stat-value {
-  font-size: 32px;
-  font-weight: 700;
-  margin-bottom: 4px;
+.n-tag.n-tag--round {
+  border-radius: 9999px !important;
 }
 
-.stat-label {
-  font-size: 14px;
-  opacity: 0.9;
+.n-data-table .n-data-table-th {
+  font-weight: 600 !important;
+  font-size: 13px !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.03em !important;
+  color: #86868B !important;
+  background: #F5F5F7 !important;
 }
 
-.table-container {
-  overflow-x: auto;
+.n-data-table .n-data-table-td {
+  color: #1D1D1F !important;
 }
 
-.data-table {
-  width: 100%;
-  border-collapse: collapse;
+/* Fullscreen Layout */
+.fullscreen-layout {
+  height: 100vh;
+  width: 100vw;
 }
 
-.data-table th,
-.data-table td {
-  padding: 12px 16px;
-  text-align: left;
-  border-bottom: 1px solid #eee;
-}
-
-.data-table th {
-  background: #f8fafc;
-  font-weight: 600;
-  color: #64748b;
-  font-size: 13px;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-}
-
-.data-table tr:hover {
-  background: #f8fafc;
-}
-
-.status-badge {
-  padding: 4px 12px;
-  border-radius: 20px;
-  font-size: 12px;
-  font-weight: 500;
-}
-
-.status-active { background: #dcfce7; color: #166534; }
-.status-inactive { background: #fee2e2; color: #991b1b; }
-.status-pending { background: #fef3c7; color: #92400e; }
-.status-approved { background: #dbeafe; color: #1e40af; }
-
-.form-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 16px;
-}
-
-.form-group {
-  margin-bottom: 16px;
-}
-
-.form-label {
-  display: block;
-  font-size: 14px;
-  font-weight: 500;
-  color: #374151;
-  margin-bottom: 6px;
-}
-
-.action-buttons {
-  display: flex;
-  gap: 12px;
-  justify-content: flex-end;
-  margin-top: 24px;
-  padding-top: 16px;
-  border-top: 1px solid #eee;
-}
-
-.empty-state {
-  text-align: center;
-  padding: 48px 24px;
-  color: #6b7280;
-}
-
-.empty-state-icon {
-  font-size: 48px;
-  margin-bottom: 16px;
-  opacity: 0.5;
-}
-
-.empty-state-text {
-  font-size: 16px;
-  margin-bottom: 8px;
-}
-
-.empty-state-subtext {
-  font-size: 14px;
-  opacity: 0.7;
+/* Responsive */
+@media (max-width: 768px) {
+  .apple-header {
+    padding: 0 16px;
+  }
+  
+  .apple-content {
+    padding: 16px;
+  }
+  
+  .header-right .n-select {
+    display: none;
+  }
 }
 </style>

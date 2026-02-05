@@ -1,0 +1,721 @@
+/**
+ * Apple Design System - RRHHMOD
+ * Estética minimalista, grises, redondeado consistente
+ * Inspired by Apple's Human Interface Guidelines
+ */
+
+/* ============================================
+   VARIABLES DE COLOR - Apple Style
+   ============================================ */
+:root {
+  /* Grises Apple */
+  --apple-gray-100: #F5F5F7;
+  --apple-gray-200: #E8E8ED;
+  --apple-gray-300: #D2D2D7;
+  --apple-gray-400: #86868B;
+  --apple-gray-500: #6E6E73;
+  --apple-gray-600: #424245;
+  --apple-gray-700: #1D1D1F;
+  
+  /* Colores del sistema Apple */
+  --apple-blue: #007AFF;
+  --apple-blue-hover: #0051D5;
+  --apple-green: #34C759;
+  --apple-orange: #FF9500;
+  --apple-red: #FF3B30;
+  --apple-teal: #5AC8FA;
+  --apple-indigo: #5856D6;
+  --apple-purple: #AF52DE;
+  --apple-pink: #FF2D55;
+  --apple-yellow: #FFCC00;
+  
+  /* Fondos */
+  --bg-primary: #FFFFFF;
+  --bg-secondary: #F5F5F7;
+  --bg-tertiary: #FFFFFF;
+  
+  /* Textos */
+  --text-primary: #1D1D1F;
+  --text-secondary: #86868B;
+  --text-tertiary: #6E6E73;
+  --text-inverse: #FFFFFF;
+  
+  /* Bordes y sombras */
+  --border-color: rgba(0, 0, 0, 0.08);
+  --border-color-hover: rgba(0, 0, 0, 0.15);
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.04);
+  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 12px 48px rgba(0, 0, 0, 0.12);
+  
+  /* Espaciado Apple (basado en 4px grid) */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  
+  /* Bordes redondeados */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+  --radius-xl: 20px;
+  --radius-full: 9999px;
+  
+  /* Tipografía */
+  --font-stack: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  --font-mono: 'SF Mono', SFMono-Regular, ui-monospace, Menlo, Monaco, monospace;
+}
+
+/* ============================================
+   RESET Y BASE
+   ============================================ */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  font-family: var(--font-stack);
+  font-weight: 400;
+  line-height: 1.5;
+  color: var(--text-primary);
+  background-color: var(--bg-secondary);
+}
+
+/* ============================================
+   TIPOGRAFÍA - SF Pro Style
+   ============================================ */
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+}
+
+h1 { font-size: 2.5rem; letter-spacing: -0.03em; }
+h2 { font-size: 2rem; letter-spacing: -0.025em; }
+h3 { font-size: 1.5rem; }
+h4 { font-size: 1.25rem; }
+h5 { font-size: 1.125rem; }
+h6 { font-size: 1rem; }
+
+.text-display {
+  font-size: 3rem;
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  line-height: 1.1;
+}
+
+.text-title {
+  font-size: 1.75rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+.text-headline {
+  font-size: 1.25rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.text-body {
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+.text-callout {
+  font-size: 0.9375rem;
+  font-weight: 500;
+}
+
+.text-subhead {
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.text-footnote {
+  font-size: 0.8125rem;
+  color: var(--text-secondary);
+}
+
+.text-caption {
+  font-size: 0.75rem;
+  color: var(--text-tertiary);
+}
+
+/* ============================================
+   COMPONENTES - Cards Apple Style
+   ============================================ */
+.apple-card {
+  background: var(--bg-primary);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--border-color);
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.apple-card:hover {
+  box-shadow: var(--shadow-md);
+  border-color: var(--border-color-hover);
+}
+
+.apple-card-header {
+  padding: var(--space-5) var(--space-6);
+  border-bottom: 1px solid var(--border-color);
+}
+
+.apple-card-body {
+  padding: var(--space-6);
+}
+
+.apple-card-footer {
+  padding: var(--space-4) var(--space-6);
+  border-top: 1px solid var(--border-color);
+  background: var(--bg-secondary);
+  border-radius: 0 0 var(--radius-lg) var(--radius-lg);
+}
+
+/* ============================================
+   BOTONES - Apple Style
+   ============================================ */
+.apple-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-5);
+  font-family: var(--font-stack);
+  font-size: 0.9375rem;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  border-radius: var(--radius-md);
+  border: none;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  outline: none;
+  position: relative;
+  overflow: hidden;
+}
+
+.apple-btn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(255,255,255,0.16) 0%, transparent 100%);
+  opacity: 0;
+  transition: opacity 0.15s ease;
+}
+
+.apple-btn:hover::before {
+  opacity: 1;
+}
+
+.apple-btn:active {
+  transform: scale(0.98);
+}
+
+/* Variantes de botón */
+.apple-btn-primary {
+  background: var(--apple-blue);
+  color: white;
+}
+
+.apple-btn-primary:hover {
+  background: var(--apple-blue-hover);
+}
+
+.apple-btn-secondary {
+  background: var(--apple-gray-200);
+  color: var(--text-primary);
+}
+
+.apple-btn-secondary:hover {
+  background: var(--apple-gray-300);
+}
+
+.apple-btn-ghost {
+  background: transparent;
+  color: var(--apple-blue);
+}
+
+.apple-btn-ghost:hover {
+  background: rgba(0, 122, 255, 0.08);
+}
+
+.apple-btn-danger {
+  background: var(--apple-red);
+  color: white;
+}
+
+.apple-btn-danger:hover {
+  background: #D70015;
+}
+
+.apple-btn-success {
+  background: var(--apple-green);
+  color: white;
+}
+
+.apple-btn-sm {
+  padding: var(--space-2) var(--space-3);
+  font-size: 0.8125rem;
+}
+
+.apple-btn-lg {
+  padding: var(--space-4) var(--space-6);
+  font-size: 1.0625rem;
+}
+
+/* ============================================
+   FORMULARIOS - Apple Style
+   ============================================ */
+.apple-input {
+  width: 100%;
+  padding: var(--space-3) var(--space-4);
+  font-family: var(--font-stack);
+  font-size: 0.9375rem;
+  font-weight: 400;
+  color: var(--text-primary);
+  background: var(--bg-secondary);
+  border: 1px solid transparent;
+  border-radius: var(--radius-md);
+  transition: all 0.2s ease;
+  outline: none;
+}
+
+.apple-input:hover {
+  background: var(--bg-tertiary);
+  border-color: var(--apple-gray-300);
+}
+
+.apple-input:focus {
+  background: var(--bg-primary);
+  border-color: var(--apple-blue);
+  box-shadow: 0 0 0 4px rgba(0, 122, 255, 0.15);
+}
+
+.apple-input::placeholder {
+  color: var(--text-tertiary);
+}
+
+.apple-label {
+  display: block;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  margin-bottom: var(--space-2);
+  letter-spacing: -0.01em;
+}
+
+.apple-select {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%2368686B' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right var(--space-4) center;
+  padding-right: var(--space-10);
+}
+
+/* ============================================
+   SIDEBAR - Apple Style
+   ============================================ */
+.apple-sidebar {
+  background: var(--bg-primary);
+  border-right: 1px solid var(--border-color);
+}
+
+.apple-sidebar-logo {
+  height: 64px;
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: 0 var(--space-5);
+  border-bottom: 1px solid var(--border-color);
+}
+
+.apple-sidebar-logo-icon {
+  width: 32px;
+  height: 32px;
+  background: linear-gradient(135deg, var(--apple-blue) 0%, var(--apple-indigo) 100%);
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+}
+
+.apple-sidebar-logo-text {
+  font-size: 1.25rem;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  color: var(--text-primary);
+}
+
+.apple-nav-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  margin: var(--space-1) var(--space-3);
+  border-radius: var(--radius-md);
+  color: var(--text-secondary);
+  font-size: 0.9375rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.apple-nav-item:hover {
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+}
+
+.apple-nav-item.active {
+  background: var(--apple-blue);
+  color: white;
+}
+
+/* ============================================
+   BADGES Y ETIQUETAS
+   ============================================ */
+.apple-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  padding: var(--space-1) var(--space-3);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  border-radius: var(--radius-full);
+}
+
+.apple-badge-success {
+  background: rgba(52, 199, 89, 0.15);
+  color: #1D7A36;
+}
+
+.apple-badge-warning {
+  background: rgba(255, 149, 0, 0.15);
+  color: #B36A00;
+}
+
+.apple-badge-danger {
+  background: rgba(255, 59, 48, 0.15);
+  color: #C41C14;
+}
+
+.apple-badge-info {
+  background: rgba(0, 122, 255, 0.15);
+  color: #0051D5;
+}
+
+.apple-badge-secondary {
+  background: var(--apple-gray-200);
+  color: var(--text-secondary);
+}
+
+/* ============================================
+   TABLAS - Apple Style
+   ============================================ */
+.apple-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  font-size: 0.9375rem;
+}
+
+.apple-table th {
+  padding: var(--space-3) var(--space-4);
+  font-weight: 600;
+  font-size: 0.8125rem;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  text-align: left;
+  background: var(--bg-secondary);
+  border-bottom: 1px solid var(--border-color);
+}
+
+.apple-table th:first-child {
+  border-radius: var(--radius-md) 0 0 0;
+}
+
+.apple-table th:last-child {
+  border-radius: 0 var(--radius-md) 0 0;
+}
+
+.apple-table td {
+  padding: var(--space-4);
+  border-bottom: 1px solid var(--border-color);
+  color: var(--text-primary);
+}
+
+.apple-table tr:hover td {
+  background: var(--bg-secondary);
+}
+
+.apple-table tr:last-child td:first-child {
+  border-radius: 0 0 0 var(--radius-md);
+}
+
+.apple-table tr:last-child td:last-child {
+  border-radius: 0 0 var(--radius-md) 0;
+}
+
+/* ============================================
+   ESTADÍSTICAS - Apple Style
+   ============================================ */
+.apple-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: var(--space-5);
+}
+
+.apple-stat-card {
+  background: var(--bg-primary);
+  border-radius: var(--radius-lg);
+  padding: var(--space-6);
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--border-color);
+}
+
+.apple-stat-card-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: var(--space-4);
+}
+
+.apple-stat-card-icon.blue { background: rgba(0, 122, 255, 0.12); color: var(--apple-blue); }
+.apple-stat-card-icon.green { background: rgba(52, 199, 89, 0.12); color: var(--apple-green); }
+.apple-stat-card-icon.orange { background: rgba(255, 149, 0, 0.12); color: var(--apple-orange); }
+.apple-stat-card-icon.red { background: rgba(255, 59, 48, 0.12); color: var(--apple-red); }
+.apple-stat-card-icon.purple { background: rgba(175, 82, 222, 0.12); color: var(--apple-purple); }
+
+.apple-stat-value {
+  font-size: 2rem;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  color: var(--text-primary);
+  margin-bottom: var(--space-1);
+}
+
+.apple-stat-label {
+  font-size: 0.9375rem;
+  color: var(--text-secondary);
+  margin-bottom: var(--space-3);
+}
+
+.apple-stat-change {
+  font-size: 0.8125rem;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+}
+
+.apple-stat-change.positive { color: var(--apple-green); }
+.apple-stat-change.negative { color: var(--apple-red); }
+
+/* ============================================
+   MODALES - Apple Style
+   ============================================ */
+.apple-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.apple-modal {
+  background: var(--bg-primary);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-lg);
+  width: 100%;
+  max-width: 480px;
+  max-height: 90vh;
+  overflow: hidden;
+  animation: modalSlideIn 0.2s ease;
+}
+
+@keyframes modalSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.apple-modal-header {
+  padding: var(--space-6);
+  border-bottom: 1px solid var(--border-color);
+}
+
+.apple-modal-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+.apple-modal-body {
+  padding: var(--space-6);
+  max-height: 60vh;
+  overflow-y: auto;
+}
+
+.apple-modal-footer {
+  padding: var(--space-4) var(--space-6);
+  border-top: 1px solid var(--border-color);
+  background: var(--bg-secondary);
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--space-3);
+}
+
+/* ============================================
+   TOASTS Y NOTIFICACIONES
+   ============================================ */
+.apple-toast {
+  background: var(--apple-gray-700);
+  color: white;
+  padding: var(--space-4) var(--space-5);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  font-size: 0.9375rem;
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  animation: toastSlideIn 0.3s ease;
+}
+
+@keyframes toastSlideIn {
+  from {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* ============================================
+   LOADING Y ESTADOS
+   ============================================ */
+.apple-skeleton {
+  background: linear-gradient(90deg, var(--apple-gray-200) 25%, var(--apple-gray-300) 50%, var(--apple-gray-200) 75%);
+  background-size: 200% 100%;
+  animation: skeleton 1.5s ease-in-out infinite;
+  border-radius: var(--radius-md);
+}
+
+@keyframes skeleton {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+.apple-spinner {
+  width: 20px;
+  height: 20px;
+  border: 2px solid var(--apple-gray-300);
+  border-top-color: var(--apple-blue);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ============================================
+   UTILIDADES
+   ============================================ */
+.apple-container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 var(--space-6);
+}
+
+.apple-section {
+  padding: var(--space-8) 0;
+}
+
+.apple-divider {
+  height: 1px;
+  background: var(--border-color);
+  margin: var(--space-6) 0;
+}
+
+.apple-empty-state {
+  text-align: center;
+  padding: var(--space-12) var(--space-6);
+}
+
+.apple-empty-state-icon {
+  width: 64px;
+  height: 64px;
+  margin: 0 auto var(--space-5);
+  background: var(--bg-secondary);
+  border-radius: var(--radius-lg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-tertiary);
+}
+
+.apple-empty-state-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: var(--space-2);
+}
+
+.apple-empty-state-text {
+  font-size: 0.9375rem;
+  color: var(--text-secondary);
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+@media (max-width: 768px) {
+  :root {
+    --space-6: 20px;
+    --space-8: 24px;
+    --space-12: 32px;
+  }
+  
+  h1 { font-size: 2rem; }
+  h2 { font-size: 1.75rem; }
+  
+  .apple-stats-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .apple-modal {
+    margin: var(--space-4);
+    max-height: calc(100vh - var(--space-8));
+  }
+}
