@@ -1,135 +1,213 @@
 <template>
-  <div class="page-container">
-    <div class="header-actions">
-      <div>
-        <h1 class="page-title">Planilla y Nómina</h1>
-        <p class="subtitle">Gestión mensual de pagos y beneficios.</p>
-      </div>
-      
-      <div class="controls">
-        <n-date-picker
-          v-model:value="selectedDate"
+  <AppleContainer>
+    <!-- Header -->
+    <ApplePageHeader
+      title="Planilla y Nómina"
+      subtitle="Gestión mensual de pagos y beneficios"
+    >
+      <template #actions>
+        <AppleDatePicker
+          v-model="selectedDate"
           type="month"
-          clearable
-          :format="'yyyy-MM'"
-          style="width: 200px"
-          @update:value="fetchPayroll"
+          @change="fetchPayroll"
         />
-        <n-button type="warning" :loading="generating" @click="generatePayroll">
-          <template #icon><n-icon><RefreshOutline /></n-icon></template>
-          Generar / Recalcular
-        </n-button>
-        <n-button type="success" :loading="exporting" @click="exportPayroll">
-          <template #icon><n-icon><CloudDownloadOutline /></n-icon></template>
+        <AppleButton 
+          variant="secondary" 
+          :loading="generating"
+          :icon="RefreshCw"
+          @click="generatePayroll"
+        >
+          Generar
+        </AppleButton>
+        <AppleButton 
+          variant="primary" 
+          :loading="exporting"
+          :icon="Download"
+          @click="exportPayroll"
+        >
           Exportar CSV
-        </n-button>
-      </div>
-    </div>
+        </AppleButton>
+      </template>
+    </ApplePageHeader>
 
     <!-- Summary Cards -->
-    <div class="stats-grid">
-      <n-card class="stat-card" :bordered="false">
-        <n-statistic label="Total Planilla" :value="summary.totalNeto">
-          <template #prefix>S/</template>
-        </n-statistic>
-      </n-card>
-      <n-card class="stat-card" :bordered="false">
-        <n-statistic label="Empleados" :value="summary.count">
-          <template #prefix><n-icon><PeopleOutline /></n-icon></template>
-        </n-statistic>
-      </n-card>
-      <n-card class="stat-card" :bordered="false">
-        <n-statistic label="Total Ingresos" :value="summary.totalIngresos">
-          <template #prefix>S/</template>
-        </n-statistic>
-      </n-card>
-      <n-card class="stat-card" :bordered="false">
-        <n-statistic label="Total Deducciones" :value="summary.totalDeducciones">
-          <template #prefix>S/</template>
-        </n-statistic>
-      </n-card>
-    </div>
+    <AppleSection v-if="loading" title="Cargando...">
+      <AppleGrid :columns="4">
+        <AppleSkeleton v-for="i in 4" :key="i" variant="card" />
+      </AppleGrid>
+    </AppleSection>
+
+    <AppleSection v-else title="Resumen del Período">
+      <AppleGrid :columns="4">
+        <AppleStatCard
+          :icon="Wallet"
+          :value="summary.totalNeto"
+          label="Total Planilla"
+          color="blue"
+          format="currency"
+        />
+        <AppleStatCard
+          :icon="Users"
+          :value="summary.count"
+          label="Empleados"
+          color="green"
+        />
+        <AppleStatCard
+          :icon="TrendingUp"
+          :value="summary.totalIngresos"
+          label="Total Ingresos"
+          color="orange"
+          format="currency"
+        />
+        <AppleStatCard
+          :icon="TrendingDown"
+          :value="summary.totalDeducciones"
+          label="Total Deducciones"
+          color="red"
+          format="currency"
+        />
+      </AppleGrid>
+    </AppleSection>
 
     <!-- Main Table -->
-    <n-card :bordered="false" class="table-card">
-      <n-data-table
+    <AppleCard title="Detalle de Planilla" padded hover-lift>
+      <AppleTable
         :columns="columns"
         :data="payrollData"
         :loading="loading"
-        :pagination="pagination"
         :bordered="false"
-        size="small"
       />
-    </n-card>
+    </AppleCard>
 
     <!-- Paystub Modal -->
-    <n-modal v-model:show="showDetailModal" style="width: 600px" preset="card" title="Boleta de Pago">
-      <div v-if="selectedRow" class="paystub-container">
-        <div class="paystub-header">
-          <h3>RickERP - Boleta de Pago</h3>
-          <p>{{ formatPeriod(selectedDate) }}</p>
+    <AppleModal
+      v-model:show="showDetailModal"
+      title="Boleta de Pago"
+      subtitle="RickERP - Sistema de Nómina"
+      size="medium"
+    >
+      <div v-if="selectedRow" class="paystub-content">
+        <!-- Period Header -->
+        <div class="paystub-period">
+          <AppleBadge type="primary" :label="formatPeriod(selectedDate)" />
         </div>
 
-        <div class="paystub-info">
-          <div class="info-row">
-            <span class="label">Empleado:</span>
-            <span class="value">{{ selectedRow.employeeName }}</span>
+        <!-- Employee Info -->
+        <AppleCardSection title="Información del Empleado">
+          <div class="info-grid">
+            <div class="info-item">
+              <span class="info-label">Empleado</span>
+              <span class="info-value">{{ selectedRow.employeeName }}</span>
+            </div>
+            <div class="info-item">
+              <span class="info-label">Documento</span>
+              <span class="info-value">{{ selectedRow.dni }}</span>
+            </div>
           </div>
-          <div class="info-row">
-            <span class="label">Documento:</span>
-            <span class="value">{{ selectedRow.dni }}</span>
+        </AppleCardSection>
+
+        <AppleDivider />
+
+        <!-- Income Section -->
+        <AppleCardSection title="Ingresos">
+          <div class="amount-list">
+            <div class="amount-row">
+              <span>Sueldo Básico</span>
+              <span class="amount-positive">S/ {{ formatMoney(selectedRow.basico) }}</span>
+            </div>
+            <div class="amount-row">
+              <span>Asignación Familiar</span>
+              <span class="amount-positive">S/ {{ formatMoney(selectedRow.asignacionFamiliar || 0) }}</span>
+            </div>
+            <div class="amount-row">
+              <span>Horas Extras</span>
+              <span class="amount-positive">S/ {{ formatMoney(selectedRow.horasExtras) }}</span>
+            </div>
+            <div class="amount-row">
+              <span>Bonificaciones</span>
+              <span class="amount-positive">S/ {{ formatMoney(selectedRow.bonificaciones) }}</span>
+            </div>
+            <div class="amount-row total">
+              <span>Total Ingresos</span>
+              <span class="amount-positive">S/ {{ formatMoney(selectedRow.totalIngresos) }}</span>
+            </div>
           </div>
-        </div>
+        </AppleCardSection>
 
-        <n-divider />
+        <AppleDivider />
 
-        <div class="paystub-body">
-          <div class="section">
-            <h4>Ingresos</h4>
-            <div class="row"><span>Básico</span> <span>S/ {{ formatMoney(selectedRow.basico) }}</span></div>
-            <div class="row"><span>Asig. Familiar</span> <span>S/ {{ formatMoney(selectedRow.asignacionFamiliar || 0) }}</span></div>
-            <div class="row"><span>Horas Extras</span> <span>S/ {{ formatMoney(selectedRow.horasExtras) }}</span></div>
-            <div class="row"><span>Bonificaciones</span> <span>S/ {{ formatMoney(selectedRow.bonificaciones) }}</span></div>
-            <div class="row total"><span>Total Ingresos</span> <span>S/ {{ formatMoney(selectedRow.totalIngresos) }}</span></div>
+        <!-- Deductions Section -->
+        <AppleCardSection title="Descuentos">
+          <div class="amount-list">
+            <div class="amount-row">
+              <span>Sistema de Pensiones (AFP)</span>
+              <span class="amount-negative">- S/ {{ formatMoney(selectedRow.afp) }}</span>
+            </div>
+            <div class="amount-row">
+              <span>Adelantos</span>
+              <span class="amount-negative">- S/ {{ formatMoney(selectedRow.adelantos || 0) }}</span>
+            </div>
+            <div class="amount-row">
+              <span>Otros Descuentos</span>
+              <span class="amount-negative">- S/ {{ formatMoney(selectedRow.otrosDescuentos) }}</span>
+            </div>
+            <div class="amount-row total">
+              <span>Total Descuentos</span>
+              <span class="amount-negative">- S/ {{ formatMoney(selectedRow.afp + selectedRow.otrosDescuentos) }}</span>
+            </div>
           </div>
+        </AppleCardSection>
 
-          <div class="section">
-            <h4>Descuentos</h4>
-            <div class="row"><span>Sistema Pensiones</span> <span>S/ {{ formatMoney(selectedRow.afp) }}</span></div>
-            <div class="row"><span>Adelantos</span> <span>S/ {{ formatMoney(selectedRow.adelantos || 0) }}</span></div>
-            <div class="row"><span>Otros</span> <span>S/ {{ formatMoney(selectedRow.otrosDescuentos) }}</span></div>
-            <div class="row total text-red"><span>Total Descuentos</span> <span>S/ {{ formatMoney(selectedRow.afp + selectedRow.otrosDescuentos) }}</span></div>
-          </div>
-        </div>
+        <AppleDivider />
 
-        <n-divider />
-
-        <div class="paystub-footer">
-          <div class="net-pay">
-            <span>NETO A PAGAR</span>
-            <span>S/ {{ formatMoney(selectedRow.neto) }}</span>
+        <!-- Net Pay -->
+        <div class="net-pay-section">
+          <div class="net-pay-row">
+            <span class="net-pay-label">NETO A PAGAR</span>
+            <span class="net-pay-value">S/ {{ formatMoney(selectedRow.neto) }}</span>
           </div>
         </div>
       </div>
+
       <template #footer>
-        <div class="modal-actions">
-          <n-button @click="showDetailModal = false">Cerrar</n-button>
-          <n-button type="primary" @click="printPaystub">Imprimir</n-button>
-        </div>
+        <AppleButtonGroup>
+          <AppleButton variant="ghost" @click="showDetailModal = false">
+            Cerrar
+          </AppleButton>
+          <AppleButton variant="primary" :icon="Printer" @click="printPaystub">
+            Imprimir
+          </AppleButton>
+        </AppleButtonGroup>
       </template>
-    </n-modal>
-  </div>
+    </AppleModal>
+  </AppleContainer>
 </template>
 
 <script setup lang="ts">
 import { ref, computed, onMounted, h } from 'vue'
 import {
-  NButton, NIcon, NCard, NStatistic, NDataTable, NDatePicker, NModal, NDivider, useMessage,
-  type DataTableColumns
-} from 'naive-ui'
+  Wallet, Users, TrendingUp, TrendingDown, RefreshCw, Download, Eye, Printer
+} from 'lucide-vue-next'
+
 import {
-  RefreshOutline, CloudDownloadOutline, PeopleOutline, EyeOutline
-} from '@vicons/ionicons5'
+  AppleContainer,
+  ApplePageHeader,
+  AppleSection,
+  AppleGrid,
+  AppleStatCard,
+  AppleCard,
+  AppleCardSection,
+  AppleTable,
+  AppleSkeleton,
+  AppleModal,
+  AppleButton,
+  AppleButtonGroup,
+  AppleBadge,
+  AppleDivider,
+  AppleDatePicker,
+  AppleIconButton
+} from '@/components/apple'
+
 import { api } from '@/services/api'
 import dayjs from 'dayjs'
 
@@ -148,7 +226,6 @@ interface PayrollRow {
   neto: number
 }
 
-const message = useMessage()
 const selectedDate = ref(Date.now())
 const loading = ref(false)
 const generating = ref(false)
@@ -156,8 +233,6 @@ const exporting = ref(false)
 const payrollData = ref<PayrollRow[]>([])
 const showDetailModal = ref(false)
 const selectedRow = ref<PayrollRow | null>(null)
-
-const pagination = { pageSize: 10 }
 
 const summary = computed(() => {
   return payrollData.value.reduce((acc, row) => ({
@@ -168,39 +243,39 @@ const summary = computed(() => {
   }), { count: 0, totalNeto: 0, totalIngresos: 0, totalDeducciones: 0 })
 })
 
-const columns: DataTableColumns<PayrollRow> = [
-  { title: 'Empleado', key: 'employeeName', fixed: 'left', width: 200 },
+const columns = [
+  { title: 'Empleado', key: 'employeeName', width: 200 },
   { title: 'DNI', key: 'dni', width: 100 },
   {
     title: 'Básico',
     key: 'basico',
-    render: (row) => `S/ ${formatMoney(row.basico)}`
+    render: (row: PayrollRow) => `S/ ${formatMoney(row.basico)}`
   },
   {
     title: 'Ingresos',
     key: 'totalIngresos',
-    render: (row) => h('strong', `S/ ${formatMoney(row.totalIngresos)}`)
+    render: (row: PayrollRow) => h('strong', `S/ ${formatMoney(row.totalIngresos)}`)
   },
   {
     title: 'Descuentos',
     key: 'deducciones',
-    render: (row) => h('span', { style: 'color: #ef4444' }, `-S/ ${formatMoney(row.afp + row.otrosDescuentos)}`)
+    render: (row: PayrollRow) => h('span', { style: 'color: #FF3B30' }, `-S/ ${formatMoney(row.afp + row.otrosDescuentos)}`)
   },
   {
     title: 'Neto',
     key: 'neto',
-    render: (row) => h('strong', { style: 'color: #10b981' }, `S/ ${formatMoney(row.neto)}`)
+    render: (row: PayrollRow) => h('strong', { style: 'color: #34C759' }, `S/ ${formatMoney(row.neto)}`)
   },
   {
     title: 'Acciones',
     key: 'actions',
-    fixed: 'right',
     width: 100,
-    render: (row) => h(
-      NButton,
-      { size: 'small', secondary: true, onClick: () => openDetail(row) },
-      { icon: () => h(NIcon, null, { default: () => h(EyeOutline) }) }
-    )
+    render: (row: PayrollRow) => h(AppleIconButton, {
+      size: 'small',
+      variant: 'ghost',
+      icon: Eye,
+      onClick: () => openDetail(row)
+    })
   }
 ]
 
@@ -232,7 +307,6 @@ const fetchPayroll = async () => {
     }
   } catch (error) {
     console.error(error)
-    message.error('Error al cargar la planilla')
     payrollData.value = []
   } finally {
     loading.value = false
@@ -245,11 +319,10 @@ const generatePayroll = async () => {
   try {
     const { data } = await api.post('/payroll/payslips/generate', { periodo: period })
     if (data.success) {
-      message.success(`Planilla generada: ${data.count} boletas creadas`)
       fetchPayroll()
     }
   } catch (error) {
-    message.error('Error al generar planilla')
+    console.error(error)
   } finally {
     generating.value = false
   }
@@ -259,16 +332,16 @@ const exportPayroll = async () => {
   exporting.value = true
   const period = dayjs(selectedDate.value).format('YYYY-MM')
   try {
-    const response = await api.post('/payroll/payslips/export', { periodo: period }, { responseType: 'blob' })
-    const url = window.URL.createObjectURL(new Blob([response.data]))
+    const { data } = await api.get(`/payroll/export?period=${period}`, { responseType: 'blob' })
+    const url = window.URL.createObjectURL(new Blob([data]))
     const link = document.createElement('a')
     link.href = url
-    link.setAttribute('download', `Planilla_${period}.csv`)
+    link.setAttribute('download', `planilla-${period}.csv`)
     document.body.appendChild(link)
     link.click()
-    message.success('Exportación completada')
+    link.remove()
   } catch (error) {
-    message.error('Error al exportar')
+    console.error(error)
   } finally {
     exporting.value = false
   }
@@ -289,116 +362,93 @@ onMounted(() => {
 </script>
 
 <style scoped>
-.page-container {
-  padding: 0;
-}
-.header-actions {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 24px;
-}
-.controls {
-  display: flex;
-  gap: 12px;
-  align-items: center;
-}
-.page-title {
-  font-size: 24px;
-  font-weight: 700;
-  margin: 0;
-  color: #1f2937;
-}
-.subtitle {
-  color: #6b7280;
-  margin: 4px 0 0;
+.paystub-content {
+  padding: 8px 0;
 }
 
-.stats-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 16px;
-  margin-bottom: 24px;
-}
-.stat-card {
-  border-radius: 12px;
-  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-}
-
-.table-card {
-  border-radius: 12px;
-  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
-}
-
-/* Paystub Styles */
-.paystub-container {
-  padding: 10px;
-}
-.paystub-header {
-  text-align: center;
+.paystub-period {
   margin-bottom: 20px;
 }
-.paystub-header h3 { margin: 0; font-size: 18px; }
-.paystub-header p { margin: 4px 0 0; color: #666; }
 
-.paystub-info {
-  margin-bottom: 20px;
-}
-.info-row {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 8px;
-  font-size: 14px;
-}
-.info-row .label { font-weight: 600; color: #555; }
-
-.paystub-body {
+.info-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 24px;
+  gap: 16px;
 }
-.section h4 {
-  margin: 0 0 12px;
-  font-size: 14px;
-  text-transform: uppercase;
-  color: #888;
-  border-bottom: 1px solid #eee;
-  padding-bottom: 4px;
+
+.info-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
 }
-.row {
+
+.info-label {
+  font-size: 13px;
+  color: #86868B;
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif;
+}
+
+.info-value {
+  font-size: 15px;
+  font-weight: 500;
+  color: #1D1D1F;
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif;
+}
+
+.amount-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.amount-row {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 8px;
-  font-size: 13px;
-}
-.row.total {
-  margin-top: 12px;
-  font-weight: 700;
+  align-items: center;
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif;
   font-size: 14px;
-  border-top: 1px solid #eee;
-  padding-top: 8px;
 }
-.text-red { color: #ef4444; }
 
-.paystub-footer {
-  margin-top: 20px;
-  text-align: right;
+.amount-row.total {
+  padding-top: 12px;
+  border-top: 1px solid #E8E8ED;
+  font-weight: 600;
 }
-.net-pay {
-  display: inline-block;
-  background: #ecfdf5;
-  padding: 12px 24px;
-  border-radius: 8px;
-  color: #065f46;
-  font-weight: 700;
-  font-size: 16px;
-  border: 1px solid #a7f3d0;
-}
-.net-pay span:first-child { margin-right: 12px; }
 
-.modal-actions {
+.amount-positive {
+  color: #34C759;
+  font-weight: 500;
+}
+
+.amount-negative {
+  color: #FF3B30;
+  font-weight: 500;
+}
+
+.net-pay-section {
+  background: #F5F5F7;
+  border-radius: 12px;
+  padding: 20px;
+  margin-top: 8px;
+}
+
+.net-pay-row {
   display: flex;
-  justify-content: flex-end;
-  gap: 12px;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.net-pay-label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #1D1D1F;
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif;
+}
+
+.net-pay-value {
+  font-size: 24px;
+  font-weight: 700;
+  color: #007AFF;
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif;
 }
 </style>

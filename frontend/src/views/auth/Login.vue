@@ -1,6 +1,7 @@
 <template>
   <div class="auth-layout">
     <div class="auth-container">
+      <!-- Brand Section -->
       <div class="brand-section">
         <div class="logo-circle">
           <span>R</span>
@@ -9,73 +10,62 @@
         <p class="brand-subtitle">Plataforma de Gestión de Recursos Humanos</p>
       </div>
 
-      <div class="auth-card">
-        <div class="auth-header">
-          <h2>Iniciar Sesión</h2>
-          <p class="text-secondary">Ingresa a tu cuenta corporativa</p>
-        </div>
+      <!-- Login Card -->
+      <AppleCard class="auth-card" padded>
+        <AppleCardHeader 
+          title="Iniciar Sesión" 
+          subtitle="Ingresa a tu cuenta corporativa"
+        />
         
-        <n-form
-          ref="formRef"
-          :model="formData"
-          :rules="rules"
-          size="large"
-          @submit.prevent="handleLogin"
-        >
-          <n-form-item path="email" label="Correo Corporativo">
-            <n-input
-              v-model:value="formData.email"
-              placeholder="ej. usuario@empresa.com"
-              type="text"
-              :input-props="{ type: 'email' }"
-            >
-              <template #prefix>
-                <n-icon><MailOutline /></n-icon>
-              </template>
-            </n-input>
-          </n-form-item>
+        <form @submit.prevent="handleLogin">
+          <AppleFormItem label="Correo Corporativo" required :error="!!emailError" :error-message="emailError">
+            <AppleInput
+              :model-value="formData.email"
+              type="email"
+              placeholder="usuario@empresa.com"
+              :prefix-icon="Mail"
+              @update:model-value="formData.email = $event"
+              @enter="handleLogin"
+            />
+          </AppleFormItem>
           
-          <n-form-item path="password" label="Contraseña">
-            <n-input
-              v-model:value="formData.password"
-              placeholder="••••••••"
+          <AppleFormItem label="Contraseña" required :error="!!passwordError" :error-message="passwordError">
+            <AppleInput
+              :model-value="formData.password"
               type="password"
-              show-password-on="click"
-              @keyup.enter="handleLogin"
-            >
-              <template #prefix>
-                <n-icon><LockClosedOutline /></n-icon>
-              </template>
-            </n-input>
-          </n-form-item>
+              placeholder="••••••••"
+              :prefix-icon="Lock"
+              @update:model-value="formData.password = $event"
+              @enter="handleLogin"
+            />
+          </AppleFormItem>
           
           <div class="form-actions">
-            <n-checkbox v-model:checked="formData.rememberMe">
-              Recordarme
-            </n-checkbox>
+            <AppleCheckbox 
+              :model-value="formData.rememberMe" 
+              label="Recordarme" 
+              @update:model-value="formData.rememberMe = $event"
+            />
             <a href="#" class="forgot-link">¿Olvidaste tu contraseña?</a>
           </div>
           
           <div class="submit-section">
-            <n-button
-              type="primary"
+            <AppleButton
+              variant="primary"
               size="large"
-              :loading="loading"
               block
-              attr-type="submit"
-              class="submit-btn"
+              :loading="loading"
+              @click="handleLogin"
             >
               Ingresar al Sistema
-            </n-button>
+            </AppleButton>
           </div>
-        </n-form>
+        </form>
 
-        <div v-if="error" class="error-container">
-          <n-alert type="error" show-icon>
-            {{ error }}
-          </n-alert>
-        </div>
-      </div>
+        <AppleAlert v-if="error" type="error" class="mt-4">
+          {{ error }}
+        </AppleAlert>
+      </AppleCard>
 
       <div class="footer-copy">
         <p>© 2024 RickERP System. Compliance Perú.</p>
@@ -87,18 +77,26 @@
 <script setup lang="ts">
 import { ref, reactive } from 'vue'
 import { useRouter } from 'vue-router'
-import { useMessage } from 'naive-ui'
-import { MailOutline, LockClosedOutline } from '@vicons/ionicons5'
+import { Mail, Lock } from 'lucide-vue-next'
 import { useAuthStore } from '@/store/auth'
-import type { FormInst, FormRules } from 'naive-ui'
+
+import {
+  AppleCard,
+  AppleCardHeader,
+  AppleFormItem,
+  AppleInput,
+  AppleCheckbox,
+  AppleButton,
+  AppleAlert
+} from '@/components/apple'
 
 const router = useRouter()
-const message = useMessage()
 const authStore = useAuthStore()
 
-const formRef = ref<FormInst | null>(null)
 const loading = ref(false)
 const error = ref('')
+const emailError = ref('')
+const passwordError = ref('')
 
 const formData = reactive({
   email: '',
@@ -106,38 +104,49 @@ const formData = reactive({
   rememberMe: false
 })
 
-const rules: FormRules = {
-  email: [
-    { required: true, message: 'Ingrese su correo', trigger: 'blur' },
-    { type: 'email', message: 'Correo inválido', trigger: 'blur' }
-  ],
-  password: [
-    { required: true, message: 'Ingrese su contraseña', trigger: 'blur' },
-    { min: 6, message: 'Mínimo 6 caracteres', trigger: 'blur' }
-  ]
+const validateForm = () => {
+  let isValid = true
+  emailError.value = ''
+  passwordError.value = ''
+  
+  if (!formData.email) {
+    emailError.value = 'Ingrese su correo'
+    isValid = false
+  } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+    emailError.value = 'Correo inválido'
+    isValid = false
+  }
+  
+  if (!formData.password) {
+    passwordError.value = 'Ingrese su contraseña'
+    isValid = false
+  } else if (formData.password.length < 6) {
+    passwordError.value = 'Mínimo 6 caracteres'
+    isValid = false
+  }
+  
+  return isValid
 }
 
 const handleLogin = async () => {
-  if (!formRef.value) return
+  if (!validateForm()) return
+  
+  loading.value = true
+  error.value = ''
   
   try {
-    await formRef.value.validate()
-    loading.value = true
-    error.value = ''
-    
     const success = await authStore.login({
       email: formData.email,
       password: formData.password
     })
     
     if (success) {
-      message.success('Sesión iniciada correctamente')
       router.push('/dashboard')
     } else {
       error.value = 'Credenciales incorrectas o usuario no activo.'
     }
   } catch (e) {
-    // Validation error
+    error.value = 'Error al iniciar sesión. Intente nuevamente.'
   } finally {
     loading.value = false
   }
@@ -150,11 +159,7 @@ const handleLogin = async () => {
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #f0f2f5;
-  background-image:
-    radial-gradient(at 0% 0%, hsla(253,16%,7%,1) 0, transparent 50%),
-    radial-gradient(at 50% 0%, hsla(225,39%,30%,1) 0, transparent 50%),
-    radial-gradient(at 100% 0%, hsla(339,49%,30%,1) 0, transparent 50%);
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   padding: 1rem;
 }
 
@@ -187,7 +192,7 @@ const handleLogin = async () => {
 .logo-circle span {
   font-size: 2rem;
   font-weight: 800;
-  color: #4f46e5;
+  color: #007AFF;
 }
 
 .brand-title {
@@ -195,37 +200,19 @@ const handleLogin = async () => {
   font-weight: 700;
   margin: 0;
   letter-spacing: -0.025em;
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif;
 }
 
 .brand-subtitle {
   margin: 0.5rem 0 0;
   opacity: 0.9;
-  font-weight: 300;
+  font-weight: 400;
 }
 
 .auth-card {
-  background: white;
   width: 100%;
-  border-radius: 16px;
-  padding: 2.5rem;
+  border-radius: 20px;
   box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-}
-
-.auth-header {
-  margin-bottom: 2rem;
-  text-align: left;
-}
-
-.auth-header h2 {
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: #111827;
-  margin: 0 0 0.5rem;
-}
-
-.text-secondary {
-  color: #6b7280;
-  margin: 0;
 }
 
 .form-actions {
@@ -236,12 +223,15 @@ const handleLogin = async () => {
 }
 
 .forgot-link {
-  color: #4f46e5;
+  color: #007AFF;
   text-decoration: none;
   font-size: 0.875rem;
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif;
+  transition: color 0.15s ease;
 }
 
 .forgot-link:hover {
+  color: #0051D5;
   text-decoration: underline;
 }
 
@@ -249,17 +239,14 @@ const handleLogin = async () => {
   margin-top: 1rem;
 }
 
-.submit-btn {
-  font-weight: 600;
-}
-
-.error-container {
-  margin-top: 1.5rem;
+.mt-4 {
+  margin-top: 1rem;
 }
 
 .footer-copy {
   margin-top: 2rem;
-  color: rgba(255, 255, 255, 0.6);
+  color: rgba(255, 255, 255, 0.7);
   font-size: 0.875rem;
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif;
 }
 </style>
