@@ -43,7 +43,7 @@
           ref="uploadRef"
           :custom-request="handleCustomUpload"
           :max="1"
-          accept=".xlsx,.xls,.csv"
+          accept=".xlsx,.csv"
           @change="handleFileChange"
           @remove="handleFileRemove"
         >
@@ -57,7 +57,7 @@
               Arrastra tu archivo aquí o haz clic para seleccionar
             </n-text>
             <n-p depth="3" style="margin: 8px 0 0 0">
-              Solo archivos .xlsx, .xls o .csv
+              Solo archivos .xlsx o .csv
             </n-p>
           </n-upload-dragger>
         </n-upload>
@@ -137,7 +137,7 @@ import {
   EyeOutline
 } from '@vicons/ionicons5'
 import { api } from '@/services/api'
-import * as XLSX from 'xlsx'
+import ExcelJS from 'exceljs/dist/exceljs.min.js'
 
 interface Import {
   id: string
@@ -239,18 +239,139 @@ const loadImports = async () => {
   }
 }
 
-const downloadTemplate = () => {
+const downloadBlob = (blob: Blob, filename: string) => {
+  const url = URL.createObjectURL(blob)
+  const a = document.createElement('a')
+  a.href = url
+  a.download = filename
+  document.body.appendChild(a)
+  a.click()
+  a.remove()
+  URL.revokeObjectURL(url)
+}
+
+const normalizeHeader = (val: unknown) =>
+  String(val ?? '')
+    .trim()
+    .toLowerCase()
+
+const cellToPrimitive = (val: unknown) => {
+  if (val == null) return ''
+  if (val instanceof Date) return val
+  if (typeof val === 'number' || typeof val === 'string' || typeof val === 'boolean') return val
+
+  if (typeof val === 'object' && val) {
+    const anyVal = val as any
+    if (typeof anyVal.text === 'string') return anyVal.text
+    if (typeof anyVal.result === 'string' || typeof anyVal.result === 'number') return anyVal.result
+    if (anyVal.richText && Array.isArray(anyVal.richText)) {
+      return anyVal.richText.map((rt: any) => rt?.text ?? '').join('')
+    }
+  }
+
+  return String(val)
+}
+
+const formatDateCell = (val: unknown) => {
+  const prim = cellToPrimitive(val)
+  if (prim instanceof Date) return prim.toISOString().slice(0, 10)
+  const s = String(prim ?? '').trim()
+  return s
+}
+
+const coercePreviewRecord = (raw: Record<string, unknown>): PreviewRecord | null => {
+  const empleado_codigo = String(raw.empleado_codigo ?? '').trim()
+  if (!empleado_codigo) return null
+
+  const empleado_dni = String(raw.empleado_dni ?? '').trim() || undefined
+  const fecha = formatDateCell(raw.fecha)
+  const horasNum = Number(String(raw.horas ?? '').trim())
+  const horas = Number.isFinite(horasNum) ? horasNum : 0
+  const tipo = String(raw.tipo ?? '').trim()
+  const motivo = String(raw.motivo ?? '').trim() || undefined
+  const proyecto_codigo = String(raw.proyecto_codigo ?? '').trim() || undefined
+
+  return { empleado_codigo, empleado_dni, fecha, horas, tipo, motivo, proyecto_codigo }
+}
+
+const parseCsv = (text: string) => {
+  const trimmed = text.replace(/^\uFEFF/, '').trim()
+  if (!trimmed) return [] as Record<string, unknown>[]
+
+  const lines = trimmed.split(/\r\n|\n|\r/).filter(Boolean)
+  if (lines.length === 0) return [] as Record<string, unknown>[]
+
+  const sample = lines[0]
+  const delimiter = (sample.match(/;/g)?.length ?? 0) > (sample.match(/,/g)?.length ?? 0) ? ';' : ','
+
+  const parseLine = (line: string) => {
+    const out: string[] = []
+    let cur = ''
+    let inQuotes = false
+    for (let i = 0; i < line.length; i++) {
+      const ch = line[i]
+      if (ch === '"') {
+        if (inQuotes && line[i + 1] === '"') {
+          cur += '"'
+          i++
+        } else {
+          inQuotes = !inQuotes
+        }
+        continue
+      }
+      if (!inQuotes && ch === delimiter) {
+        out.push(cur)
+        cur = ''
+        continue
+      }
+      cur += ch
+    }
+    out.push(cur)
+    return out.map((s) => s.trim())
+  }
+
+  const headers = parseLine(lines[0]).map(normalizeHeader)
+  const records: Record<string, unknown>[] = []
+  for (let i = 1; i < lines.length; i++) {
+    const cols = parseLine(lines[i])
+    if (cols.every((c) => !c)) continue
+    const rec: Record<string, unknown> = {}
+    for (let c = 0; c < headers.length; c++) {
+      const key = headers[c]
+      if (!key) continue
+      rec[key] = cols[c] ?? ''
+    }
+    records.push(rec)
+  }
+  return records
+}
+
+const downloadTemplate = async () => {
   const headers = ['empleado_codigo', 'empleado_dni', 'fecha', 'horas', 'tipo', 'motivo', 'proyecto_codigo']
   const example = [
     { empleado_codigo: 'EMP-001', empleado_dni: '12345678', fecha: '2024-02-15', horas: 2, tipo: 'ORDINARIA', motivo: 'Cierre de mes', proyecto_codigo: 'PRJ01' },
     { empleado_codigo: 'EMP-002', empleado_dni: '87654321', fecha: '2024-02-15', horas: 3, tipo: 'NOCTURNA', motivo: 'Mantenimiento', proyecto_codigo: '' }
   ]
 
-  const ws = XLSX.utils.json_to_sheet(example, { header: headers })
-  const wb = XLSX.utils.book_new()
-  XLSX.utils.book_append_sheet(wb, ws, 'HorasExtras')
-  XLSX.writeFile(wb, 'plantilla_horas_extras.xlsx')
-  message.success('Plantilla descargada')
+  try {
+    const workbook = new ExcelJS.Workbook()
+    const sheet = workbook.addWorksheet('HorasExtras')
+    sheet.addRow(headers)
+    for (const row of example) {
+      sheet.addRow(headers.map((h) => (row as any)[h] ?? ''))
+    }
+    sheet.getRow(1).font = { bold: true }
+
+    const buffer = await workbook.xlsx.writeBuffer()
+    const blob = new Blob([buffer], {
+      type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+    })
+    downloadBlob(blob, 'plantilla_horas_extras.xlsx')
+    message.success('Plantilla descargada')
+  } catch (error) {
+    console.error(error)
+    message.error('No se pudo generar la plantilla')
+  }
 }
 
 const handleFileChange = (options: { file: UploadFileInfo }) => {
@@ -258,21 +379,92 @@ const handleFileChange = (options: { file: UploadFileInfo }) => {
   uploadError.value = ''
 
   if (options.file.file) {
+    const selectedFile = options.file.file
+
+    if (selectedFile.size > 10 * 1024 * 1024) {
+      uploadError.value = 'El archivo es demasiado grande (máx 10MB).'
+      previewData.value = []
+      return
+    }
+
+    const name = (options.file.name || selectedFile.name || '').toLowerCase()
+    const isCsv = name.endsWith('.csv')
+    const isXlsx = name.endsWith('.xlsx')
+
     const reader = new FileReader()
-    reader.onload = (e) => {
+    reader.onload = async (e) => {
       try {
-        const data = new Uint8Array(e.target?.result as ArrayBuffer)
-        const workbook = XLSX.read(data, { type: 'array' })
-        const sheetName = workbook.SheetNames[0]
-        const sheet = workbook.Sheets[sheetName]
-        const json = XLSX.utils.sheet_to_json(sheet)
-        previewData.value = json as PreviewRecord[]
+        if (isCsv) {
+          const text = String(e.target?.result ?? '')
+          const rawRecords = parseCsv(text)
+          const coerced = rawRecords
+            .map((r) => {
+              const normalized: Record<string, unknown> = {}
+              for (const [k, v] of Object.entries(r)) normalized[normalizeHeader(k)] = v
+              return coercePreviewRecord(normalized)
+            })
+            .filter(Boolean) as PreviewRecord[]
+
+          previewData.value = coerced
+          return
+        }
+
+        if (!isXlsx) {
+          uploadError.value = 'Formato no soportado. Usa .xlsx o .csv.'
+          previewData.value = []
+          return
+        }
+
+        const arrayBuffer = e.target?.result as ArrayBuffer
+        const workbook = new ExcelJS.Workbook()
+        await workbook.xlsx.load(arrayBuffer)
+        const sheet = workbook.worksheets[0]
+        if (!sheet) {
+          uploadError.value = 'El archivo no contiene hojas.'
+          previewData.value = []
+          return
+        }
+
+        const headerValues = (sheet.getRow(1).values as unknown[]).slice(1).map(normalizeHeader)
+        if (headerValues.length === 0 || headerValues.every((h) => !h)) {
+          uploadError.value = 'No se detectaron encabezados en la primera fila.'
+          previewData.value = []
+          return
+        }
+
+        const records: PreviewRecord[] = []
+        const maxRows = 10000
+        const lastRow = Math.min(sheet.rowCount, maxRows)
+
+        for (let r = 2; r <= lastRow; r++) {
+          const row = sheet.getRow(r)
+          const raw: Record<string, unknown> = {}
+          for (let c = 0; c < headerValues.length; c++) {
+            const key = headerValues[c]
+            if (!key) continue
+            raw[key] = cellToPrimitive(row.getCell(c + 1).value)
+          }
+
+          const rec = coercePreviewRecord(raw)
+          if (rec) records.push(rec)
+        }
+
+        if (sheet.rowCount > maxRows) {
+          uploadError.value = `El archivo tiene demasiadas filas (máx ${maxRows}).`
+          previewData.value = []
+          return
+        }
+
+        previewData.value = records
       } catch (error) {
+        console.error(error)
         uploadError.value = 'Error al leer el archivo. Verifica el formato.'
         previewData.value = []
       }
     }
-    reader.readAsArrayBuffer(options.file.file)
+
+    if (isCsv) reader.readAsText(selectedFile)
+    else reader.readAsArrayBuffer(selectedFile)
   }
 }
 
