@@ -1,397 +1,161 @@
 <template>
-  <div class="payroll-run">
-    <n-alert type="info" class="info-alert">
-      <template #header>
-        Generador de Planilla
-      </template>
-      Seleccione un período para generar o recalcular la planilla. El sistema calculará automáticamente los ingresos, descuentos y neto a pagar para cada empleado.
-    </n-alert>
+  <AppleCard>
+    <div class="info-alert">
+      <h3>Generador de Planilla</h3>
+      <p>Seleccione un período para generar o recalcular la planilla. El sistema calculará automáticamente los ingresos, descuentos y neto a pagar.</p>
+    </div>
 
-    <n-grid :cols="24" :x-gap="24">
-      <n-gi :span="8">
-        <n-card :bordered="false" class="config-card">
-          <template #header>Configuración</template>
+    <div class="content-grid">
+      <div class="config-card">
+        <h4>Configuración</h4>
+        <div class="form-group"><label>Período de Planilla</label><AppleDatePicker v-model="periodDate" /></div>
+        <div class="form-group"><label>Tipo de Planilla</label><AppleSelect v-model="config.type" :options="typeOptions" /></div>
+        <div class="form-group"><label>Fecha de Pago</label><AppleDatePicker v-model="paymentDateVal" /></div>
+        <div class="form-group"><label>Observaciones</label><textarea v-model="config.observation" class="textarea" rows="3"></textarea></div>
+        
+        <div class="options-group">
+          <label class="checkbox"><input type="checkbox" v-model="config.includeOvertime" /> Incluir Horas Extras</label>
+          <label class="checkbox"><input type="checkbox" v-model="config.includeBonifications" /> Incluir Bonificaciones</label>
+          <label class="checkbox"><input type="checkbox" v-model="config.includePendingAdvances" /> Incluir Adelantos</label>
+          <label class="checkbox"><input type="checkbox" v-model="config.recalculateAll" /> Recalcular Todo</label>
+        </div>
 
-          <n-form ref="formRef" :model="config" :rules="rules" label-placement="top">
-            <n-form-item label="Período de Planilla" path="period">
-              <n-date-picker
-                v-model:value="config.period"
-                type="month"
-                clearable
-                :format="'MMMM YYYY'"
-                style="width: 100%"
-                @update:value="onPeriodChange"
-              />
-            </n-form-item>
-
-            <n-form-item label="Tipo de Planilla" path="type">
-              <n-select
-                v-model:value="config.type"
-                :options="typeOptions"
-                placeholder="Seleccionar tipo"
-              />
-            </n-form-item>
-
-            <n-form-item label="Fecha de Pago" path="paymentDate">
-              <n-date-picker
-                v-model:value="config.paymentDate"
-                type="date"
-                clearable
-                style="width: 100%"
-              />
-            </n-form-item>
-
-            <n-form-item label="Observaciones">
-              <n-input
-                v-model:value="config.observation"
-                type="textarea"
-                :rows="3"
-                placeholder="Notas adicionales..."
-              />
-            </n-form-item>
-
-            <n-divider />
-
-            <div class="config-options">
-              <n-checkbox v-model:checked="config.includeOvertime">
-                Incluir Horas Extras
-              </n-checkbox>
-              <n-checkbox v-model:checked="config.includeBonifications">
-                Incluir Bonificaciones
-              </n-checkbox>
-              <n-checkbox v-model:checked="config.includePendingAdvances">
-                Incluir Adelantos Pendientes
-              </n-checkbox>
-              <n-checkbox v-model:checked="config.recalculateAll">
-                Recalcular Todo (sobrescribir)
-              </n-checkbox>
-            </div>
-
-            <n-divider />
-
-            <n-button
-              type="primary"
-              block
-              size="large"
-              :loading="generating"
-              :disabled="!isValidConfig"
-              @click="startGeneration"
-            >
-              <template #icon><n-icon><FlashOutline /></n-icon></template>
-              Generar Planilla
-            </n-button>
-          </n-form>
-        </n-card>
-      </n-gi>
-
-      <n-gi :span="16">
-        <n-card :bordered="false" class="preview-card">
-          <template #header>
-            <div class="preview-header">
-              <span>Vista Previa</span>
-              <n-tag v-if="previewData" type="success">{{ previewData.length }} empleados</n-tag>
-            </div>
-          </template>
-
-          <div v-if="loadingPreview" class="loading-container">
-            <n-spin size="large" />
-            <p>Calculando...</p>
-          </div>
-
-          <div v-else-if="previewData && previewData.length > 0" class="preview-content">
-            <n-data-table
-              :columns="previewColumns"
-              :data="previewData"
-              :max-height="400"
-              :bordered="false"
-              size="small"
-              :pagination="false"
-            />
-
-            <n-divider />
-
-            <div class="preview-summary">
-              <n-grid :cols="4" :x-gap="16">
-                <n-gi>
-                  <div class="summary-item">
-                    <span class="label">Total Empleados</span>
-                    <span class="value">{{ previewData.length }}</span>
-                  </div>
-                </n-gi>
-                <n-gi>
-                  <div class="summary-item">
-                    <span class="label">Total Ingresos</span>
-                    <span class="value income">S/ {{ formatMoney(summary.totalIngresos) }}</span>
-                  </div>
-                </n-gi>
-                <n-gi>
-                  <div class="summary-item">
-                    <span class="label">Total Descuentos</span>
-                    <span class="value deduction">S/ {{ formatMoney(summary.totalDescuentos) }}</span>
-                  </div>
-                </n-gi>
-                <n-gi>
-                  <div class="summary-item">
-                    <span class="label">Neto a Pagar</span>
-                    <span class="value net">S/ {{ formatMoney(summary.totalNeto) }}</span>
-                  </div>
-                </n-gi>
-              </n-grid>
-            </div>
-
-            <div class="preview-actions">
-              <n-button @click="saveDraft">
-                Guardar Borrador
-              </n-button>
-              <n-button type="info" @click="validatePayroll">
-                Validar y Previsualizar
-              </n-button>
-              <n-button type="success" @click="confirmPayroll">
-                Confirmar y Cerrar
-              </n-button>
-            </div>
-          </div>
-
-          <div v-else class="empty-preview">
-            <n-empty description="Seleccione un período para ver la previsualización" />
-          </div>
-        </n-card>
-      </n-gi>
-    </n-grid>
-
-    <n-modal v-model:show="showConfirmModal" style="width: 500px" preset="dialog" title="Confirmar Generación">
-      <template #default>
-        <p>¿Está seguro de generar la planilla para el período <strong>{{ formatPeriodName(config.period) }}</strong>?</p>
-        <p>Esta acción procesará a <strong>{{ previewData?.length || 0 }}</strong> empleados.</p>
-        <n-checkbox v-model:checked="confirmTerms" style="margin-top: 16px">
-          Confirmo que los datos son correctos y deseo proceder con la generación
-        </n-checkbox>
-      </template>
-      <template #action>
-        <n-button @click="showConfirmModal = false">Cancelar</n-button>
-        <n-button
-          type="primary"
-          :loading="generating"
-          :disabled="!confirmTerms"
-          @click="executeGeneration"
-        >
+        <AppleButton variant="primary" block :disabled="!isValidConfig" :loading="generating" @click="startGeneration">
           Generar Planilla
-        </n-button>
+        </AppleButton>
+      </div>
+
+      <div class="preview-card">
+        <h4>Vista Previa <span v-if="previewData" class="badge">{{ previewData.length }} empleados</span></h4>
+        
+        <div v-if="loadingPreview" class="loading">Calculando...</div>
+        
+        <div v-else-if="previewData && previewData.length > 0">
+          <AppleTable :columns="previewColumns" :data="previewData" />
+          
+          <div class="summary">
+            <div class="summary-item">
+              <span class="label">Total Empleados</span>
+              <span class="value">{{ previewData.length }}</span>
+            </div>
+            <div class="summary-item">
+              <span class="label">Total Ingresos</span>
+              <span class="value income">S/ {{ formatMoney(summary.totalIngresos) }}</span>
+            </div>
+            <div class="summary-item">
+              <span class="label">Total Descuentos</span>
+              <span class="value deduction">S/ {{ formatMoney(summary.totalDescuentos) }}</span>
+            </div>
+            <div class="summary-item">
+              <span class="label">Neto a Pagar</span>
+              <span class="value net">S/ {{ formatMoney(summary.totalNeto) }}</span>
+            </div>
+          </div>
+
+          <div class="actions">
+            <AppleButton variant="secondary" @click="saveDraft">Guardar Borrador</AppleButton>
+            <AppleButton variant="secondary" @click="validatePayroll">Validar</AppleButton>
+            <AppleButton variant="primary" @click="confirmPayroll">Confirmar y Cerrar</AppleButton>
+          </div>
+        </div>
+
+        <div v-else class="empty">Seleccione un período para ver la previsualización</div>
+      </div>
+    </div>
+
+    <AppleModal v-model:show="showConfirmModal" title="Confirmar Generación" style="width: 500px">
+      <p>¿Está seguro de generar la planilla para el período <strong>{{ formatPeriodName(config.period) }}</strong>?</p>
+      <p>Esta acción procesará a <strong>{{ previewData?.length || 0 }}</strong> empleados.</p>
+      <label class="checkbox"><input type="checkbox" v-model="confirmTerms" /> Confirmo que los datos son correctos</label>
+      <template #footer>
+        <div style="display: flex; gap: 8px; justify-content: flex-end">
+          <AppleButton variant="secondary" @click="showConfirmModal = false">Cancelar</AppleButton>
+          <AppleButton variant="primary" :loading="generating" :disabled="!confirmTerms" @click="executeGeneration">Generar</AppleButton>
+        </div>
       </template>
-    </n-modal>
-  </div>
+    </AppleModal>
+  </AppleCard>
 </template>
 
 <script setup lang="ts">
-import { ref, computed, watch, onMounted, h } from 'vue'
-import {
-  NButton, NIcon, NCard, NForm, NFormItem, NDatePicker, NSelect,
-  NInput, NCheckbox, NDivider, NDataTable, NGrid, NGi, NSpin,
-  NEmpty, NAlert, NTag, NModal, useMessage, type DataTableColumns
-} from 'naive-ui'
-import {
-  FlashOutline
-} from '@vicons/ionicons5'
+import { ref, computed, watch, onMounted } from 'vue'
+import { AppleCard, AppleButton, AppleDatePicker, AppleSelect, AppleTable, AppleModal } from '@/components/apple'
 import { api } from '@/services/api'
 import dayjs from 'dayjs'
-import 'dayjs/locale/es'
 
-dayjs.locale('es')
+interface PreviewRow { employeeId: string; employeeName: string; dni: string; basico: number; horasExtras: number; bonificaciones: number; totalIngresos: number; afp: number; otrosDescuentos: number; totalDescuentos: number; neto: number }
 
-interface PreviewRow {
-  employeeId: string
-  employeeName: string
-  dni: string
-  basico: number
-  asignacionFamiliar: number
-  horasExtras: number
-  bonificaciones: number
-  totalIngresos: number
-  afp: number
-  otrosDescuentos: number
-  totalDescuentos: number
-  neto: number
-}
-
-const message = useMessage()
-
-const formRef = ref()
-const config = ref({
-  period: null as number | null,
-  type: 'MENSUAL',
-  paymentDate: null as number | null,
-  observation: '',
-  includeOvertime: true,
-  includeBonifications: true,
-  includePendingAdvances: true,
-  recalculateAll: false
-})
-
-const rules = {
-  period: { required: true, message: 'Seleccione un período' },
-  type: { required: true, message: 'Seleccione el tipo de planilla' }
-}
-
-const typeOptions = [
-  { label: 'Mensual', value: 'MENSUAL' },
-  { label: 'Quincenal', value: 'QUINCENAL' },
-  { label: 'Semanal', value: 'SEMANAL' }
-]
-
-const loadingPreview = ref(false)
+const config = ref({ period: null as number | null, type: 'MENSUAL', paymentDate: null as number | null, observation: '', includeOvertime: true, includeBonifications: true, includePendingAdvances: true, recalculateAll: false })
 const generating = ref(false)
 const previewData = ref<PreviewRow[] | null>(null)
+const loadingPreview = ref(false)
 const showConfirmModal = ref(false)
 const confirmTerms = ref(false)
 
-const isValidConfig = computed(() =>
-  config.value.period !== null && config.value.type !== null
-)
+const typeOptions = [{ label: 'Mensual', value: 'MENSUAL' }, { label: 'Quincenal', value: 'QUINCENAL' }, { label: 'Semanal', value: 'SEMANAL' }]
 
-const summary = computed(() => {
-  if (!previewData.value) {
-    return { totalIngresos: 0, totalDescuentos: 0, totalNeto: 0 }
-  }
-  return previewData.value.reduce((acc, row) => ({
-    totalIngresos: acc.totalIngresos + row.totalIngresos,
-    totalDescuentos: acc.totalDescuentos + row.totalDescuentos,
-    totalNeto: acc.totalNeto + row.neto
-  }), { totalIngresos: 0, totalDescuentos: 0, totalNeto: 0 })
+// Computed para AppleDatePicker que espera Date
+const periodDate = computed({
+  get: () => config.value.period ? new Date(config.value.period) : null,
+  set: (val: Date | null) => { config.value.period = val ? val.getTime() : null }
 })
 
-const formatMoney = (val: number) =>
-  val?.toLocaleString('es-PE', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) ?? '0.00'
+const paymentDateVal = computed({
+  get: () => config.value.paymentDate ? new Date(config.value.paymentDate) : null,
+  set: (val: Date | null) => { config.value.paymentDate = val ? val.getTime() : null }
+})
 
-const formatPeriodName = (ts: number | null) =>
-  ts ? dayjs(ts).format('MMMM YYYY').toUpperCase() : ''
+const isValidConfig = computed(() => config.value.period !== null && config.value.type !== null)
 
-const previewColumns: DataTableColumns<PreviewRow> = [
-  { title: 'Empleado', key: 'employeeName', fixed: 'left', width: 200 },
-  { title: 'DNI', key: 'dni', width: 100 },
-  {
-    title: 'Básico',
-    key: 'basico',
-    width: 120,
-    render: (row) => `S/ ${formatMoney(row.basico)}`
-  },
-  {
-    title: 'Hrs. Extras',
-    key: 'horasExtras',
-    width: 100,
-    render: (row) => `S/ ${formatMoney(row.horasExtras)}`
-  },
-  {
-    title: 'Bonos',
-    key: 'bonificaciones',
-    width: 100,
-    render: (row) => `S/ ${formatMoney(row.bonificaciones)}`
-  },
-  {
-    title: 'Ingresos',
-    key: 'totalIngresos',
-    width: 120,
-    render: (row) => h('strong', null, { default: () => `S/ ${formatMoney(row.totalIngresos)}` })
-  },
-  {
-    title: 'AFP',
-    key: 'afp',
-    width: 100,
-    render: (row) => h('span', { style: 'color: #ef4444' }, `-S/ ${formatMoney(row.afp)}`)
-  },
-  {
-    title: 'Descuentos',
-    key: 'totalDescuentos',
-    width: 120,
-    render: (row) => h('span', { style: 'color: #ef4444' }, `-S/ ${formatMoney(row.totalDescuentos)}`)
-  },
-  {
-    title: 'Neto',
-    key: 'neto',
-    width: 120,
-    render: (row) => h('strong', { style: 'color: #10b981' }, `S/ ${formatMoney(row.neto)}`)
-  }
+const summary = computed(() => {
+  if (!previewData.value) return { totalIngresos: 0, totalDescuentos: 0, totalNeto: 0 }
+  return previewData.value.reduce((acc, row) => ({ totalIngresos: acc.totalIngresos + row.totalIngresos, totalDescuentos: acc.totalDescuentos + row.totalDescuentos, totalNeto: acc.totalNeto + row.neto }), { totalIngresos: 0, totalDescuentos: 0, totalNeto: 0 })
+})
+
+const formatMoney = (val: number) => val?.toLocaleString('es-PE', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) ?? '0.00'
+const formatPeriodName = (ts: number | null) => ts ? dayjs(ts).format('MMMM YYYY').toUpperCase() : ''
+
+const previewColumns = [
+  { title: 'Empleado', key: 'employeeName' },
+  { title: 'DNI', key: 'dni' },
+  { title: 'Básico', key: 'basico', render: (row: any) => `S/ ${formatMoney(row.basico)}` },
+  { title: 'Hrs. Extras', key: 'horasExtras', render: (row: any) => `S/ ${formatMoney(row.horasExtras)}` },
+  { title: 'Bonos', key: 'bonificaciones', render: (row: any) => `S/ ${formatMoney(row.bonificaciones)}` },
+  { title: 'Ingresos', key: 'totalIngresos', render: (row: any) => `S/ ${formatMoney(row.totalIngresos)}` },
+  { title: 'AFP', key: 'afp', render: (row: any) => `-S/ ${formatMoney(row.afp)}` },
+  { title: 'Descuentos', key: 'totalDescuentos', render: (row: any) => `-S/ ${formatMoney(row.totalDescuentos)}` },
+  { title: 'Neto', key: 'neto', render: (row: any) => `S/ ${formatMoney(row.neto)}` }
 ]
-
-const onPeriodChange = () => {
-  if (config.value.period) {
-    loadPreview()
-  }
-}
 
 const loadPreview = async () => {
   if (!config.value.period) return
-
   loadingPreview.value = true
   const period = dayjs(config.value.period).format('YYYY-MM')
-
   try {
     const { data } = await api.get(`/payroll/preview?period=${period}&type=${config.value.type}`)
-    if (data.success) {
-      previewData.value = data.data
-    } else {
-      previewData.value = []
-    }
-  } catch (error) {
-    console.error(error)
-    message.error('Error al cargar previsualización')
-    previewData.value = []
-  } finally {
-    loadingPreview.value = false
-  }
+    previewData.value = data.success ? data.data : []
+  } catch (error) { console.error(error); previewData.value = [] }
+  finally { loadingPreview.value = false }
 }
 
-const startGeneration = () => {
-  showConfirmModal.value = true
-  confirmTerms.value = false
-}
+const startGeneration = () => { showConfirmModal.value = true; confirmTerms.value = false }
 
 const executeGeneration = async () => {
   if (!config.value.period) return
-
   generating.value = true
   const period = dayjs(config.value.period).format('YYYY-MM')
-
   try {
-    const { data } = await api.post('/payroll/generate', {
-      period,
-      type: config.value.type,
-      paymentDate: config.value.paymentDate ? dayjs(config.value.paymentDate).format('YYYY-MM-DD') : null,
-      observation: config.value.observation,
-      includeOvertime: config.value.includeOvertime,
-      includeBonifications: config.value.includeBonifications,
-      includePendingAdvances: config.value.includePendingAdvances,
-      recalculateAll: config.value.recalculateAll
-    })
-
-    if (data.success) {
-      message.success('Planilla generada correctamente')
-      showConfirmModal.value = false
-      previewData.value = data.data?.details || null
-    }
-  } catch (error) {
-    message.error('Error al generar planilla')
-  } finally {
-    generating.value = false
-  }
+    const { data } = await api.post('/payroll/generate', { period, type: config.value.type, paymentDate: config.value.paymentDate ? dayjs(config.value.paymentDate).format('YYYY-MM-DD') : null, observation: config.value.observation, includeOvertime: config.value.includeOvertime, includeBonifications: config.value.includeBonifications, includePendingAdvances: config.value.includePendingAdvances, recalculateAll: config.value.recalculateAll })
+    if (data.success) { alert('Planilla generada correctamente'); showConfirmModal.value = false; previewData.value = data.data?.details || null }
+  } catch (error) { console.error(error) }
+  finally { generating.value = false }
 }
 
-const saveDraft = () => {
-  message.success('Borrador guardado')
-}
+const saveDraft = () => alert('Borrador guardado')
+const validatePayroll = () => alert('Validando planilla...')
+const confirmPayroll = () => alert('Planilla confirmada')
 
-const validatePayroll = () => {
-  message.info('Validando planilla...')
-}
-
-const confirmPayroll = () => {
-  message.success('Planilla confirmada')
-}
-
-watch(() => config.value.period, () => {
-  if (config.value.period) {
-    loadPreview()
-  }
-})
+watch(() => config.value.period, () => { if (config.value.period) loadPreview() })
 
 onMounted(() => {
   const now = Date.now()
@@ -402,90 +166,25 @@ onMounted(() => {
 </script>
 
 <style scoped>
-.payroll-run {
-  padding: 0;
-}
-
-.info-alert {
-  margin-bottom: 24px;
-}
-
-.config-card, .preview-card {
-  border-radius: 12px;
-  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
-  height: fit-content;
-}
-
-.preview-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-}
-
-.loading-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 60px;
-  color: #666;
-}
-
-.empty-preview {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 60px;
-}
-
-.preview-summary {
-  margin-top: 20px;
-  padding: 16px;
-  background: #f8fafc;
-  border-radius: 8px;
-}
-
-.summary-item {
-  display: flex;
-  flex-direction: column;
-  text-align: center;
-}
-
-.summary-item .label {
-  font-size: 12px;
-  color: #666;
-  margin-bottom: 4px;
-}
-
-.summary-item .value {
-  font-size: 18px;
-  font-weight: 600;
-}
-
-.summary-item .value.income {
-  color: #3b82f6;
-}
-
-.summary-item .value.deduction {
-  color: #ef4444;
-}
-
-.summary-item .value.net {
-  color: #10b981;
-  font-size: 20px;
-}
-
-.preview-actions {
-  display: flex;
-  gap: 12px;
-  justify-content: flex-end;
-  margin-top: 20px;
-}
-
-.config-options {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
+.info-alert { background: #dbeafe; border-radius: 8px; padding: 16px; margin-bottom: 24px; }
+.info-alert h3 { margin: 0 0 8px 0; color: #1e40af; }
+.info-alert p { margin: 0; color: #1e40af; font-size: 14px; }
+.content-grid { display: grid; grid-template-columns: 1fr 2fr; gap: 24px; }
+.config-card, .preview-card { background: white; border-radius: 12px; padding: 20px; }
+h4 { margin: 0 0 16px 0; font-size: 16px; font-weight: 600; display: flex; justify-content: space-between; align-items: center; }
+.badge { background: #10b981; color: white; padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 500; }
+.form-group { margin-bottom: 16px; }
+.form-group label { display: block; font-size: 13px; font-weight: 500; color: var(--color-text-secondary); margin-bottom: 6px; }
+.textarea { width: 100%; padding: 10px; border: 1px solid #e2e8f0; border-radius: 8px; resize: vertical; font-family: inherit; }
+.options-group { display: flex; flex-direction: column; gap: 8px; margin-bottom: 16px; }
+.checkbox { display: flex; align-items: center; gap: 8px; font-size: 14px; cursor: pointer; }
+.summary { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-top: 20px; padding: 16px; background: #f8fafc; border-radius: 8px; }
+.summary-item { text-align: center; }
+.summary-item .label { display: block; font-size: 12px; color: #666; margin-bottom: 4px; }
+.summary-item .value { font-size: 18px; font-weight: 600; }
+.summary-item .value.income { color: #3b82f6; }
+.summary-item .value.deduction { color: #ef4444; }
+.summary-item .value.net { color: #10b981; font-size: 20px; }
+.actions { display: flex; gap: 12px; justify-content: flex-end; margin-top: 20px; }
+.loading, .empty { padding: 60px; text-align: center; color: #666; }
 </style>

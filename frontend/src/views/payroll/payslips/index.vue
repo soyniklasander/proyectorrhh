@@ -1,169 +1,70 @@
 <template>
-  <div class="payslips-page">
-    <PageHeader title="Boletas de Pago" subtitle="Consulta y descarga de recibos de pago">
-      <template #extra>
-        <n-space>
-          <n-date-picker v-model:value="selectedPeriod" type="month" :is-date-disabled="(ts: number) => ts > Date.now()" />
-          <n-select
-            v-model:value="statusFilter"
-            :options="statusOptions"
-            placeholder="Estado"
-            clearable
-            style="width: 150px"
-          />
-          <n-button @click="loadPayslips" :loading="loading">
-            <template #icon><n-icon><RefreshOutline /></n-icon></template>
-            Actualizar
-          </n-button>
-          <n-button type="info" @click="showGenerateModal = true">
-            <template #icon><n-icon><CalculatorOutline /></n-icon></template>
-            Generar Planilla
-          </n-button>
-          <n-button type="primary" @click="exportPayslips" :loading="exporting">
-            <template #icon><n-icon><DownloadOutline /></n-icon></template>
-            Exportar
-          </n-button>
-        </n-space>
-      </template>
-    </PageHeader>
+  <AppleCard>
+    <div class="header-actions">
+      <div>
+        <h3>Boletas de Pago</h3>
+        <p>Consulta y descarga de recibos de pago</p>
+      </div>
+      <div class="controls">
+        <AppleDatePicker v-model="periodDate" type="month" />
+        <AppleSelect v-model="statusFilter" :options="statusOptions" placeholder="Estado" style="width: 150px" />
+        <AppleButton variant="secondary" @click="loadPayslips">Actualizar</AppleButton>
+        <AppleButton variant="primary" @click="showGenerateModal = true">Generar Planilla</AppleButton>
+        <AppleButton variant="secondary" @click="exportPayslips">Exportar</AppleButton>
+      </div>
+    </div>
 
-    <n-grid :cols="4" :x-gap="16" :y-gap="16" class="summary-cards">
-      <n-gi>
-        <n-card :bordered="false" class="summary-card">
-          <n-statistic label="Total Empleados" :value="payslips.length" />
-        </n-card>
-      </n-gi>
-      <n-gi>
-        <n-card :bordered="false" class="summary-card">
-          <n-statistic label="Total Ingresos" prefix="S/" :value="totalIngresos" :precision="2" />
-        </n-card>
-      </n-gi>
-      <n-gi>
-        <n-card :bordered="false" class="summary-card">
-          <n-statistic label="Total Descuentos" prefix="S/" :value="totalDescuentos" :precision="2" />
-        </n-card>
-      </n-gi>
-      <n-gi>
-        <n-card :bordered="false" class="summary-card highlight">
-          <n-statistic label="Neto a Pagar" prefix="S/" :value="totalNeto" :precision="2" />
-        </n-card>
-      </n-gi>
-    </n-grid>
+    <div class="stats-row">
+      <div class="stat-card"><div class="stat-value">{{ payslips.length }}</div><div class="stat-label">Total</div></div>
+      <div class="stat-card"><div class="stat-value">S/ {{ formatMoney(totalIngresos) }}</div><div class="stat-label">Ingresos</div></div>
+      <div class="stat-card"><div class="stat-value">S/ {{ formatMoney(totalDescuentos) }}</div><div class="stat-label">Descuentos</div></div>
+      <div class="stat-card highlight"><div class="stat-value">S/ {{ formatMoney(totalNeto) }}</div><div class="stat-label">Neto</div></div>
+    </div>
 
-    <n-card :bordered="false" class="table-card">
-      <n-data-table
-        :columns="columns"
-        :data="payslips"
-        :loading="loading"
-        :pagination="pagination"
-        :bordered="false"
-        :row-key="(row: Payslip) => row.id"
-      />
-    </n-card>
+    <AppleTable :columns="columns" :data="payslips" />
 
-    <n-modal v-model:show="showGenerateModal" preset="card" title="Generar Planilla" style="width: 500px">
-      <n-form :model="generateFormData" label-placement="left" label-width="120px">
-        <n-form-item label="Período">
-          <n-date-picker v-model:value="generateFormData.periodo" type="month" style="width: 100%" />
-        </n-form-item>
-        <n-form-item label="Regenerar">
-          <n-switch v-model:value="generateFormData.regenerateExisting" />
-          <span style="margin-left: 8px; font-size: 12px; color: #666;">Sobreescribir planillas existentes</span>
-        </n-form-item>
-      </n-form>
+    <AppleModal v-model:show="showGenerateModal" title="Generar Planilla" style="width: 500px">
+      <div class="form-group"><label>Período</label><AppleDatePicker v-model="generatePeriodDate" type="month" style="width: 100%" /></div>
+      <div class="form-group"><label>Regenerar existente</label><label class="checkbox"><input type="checkbox" v-model="generateFormData.regenerateExisting" /> Sobreescribir</label></div>
       <template #footer>
-        <n-space justify="end">
-          <n-button @click="showGenerateModal = false">Cancelar</n-button>
-          <n-button type="primary" @click="handleGenerate" :loading="generating">Generar</n-button>
-        </n-space>
+        <div style="display: flex; gap: 8px; justify-content: flex-end">
+          <AppleButton variant="secondary" @click="showGenerateModal = false">Cancelar</AppleButton>
+          <AppleButton variant="primary" :loading="generating" @click="handleGenerate">Generar</AppleButton>
+        </div>
       </template>
-    </n-modal>
+    </AppleModal>
 
-    <n-modal v-model:show="showDetailModal" preset="card" title="Detalle de Boleta" style="width: 800px">
-      <n-tabs type="line" animated v-if="selectedPayslip">
-        <n-tab-pane name="resumen" tab="Resumen">
-          <n-descriptions :column="2" label-placement="left">
-            <n-descriptions-item label="Empleado">{{ selectedPayslip.empleadoNombre }}</n-descriptions-item>
-            <n-descriptions-item label="DNI">{{ selectedPayslip.empleadoDni }}</n-descriptions-item>
-            <n-descriptions-item label="Período">{{ selectedPayslip.periodoLabel }}</n-descriptions-item>
-            <n-descriptions-item label="Estado">
-              <n-tag :type="getStatusType(selectedPayslip.estado)" size="small">{{ selectedPayslip.estado }}</n-tag>
-            </n-descriptions-item>
-          </n-descriptions>
-          <n-divider />
-          <n-grid :cols="3" :x-gap="16">
-            <n-gi>
-              <div class="detail-box income">
-                <div class="label">INGRESOS</div>
-                <div class="amount">S/ {{ selectedPayslip.ingresos.totalIngresos?.toFixed(2) }}</div>
-              </div>
-            </n-gi>
-            <n-gi>
-              <div class="detail-box discount">
-                <div class="label">DESCUENTOS</div>
-                <div class="amount">S/ {{ selectedPayslip.descuentos.totalDescuentos?.toFixed(2) }}</div>
-              </div>
-            </n-gi>
-            <n-gi>
-              <div class="detail-box total">
-                <div class="label">NETO A PAGAR</div>
-                <div class="amount">S/ {{ selectedPayslip.netoPagar?.toFixed(2) }}</div>
-              </div>
-            </n-gi>
-          </n-grid>
-        </n-tab-pane>
-        <n-tab-pane name="detalle" tab="Detalle Completo">
-          <n-collapse>
-            <n-collapse-item title="Ingresos" name="ingresos">
-              <n-data-table
-                :columns="detailColumns"
-                :data="getIngresosRows(selectedPayslip)"
-                :bordered="false"
-                size="small"
-              />
-            </n-collapse-item>
-            <n-collapse-item title="Descuentos" name="descuentos">
-              <n-data-table
-                :columns="detailColumns"
-                :data="getDescuentosRows(selectedPayslip)"
-                :bordered="false"
-                size="small"
-              />
-            </n-collapse-item>
-          </n-collapse>
-        </n-tab-pane>
-      </n-tabs>
+    <AppleModal v-model:show="showDetailModal" title="Detalle de Boleta" style="width: 800px">
+      <div v-if="selectedPayslip">
+        <div class="detail-header">
+          <div><strong>{{ selectedPayslip.empleadoNombre }}</strong><br><small>{{ selectedPayslip.empleadoDni }}</small></div>
+          <div>{{ selectedPayslip.periodoLabel }}</div>
+          <div class="status-badge">{{ selectedPayslip.estado }}</div>
+        </div>
+        <div class="detail-totals">
+          <div class="total-box income">INGRESOS<br>S/ {{ selectedPayslip.ingresos?.totalIngresos?.toFixed(2) }}</div>
+          <div class="total-box discount">DESCUENTOS<br>S/ {{ selectedPayslip.descuentos?.totalDescuentos?.toFixed(2) }}</div>
+          <div class="total-box total">NETO<br>S/ {{ selectedPayslip.netoPagar?.toFixed(2) }}</div>
+        </div>
+      </div>
       <template #footer>
-        <n-space justify="end">
-          <n-button @click="showDetailModal = false">Cerrar</n-button>
-          <n-button type="primary" @click="downloadPayslip">
-            <template #icon><n-icon><DownloadOutline /></n-icon></template>
-            Descargar PDF
-          </n-button>
-        </n-space>
+        <div style="display: flex; gap: 8px; justify-content: flex-end">
+          <AppleButton variant="secondary" @click="showDetailModal = false">Cerrar</AppleButton>
+          <AppleButton variant="primary" @click="downloadPayslip">Descargar PDF</AppleButton>
+        </div>
       </template>
-    </n-modal>
-  </div>
+    </AppleModal>
+  </AppleCard>
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted, h } from 'vue'
-import {
-  NButton, NIcon, NCard, NDataTable, NSpace, NTag, useMessage, NModal, NDatePicker, NSelect,
-  NStatistic, NGrid, NGi, NDivider, NTabs, NTabPane, NDescriptions, NDescriptionsItem,
-  NCollapse, NCollapseItem, type DataTableColumns
-} from 'naive-ui'
-import {
-  DownloadOutline, EyeOutline, RefreshOutline, CalculatorOutline
-} from '@vicons/ionicons5'
-import PageHeader from '@/components/shared/PageHeader.vue'
+import { ref, computed, onMounted } from 'vue'
+import { AppleCard, AppleButton, AppleDatePicker, AppleSelect, AppleTable, AppleModal } from '@/components/apple'
 import payrollService, { type Payslip } from '@/services/payroll.service'
 
-const message = useMessage()
 const loading = ref(false)
 const exporting = ref(false)
 const generating = ref(false)
-
 const payslips = ref<Payslip[]>([])
 const selectedPayslip = ref<Payslip | null>(null)
 const selectedPeriod = ref(Date.now())
@@ -171,124 +72,50 @@ const statusFilter = ref<string | null>(null)
 const showGenerateModal = ref(false)
 const showDetailModal = ref(false)
 
-const pagination = { pageSize: 10 }
+const generateFormData = ref({ periodo: Date.now(), regenerateExisting: false })
 
-const generateFormData = ref({
-  periodo: Date.now(),
-  regenerateExisting: false
+const periodDate = computed({
+  get: () => new Date(selectedPeriod.value),
+  set: (val: Date) => { selectedPeriod.value = val.getTime() }
 })
 
-const statusOptions = [
-  { label: 'Borrador', value: 'BORRADOR' },
-  { label: 'Procesado', value: 'PROCESADO' },
-  { label: 'Aprobado', value: 'APROBADO' },
-  { label: 'Pagado', value: 'PAGADO' }
-]
+const generatePeriodDate = computed({
+  get: () => new Date(generateFormData.value.periodo),
+  set: (val: Date) => { generateFormData.value.periodo = val.getTime() }
+})
+
+const statusOptions = [{ label: 'Borrador', value: 'BORRADOR' }, { label: 'Procesado', value: 'PROCESADO' }, { label: 'Aprobado', value: 'APROBADO' }, { label: 'Pagado', value: 'PAGADO' }]
 
 const totalIngresos = computed(() => payslips.value.reduce((sum, p) => sum + (p.ingresos?.totalIngresos || 0), 0))
 const totalDescuentos = computed(() => payslips.value.reduce((sum, p) => sum + (p.descuentos?.totalDescuentos || 0), 0))
 const totalNeto = computed(() => payslips.value.reduce((sum, p) => sum + (p.netoPagar || 0), 0))
 
-const filteredPayslips = computed(() => {
-  let result = payslips.value
-  if (statusFilter.value) {
-    result = result.filter(p => p.estado === statusFilter.value)
-  }
-  return result
-})
+const formatMoney = (val: number) => val?.toLocaleString('es-PE', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) ?? '0.00'
 
-const columns: DataTableColumns<Payslip> = [
-  { title: 'Código', key: 'empleadoCodigo', width: 90 },
-  { title: 'Empleado', key: 'empleadoNombre', width: 200 },
-  { title: 'Período', key: 'periodoLabel', width: 120 },
-  { title: 'Ingresos', key: 'ingreso', width: 120, render: (row) => `S/ ${row.ingresos?.totalIngresos?.toFixed(2) || '0.00'}` },
-  { title: 'Descuentos', key: 'descuento', width: 120, render: (row) => `S/ ${row.descuentos?.totalDescuentos?.toFixed(2) || '0.00'}` },
-  { 
-    title: 'Neto', 
-    key: 'neto', 
-    width: 130, 
-    render: (row) => h('strong', null, `S/ ${row.netoPagar?.toFixed(2) || '0.00'}`) 
-  },
-  {
-    title: 'Estado',
-    key: 'estado',
-    width: 110,
-    render: (row) => h(NTag, { type: getStatusType(row.estado), size: 'small' }, () => row.estado)
-  },
-  {
-    title: 'Acciones',
-    key: 'actions',
-    width: 100,
-    render: (row) => h(NButton, { size: 'small', secondary: true, onClick: () => viewPayslip(row) }, { 
-      icon: () => h(NIcon, null, { default: () => h(EyeOutline) }) 
-    })
-  }
+const columns = [
+  { title: 'Código', key: 'empleadoCodigo' },
+  { title: 'Empleado', key: 'empleadoNombre' },
+  { title: 'Período', key: 'periodoLabel' },
+  { title: 'Ingresos', key: 'ingreso', render: (row: any) => `S/ ${row.ingresos?.totalIngresos?.toFixed(2) || '0.00'}` },
+  { title: 'Descuentos', key: 'descuento', render: (row: any) => `S/ ${row.descuentos?.totalDescuentos?.toFixed(2) || '0.00'}` },
+  { title: 'Neto', key: 'neto', render: (row: any) => `S/ ${row.netoPagar?.toFixed(2) || '0.00'}` },
+  { title: 'Estado', key: 'estado' },
+  { title: 'Acciones', key: 'actions', render: (row: any) => h(AppleButton, { variant: 'ghost', size: 'small', onClick: () => viewPayslip(row) }, () => 'Ver') }
 ]
 
-const detailColumns: DataTableColumns<{ concepto: string; monto: number }> = [
-  { title: 'Concepto', key: 'concepto' },
-  { title: 'Monto', key: 'monto', width: 120, render: (row) => `S/ ${row.monto?.toFixed(2)}` }
-]
-
-const getStatusType = (status: string) => {
-  switch (status) {
-    case 'BORRADOR': return 'warning'
-    case 'PROCESADO': return 'info'
-    case 'APROBADO': return 'success'
-    case 'PAGADO': return 'success'
-    default: return 'default'
-  }
-}
-
-const getIngresosRows = (p: Payslip) => [
-  { concepto: 'Salario Base', monto: p.ingresos?.salarioBase || 0 },
-  { concepto: 'Horas Extras 25%', monto: p.ingresos?.horasExtras25 || 0 },
-  { concepto: 'Horas Extras 35%', monto: p.ingresos?.horasExtras35 || 0 },
-  { concepto: 'Horas Extras 100%', monto: p.ingresos?.horasExtras100 || 0 },
-  { concepto: 'Bonificación Productividad', monto: p.ingresos?.bonificacionProductividad || 0 },
-  { concepto: 'Bonificación Puesto', monto: p.ingresos?.bonificacionPuesto || 0 },
-  { concepto: 'Asignación Familiar', monto: p.ingresos?.asignacionFamiliar || 0 },
-  { concepto: 'Movilidad', monto: p.ingresos?.movilidad || 0 },
-  { concepto: 'Refrigerio', monto: p.ingresos?.refrigerio || 0 },
-  { concepto: 'Vacaciones Truncas', monto: p.ingresos?.vacacionesTruncas || 0 },
-  { concepto: 'Otros Ingresos', monto: p.ingresos?.otrosIngresos || 0 }
-].filter(r => r.monto > 0)
-
-const getDescuentosRows = (p: Payslip) => [
-  { concepto: 'AFP/ONP', monto: p.descuentos?.afpOnp || 0 },
-  { concepto: 'ESSALUD', monto: p.descuentos?.essalud || 0 },
-  { concepto: 'SCTR', monto: p.descuentos?.sctr || 0 },
-  { concepto: 'Quinta Categoría', monto: p.descuentos?.quintaCategoria || 0 },
-  { concepto: 'Préstamos', monto: p.descuentos?.prestamos || 0 },
-  { concepto: 'Adelantos', monto: p.descuentos?.adelantos || 0 },
-  { concepto: 'Faltas', monto: p.descuentos?.faltas || 0 },
-  { concepto: 'Tardanzas', monto: p.descuentos?.tardanzas || 0 },
-  { concepto: 'Otros Descuentos', monto: p.descuentos?.otrosDescuentos || 0 }
-].filter(r => r.monto > 0)
-
-const formatPeriod = (ts: number) => {
-  const d = new Date(ts)
-  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}`
-}
+const formatPeriod = (ts: number) => { const d = new Date(ts); return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}` }
 
 const loadPayslips = async () => {
   loading.value = true
   try {
     const periodo = formatPeriod(selectedPeriod.value)
     const { data } = await payrollService.getPayslips({ periodo, limit: 200 })
-    payslips.value = data.map(p => ({ ...p, periodoLabel: periodo }))
-  } catch (error) {
-    console.error(error)
-    message.error('Error al cargar boletas')
-  } finally {
-    loading.value = false
-  }
+    payslips.value = data.map((p: any) => ({ ...p, periodoLabel: periodo }))
+  } catch (error) { console.error(error) }
+  finally { loading.value = false }
 }
 
-const viewPayslip = (payslip: Payslip) => {
-  selectedPayslip.value = payslip
-  showDetailModal.value = true
-}
+const viewPayslip = (payslip: Payslip) => { selectedPayslip.value = payslip; showDetailModal.value = true }
 
 const exportPayslips = async () => {
   exporting.value = true
@@ -301,52 +128,47 @@ const exportPayslips = async () => {
     a.download = `boletas_${periodo}.xlsx`
     a.click()
     URL.revokeObjectURL(url)
-    message.success('Exportación completada')
-  } catch (error) {
-    console.error(error)
-    message.error('Error al exportar')
-  } finally {
-    exporting.value = false
-  }
+    alert('Exportación completada')
+  } catch (error) { console.error(error) }
+  finally { exporting.value = false }
 }
 
 const handleGenerate = async () => {
   generating.value = true
   try {
     const periodo = formatPeriod(generateFormData.value.periodo)
-    const result = await payrollService.generatePayroll({
-      periodo,
-      regenerateExisting: generateFormData.value.regenerateExisting
-    })
-    message.success(`Generados: ${result.data.generados}, Actualizados: ${result.data.actualizados}`)
+    const result = await payrollService.generatePayroll({ periodo, regenerateExisting: generateFormData.value.regenerateExisting })
+    alert(`Generados: ${result.data.generados}, Actualizados: ${result.data.actualizados}`)
     showGenerateModal.value = false
     loadPayslips()
-  } catch (error) {
-    console.error(error)
-    message.error('Error al generar planilla')
-  } finally {
-    generating.value = false
-  }
+  } catch (error) { console.error(error) }
+  finally { generating.value = false }
 }
 
-const downloadPayslip = () => {
-  if (!selectedPayslip.value) return
-  message.info('Funcionalidad de descarga PDF en desarrollo')
-}
+const downloadPayslip = () => alert('Funcionalidad de descarga PDF en desarrollo')
 
 onMounted(() => { loadPayslips() })
 </script>
 
 <style scoped>
-.payslips-page { padding: 0; }
-.table-card { border-radius: 12px; box-shadow: 0 1px 3px 0 rgba(0,0,0,0.1); margin-top: 16px; }
-.summary-card { border-radius: 12px; }
-.summary-card.highlight { background: linear-gradient(135deg, #18a058 0%, #36ad6a 100%); color: white; }
-.summary-card.highlight :deep(.n-statistic-value) { color: white; }
-.detail-box { padding: 16px; border-radius: 8px; text-align: center; }
-.detail-box.income { background: #e8f5e9; color: #2e7d32; }
-.detail-box.discount { background: #ffebee; color: #c62828; }
-.detail-box.total { background: #e3f2fd; color: #1565c0; }
-.detail-box .label { font-size: 12px; font-weight: 500; margin-bottom: 8px; }
-.detail-box .amount { font-size: 24px; font-weight: bold; }
+.header-actions { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 24px; }
+.header-actions h3 { margin: 0 0 4px 0; font-size: 20px; font-weight: 600; }
+.header-actions p { margin: 0; color: var(--color-text-secondary); }
+.controls { display: flex; gap: 12px; align-items: center; }
+.stats-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 24px; }
+.stat-card { background: white; padding: 16px; border-radius: 12px; text-align: center; }
+.stat-card.highlight { background: linear-gradient(135deg, #18a058 0%, #36ad6a 100%); color: white; }
+.stat-value { font-size: 24px; font-weight: 700; }
+.stat-label { font-size: 12px; color: var(--color-text-secondary); margin-top: 4px; }
+.stat-card.highlight .stat-label { color: rgba(255,255,255,0.8); }
+.form-group { margin-bottom: 16px; }
+.form-group label { display: block; font-size: 13px; font-weight: 500; color: var(--color-text-secondary); margin-bottom: 6px; }
+.checkbox { display: flex; align-items: center; gap: 8px; font-size: 14px; cursor: pointer; }
+.detail-header { display: flex; justify-content: space-between; align-items: center; padding: 16px; background: #f8fafc; border-radius: 8px; margin-bottom: 16px; }
+.status-badge { background: #10b981; color: white; padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 500; }
+.detail-totals { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.total-box { padding: 16px; border-radius: 8px; text-align: center; }
+.total-box.income { background: #e8f5e9; color: #2e7d32; }
+.total-box.discount { background: #ffebee; color: #c62828; }
+.total-box.total { background: #e3f2fd; color: #1565c0; }
 </style>

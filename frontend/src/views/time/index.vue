@@ -1,84 +1,80 @@
 <template>
-  <div class="time-module">
-    <PageHeader title="Tiempo y Asistencia" subtitle="Control de asistencia, horas extras, vacaciones y permisos">
-      <template #extra>
-        <div class="module-actions">
-          <n-button type="primary" @click="activeTab = 'attendance'">
-            📍 Asistencia
-          </n-button>
-          <n-button type="warning" @click="activeTab = 'overtime'">
-            ⏰ Horas Extras
-          </n-button>
-          <n-button type="success" @click="activeTab = 'vacations'">
-            🏖️ Vacaciones
-          </n-button>
-          <n-button type="info" @click="activeTab = 'permits'">
-            📋 Permisos
-          </n-button>
-        </div>
+  <AppleContainer>
+    <ApplePageHeader
+      title="Tiempo y Asistencia"
+      subtitle="Control de asistencia, horas extras, vacaciones y permisos"
+    >
+      <template #actions>
+        <AppleButton variant="primary" :icon="MapPinIcon" @click="activeTab = 'attendance'">
+          📍 Asistencia
+        </AppleButton>
+        <AppleButton variant="secondary" :icon="ClockIcon" @click="activeTab = 'overtime'">
+          ⏰ Horas Extras
+        </AppleButton>
+        <AppleButton variant="secondary" :icon="SunIcon" @click="activeTab = 'vacations'">
+          🏖️ Vacaciones
+        </AppleButton>
+        <AppleButton variant="secondary" :icon="FileTextIcon" @click="activeTab = 'permits'">
+          📋 Permisos
+        </AppleButton>
       </template>
-    </PageHeader>
+    </ApplePageHeader>
 
-    <div class="module-tabs">
-      <n-tabs v-model:value="activeTab" type="line" size="large">
-        <n-tab-pane name="attendance" tab="📍 Asistencia">
-          <AttendanceList />
-        </n-tab-pane>
-        <n-tab-pane name="overtime" tab="⏰ Horas Extras">
-          <div class="overtime-actions" style="margin-bottom: 16px;">
-            <n-space>
-              <n-button type="primary" @click="$router.push('/time/overtime/import')">
-                📥 Importar Excel
-              </n-button>
-              <n-button type="info" @click="$router.push('/time/overtime/review')">
-                👁️ Revisión
-              </n-button>
-              <n-button @click="$router.push('/time/overtime/settings')">
-                ⚙️ Configuración
-              </n-button>
-            </n-space>
-          </div>
-          <OvertimeList />
-        </n-tab-pane>
-        <n-tab-pane name="vacations" tab="🏖️ Vacaciones">
-          <VacationsList />
-        </n-tab-pane>
-        <n-tab-pane name="permits" tab="📋 Permisos">
-          <PermitsList />
-        </n-tab-pane>
-      </n-tabs>
-    </div>
-  </div>
+    <AppleCard>
+      <div v-if="activeTab === 'attendance'">
+        <AttendanceList />
+      </div>
+      
+      <div v-else-if="activeTab === 'overtime'">
+        <div class="overtime-actions" style="margin-bottom: 16px;">
+          <AppleButton variant="primary" :icon="DownloadIcon" @click="$router.push('/time/overtime/import')">
+            📥 Importar Excel
+          </AppleButton>
+          <AppleButton variant="secondary" :icon="EyeIcon" @click="$router.push('/time/overtime/review')">
+            👁️ Revisión
+          </AppleButton>
+          <AppleButton variant="secondary" :icon="SettingsIcon" @click="$router.push('/time/overtime/settings')">
+            ⚙️ Configuración
+          </AppleButton>
+        </div>
+        <OvertimeList />
+      </div>
+      
+      <div v-else-if="activeTab === 'vacations'">
+        <VacationsList />
+      </div>
+      
+      <div v-else-if="activeTab === 'permits'">
+        <PermitsList />
+      </div>
+    </AppleCard>
+  </AppleContainer>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import { NTabPane } from 'naive-ui'
-
-import PageHeader from '@/components/shared/PageHeader.vue'
+import {
+  AppleContainer,
+  ApplePageHeader,
+  AppleButton,
+  AppleCard
+} from '@/components/apple'
+import { 
+  MapPin, Clock, Sun, FileText, 
+  Download, Eye, Settings 
+} from 'lucide-vue-next'
 import AttendanceList from './AttendanceList.vue'
 import OvertimeList from './OvertimeList.vue'
 import VacationsList from './VacationsList.vue'
 import PermitsList from './PermitsList.vue'
 
+const MapPinIcon = MapPin
+const ClockIcon = Clock
+const SunIcon = Sun
+const FileTextIcon = FileText
+const DownloadIcon = Download
+const EyeIcon = Eye
+const SettingsIcon = Settings
+
 const activeTab = ref('attendance')
 </script>
-
-<style scoped>
-.time-module {
-  padding: 24px;
-}
-
-.module-actions {
-  display: flex;
-  gap: 12px;
-}
-
-.module-tabs {
-  margin-top: 24px;
-  background: white;
-  border-radius: 12px;
-  padding: 24px;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-}
-</style>

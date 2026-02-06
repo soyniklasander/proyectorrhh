@@ -1,622 +1,200 @@
 <template>
-  <div class="benefits-list">
+  <AppleCard>
     <div class="header-actions">
       <div>
-        <h1 class="page-title">Beneficios y Descuentos</h1>
+        <h3 class="page-title">Beneficios y Descuentos</h3>
         <p class="subtitle">Gestión de conceptos adicionales de planilla.</p>
       </div>
+      <AppleButton variant="primary" @click="showBenefitModal = true">Nuevo Concepto</AppleButton>
+    </div>
 
-      <div class="controls">
-        <n-button type="primary" @click="showBenefitModal = true">
-          <template #icon><n-icon><AddOutline /></n-icon></template>
-          Nuevo Concepto
-        </n-button>
+    <div class="tabs-container">
+      <div class="tabs">
+        <button :class="{ active: activeTab === 'benefits' }" @click="activeTab = 'benefits'">Beneficios</button>
+        <button :class="{ active: activeTab === 'deductions' }" @click="activeTab = 'deductions'">Descuentos</button>
+        <button :class="{ active: activeTab === 'employees' }" @click="activeTab = 'employees'">Asignaciones</button>
+      </div>
+
+      <div class="tab-content">
+        <div v-if="activeTab === 'benefits'" class="tab-panel">
+          <div class="card-header"><span>Beneficios Registrados</span><AppleSearchInput v-model="searchBenefit" placeholder="Buscar..." /></div>
+          <AppleTable :columns="benefitColumns" :data="filteredBenefits" />
+        </div>
+        <div v-if="activeTab === 'deductions'" class="tab-panel">
+          <div class="card-header"><span>Descuentos Registrados</span><AppleSearchInput v-model="searchDeduction" placeholder="Buscar..." /></div>
+          <AppleTable :columns="deductionColumns" :data="filteredDeductions" />
+        </div>
+        <div v-if="activeTab === 'employees'" class="tab-panel">
+          <div class="card-header"><span>Conceptos por Empleado</span><AppleButton variant="secondary" size="small" @click="showAssignmentModal = true">Asignar</AppleButton></div>
+          <AppleTable :columns="assignmentColumns" :data="employeeConcepts" />
+        </div>
       </div>
     </div>
 
-    <n-tabs v-model:value="activeTab" type="line" animated>
-      <n-tab-pane name="benefits" tab="Beneficios">
-        <n-card :bordered="false" class="table-card">
-          <template #header>
-            <div class="card-header">
-              <span>Beneficios Registrados</span>
-              <n-input
-                v-model:value="searchBenefit"
-                placeholder="Buscar..."
-                style="width: 250px"
-                clearable
-              />
-            </div>
-          </template>
-
-          <n-data-table
-            :columns="benefitColumns"
-            :data="filteredBenefits"
-            :loading="loading"
-            :pagination="pagination"
-            :bordered="false"
-            :row-key="(row: Benefit) => row.id"
-          />
-        </n-card>
-      </n-tab-pane>
-
-      <n-tab-pane name="deductions" tab="Descuentos">
-        <n-card :bordered="false" class="table-card">
-          <template #header>
-            <div class="card-header">
-              <span>Descuentos Registrados</span>
-              <n-input
-                v-model:value="searchDeduction"
-                placeholder="Buscar..."
-                style="width: 250px"
-                clearable
-              />
-            </div>
-          </template>
-
-          <n-data-table
-            :columns="deductionColumns"
-            :data="filteredDeductions"
-            :loading="loading"
-            :pagination="pagination"
-            :bordered="false"
-            :row-key="(row: Deduction) => row.id"
-          />
-        </n-card>
-      </n-tab-pane>
-
-      <n-tab-pane name="employees" tab="Asignaciones por Empleado">
-        <n-card :bordered="false" class="table-card">
-          <template #header>
-            <div class="card-header">
-              <span>Conceptos Asignados por Empleado</span>
-              <n-button size="small" @click="showAssignmentModal = true">
-                <template #icon><n-icon><PersonAddOutline /></n-icon></template>
-                Asignar Concepto
-              </n-button>
-            </div>
-          </template>
-
-          <n-data-table
-            :columns="assignmentColumns"
-            :data="employeeConcepts"
-            :loading="loading"
-            :pagination="pagination"
-            :bordered="false"
-            :row-key="(row: EmployeeConcept) => row.id"
-          />
-        </n-card>
-      </n-tab-pane>
-    </n-tabs>
-
-    <n-modal v-model:show="showBenefitModal" style="width: 500px" preset="card" :title="editingBenefit ? 'Editar Concepto' : 'Nuevo Concepto'">
-      <n-form ref="benefitFormRef" :model="benefitForm" :rules="benefitRules" label-placement="top">
-        <n-form-item label="Tipo" path="type">
-          <n-radio-group v-model:value="benefitForm.type">
-            <n-radio value="BENEFICIO">Beneficio</n-radio>
-            <n-radio value="DESCUENTO">Descuento</n-radio>
-          </n-radio-group>
-        </n-form-item>
-
-        <n-form-item label="Nombre" path="name">
-          <n-input v-model:value="benefitForm.name" placeholder="Nombre del concepto" />
-        </n-form-item>
-
-        <n-form-item label="Código" path="code">
-          <n-input v-model:value="benefitForm.code" placeholder="Código único" />
-        </n-form-item>
-
-        <n-form-item label="Descripción">
-          <n-input v-model:value="benefitForm.description" type="textarea" :rows="2" placeholder="Descripción..." />
-        </n-form-item>
-
-        <n-grid :cols="2" :x-gap="16">
-          <n-gi>
-            <n-form-item label="Monto" path="amount">
-              <n-input-number v-model:value="benefitForm.amount" :precision="2" :min="0" style="width: 100%">
-                <template #prefix>S/</template>
-              </n-input-number>
-            </n-form-item>
-          </n-gi>
-          <n-gi>
-            <n-form-item label="Tipo de Monto" path="amountType">
-              <n-select
-                v-model:value="benefitForm.amountType"
-                :options="[
-                  { label: 'Fijo', value: 'FIJO' },
-                  { label: 'Porcentaje', value: 'PORCENTAJE' }
-                ]"
-              />
-            </n-form-item>
-          </n-gi>
-        </n-grid>
-
-        <n-form-item label="Frecuencia" path="frequency">
-          <n-select
-            v-model:value="benefitForm.frequency"
-            :options="[
-              { label: 'Mensual', value: 'MENSUAL' },
-              { label: 'Quincenal', value: 'QUINCENAL' },
-              { label: 'Única vez', value: 'UNICA' }
-            ]"
-          />
-        </n-form-item>
-
-        <n-form-item label="Estado">
-          <n-switch v-model:value="benefitForm.active" />
-        </n-form-item>
-      </n-form>
-
+    <AppleModal v-model:show="showBenefitModal" :title="editingBenefit ? 'Editar Concepto' : 'Nuevo Concepto'" style="width: 500px">
+      <div class="form-grid">
+        <div class="form-group"><label>Tipo</label><AppleSelect v-model="benefitForm.type" :options="typeOptions" /></div>
+        <div class="form-group"><label>Nombre</label><AppleInput v-model="benefitForm.name" /></div>
+        <div class="form-group"><label>Código</label><AppleInput v-model="benefitForm.code" /></div>
+        <div class="form-group full"><label>Descripción</label><textarea v-model="benefitForm.description" class="textarea"></textarea></div>
+        <div class="form-group"><label>Monto</label><AppleInput v-model="benefitForm.amountStr" @update:model-value="(val) => benefitForm.amount = Number(val) || 0" /></div>
+        <div class="form-group"><label>Frecuencia</label><AppleSelect v-model="benefitForm.frequency" :options="frequencyOptions" /></div>
+      </div>
       <template #footer>
-        <div style="display: flex; justify-content: flex-end; gap: 12px">
-          <n-button @click="closeBenefitModal">Cancelar</n-button>
-          <n-button type="primary" :loading="saving" @click="saveBenefit">
-            {{ editingBenefit ? 'Actualizar' : 'Crear' }}
-          </n-button>
+        <div style="display: flex; gap: 8px; justify-content: flex-end">
+          <AppleButton variant="secondary" @click="closeBenefitModal">Cancelar</AppleButton>
+          <AppleButton variant="primary" :loading="saving" @click="saveBenefit">{{ editingBenefit ? 'Actualizar' : 'Crear' }}</AppleButton>
         </div>
       </template>
-    </n-modal>
+    </AppleModal>
 
-    <n-modal v-model:show="showAssignmentModal" style="width: 500px" preset="card" title="Asignar Concepto a Empleado">
-      <n-form ref="assignmentFormRef" :model="assignmentForm" :rules="assignmentRules" label-placement="top">
-        <n-form-item label="Empleado" path="employeeId">
-          <n-select
-            v-model:value="assignmentForm.employeeId"
-            :options="employeeOptions"
-            filterable
-            placeholder="Seleccionar empleado"
-          />
-        </n-form-item>
-
-        <n-form-item label="Concepto" path="conceptId">
-          <n-select
-            v-model:value="assignmentForm.conceptId"
-            :options="conceptOptions"
-            placeholder="Seleccionar concepto"
-          />
-        </n-form-item>
-
-        <n-form-item label="Monto Específico (opcional)">
-          <n-input-number
-            v-model:value="assignmentForm.customAmount"
-            :precision="2"
-            :min="0"
-            style="width: 100%"
-          >
-            <template #prefix>S/</template>
-          </n-input-number>
-        </n-form-item>
-
-        <n-form-item label="Fecha Inicio">
-          <n-date-picker v-model:value="assignmentForm.startDate" type="date" style="width: 100%" />
-        </n-form-item>
-
-        <n-form-item label="Fecha Fin (opcional)">
-          <n-date-picker v-model:value="assignmentForm.endDate" type="date" style="width: 100%" />
-        </n-form-item>
-
-        <n-form-item label="Observaciones">
-          <n-input v-model:value="assignmentForm.observation" type="textarea" :rows="2" />
-        </n-form-item>
-      </n-form>
-
+    <AppleModal v-model:show="showAssignmentModal" title="Asignar Concepto" style="width: 500px">
+      <div class="form-grid">
+        <div class="form-group"><label>Empleado</label><AppleSelect v-model="assignmentForm.employeeId" :options="employeeOptions" filterable /></div>
+        <div class="form-group"><label>Concepto</label><AppleSelect v-model="assignmentForm.conceptId" :options="conceptOptions" /></div>
+        <div class="form-group"><label>Monto</label><AppleInput v-model="assignmentForm.customAmountStr" @update:model-value="(val) => assignmentForm.customAmount = val ? Number(val) : null" /></div>
+      </div>
       <template #footer>
-        <div style="display: flex; justify-content: flex-end; gap: 12px">
-          <n-button @click="showAssignmentModal = false">Cancelar</n-button>
-          <n-button type="primary" :loading="saving" @click="saveAssignment">
-            Asignar
-          </n-button>
+        <div style="display: flex; gap: 8px; justify-content: flex-end">
+          <AppleButton variant="secondary" @click="showAssignmentModal = false">Cancelar</AppleButton>
+          <AppleButton variant="primary" :loading="saving" @click="saveAssignment">Asignar</AppleButton>
         </div>
       </template>
-    </n-modal>
-  </div>
+    </AppleModal>
+  </AppleCard>
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted, h } from 'vue'
-import {
-  NButton, NIcon, NCard, NInput, NDataTable, NModal, NForm, NFormItem,
-  NInputNumber, NSelect, NRadioGroup, NRadio, NSwitch, NGrid, NGi, NDivider,
-  NTabs, NTabPane, useMessage, type DataTableColumns
-} from 'naive-ui'
-import {
-  AddOutline, PersonAddOutline, CreateOutline, TrashOutline, BusinessOutline
-} from '@vicons/ionicons5'
+import { ref, computed, onMounted, watch } from 'vue'
+import { AppleCard, AppleButton, AppleSearchInput, AppleTable, AppleModal, AppleInput, AppleSelect } from '@/components/apple'
 import { api } from '@/services/api'
 
-interface Benefit {
-  id: string
-  name: string
-  code: string
-  type: 'BENEFICIO' | 'DESCUENTO'
-  description: string
-  amount: number
-  amountType: 'FIJO' | 'PORCENTAJE'
-  frequency: string
-  active: boolean
-  createdAt: string
-}
+interface Benefit { id: string; name: string; code: string; type: string; description: string; amount: number; frequency: string; active: boolean }
+interface EmployeeConcept { id: string; employeeName: string; conceptName: string; conceptType: string; amount: number; status: string }
 
-interface Deduction {
-  id: string
-  name: string
-  code: string
-  type: 'DESCUENTO'
-  description: string
-  amount: number
-  amountType: 'FIJO' | 'PORCENTAJE'
-  frequency: string
-  active: boolean
-  createdAt: string
-}
-
-interface EmployeeConcept {
-  id: string
-  employeeId: string
-  employeeName: string
-  conceptId: string
-  conceptName: string
-  conceptType: string
-  amount: number
-  startDate: string
-  endDate?: string
-  status: 'ACTIVO' | 'INACTIVO' | 'VENCIDO'
-}
-
-const message = useMessage()
 const activeTab = ref('benefits')
-const loading = ref(false)
 const saving = ref(false)
 const benefits = ref<Benefit[]>([])
-const deductions = ref<Deduction[]>([])
+const deductions = ref<Benefit[]>([])
 const employeeConcepts = ref<EmployeeConcept[]>([])
 const searchBenefit = ref('')
 const searchDeduction = ref('')
-
 const showBenefitModal = ref(false)
 const showAssignmentModal = ref(false)
 const editingBenefit = ref<Benefit | null>(null)
 
 const benefitForm = ref({
-  type: 'BENEFICIO' as 'BENEFICIO' | 'DESCUENTO',
-  name: '',
-  code: '',
-  description: '',
-  amount: 0,
-  amountType: 'FIJO',
-  frequency: 'MENSUAL',
-  active: true
+  type: 'BENEFICIO', name: '', code: '', description: '', amount: 0, amountStr: '0', frequency: 'MENSUAL', active: true
 })
 
 const assignmentForm = ref({
-  employeeId: '',
-  conceptId: '',
-  customAmount: null as number | null,
-  startDate: Date.now(),
-  endDate: null as number | null,
-  observation: ''
+  employeeId: '', conceptId: '', customAmount: null as number | null, customAmountStr: ''
 })
 
+const typeOptions = [{ label: 'Beneficio', value: 'BENEFICIO' }, { label: 'Descuento', value: 'DESCUENTO' }]
+const frequencyOptions = [{ label: 'Mensual', value: 'MENSUAL' }, { label: 'Quincenal', value: 'QUINCENAL' }]
 const employeeOptions = ref<{ label: string; value: string }[]>([])
 const conceptOptions = ref<{ label: string; value: string }[]>([])
 
-const benefitRules = {
-  type: { required: true },
-  name: { required: true, message: 'Ingrese nombre' },
-  code: { required: true, message: 'Ingrese código' },
-  amount: { required: true, type: 'number', min: 0 }
-}
+const filteredBenefits = computed(() => benefits.value.filter(b => b.name.toLowerCase().includes(searchBenefit.value.toLowerCase())))
+const filteredDeductions = computed(() => deductions.value.filter(d => d.name.toLowerCase().includes(searchDeduction.value.toLowerCase())))
 
-const assignmentRules = {
-  employeeId: { required: true, message: 'Seleccione empleado' },
-  conceptId: { required: true, message: 'Seleccione concepto' }
-}
-
-const pagination = { pageSize: 10 }
-
-const formatMoney = (val: number) =>
-  val?.toLocaleString('es-PE', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) ?? '0.00'
-
-const formatDate = (val: string) =>
-  val ? new Date(val).toLocaleDateString('es-PE') : '-'
-
-const filteredBenefits = computed(() =>
-  benefits.value.filter(b =>
-    b.name.toLowerCase().includes(searchBenefit.value.toLowerCase()) ||
-    b.code.toLowerCase().includes(searchBenefit.value.toLowerCase())
-  )
-)
-
-const filteredDeductions = computed(() =>
-  deductions.value.filter(d =>
-    d.name.toLowerCase().includes(searchDeduction.value.toLowerCase()) ||
-    d.code.toLowerCase().includes(searchDeduction.value.toLowerCase())
-  )
-)
-
-const benefitColumns: DataTableColumns<Benefit> = [
-  { title: 'Código', key: 'code', width: 100 },
-  { title: 'Nombre', key: 'name', width: 200 },
-  {
-    title: 'Monto',
-    key: 'amount',
-    width: 120,
-    render: (row) => {
-      const prefix = row.amountType === 'PORCENTAJE' ? '%' : 'S/'
-      return `${prefix}${row.amountType === 'PORCENTAJE' ? row.amount : formatMoney(row.amount)}`
-    }
-  },
-  { title: 'Frecuencia', key: 'frequency', width: 120 },
-  {
-    title: 'Estado',
-    key: 'active',
-    width: 100,
-    render: (row) => h('span', {
-      style: {
-        color: row.active ? '#10b981' : '#ef4444',
-        fontWeight: 600
-      }
-    }, row.active ? 'Activo' : 'Inactivo')
-  },
-  {
-    title: 'Acciones',
-    key: 'actions',
-    width: 120,
-    render: (row) => h('div', { style: 'display: flex; gap: 8px' }, [
-      h(
-        NButton,
-        { size: 'small', secondary: true, onClick: () => editBenefit(row) },
-        { icon: () => h(NIcon, null, { default: () => h(CreateOutline) }) }
-      ),
-      h(
-        NButton,
-        { size: 'small', secondary: true, type: 'error', onClick: () => deleteBenefit(row) },
-        { icon: () => h(NIcon, null, { default: () => h(TrashOutline) }) }
-      )
-    ])
-  }
+const benefitColumns = [
+  { title: 'Código', key: 'code' },
+  { title: 'Nombre', key: 'name' },
+  { title: 'Monto', key: 'amount', render: (row: any) => `S/ ${row.amount.toFixed(2)}` },
+  { title: 'Estado', key: 'active', render: (row: any) => row.active ? 'Activo' : 'Inactivo' },
+  { title: 'Acciones', key: 'actions', render: (row: any) => h('div', { style: 'display: flex; gap: 8px' }, [h(AppleButton, { variant: 'ghost', size: 'small', onClick: () => editBenefit(row) }, () => 'Editar'), h(AppleButton, { variant: 'ghost', size: 'small', onClick: () => deleteBenefit(row) }, () => 'Eliminar')]) }
 ]
 
-const deductionColumns: DataTableColumns<Deduction> = [
-  { title: 'Código', key: 'code', width: 100 },
-  { title: 'Nombre', key: 'name', width: 200 },
-  {
-    title: 'Monto',
-    key: 'amount',
-    width: 120,
-    render: (row) => {
-      const prefix = row.amountType === 'PORCENTAJE' ? '%' : 'S/'
-      return `${prefix}${row.amountType === 'PORCENTAJE' ? row.amount : formatMoney(row.amount)}`
-    }
-  },
-  { title: 'Frecuencia', key: 'frequency', width: 120 },
-  {
-    title: 'Estado',
-    key: 'active',
-    width: 100,
-    render: (row) => h('span', {
-      style: {
-        color: row.active ? '#10b981' : '#ef4444',
-        fontWeight: 600
-      }
-    }, row.active ? 'Activo' : 'Inactivo')
-  },
-  {
-    title: 'Acciones',
-    key: 'actions',
-    width: 120,
-    render: (row) => h('div', { style: 'display: flex; gap: 8px' }, [
-      h(
-        NButton,
-        { size: 'small', secondary: true, onClick: () => editBenefit(row) },
-        { icon: () => h(NIcon, null, { default: () => h(CreateOutline) }) }
-      ),
-      h(
-        NButton,
-        { size: 'small', secondary: true, type: 'error', onClick: () => deleteBenefit(row) },
-        { icon: () => h(NIcon, null, { default: () => h(TrashOutline) }) }
-      )
-    ])
-  }
+const deductionColumns = [
+  { title: 'Código', key: 'code' },
+  { title: 'Nombre', key: 'name' },
+  { title: 'Monto', key: 'amount', render: (row: any) => `S/ ${row.amount.toFixed(2)}` },
+  { title: 'Estado', key: 'active', render: (row: any) => row.active ? 'Activo' : 'Inactivo' },
+  { title: 'Acciones', key: 'actions', render: (row: any) => h('div', { style: 'display: flex; gap: 8px' }, [h(AppleButton, { variant: 'ghost', size: 'small', onClick: () => editBenefit(row) }, () => 'Editar'), h(AppleButton, { variant: 'ghost', size: 'small', onClick: () => deleteBenefit(row) }, () => 'Eliminar')]) }
 ]
 
-const assignmentColumns: DataTableColumns<EmployeeConcept> = [
-  { title: 'Empleado', key: 'employeeName', fixed: 'left', width: 200 },
-  { title: 'Concepto', key: 'conceptName', width: 180 },
-  {
-    title: 'Tipo',
-    key: 'conceptType',
-    width: 120,
-    render: (row) => h('span', {
-      style: { color: row.conceptType === 'BENEFICIO' ? '#10b981' : '#ef4444' }
-    }, row.conceptType)
-  },
-  {
-    title: 'Monto',
-    key: 'amount',
-    width: 120,
-    render: (row) => `S/ ${formatMoney(row.amount)}`
-  },
-  {
-    title: 'Inicio',
-    key: 'startDate',
-    width: 110,
-    render: (row) => formatDate(row.startDate)
-  },
-  {
-    title: 'Fin',
-    key: 'endDate',
-    width: 110,
-    render: (row) => row.endDate ? formatDate(row.endDate) : '-'
-  },
-  {
-    title: 'Estado',
-    key: 'status',
-    width: 110,
-    render: (row) => h('span', {
-      style: {
-        color: row.status === 'ACTIVO' ? '#10b981' : row.status === 'VENCIDO' ? '#ef4444' : '#666'
-      }
-    }, row.status)
-  },
-  {
-    title: 'Acciones',
-    key: 'actions',
-    width: 100,
-    render: (row) => h(
-      NButton,
-      { size: 'small', secondary: true, type: 'error', onClick: () => deleteAssignment(row) },
-      { icon: () => h(NIcon, null, { default: () => h(TrashOutline) }) }
-    )
-  }
+const assignmentColumns = [
+  { title: 'Empleado', key: 'employeeName' },
+  { title: 'Concepto', key: 'conceptName' },
+  { title: 'Tipo', key: 'conceptType' },
+  { title: 'Monto', key: 'amount', render: (row: any) => `S/ ${row.amount.toFixed(2)}` },
+  { title: 'Estado', key: 'status' },
+  { title: 'Acciones', key: 'actions', render: (row: any) => h(AppleButton, { variant: 'ghost', size: 'small', onClick: () => deleteAssignment(row) }, () => 'Eliminar') }
 ]
+
+watch(() => benefitForm.value.amount, (val) => { benefitForm.value.amountStr = String(val) })
+watch(() => assignmentForm.value.customAmount, (val) => { assignmentForm.value.customAmountStr = val ? String(val) : '' })
 
 const loadData = async () => {
-  loading.value = true
   try {
     const { data } = await api.get('/payroll/concepts')
     if (data.success) {
       benefits.value = data.data.filter((c: any) => c.type === 'BENEFICIO')
       deductions.value = data.data.filter((c: any) => c.type === 'DESCUENTO')
     }
-
-    const { data: assignmentsData } = await api.get('/payroll/employee-concepts')
-    if (assignmentsData.success) {
-      employeeConcepts.value = assignmentsData.data
-    }
-  } catch (error) {
-    console.error(error)
-    message.error('Error al cargar datos')
-  } finally {
-    loading.value = false
-  }
+    const { data: aData } = await api.get('/payroll/employee-concepts')
+    if (aData.success) employeeConcepts.value = aData.data
+  } catch (error) { console.error(error) }
 }
 
-const loadEmployees = async () => {
+const loadOptions = async () => {
   try {
     const { data } = await api.get('/employees')
-    if (data.success) {
-      employeeOptions.value = data.data.map((e: any) => ({
-        label: `${e.nombres} ${e.apellidos}`,
-        value: e.id
-      }))
-    }
-  } catch (error) {
-    console.error(error)
-  }
-}
-
-const editBenefit = (benefit: Benefit) => {
-  editingBenefit.value = benefit
-  benefitForm.value = { ...benefit }
-  showBenefitModal.value = true
-}
-
-const deleteBenefit = (benefit: Benefit) => {
-  message.warning(`Eliminando ${benefit.name}`)
-}
-
-const deleteAssignment = (assignment: EmployeeConcept) => {
-  message.warning(`Eliminando asignación de ${assignment.employeeName}`)
-}
-
-const closeBenefitModal = () => {
-  showBenefitModal.value = false
-  editingBenefit.value = null
-  benefitForm.value = {
-    type: 'BENEFICIO',
-    name: '',
-    code: '',
-    description: '',
-    amount: 0,
-    amountType: 'FIJO',
-    frequency: 'MENSUAL',
-    active: true
-  }
+    if (data.success) employeeOptions.value = data.data.map((e: any) => ({ label: `${e.nombres} ${e.apellidos}`, value: e.id }))
+    const { data: cData } = await api.get('/payroll/concepts')
+    if (cData.success) conceptOptions.value = cData.data.map((c: any) => ({ label: `${c.code} - ${c.name}`, value: c.id }))
+  } catch (error) { console.error(error) }
 }
 
 const saveBenefit = async () => {
   saving.value = true
   try {
-    const endpoint = editingBenefit.value ? `/payroll/concepts/${editingBenefit.value.id}` : '/payroll/concepts'
-    const method = editingBenefit.value ? 'put' : 'post'
-    const { data } = await api[method](endpoint, benefitForm.value)
-    if (data.success) {
-      message.success(editingBenefit.value ? 'Concepto actualizado' : 'Concepto creado')
-      closeBenefitModal()
-      loadData()
-    }
-  } catch (error) {
-    message.error('Error al guardar concepto')
-  } finally {
-    saving.value = false
-  }
+    if (editingBenefit.value) await api.put(`/payroll/concepts/${editingBenefit.value.id}`, benefitForm.value)
+    else await api.post('/payroll/concepts', benefitForm.value)
+    showBenefitModal.value = false
+    loadData()
+  } catch (error) { console.error(error) }
+  finally { saving.value = false }
 }
 
 const saveAssignment = async () => {
   saving.value = true
   try {
-    const { data } = await api.post('/payroll/employee-concepts', {
-      ...assignmentForm.value,
-      startDate: new Date(assignmentForm.value.startDate).toISOString(),
-      endDate: assignmentForm.value.endDate ? new Date(assignmentForm.value.endDate).toISOString() : null
-    })
-    if (data.success) {
-      message.success('Concepto asignado correctamente')
-      showAssignmentModal.value = false
-      loadData()
-    }
-  } catch (error) {
-    message.error('Error al asignar concepto')
-  } finally {
-    saving.value = false
-  }
+    await api.post('/payroll/employee-concepts', { employeeId: assignmentForm.value.employeeId, conceptId: assignmentForm.value.conceptId, customAmount: assignmentForm.value.customAmount })
+    showAssignmentModal.value = false
+    loadData()
+  } catch (error) { console.error(error) }
+  finally { saving.value = false }
 }
 
-onMounted(() => {
-  loadData()
-  loadEmployees()
-})
+const editBenefit = (benefit: Benefit) => {
+  editingBenefit.value = benefit
+  benefitForm.value = { ...benefit, amountStr: String(benefit.amount) }
+  showBenefitModal.value = true
+}
+
+const deleteBenefit = async (benefit: Benefit) => { if (confirm('¿Eliminar?')) { await api.delete(`/payroll/concepts/${benefit.id}`); loadData() }}
+const deleteAssignment = async (a: EmployeeConcept) => { if (confirm('¿Eliminar?')) { await api.delete(`/payroll/employee-concepts/${a.id}`); loadData() }}
+const closeBenefitModal = () => { showBenefitModal.value = false; editingBenefit.value = null; benefitForm.value = { type: 'BENEFICIO', name: '', code: '', description: '', amount: 0, amountStr: '0', frequency: 'MENSUAL', active: true }}
+
+onMounted(() => { loadData(); loadOptions() })
 </script>
 
 <style scoped>
-.benefits-list {
-  padding: 0;
-}
-
-.header-actions {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 24px;
-}
-
-.controls {
-  display: flex;
-  gap: 12px;
-}
-
-.page-title {
-  font-size: 24px;
-  font-weight: 700;
-  margin: 0;
-  color: #1f2937;
-}
-
-.subtitle {
-  color: #6b7280;
-  margin: 4px 0 0;
-}
-
-.table-card {
-  border-radius: 12px;
-  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
-}
-
-.card-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-}
+.page-title { font-size: 20px; font-weight: 600; margin-bottom: 4px; }
+.subtitle { color: var(--color-text-secondary); font-size: 14px; }
+.header-actions { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 24px; }
+.tabs-container { margin-top: 24px; }
+.tabs { display: flex; gap: 4px; background: #f1f5f9; padding: 4px; border-radius: 8px; margin-bottom: 16px; }
+.tabs button { flex: 1; padding: 10px 16px; border: none; background: transparent; border-radius: 6px; cursor: pointer; font-weight: 500; }
+.tabs button.active { background: white; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+.tab-panel { background: white; border-radius: 8px; padding: 16px; }
+.card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; font-weight: 500; }
+.form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.form-group { display: flex; flex-direction: column; gap: 6px; }
+.form-group.full { grid-column: span 2; }
+.form-group label { font-size: 13px; font-weight: 500; color: var(--color-text-secondary); }
+.textarea { width: 100%; padding: 10px; border: 1px solid #e2e8f0; border-radius: 8px; resize: vertical; min-height: 60px; font-family: inherit; }
 </style>

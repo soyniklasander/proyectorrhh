@@ -1,105 +1,111 @@
 <template>
   <div class="attendance-list">
-    <div class="list-header">
-      <div class="header-left">
-        <n-tag type="info">{{ todayRecords }} registros</n-tag>
-        <n-tag type="success">{{ onTimeCount }} puntuales</n-tag>
-        <n-tag type="warning">{{ lateCount }} tardanzas</n-tag>
+    <AppleCard>
+      <div class="list-header">
+        <div class="header-left">
+          <AppleBadge type="info" :label="`${todayRecords} registros`" />
+          <AppleBadge type="success" :label="`${onTimeCount} puntuales`" />
+          <AppleBadge type="warning" :label="`${lateCount} tardanzas`" />
+        </div>
+        <div class="header-right">
+          <AppleButton variant="primary" :icon="PlusIcon" @click="showModal = true">
+            ➕ Registrar Asistencia
+          </AppleButton>
+          <AppleButton variant="secondary" :icon="RefreshIcon" @click="loadAttendance">
+            🔄 Actualizar
+          </AppleButton>
+        </div>
       </div>
-      <div class="header-right">
-        <n-button type="primary" @click="showModal = true">
-          ➕ Registrar Asistencia
-        </n-button>
-        <n-button type="primary" @click="loadAttendance">
-          🔄 Actualizar
-        </n-button>
-      </div>
+
+      <AppleTable
+        :columns="columns"
+        :data="filteredAttendance"
+        :loading="loading"
+        :bordered="false"
+        :striped="true"
+      />
+    </AppleCard>
+
+    <!-- Modal simplificado -->
+    <div v-if="showModal" class="modal-overlay" @click.self="showModal = false">
+      <AppleCard class="modal-card" title="Registrar Asistencia">
+        <div class="form-grid">
+          <div class="form-item">
+            <label>Empleado</label>
+            <select v-model="formData.empleadoId" class="form-select">
+              <option :value="null">Seleccionar empleado</option>
+              <option v-for="emp in employeeOptions" :key="emp.value" :value="emp.value">
+                {{ emp.label }}
+              </option>
+            </select>
+          </div>
+          <div class="form-item">
+            <label>Fecha</label>
+            <input type="date" v-model="formData.fechaString" class="form-input" />
+          </div>
+          <div class="form-item">
+            <label>Hora Entrada</label>
+            <input type="time" v-model="formData.horaEntrada" class="form-input" />
+          </div>
+          <div class="form-item">
+            <label>Hora Salida</label>
+            <input type="time" v-model="formData.horaSalida" class="form-input" />
+          </div>
+          <div class="form-item">
+            <label>Estado</label>
+            <select v-model="formData.estado" class="form-select">
+              <option value="PUNTUAL">Puntual</option>
+              <option value="TARDE">Tarde</option>
+              <option value="FALTA">Falta</option>
+              <option value="JUSTIFICADO">Justificado</option>
+            </select>
+          </div>
+          <div class="form-item full-width">
+            <label>Observaciones</label>
+            <textarea v-model="formData.observaciones" class="form-textarea" placeholder="Observaciones"></textarea>
+          </div>
+        </div>
+        <template #footer>
+          <div class="modal-actions">
+            <AppleButton variant="ghost" @click="showModal = false">Cancelar</AppleButton>
+            <AppleButton variant="primary" @click="saveAttendance">Guardar</AppleButton>
+          </div>
+        </template>
+      </AppleCard>
     </div>
-
-    <n-data-table
-      :columns="columns"
-      :data="filteredAttendance"
-      :loading="loading"
-      :bordered="false"
-      :striped="true"
-    />
-
-    <n-modal v-model:show="showModal" preset="card" title="Registrar Asistencia" style="width: 500px">
-      <n-form :model="formData" label-placement="left" label-width="120px">
-        <n-form-item label="Empleado">
-          <n-select
-            v-model:value="formData.empleadoId"
-            :options="employeeOptions"
-            placeholder="Seleccionar empleado"
-          />
-        </n-form-item>
-        <n-form-item label="Fecha">
-          <n-date-picker v-model:value="formData.fecha" type="date" style="width: 100%" />
-        </n-form-item>
-        <n-form-item label="Hora Entrada">
-          <n-time-picker v-model:value="formData.horaEntrada" format="HH:mm" style="width: 100%" />
-        </n-form-item>
-        <n-form-item label="Hora Salida">
-          <n-time-picker v-model:value="formData.horaSalida" format="HH:mm" style="width: 100%" />
-        </n-form-item>
-        <n-form-item label="Estado">
-          <n-select
-            v-model:value="formData.estado"
-            :options="statusOptions"
-            placeholder="Seleccionar estado"
-          />
-        </n-form-item>
-        <n-form-item label="Observaciones">
-          <n-input v-model:value="formData.observaciones" type="textarea" placeholder="Observaciones" />
-        </n-form-item>
-      </n-form>
-      <template #footer>
-        <n-space justify="end">
-          <n-button @click="showModal = false">Cancelar</n-button>
-          <n-button type="primary" @click="saveAttendance">Guardar</n-button>
-        </n-space>
-      </template>
-    </n-modal>
   </div>
 </template>
 
 <script setup lang="ts">
 import { ref, computed, onMounted, h } from 'vue'
-import { useMessage } from 'naive-ui'
-import { NTag, NButton, NAvatar, NDatePicker, NSelect, NDataTable, NModal, NForm, NFormItem, NTimePicker, NSpace, NInput } from 'naive-ui'
+import {
+  AppleCard,
+  AppleButton,
+  AppleBadge,
+  AppleTable,
+  AppleAvatar,
+  AppleTag
+} from '@/components/apple'
+import { Plus, RefreshCw } from 'lucide-vue-next'
 import { api } from '@/services/api'
 
-const message = useMessage()
+const PlusIcon = Plus
+const RefreshIcon = RefreshCw
 
 const loading = ref(false)
 const showModal = ref(false)
-const selectedDate = ref(Date.now())
-const filterArea = ref(null)
 const attendanceRecords = ref<any[]>([])
 const employeeOptions = ref<any[]>([])
+
 const formData = ref({
-  empleadoId: null,
-  fecha: Date.now(),
-  horaEntrada: Date.now(),
-  horaSalida: Date.now(),
+  empleadoId: null as string | null,
+  fecha: new Date().toISOString().split('T')[0],
+  fechaString: new Date().toISOString().split('T')[0],
+  horaEntrada: '08:00',
+  horaSalida: '17:00',
   estado: 'PUNTUAL',
   observaciones: ''
 })
-
-const areaOptions = [
-  { label: 'Todas las áreas', value: null },
-  { label: 'Administración', value: 'ADMIN' },
-  { label: 'Ventas', value: 'VENTAS' },
-  { label: 'Producción', value: 'PRODUCCION' },
-  { label: 'RRHH', value: 'RRHH' }
-]
-
-const statusOptions = [
-  { label: 'Puntual', value: 'PUNTUAL' },
-  { label: 'Tarde', value: 'TARDE' },
-  { label: 'Falta', value: 'FALTA' },
-  { label: 'Justificado', value: 'JUSTIFICADO' }
-]
 
 const todayRecords = computed(() => attendanceRecords.value.length)
 const onTimeCount = computed(() => 
@@ -109,13 +115,12 @@ const lateCount = computed(() =>
   attendanceRecords.value.filter((r: any) => r.estado === 'TARDE').length
 )
 
-const getStatusType = (status: string | undefined | null) => {
-  if (!status) return 'default'
+const getStatusType = (status: string | undefined | null): 'default' | 'primary' | 'success' | 'warning' | 'error' => {
   switch (status) {
     case 'PUNTUAL': return 'success'
     case 'TARDE': return 'warning'
     case 'FALTA': return 'error'
-    case 'JUSTIFICADO': return 'info'
+    case 'JUSTIFICADO': return 'primary'
     default: return 'default'
   }
 }
@@ -134,33 +139,29 @@ const loadEmployees = async () => {
   }
 }
 
-const createColumns = () => [
+const columns = [
   {
     title: 'Empleado',
     key: 'empleado',
     render(row: any) {
       return h('div', { class: 'employee-cell' }, [
-        h(NAvatar, {
-          size: 'medium',
-          round: true,
-          src: row.foto || ''
-        }, () => row.nombreCompleto?.slice(0, 2)?.toUpperCase() || ''),
-        h('div', { style: 'margin-left: 12px;' }, [
-          h('div', { style: 'font-weight: 600;' }, row.nombreCompleto || ''),
-          h('div', { style: 'font-size: 12px; color: #6b7280;' }, row.numeroDocumento || '')
+        h(AppleAvatar, {
+          src: row.foto || '',
+          size: 'sm',
+          name: row.nombreCompleto || ''
+        }),
+        h('div', { style: 'margin-left: 10px;' }, [
+          h('div', { style: 'font-weight: 500;' }, row.nombreCompleto || ''),
+          h('div', { style: 'font-size: 12px; color: var(--color-text-secondary);' }, row.numeroDocumento || '')
         ])
       ])
     }
   },
-  {
-    title: 'Fecha',
-    key: 'fecha',
-    width: 120
-  },
+  { title: 'Fecha', key: 'fecha', width: '120px' },
   {
     title: 'Entrada',
     key: 'horaEntrada',
-    width: 100,
+    width: '100px',
     render(row: any) {
       const isLate = row.horaEntrada > '08:30'
       return h('span', { 
@@ -171,7 +172,7 @@ const createColumns = () => [
   {
     title: 'Salida',
     key: 'horaSalida',
-    width: 100,
+    width: '100px',
     render(row: any) {
       return h('span', {}, row.horaSalida || '--:--')
     }
@@ -179,29 +180,28 @@ const createColumns = () => [
   {
     title: 'Estado',
     key: 'estado',
-    width: 120,
+    width: '120px',
     render(row: any) {
-      return h(NTag, { 
-        type: getStatusType(row.estado), 
-        round: true,
-        size: 'small'
-      }, () => row.estado || '')
+      return h(AppleTag, { 
+        type: getStatusType(row.estado),
+        label: row.estado || ''
+      })
     }
   },
   {
     title: 'Acciones',
     key: 'actions',
-    width: 150,
+    width: '150px',
     render(row: any) {
-      return h(NSpace, {}, () => [
-        h(NButton, { 
-          size: 'small', 
-          type: 'info',
+      return h('div', { class: 'action-buttons' }, [
+        h(AppleButton, { 
+          variant: 'ghost',
+          size: 'small',
           onClick: () => editRecord(row.id)
         }, () => 'Editar'),
-        h(NButton, { 
-          size: 'small', 
-          type: 'warning',
+        h(AppleButton, { 
+          variant: 'ghost',
+          size: 'small',
           onClick: () => justify(row.id)
         }, () => 'Justificar')
       ])
@@ -209,22 +209,7 @@ const createColumns = () => [
   }
 ]
 
-const columns = createColumns()
-
-const filteredAttendance = computed(() => {
-  let data = attendanceRecords.value || []
-  
-  if (filterArea.value) {
-    data = (data || []).filter((r: any) => r.areaTrabajo === filterArea.value)
-  }
-  
-  return data || []
-})
-
-const formatTime = (timestamp: number) => {
-  const date = new Date(timestamp)
-  return `${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}`
-}
+const filteredAttendance = computed(() => attendanceRecords.value || [])
 
 const loadAttendance = async () => {
   loading.value = true
@@ -234,7 +219,7 @@ const loadAttendance = async () => {
       attendanceRecords.value = response.data.data
     }
   } catch (error) {
-    message.error('Error al cargar asistencia')
+    console.error('Error al cargar asistencia')
   } finally {
     loading.value = false
   }
@@ -244,30 +229,31 @@ const saveAttendance = async () => {
   try {
     await api.post('/attendance', {
       empleadoId: formData.value.empleadoId,
-      fecha: new Date(formData.value.fecha).toISOString().split('T')[0],
-      horaEntrada: formatTime(formData.value.horaEntrada),
-      horaSalida: formatTime(formData.value.horaSalida),
+      fecha: formData.value.fechaString,
+      horaEntrada: formData.value.horaEntrada,
+      horaSalida: formData.value.horaSalida,
       estado: formData.value.estado,
       observaciones: formData.value.observaciones
     })
-    message.success('Asistencia registrada correctamente')
+    alert('Asistencia registrada correctamente')
     showModal.value = false
     loadAttendance()
     formData.value = {
       empleadoId: null,
-      fecha: Date.now(),
-      horaEntrada: Date.now(),
-      horaSalida: Date.now(),
+      fecha: new Date().toISOString().split('T')[0],
+      fechaString: new Date().toISOString().split('T')[0],
+      horaEntrada: '08:00',
+      horaSalida: '17:00',
       estado: 'PUNTUAL',
       observaciones: ''
     }
   } catch (error) {
-    message.error('Error al registrar asistencia')
+    alert('Error al registrar asistencia')
   }
 }
 
-const editRecord = async (id: string) => {
-  message.info('Función de edición: ' + id)
+const editRecord = (id: string) => {
+  console.log('Edit record:', id)
 }
 
 const justify = async (id: string) => {
@@ -275,10 +261,10 @@ const justify = async (id: string) => {
     await api.put(`/attendance/${id}`, { estado: 'JUSTIFICADO' })
     const record = attendanceRecords.value.find((r: any) => r.id === id)
     if (record) record.estado = 'JUSTIFICADO'
-    message.success('Registro justificado')
+    alert('Registro justificado')
     loadAttendance()
   } catch (error) {
-    message.error('Error al justificar')
+    alert('Error al justificar')
   }
 }
 
@@ -290,10 +276,7 @@ onMounted(() => {
 
 <style scoped>
 .attendance-list {
-  background: white;
-  border-radius: 12px;
-  padding: 24px;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  padding: 0;
 }
 
 .list-header {
@@ -320,5 +303,68 @@ onMounted(() => {
 .employee-cell {
   display: flex;
   align-items: center;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 8px;
+}
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal-card {
+  width: 500px;
+  max-width: 90vw;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.form-item {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.form-item.full-width {
+  grid-column: span 2;
+}
+
+.form-item label {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--color-text-secondary);
+}
+
+.form-input,
+.form-select,
+.form-textarea {
+  padding: 10px 12px;
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  font-size: 14px;
+  background: var(--color-surface-primary);
+}
+
+.form-textarea {
+  min-height: 80px;
+  resize: vertical;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
 }
 </style>

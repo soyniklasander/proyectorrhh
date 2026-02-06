@@ -1,58 +1,60 @@
 <template>
-  <div class="contracts-list">
+  <AppleCard>
     <div class="list-header">
       <div class="header-left">
-        <n-tag type="success">{{ activeContracts }} vigentes</n-tag>
-        <n-tag type="warning">{{ expiringContracts }} por vencer</n-tag>
-        <n-tag type="error">{{ expiredContracts }} vencidos</n-tag>
+        <AppleBadge type="success" :label="`${activeContracts} vigentes`" />
+        <AppleBadge type="warning" :label="`${expiringContracts} por vencer`" />
+        <AppleBadge type="error" :label="`${expiredContracts} vencidos`" />
       </div>
       <div class="header-right">
-        <n-select
-          v-model:value="filterStatus"
+        <AppleSelect
+          v-model="filterStatus"
           placeholder="Filtrar por estado"
           :options="statusOptions"
           class="filter-select"
         />
-        <n-input
-          v-model:value="search"
+        <AppleSearchInput
+          v-model="search"
           placeholder="Buscar contrato..."
           class="search-input"
-          clearable
         />
-        <n-button type="primary" @click="loadContracts">
-          🔄 Actualizar
-        </n-button>
+        <AppleButton variant="secondary" :icon="RefreshIcon" @click="loadContracts">
+          Actualizar
+        </AppleButton>
       </div>
     </div>
 
-    <n-data-table
+    <AppleTable
       :columns="columns"
       :data="filteredContracts"
       :loading="loading"
-      :pagination="pagination"
-      @update:pagination="handlePagination"
       :bordered="false"
       :striped="true"
+      pagination
     />
-  </div>
+  </AppleCard>
 </template>
 
 <script setup lang="ts">
 import { ref, computed, onMounted, h } from 'vue'
-import { useMessage } from 'naive-ui'
-import { NTag, NButton, NSelect, NInput, NDataTable } from 'naive-ui'
+import {
+  AppleCard,
+  AppleButton,
+  AppleBadge,
+  AppleTable,
+  AppleTag,
+  AppleSearchInput,
+  AppleSelect,
+  AppleAvatar
+} from '@/components/apple'
+import { RefreshCw } from 'lucide-vue-next'
 
-const message = useMessage()
+const RefreshIcon = RefreshCw
 
 const contracts = ref<any[]>([])
 const loading = ref(false)
 const search = ref('')
 const filterStatus = ref('todos')
-const pagination = ref({
-  page: 1,
-  pageSize: 10,
-  itemCount: 0
-})
 
 const statusOptions = [
   { label: 'Todos', value: 'todos' },
@@ -66,228 +68,109 @@ const activeContracts = computed(() => contracts.value.filter((c: any) => c.esta
 const expiringContracts = computed(() => contracts.value.filter((c: any) => c.estado === 'POR_VENCER').length)
 const expiredContracts = computed(() => contracts.value.filter((c: any) => c.estado === 'VENCIDO').length)
 
-const getStatusType = (status: string) => {
-  const types: Record<string, string> = {
+const getStatusType = (status: string): 'default' | 'primary' | 'success' | 'warning' | 'error' => {
+  const types: Record<string, 'default' | 'primary' | 'success' | 'warning' | 'error'> = {
     'VIGENTE': 'success',
     'POR_VENCER': 'warning',
     'VENCIDO': 'error',
-    'SUSPENDIDO': 'info'
+    'SUSPENDIDO': 'primary'
   }
   return types[status] || 'default'
 }
 
-const getStatusLabel = (status: string) => {
-  const labels: Record<string, string> = {
-    'VIGENTE': 'Vigente',
-    'POR_VENCER': 'Por Vencer',
-    'VENCIDO': 'Vencido',
-    'SUSPENDIDO': 'Suspendido'
-  }
-  return labels[status] || status
-}
-
 const formatDate = (dateStr: string) => {
   if (!dateStr) return 'Indefinido'
-  return new Date(dateStr).toLocaleDateString('es-PE', { day: '2-digit', month: '2-digit', year: 'numeric' })
+  return new Date(dateStr).toLocaleDateString('es-PE')
 }
 
-const createColumns = () => [
+const columns = [
   {
     title: 'Empleado',
     key: 'empleado',
     render(row: any) {
       return h('div', { class: 'employee-info' }, [
-        h('div', { style: 'font-weight: 600;' }, row.nombreCompleto || ''),
-        h('div', { style: 'font-size: 12px; color: #6b7280;' }, `DNI: ${row.numeroDocumento || ''}`)
+        h(AppleAvatar, { src: '', size: 'sm', name: row.nombreCompleto || '' }),
+        h('div', { style: 'margin-left: 10px;' }, [
+          h('div', { style: 'font-weight: 500;' }, row.nombreCompleto || ''),
+          h('div', { style: 'font-size: 12px; color: var(--color-text-secondary);' }, `DNI: ${row.numeroDocumento || ''}`)
+        ])
       ])
     }
   },
-  {
-    title: 'Tipo',
-    key: 'tipoContrato',
-    width: 140
-  },
-  {
-    title: 'Régimen',
-    key: 'regimenLaboral',
-    width: 140,
-    render(row: any) {
-      return h(NTag, { type: 'info', size: 'small' }, () => row.regimenLaboral || '')
-    }
-  },
-  {
-    title: 'Cargo',
-    key: 'cargo',
-    width: 160
-  },
+  { title: 'Tipo', key: 'tipoContrato', width: '140px' },
+  { title: 'Régimen', key: 'regimenLaboral', width: '140px', render: (row: any) => h(AppleTag, { type: 'primary', label: row.regimenLaboral || '' }) },
+  { title: 'Cargo', key: 'cargo', width: '160px' },
   {
     title: 'Período',
     key: 'periodo',
-    width: 160,
+    width: '160px',
     render(row: any) {
       return h('div', { class: 'periodo-info' }, [
         h('div', {}, `Inicio: ${formatDate(row.fechaInicio)}`),
-        h('div', { style: 'font-size: 12px; color: #6b7280;' }, `Fin: ${formatDate(row.fechaFin)}`)
+        h('div', { style: 'font-size: 12px;' }, `Fin: ${formatDate(row.fechaFin)}`)
       ])
     }
   },
-  {
-    title: 'Sueldo',
-    key: 'salarioBase',
-    width: 120,
-    render(row: any) {
-      return h('strong', {}, `S/ ${(row.salarioBase || 0).toLocaleString()}`)
-    }
-  },
+  { title: 'Sueldo', key: 'salarioBase', width: '120px', render: (row: any) => h('strong', {}, `S/ ${(row.salarioBase || 0).toLocaleString()}`) },
   {
     title: 'Estado',
     key: 'estado',
-    width: 110,
+    width: '110px',
     render(row: any) {
-      return h(NTag, { 
-        type: getStatusType(row.estado), 
-        round: true,
-        size: 'small' 
-      }, () => getStatusLabel(row.estado))
+      const labels: Record<string, string> = { 'VIGENTE': 'Vigente', 'POR_VENCER': 'Por Vencer', 'VENCIDO': 'Vencido', 'SUSPENDIDO': 'Suspendido' }
+      return h(AppleTag, { type: getStatusType(row.estado), label: labels[row.estado] || row.estado })
     }
   },
   {
     title: 'Acciones',
     key: 'actions',
-    width: 200,
+    width: '200px',
     render(row: any) {
       return h('div', { class: 'actions' }, [
-        h(NButton, { 
-          size: 'small', 
-          type: 'info',
-          onClick: () => viewContract(row.id)
-        }, () => 'Ver'),
-        h(NButton, { 
-          size: 'small', 
-          type: 'warning',
-          onClick: () => renewContract(row.id)
-        }, () => 'Renovar'),
-        h(NButton, { 
-          size: 'small', 
-          type: 'error',
-          onClick: () => terminateContract(row.id)
-        }, () => 'Terminar')
+        h(AppleButton, { variant: 'ghost', size: 'small', onClick: () => viewContract(row.id) }, () => 'Ver'),
+        h(AppleButton, { variant: 'ghost', size: 'small', onClick: () => renewContract(row.id) }, () => 'Renovar'),
+        h(AppleButton, { variant: 'ghost', size: 'small', onClick: () => terminateContract(row.id) }, () => 'Terminar')
       ])
     }
   }
 ]
 
-const columns = createColumns()
-
 const filteredContracts = computed(() => {
   let data = contracts.value
-  
   if (search.value) {
     const s = search.value.toLowerCase()
-    data = data.filter((contract: any) => 
-      contract.nombreCompleto?.toLowerCase().includes(s) ||
-      contract.numeroDocumento?.includes(search.value)
-    )
+    data = data.filter((c: any) => c.nombreCompleto?.toLowerCase().includes(s) || c.numeroDocumento?.includes(search.value))
   }
-  
   if (filterStatus.value !== 'todos') {
-    data = data.filter((contract: any) => contract.estado === filterStatus.value)
+    data = data.filter((c: any) => c.estado === filterStatus.value)
   }
-  
   return data
 })
-
-const handlePagination = (newPagination: any) => {
-  pagination.value = newPagination
-  loadContracts()
-}
 
 const loadContracts = async () => {
   loading.value = true
   try {
-    const response = await fetch('/api/v1/contracts', {
-      headers: {
-        'Authorization': `Bearer ${localStorage.getItem('access_token')}`
-      }
-    })
-    
+    const response = await fetch('/api/v1/contracts', { headers: { 'Authorization': `Bearer ${localStorage.getItem('access_token')}` } })
     const data = await response.json()
-    if (data.success) {
-      contracts.value = data.data
-      pagination.value.itemCount = data.data.length
-    }
+    if (data.success) contracts.value = data.data
   } catch (error) {
-    message.error('Error al cargar contratos')
-  } finally {
-    loading.value = false
-  }
+    console.error(error)
+  } finally { loading.value = false }
 }
 
-const viewContract = (id: string) => {
-  console.log('View contract:', id)
-}
+const viewContract = (id: string) => console.log('View:', id)
+const renewContract = (id: string) => console.log('Renew:', id)
+const terminateContract = (id: string) => console.log('Terminate:', id)
 
-const renewContract = (id: string) => {
-  console.log('Renew contract:', id)
-}
-
-const terminateContract = (id: string) => {
-  console.log('Terminate contract:', id)
-}
-
-onMounted(() => {
-  loadContracts()
-})
+onMounted(() => loadContracts())
 </script>
 
 <style scoped>
-.contracts-list {
-  background: white;
-  border-radius: 12px;
-  padding: 24px;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-}
-
-.list-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 24px;
-  flex-wrap: wrap;
-  gap: 16px;
-}
-
-.header-left {
-  display: flex;
-  gap: 12px;
-}
-
-.header-right {
-  display: flex;
-  gap: 12px;
-  align-items: center;
-  flex-wrap: wrap;
-}
-
-.search-input {
-  max-width: 250px;
-}
-
-.filter-select {
-  min-width: 140px;
-}
-
-.employee-info {
-  display: flex;
-  flex-direction: column;
-}
-
-.periodo-info {
-  font-size: 13px;
-}
-
-.actions {
-  display: flex;
-  gap: 6px;
-}
+.list-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; flex-wrap: wrap; gap: 16px; }
+.header-left, .header-right { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
+.search-input { max-width: 250px; }
+.filter-select { min-width: 140px; }
+.employee-info { display: flex; align-items: center; }
+.periodo-info { font-size: 13px; }
+.actions { display: flex; gap: 6px; }
 </style>

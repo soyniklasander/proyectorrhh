@@ -58,7 +58,7 @@ interface Props {
   disabled?: boolean
   readonly?: boolean
   clearable?: boolean
-  maxlength?: number
+  maxlength?: string | number
   prefixIcon?: Component
   suffixIcon?: Component
   error?: boolean

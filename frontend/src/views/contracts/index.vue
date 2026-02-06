@@ -1,52 +1,72 @@
 <template>
-  <div class="page-container">
-    <div class="header-actions">
-      <div>
-        <h1 class="page-title">Gestión de Contratos</h1>
-        <p class="subtitle">Administración de vínculos laborales y adendas.</p>
-      </div>
-      <n-button type="primary" @click="$router.push('/contracts/new')">
-        <template #icon><n-icon><AddOutline /></n-icon></template>
-        Nuevo Contrato
-      </n-button>
-    </div>
+  <AppleContainer>
+    <ApplePageHeader
+      title="Gestión de Contratos"
+      subtitle="Administración de vínculos laborales y adendas"
+    >
+      <template #actions>
+        <AppleButton variant="primary" :icon="PlusIcon" @click="$router.push('/contracts/new')">
+          Nuevo Contrato
+        </AppleButton>
+      </template>
+    </ApplePageHeader>
 
     <!-- Stats Row -->
-    <div class="stats-grid mb-6">
-      <n-card class="stat-card" :bordered="false">
-        <n-statistic label="Total Contratos" :value="contracts.length">
-          <template #prefix><n-icon color="#3b82f6"><DocumentTextOutline /></n-icon></template>
-        </n-statistic>
-      </n-card>
-      <n-card class="stat-card" :bordered="false">
-        <n-statistic label="Vigentes" :value="activeCount">
-          <template #prefix><n-icon color="#10b981"><CheckmarkCircleOutline /></n-icon></template>
-        </n-statistic>
-      </n-card>
-      <n-card class="stat-card" :bordered="false">
-        <n-statistic label="Por Vencer" :value="expiringCount">
-          <template #prefix><n-icon color="#f59e0b"><AlertCircleOutline /></n-icon></template>
-        </n-statistic>
-      </n-card>
-    </div>
+    <AppleGrid :columns="3" style="margin-bottom: 24px;">
+      <AppleStatCard
+        :icon="DocumentIcon"
+        :value="contracts.length"
+        label="Total Contratos"
+        color="blue"
+      />
+      <AppleStatCard
+        :icon="CheckIcon"
+        :value="activeCount"
+        label="Vigentes"
+        color="green"
+      />
+      <AppleStatCard
+        :icon="AlertIcon"
+        :value="expiringCount"
+        label="Por Vencer"
+        color="orange"
+      />
+    </AppleGrid>
 
-    <n-card :bordered="false" class="table-card">
-      <n-data-table
+    <AppleCard>
+      <AppleTable
         :columns="columns"
         :data="contracts"
         :loading="loading"
-        :pagination="pagination"
         :bordered="false"
+        :striped="true"
+        pagination
       />
-    </n-card>
-  </div>
+    </AppleCard>
+  </AppleContainer>
 </template>
 
 <script setup lang="ts">
 import { ref, computed, onMounted, h } from 'vue'
-import { NButton, NIcon, NTag, NStatistic, NCard, type DataTableColumns } from 'naive-ui'
-import { AddOutline, DocumentTextOutline, CheckmarkCircleOutline, AlertCircleOutline } from '@vicons/ionicons5'
+import {
+  AppleContainer,
+  ApplePageHeader,
+  AppleGrid,
+  AppleStatCard,
+  AppleCard,
+  AppleButton,
+  AppleTable,
+  AppleTag,
+  AppleAvatar
+} from '@/components/apple'
+import { Plus, FileText, CheckCircle, AlertCircle } from 'lucide-vue-next'
 import { api } from '@/services/api'
+import dayjs from 'dayjs'
+
+const PlusIcon = Plus
+const DocumentIcon = FileText
+const CheckIcon = CheckCircle
+const AlertIcon = AlertCircle
 
 interface Contract {
   id: string
@@ -56,62 +76,93 @@ interface Contract {
   fechaFin?: string
   salarioBase: number
   estado: string
+  email?: string
   [key: string]: any
 }
 
 const contracts = ref<Contract[]>([])
 const loading = ref(false)
-const pagination = { pageSize: 10 }
 
 const activeCount = computed(() => contracts.value.filter(c => c.estado === 'VIGENTE').length)
-const expiringCount = computed(() => 0) // TODO: Implement expiration logic based on fechaFin
+const expiringCount = computed(() => 0)
 
-const columns: DataTableColumns<Contract> = [
+const getStatusType = (status: string): 'default' | 'primary' | 'success' | 'warning' | 'error' => {
+  switch (status) {
+    case 'VIGENTE': return 'success'
+    case 'POR_VENCER': return 'warning'
+    case 'VENCIDO': return 'error'
+    default: return 'default'
+  }
+}
+
+const columns = [
   {
     title: 'Colaborador',
     key: 'nombreCompleto',
-    render: (row) => row.nombreCompleto || 'Sin Nombre'
+    width: '200px',
+    render(row: Contract) {
+      return h('div', { class: 'name-cell' }, [
+        h(AppleAvatar, {
+          src: '',
+          size: 'sm',
+          name: row.nombreCompleto || 'SN'
+        }),
+        h('div', { style: 'margin-left: 10px;' }, [
+          h('div', { style: 'font-weight: 500; color: var(--color-text-primary);' }, row.nombreCompleto || 'Sin Nombre'),
+          h('div', { style: 'font-size: 12px; color: var(--color-text-secondary);' }, row.email || '')
+        ])
+      ])
+    }
   },
-  { title: 'Cargo', key: 'cargo' },
+  { title: 'Cargo', key: 'cargo', width: '150px' },
   {
     title: 'Inicio',
     key: 'fechaInicio',
-    render: (row) => formatDate(row.fechaInicio)
+    width: '110px',
+    render(row: Contract) {
+      return dayjs(row.fechaInicio).format('DD/MM/YYYY')
+    }
   },
   {
     title: 'Fin',
     key: 'fechaFin',
-    render: (row) => row.fechaFin ? formatDate(row.fechaFin) : 'Indefinido'
+    width: '110px',
+    render(row: Contract) {
+      return row.fechaFin ? dayjs(row.fechaFin).format('DD/MM/YYYY') : 'Indefinido'
+    }
   },
   {
     title: 'Salario',
     key: 'salarioBase',
-    render: (row) => `S/ ${row.salarioBase}`
+    width: '120px',
+    render(row: Contract) {
+      return h('strong', `S/ ${row.salarioBase.toLocaleString()}`)
+    }
   },
   {
     title: 'Estado',
     key: 'estado',
-    render: (row) => h(
-      NTag,
-      { type: row.estado === 'VIGENTE' ? 'success' : 'warning', round: true, bordered: false },
-      { default: () => row.estado }
-    )
+    width: '110px',
+    render(row: Contract) {
+      return h(AppleTag, {
+        type: getStatusType(row.estado),
+        label: row.estado
+      })
+    }
   },
   {
     title: 'Acciones',
     key: 'actions',
-    render: (row) => h(
-      NButton,
-      { size: 'small', secondary: true, onClick: () => console.log('View', row.id) },
-      { default: () => 'Ver' }
-    )
+    width: '100px',
+    render(row: Contract) {
+      return h(AppleButton, {
+        variant: 'ghost',
+        size: 'small',
+        onClick: () => console.log('View', row.id)
+      }, () => 'Ver')
+    }
   }
 ]
-
-const formatDate = (dateString: string) => {
-  if (!dateString) return '-'
-  return new Date(dateString).toLocaleDateString('es-PE')
-}
 
 const fetchContracts = async () => {
   loading.value = true
@@ -131,39 +182,8 @@ onMounted(fetchContracts)
 </script>
 
 <style scoped>
-.page-container {
-  padding: 0;
-}
-.header-actions {
+.name-cell {
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  margin-bottom: 24px;
-}
-.page-title {
-  font-size: 24px;
-  font-weight: 700;
-  margin: 0;
-  color: #1f2937;
-}
-.subtitle {
-  color: #6b7280;
-  margin: 4px 0 0;
-}
-.stats-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 16px;
-}
-.stat-card {
-  border-radius: 12px;
-  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-}
-.table-card {
-  border-radius: 12px;
-  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
-}
-.mb-6 {
-  margin-bottom: 24px;
 }
 </style>

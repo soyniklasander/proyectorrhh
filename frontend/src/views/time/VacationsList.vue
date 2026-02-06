@@ -1,95 +1,109 @@
 <template>
   <div class="vacations-list">
-    <div class="list-header">
-      <div class="header-left">
-        <n-tag type="info">{{ pendingCount }} pendientes</n-tag>
-        <n-tag type="success">{{ approvedCount }} aprobados</n-tag>
-        <n-tag type="warning">{{ daysAvailable }} días disponibles</n-tag>
+    <AppleCard>
+      <div class="list-header">
+        <div class="header-left">
+          <AppleBadge type="info" :label="`${pendingCount} pendientes`" />
+          <AppleBadge type="success" :label="`${approvedCount} aprobados`" />
+          <AppleBadge type="warning" :label="`${daysAvailable} días disponibles`" />
+        </div>
+        <div class="header-right">
+          <AppleSearchInput v-model="search" placeholder="Buscar..." class="search-input" />
+          <AppleSelect
+            v-model="filterStatus"
+            placeholder="Todos los estados"
+            :options="statusOptions"
+            class="filter-select"
+          />
+          <AppleButton variant="primary" :icon="PlusIcon" @click="showModal = true">
+            ➕ Solicitar
+          </AppleButton>
+        </div>
       </div>
-      <div class="header-right">
-        <n-input
-          v-model:value="search"
-          placeholder="Buscar empleado..."
-          class="search-input"
-          clearable
-        />
-        <n-select
-          v-model:value="filterStatus"
-          placeholder="Todos los estados"
-          :options="statusOptions"
-          style="width: 150px"
-        />
-        <n-button type="primary" @click="showModal = true">
-          ➕ Solicitar Vacaciones
-        </n-button>
-      </div>
+
+      <AppleTable
+        :columns="columns"
+        :data="filteredVacations"
+        :loading="loading"
+        :bordered="false"
+        :striped="true"
+      />
+    </AppleCard>
+
+    <div v-if="showModal" class="modal-overlay" @click.self="showModal = false">
+      <AppleCard class="modal-card" title="Solicitar Vacaciones">
+        <div class="form-grid">
+          <div class="form-item">
+            <label>Empleado</label>
+            <select v-model="formData.empleadoId" class="form-select">
+              <option :value="null">Seleccionar</option>
+              <option v-for="emp in employeeOptions" :key="emp.value" :value="emp.value">
+                {{ emp.label }}
+              </option>
+            </select>
+          </div>
+          <div class="form-item">
+            <label>Tipo</label>
+            <select v-model="formData.tipo" class="form-select">
+              <option value="VACACIONES">Vacaciones</option>
+              <option value="MEDICO">Permiso Médico</option>
+              <option value="PERSONAL">Personal</option>
+            </select>
+          </div>
+          <div class="form-item">
+            <label>Fecha Inicio</label>
+            <input type="date" v-model="formData.fechaInicioString" class="form-input" />
+          </div>
+          <div class="form-item">
+            <label>Fecha Fin</label>
+            <input type="date" v-model="formData.fechaFinString" class="form-input" />
+          </div>
+          <div class="form-item full-width">
+            <label>Motivo</label>
+            <textarea v-model="formData.motivo" class="form-textarea"></textarea>
+          </div>
+        </div>
+        <template #footer>
+          <div class="modal-actions">
+            <AppleButton variant="ghost" @click="showModal = false">Cancelar</AppleButton>
+            <AppleButton variant="primary" @click="saveVacation">Enviar</AppleButton>
+          </div>
+        </template>
+      </AppleCard>
     </div>
-
-    <n-data-table
-      :columns="columns"
-      :data="filteredVacations"
-      :loading="loading"
-      :bordered="false"
-      :striped="true"
-    />
-
-    <n-modal v-model:show="showModal" preset="card" title="Solicitar Vacaciones" style="width: 500px">
-      <n-form :model="formData" label-placement="left" label-width="120px">
-        <n-form-item label="Empleado">
-          <n-select
-            v-model:value="formData.empleadoId"
-            :options="employeeOptions"
-            placeholder="Seleccionar empleado"
-          />
-        </n-form-item>
-        <n-form-item label="Tipo">
-          <n-select
-            v-model:value="formData.tipo"
-            :options="typeOptions"
-            placeholder="Tipo de permiso"
-          />
-        </n-form-item>
-        <n-form-item label="Fecha Inicio">
-          <n-date-picker v-model:value="formData.fechaInicio" type="date" style="width: 100%" />
-        </n-form-item>
-        <n-form-item label="Fecha Fin">
-          <n-date-picker v-model:value="formData.fechaFin" type="date" style="width: 100%" />
-        </n-form-item>
-        <n-form-item label="Días Solicitados">
-          <n-input-number :value="calculateDays" :readonly="true" style="width: 100%" />
-        </n-form-item>
-        <n-form-item label="Motivo">
-          <n-input v-model:value="formData.motivo" type="textarea" placeholder="Motivo de la solicitud" />
-        </n-form-item>
-      </n-form>
-      <template #footer>
-        <n-space justify="end">
-          <n-button @click="showModal = false">Cancelar</n-button>
-          <n-button type="primary" @click="saveVacation">Enviar Solicitud</n-button>
-        </n-space>
-      </template>
-    </n-modal>
   </div>
 </template>
 
 <script setup lang="ts">
 import { ref, computed, onMounted, h } from 'vue'
-import { useMessage } from 'naive-ui'
-import { NTag, NButton, NAvatar, NInput, NSelect, NDataTable, NModal, NForm, NFormItem, NInputNumber, NDatePicker, NSpace } from 'naive-ui'
+import {
+  AppleCard,
+  AppleButton,
+  AppleBadge,
+  AppleTable,
+  AppleAvatar,
+  AppleTag,
+  AppleSearchInput,
+  AppleSelect
+} from '@/components/apple'
+import { Plus } from 'lucide-vue-next'
 import { api } from '@/services/api'
 
-const message = useMessage()
+const PlusIcon = Plus
 
 const loading = ref(false)
 const search = ref('')
 const filterStatus = ref('todos')
 const showModal = ref(false)
 const vacationRecords = ref<any[]>([])
+
 const formData = ref({
-  empleadoId: null,
+  empleadoId: null as string | null,
   tipo: 'VACACIONES',
-  fechaInicio: Date.now(),
-  fechaFin: Date.now() + 86400000 * 7,
+  fechaInicio: new Date().toISOString().split('T')[0],
+  fechaInicioString: new Date().toISOString().split('T')[0],
+  fechaFin: new Date(Date.now() + 86400000 * 7).toISOString().split('T')[0],
+  fechaFinString: new Date(Date.now() + 86400000 * 7).toISOString().split('T')[0],
   motivo: ''
 })
 
@@ -100,63 +114,31 @@ const statusOptions = [
   { label: 'Rechazados', value: 'RECHAZADO' }
 ]
 
-const typeOptions = [
-  { label: 'Vacaciones', value: 'VACACIONES' },
-  { label: 'Permiso Médico', value: 'MEDICO' },
-  { label: 'Permiso Personal', value: 'PERSONAL' },
-  { label: 'Licencia por Matrimonio', value: 'MATRIMONIO' },
-  { label: 'Licencia por Fallecimiento', value: 'FALLECIMIENTO' }
-]
-
 const employeeOptions = [
   { label: 'Juan Pérez', value: 'emp-001' },
-  { label: 'María López', value: 'emp-002' },
-  { label: 'Carlos Rodríguez', value: 'emp-003' }
+  { label: 'María López', value: 'emp-002' }
 ]
 
-const pendingCount = computed(() => 
-  vacationRecords.value.filter((r: any) => r.estado === 'PENDIENTE').length
-)
-const approvedCount = computed(() => 
-  vacationRecords.value.filter((r: any) => r.estado === 'APROBADO').length
-)
+const pendingCount = computed(() => vacationRecords.value.filter((r: any) => r.estado === 'PENDIENTE').length)
+const approvedCount = computed(() => vacationRecords.value.filter((r: any) => r.estado === 'APROBADO').length)
 const daysAvailable = computed(() => 15)
 
-const calculateDays = computed(() => {
-  const diff = formData.value.fechaFin - formData.value.fechaInicio
-  return Math.ceil(diff / (86400000 * 1000)) + 1 || 7
-})
-
-const getStatusType = (status: string | undefined | null) => {
-  if (!status) return 'default'
+const getStatusType = (status: string): 'default' | 'success' | 'warning' | 'error' => {
   switch (status) {
     case 'APROBADO': return 'success'
     case 'PENDIENTE': return 'warning'
     case 'RECHAZADO': return 'error'
-    case 'TOMADO': return 'info'
     default: return 'default'
   }
 }
 
-const getTypeColor = (type: string | undefined | null) => {
-  if (!type) return 'default'
-  switch (type) {
-    case 'VACACIONES': return 'success'
-    case 'MEDICO': return 'error'
-    case 'PERSONAL': return 'info'
-    case 'MATRIMONIO': return 'warning'
-    case 'FALLECIMIENTO': return 'default'
-    default: return 'default'
-  }
-}
-
-const createColumns = () => [
+const columns = [
   {
     title: 'Empleado',
     key: 'empleado',
     render(row: any) {
       return h('div', { class: 'employee-cell' }, [
-        h(NAvatar, { size: 'small', round: true }, () => row.nombreCompleto?.slice(0, 2)?.toUpperCase() || ''),
+        h(AppleAvatar, { src: '', size: 'sm', name: row.nombreCompleto || '' }),
         h('span', { style: 'margin-left: 8px;' }, row.nombreCompleto || '')
       ])
     }
@@ -164,72 +146,48 @@ const createColumns = () => [
   {
     title: 'Tipo',
     key: 'tipo',
-    width: 140,
+    width: '140px',
     render(row: any) {
-      return h(NTag, { type: getTypeColor(row.tipo), size: 'small' }, () => row.tipo || '')
+      return h(AppleTag, { type: 'primary', label: row.tipo || '' })
     }
   },
-  {
-    title: 'Fecha Inicio',
-    key: 'fechaInicio',
-    width: 120
-  },
-  {
-    title: 'Fecha Fin',
-    key: 'fechaFin',
-    width: 120
-  },
-  {
-    title: 'Días',
-    key: 'dias',
-    width: 70,
-    render(row: any) {
-      return h('strong', {}, row.dias || 0)
-    }
-  },
+  { title: 'Inicio', key: 'fechaInicio', width: '120px' },
+  { title: 'Fin', key: 'fechaFin', width: '120px' },
+  { title: 'Días', key: 'dias', width: '70px', render: (row: any) => h('strong', {}, row.dias || 0) },
   {
     title: 'Estado',
     key: 'estado',
-    width: 120,
+    width: '120px',
     render(row: any) {
-      return h(NTag, { type: getStatusType(row.estado), round: true, size: 'small' }, () => row.estado || '')
+      return h(AppleTag, { type: getStatusType(row.estado), label: row.estado || '' })
     }
   },
-  {
-    title: 'Motivo',
-    key: 'motivo'
-  },
+  { title: 'Motivo', key: 'motivo' },
   {
     title: 'Acciones',
     key: 'actions',
-    width: 180,
+    width: '180px',
     render(row: any) {
       if (row.estado !== 'PENDIENTE') {
         return h('span', { style: 'color: #9ca3af; font-size: 12px;' }, 'Completado')
       }
-      return h(NSpace, {}, () => [
-        h(NButton, { size: 'small', type: 'success', onClick: () => approve(row.id) }, () => 'Aprobar'),
-        h(NButton, { size: 'small', type: 'error', onClick: () => reject(row.id) }, () => 'Rechazar')
+      return h('div', { class: 'action-buttons' }, [
+        h(AppleButton, { variant: 'success', size: 'small', onClick: () => approve(row.id) }, () => 'Aprobar'),
+        h(AppleButton, { variant: 'danger', size: 'small', onClick: () => reject(row.id) }, () => 'Rechazar')
       ])
     }
   }
 ]
 
-const columns = createColumns()
-
 const filteredVacations = computed(() => {
   let data = vacationRecords.value || []
-  
   if (search.value) {
-    const s = search.value.toLowerCase()
-    data = (data || []).filter((r: any) => r.nombreCompleto?.toLowerCase().includes(s))
+    data = data.filter((r: any) => r.nombreCompleto?.toLowerCase().includes(search.value.toLowerCase()))
   }
-  
   if (filterStatus.value !== 'todos') {
-    data = (data || []).filter((r: any) => r.estado === filterStatus.value)
+    data = data.filter((r: any) => r.estado === filterStatus.value)
   }
-  
-  return data || []
+  return data
 })
 
 const loadVacations = async () => {
@@ -247,10 +205,8 @@ const loadVacations = async () => {
 }
 
 const generateMockData = () => [
-  { id: 'vac-001', nombreCompleto: 'Juan Pérez', tipo: 'VACACIONES', fechaInicio: '2024-02-01', fechaFin: '2024-02-10', dias: 10, estado: 'PENDIENTE', motivo: 'Vacaciones familiares' },
-  { id: 'vac-002', nombreCompleto: 'María López', tipo: 'MEDICO', fechaInicio: '2024-01-20', fechaFin: '2024-01-22', dias: 3, estado: 'APROBADO', motivo: 'Atención médica' },
-  { id: 'vac-003', nombreCompleto: 'Carlos Rodríguez', tipo: 'VACACIONES', fechaInicio: '2024-02-15', fechaFin: '2024-02-24', dias: 10, estado: 'PENDIENTE', motivo: 'Viaje de descanso' },
-  { id: 'vac-004', nombreCompleto: 'Ana García', tipo: 'PERSONAL', fechaInicio: '2024-01-25', fechaFin: '2024-01-25', dias: 1, estado: 'APROBADO', motivo: 'Trámites personales' }
+  { id: 'vac-001', nombreCompleto: 'Juan Pérez', tipo: 'VACACIONES', fechaInicio: '2024-02-01', fechaFin: '2024-02-10', dias: 10, estado: 'PENDIENTE', motivo: 'Vacaciones' },
+  { id: 'vac-002', nombreCompleto: 'María López', tipo: 'MEDICO', fechaInicio: '2024-01-20', fechaFin: '2024-01-22', dias: 3, estado: 'APROBADO', motivo: 'Médico' }
 ]
 
 const approve = async (id: string) => {
@@ -258,10 +214,10 @@ const approve = async (id: string) => {
     await api.put(`/vacations/${id}/status`, { estado: 'APROBADO' })
     const record = vacationRecords.value.find((r: any) => r.id === id)
     if (record) record.estado = 'APROBADO'
-    message.success('Solicitud aprobada')
+    alert('Aprobado')
     loadVacations()
   } catch (error) {
-    message.error('Error al aprobar solicitud')
+    alert('Error')
   }
 }
 
@@ -270,10 +226,10 @@ const reject = async (id: string) => {
     await api.put(`/vacations/${id}/status`, { estado: 'RECHAZADO' })
     const record = vacationRecords.value.find((r: any) => r.id === id)
     if (record) record.estado = 'RECHAZADO'
-    message.warning('Solicitud rechazada')
+    alert('Rechazado')
     loadVacations()
   } catch (error) {
-    message.error('Error al rechazar solicitud')
+    alert('Error')
   }
 }
 
@@ -282,66 +238,36 @@ const saveVacation = async () => {
     await api.post('/vacations', {
       empleadoId: formData.value.empleadoId,
       tipo: formData.value.tipo,
-      fechaInicio: new Date(formData.value.fechaInicio).toISOString().split('T')[0],
-      fechaFin: new Date(formData.value.fechaFin).toISOString().split('T')[0],
-      dias: calculateDays.value,
+      fechaInicio: formData.value.fechaInicioString,
+      fechaFin: formData.value.fechaFinString,
       motivo: formData.value.motivo
     })
-    message.success('Solicitud de vacaciones enviada correctamente')
+    alert('Solicitud enviada')
     showModal.value = false
     loadVacations()
-    formData.value = {
-      empleadoId: null,
-      tipo: 'VACACIONES',
-      fechaInicio: Date.now(),
-      fechaFin: Date.now() + 86400000 * 7,
-      motivo: ''
-    }
   } catch (error) {
-    message.error('Error al enviar solicitud')
+    alert('Error')
   }
 }
 
-onMounted(() => {
-  loadVacations()
-})
+onMounted(() => loadVacations())
 </script>
 
 <style scoped>
-.vacations-list {
-  background: white;
-  border-radius: 12px;
-  padding: 24px;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-}
-
-.list-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 24px;
-  flex-wrap: wrap;
-  gap: 16px;
-}
-
-.header-left {
-  display: flex;
-  gap: 12px;
-}
-
-.header-right {
-  display: flex;
-  gap: 12px;
-  align-items: center;
-  flex-wrap: wrap;
-}
-
-.search-input {
-  max-width: 200px;
-}
-
-.employee-cell {
-  display: flex;
-  align-items: center;
-}
+.vacations-list { padding: 0; }
+.list-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; flex-wrap: wrap; gap: 16px; }
+.header-left, .header-right { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
+.search-input { max-width: 200px; }
+.filter-select { width: 150px; }
+.employee-cell { display: flex; align-items: center; }
+.action-buttons { display: flex; gap: 8px; }
+.modal-overlay { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.5); display: flex; align-items: center; justify-content: center; z-index: 1000; }
+.modal-card { width: 500px; max-width: 90vw; }
+.form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.form-item { display: flex; flex-direction: column; gap: 6px; }
+.form-item.full-width { grid-column: span 2; }
+.form-item label { font-size: 13px; font-weight: 500; color: var(--color-text-secondary); }
+.form-input, .form-select, .form-textarea { padding: 10px 12px; border: 1px solid var(--color-border); border-radius: 8px; font-size: 14px; }
+.form-textarea { min-height: 80px; resize: vertical; }
+.modal-actions { display: flex; justify-content: flex-end; gap: 12px; }
 </style>
