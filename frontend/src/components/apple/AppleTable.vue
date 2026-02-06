@@ -140,7 +140,13 @@ const handleSort = (col: Column) => {
 
 const renderCell = (col: Column, row: any, index: number) => {
   if (col.render) {
-    return col.render(row, index)
+    const result = col.render(row, index)
+    // If render function returns a primitive (string/number), wrap it in a VNode
+    // This prevents <component :is="..."> from trying to use it as a tag name
+    if (typeof result === 'string' || typeof result === 'number' || typeof result === 'boolean') {
+      return h('span', {}, String(result))
+    }
+    return result
   }
   return h('span', {}, row[col.key])
 }

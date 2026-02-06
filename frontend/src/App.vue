@@ -98,7 +98,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, h } from 'vue'
+import { ref, computed, h, nextTick, watch } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import {
   NConfigProvider, darkTheme, NLayout, NLayoutSider, NLayoutHeader, NLayoutContent,
@@ -250,14 +250,40 @@ const currentPageTitle = computed(() => {
   return titles[activeKey.value] || 'RickERP'
 })
 
-const handleMenuClick = (key: string) => {
+const handleMenuClick = async (key: string) => {
   activeKey.value = key
+  await nextTick()
   if (key === 'dashboard') {
     router.push('/')
   } else {
     router.push(`/${key}`)
   }
 }
+
+// Sync menu state with route
+watch(
+  () => route.path,
+  (path) => {
+    if (path === '/' || path === '/dashboard') {
+      activeKey.value = 'dashboard'
+    } else {
+      const parts = path.split('/').filter(Boolean)
+      if (parts.length > 0) {
+        // Try to match exact path or first segment for nested routes
+        const mainSection = parts[0]
+        // Check if full path exists in menu keys (simplified logic)
+        // For production app, recursive search in menuOptions is better
+        activeKey.value = path.substring(1) // remove leading slash
+        
+        // Fix for specific known prefix matches if needed
+        if (mainSection === 'personal') activeKey.value = 'personal'
+        if (mainSection === 'employees') activeKey.value = 'personal' // Map employees to personal
+        if (path.startsWith('/contracts')) activeKey.value = 'contracts'
+      }
+    }
+  },
+  { immediate: true }
+)
 </script>
 
 <style>
