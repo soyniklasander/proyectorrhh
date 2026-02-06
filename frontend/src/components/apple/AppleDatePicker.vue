@@ -34,8 +34,8 @@
         
         <div class="apple-datepicker__days">
           <button
-            v-for="date in calendarDays"
-            :key="date.date"
+            v-for="(date, idx) in calendarDays"
+            :key="idx"
             class="apple-datepicker__day"
             :class="{
               'apple-datepicker__day--other-month': !date.currentMonth,
@@ -58,7 +58,7 @@ import { NIcon } from 'naive-ui'
 import { CalendarOutline, ChevronBackOutline, ChevronForwardOutline } from '@vicons/ionicons5'
 
 interface Props {
-  modelValue: Date | null
+  modelValue: Date | number | null
   placeholder?: string
   disabled?: boolean
   error?: boolean
@@ -74,14 +74,23 @@ const emit = defineEmits<{
   'update:modelValue': [value: Date | null]
 }>()
 
+// Normalizar modelValue a Date
+const normalizedDate = computed(() => {
+  if (!props.modelValue) return null
+  if (typeof props.modelValue === 'number') {
+    return new Date(props.modelValue)
+  }
+  return props.modelValue
+})
+
 const isOpen = ref(false)
 const currentDate = ref(new Date())
 
 const weekDays = ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb']
 
 const formattedValue = computed(() => {
-  if (!props.modelValue) return ''
-  return props.modelValue.toLocaleDateString('es-PE', {
+  if (!normalizedDate.value) return ''
+  return normalizedDate.value.toLocaleDateString('es-PE', {
     day: '2-digit',
     month: 'short',
     year: 'numeric'
@@ -157,8 +166,8 @@ const nextMonth = () => {
 }
 
 const isSelected = (date: Date) => {
-  if (!props.modelValue) return false
-  return date.toDateString() === props.modelValue.toDateString()
+  if (!normalizedDate.value) return false
+  return date.toDateString() === normalizedDate.value.toDateString()
 }
 
 const isToday = (date: Date) => {
@@ -172,15 +181,15 @@ const selectDate = (date: Date) => {
 
 const vClickOutside = {
   mounted(el: HTMLElement, binding: any) {
-    el._clickOutside = (event: Event) => {
+    (el as any)._clickOutside = (event: Event) => {
       if (!(el === event.target || el.contains(event.target as Node))) {
         binding.value()
       }
     }
-    document.addEventListener('click', el._clickOutside)
+    document.addEventListener('click', (el as any)._clickOutside)
   },
   unmounted(el: HTMLElement) {
-    document.removeEventListener('click', el._clickOutside)
+    document.removeEventListener('click', (el as any)._clickOutside)
   },
 }
 </script>
