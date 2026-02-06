@@ -108,7 +108,7 @@ import {
 import type { MenuOption } from 'naive-ui'
 import {
   PeopleOutline, DocumentTextOutline, WalletOutline, TimeOutline,
-  CardOutline, BarChartOutline, SettingsOutline, HomeOutline, 
+  CardOutline, BarChartOutline, SettingsOutline, HomeOutline,
   SunnyOutline, MoonOutline, BusinessOutline, CheckmarkCircleOutline
 } from '@vicons/ionicons5'
 import { useAuthStore } from '@/store/auth'
@@ -215,7 +215,14 @@ const menuOptions = computed((): MenuOption[] => {
     {
       label: 'Nómina',
       key: 'payroll',
-      icon: () => h(NIcon, null, { default: () => h(WalletOutline) })
+      icon: () => h(NIcon, null, { default: () => h(WalletOutline) }),
+      children: [
+        { label: 'Planilla', key: 'payroll' },
+        { label: 'Préstamos', key: 'payroll/loans' },
+        { label: 'Descuentos', key: 'payroll/discounts' },
+        { label: 'Boletas', key: 'payroll/payslips' },
+        { label: 'Liquidaciones', key: 'payroll/liquidations' }
+      ]
     },
     {
       label: 'Tiempo',

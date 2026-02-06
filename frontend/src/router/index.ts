@@ -1,7 +1,10 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
 import { useAuthStore } from '@/store/auth'
+import { phasesRoutes } from './phases_routes'
 
 const routes: RouteRecordRaw[] = [
+  ...phasesRoutes,
+
   {
     path: '/login',
     name: 'Login',
@@ -72,55 +75,7 @@ const routes: RouteRecordRaw[] = [
     component: () => import('@/views/time/OvertimeSettings.vue'),
     meta: { requiresAuth: true }
   },
-  {
-    path: '/loans',
-    name: 'Loans',
-    component: () => import('@/views/loans/index.vue'),
-    meta: { requiresAuth: true }
-  },
-  // FASE 3: NÓMINA Y BENEFICIOS
-  {
-    path: '/payroll/loans',
-    name: 'PayrollLoans',
-    component: () => import('@/views/payroll/loans/index.vue'),
-    meta: { requiresAuth: true }
-  },
-  {
-    path: '/payroll/discounts',
-    name: 'PayrollDiscounts',
-    component: () => import('@/views/payroll/discounts/index.vue'),
-    meta: { requiresAuth: true }
-  },
-  {
-    path: '/payroll/payslips',
-    name: 'PayrollPayslips',
-    component: () => import('@/views/payroll/payslips/index.vue'),
-    meta: { requiresAuth: true }
-  },
-  {
-    path: '/payroll/liquidations',
-    name: 'PayrollLiquidations',
-    component: () => import('@/views/payroll/liquidations/index.vue'),
-    meta: { requiresAuth: true }
-  },
-  {
-    path: '/leaves',
-    name: 'Leaves',
-    component: () => import('@/views/leaves/index.vue'),
-    meta: { requiresAuth: true }
-  },
-  {
-    path: '/reports',
-    name: 'Reports',
-    component: () => import('@/views/reports/index.vue'),
-    meta: { requiresAuth: true }
-  },
-  {
-    path: '/legal/templates',
-    name: 'LegalTemplates',
-    component: () => import('@/views/legal/templates/index.vue'),
-    meta: { requiresAuth: true }
-  },
+  
   {
     path: '/settings',
     name: 'Settings',
