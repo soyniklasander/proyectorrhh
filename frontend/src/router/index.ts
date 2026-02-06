@@ -3,8 +3,6 @@ import { useAuthStore } from '@/store/auth'
 import { phasesRoutes } from './phases_routes'
 
 const routes: RouteRecordRaw[] = [
-  ...phasesRoutes,
-
   {
     path: '/login',
     name: 'Login',
@@ -43,12 +41,6 @@ const routes: RouteRecordRaw[] = [
     path: '/contracts/new',
     name: 'Onboarding',
     component: () => import('@/views/contracts/Onboarding.vue'),
-    meta: { requiresAuth: true }
-  },
-  {
-    path: '/payroll',
-    name: 'Payroll',
-    component: () => import('@/views/payroll/index.vue'),
     meta: { requiresAuth: true }
   },
   {
