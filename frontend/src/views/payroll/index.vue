@@ -89,7 +89,7 @@
       <div v-if="selectedRow" class="paystub-content">
         <!-- Period Header -->
         <div class="paystub-period">
-          <AppleBadge type="primary" :label="formatPeriod(selectedDate)" />
+          <AppleBadge type="info" :label="formatPeriod(selectedDate)" />
         </div>
 
         <!-- Employee Info -->
@@ -226,7 +226,7 @@ interface PayrollRow {
   neto: number
 }
 
-const selectedDate = ref(Date.now())
+const selectedDate = ref<Date | null>(dayjs().toDate())
 const loading = ref(false)
 const generating = ref(false)
 const exporting = ref(false)
@@ -244,8 +244,8 @@ const summary = computed(() => {
 })
 
 const columns = [
-  { title: 'Empleado', key: 'employeeName', width: 200 },
-  { title: 'DNI', key: 'dni', width: 100 },
+  { title: 'Empleado', key: 'employeeName' },
+  { title: 'DNI', key: 'dni' },
   {
     title: 'Básico',
     key: 'basico',
@@ -269,7 +269,7 @@ const columns = [
   {
     title: 'Acciones',
     key: 'actions',
-    width: 100,
+    width: '100px',
     render: (row: PayrollRow) => h(AppleIconButton, {
       size: 'small',
       variant: 'ghost',
@@ -280,7 +280,7 @@ const columns = [
 ]
 
 const formatMoney = (val: number) => val?.toLocaleString('es-PE', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) ?? '0.00'
-const formatPeriod = (ts: number) => dayjs(ts).format('MMMM YYYY').toUpperCase()
+const formatPeriod = (date: Date | null) => date ? dayjs(date).format('MMMM YYYY').toUpperCase() : ''
 
 const fetchPayroll = async () => {
   loading.value = true
