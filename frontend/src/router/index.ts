@@ -87,9 +87,12 @@ const routes: RouteRecordRaw[] = [
   }
 ]
 
+// Combine all routes including phases routes
+const allRoutes = [...routes, ...phasesRoutes]
+
 const router = createRouter({
   history: createWebHistory(),
-  routes
+  routes: allRoutes
 })
 
 router.beforeEach((to, _from, next) => {

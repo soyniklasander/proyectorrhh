@@ -58,7 +58,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted, watch } from 'vue'
+import { ref, computed, onMounted, watch, h } from 'vue'
 import { AppleContainer, ApplePageHeader, AppleCard, AppleButton, AppleTable, AppleSearchInput, AppleSelect, AppleModal, AppleInput } from '@/components/apple'
 import payrollService, { type EmployeeDiscount, type DiscountType } from '@/services/payroll.service'
 
