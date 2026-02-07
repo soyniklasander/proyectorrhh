@@ -29,11 +29,17 @@ import { RefreshCw } from 'lucide-vue-next'
 const RefreshIcon = RefreshCw
 
 const search = ref('')
-const stats = ref({ expired: 0, pending: 3, processing: 1, completed: 12 })
+const stats = ref({ expired: 4, pending: 8, processing: 3, completed: 45 })
 
 const desvinculaciones = ref([
-  { id: 'DESV-001', nombre: 'Juan Pérez García', dni: '12345678', cargo: 'Analista', fechaFin: '2026-01-15', motivo: 'Renuncia', estado: 'VENCIDO' },
-  { id: 'DESV-002', nombre: 'María López', dni: '87654321', cargo: 'Asistente', fechaFin: '2026-02-01', motivo: 'Despido', estado: 'PENDIENTE' }
+  { id: 'DESV-001', nombre: 'Luis Miguel Herrera Gálvez', dni: '10293847', cargo: 'Analista de Sistemas', fechaFin: '2026-01-15', motivo: 'Renuncia voluntaria', estado: 'LIQUIDADO' },
+  { id: 'DESV-002', nombre: 'Patricia Elena Quispe Mamani', dni: '38475612', cargo: 'Asistente de Ventas', fechaFin: '2026-02-01', motivo: 'Despido justificado', estado: 'PENDIENTE' },
+  { id: 'DESV-003', nombre: 'Jorge Alberto Núñez Ortiz', dni: '91827364', cargo: 'Técnico de Mantenimiento', fechaFin: '2025-12-20', motivo: 'Fin de contrato', estado: 'PROCESO' },
+  { id: 'DESV-004', nombre: 'Rosa Marina Flores Delgado', dni: '56473829', cargo: 'Secretaria', fechaFin: '2025-11-30', motivo: 'Renuncia voluntaria', estado: 'LIQUIDADO' },
+  { id: 'DESV-005', nombre: 'Walter Raúl Chávez Vega', dni: '73649281', cargo: 'Chofer', fechaFin: '2026-02-10', motivo: 'Mutuo acuerdo', estado: 'PENDIENTE' },
+  { id: 'DESV-006', nombre: 'Sofía Isabella Paz García', dni: '12837465', cargo: 'Practicante de Marketing', fechaFin: '2025-08-15', motivo: 'Fin de prácticas', estado: 'LIQUIDADO' },
+  { id: 'DESV-007', nombre: 'Marco Antonio López Ruiz', dni: '92736451', cargo: 'Vendedor', fechaFin: '2025-07-22', motivo: 'Despido injustificado', estado: 'VENCIDO' },
+  { id: 'DESV-008', nombre: 'Elena Carmen Torres Mendoza', dni: '45126378', cargo: 'Contadora', fechaFin: '2025-06-10', motivo: 'Renuncia voluntaria', estado: 'LIQUIDADO' }
 ])
 
 const getStatusType = (status: string): 'default' | 'success' | 'warning' | 'error' | 'primary' => {

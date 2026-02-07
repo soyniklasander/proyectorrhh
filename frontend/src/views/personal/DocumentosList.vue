@@ -30,11 +30,17 @@ const UploadIcon = Upload
 
 const search = ref('')
 const showUploadModal = ref(false)
-const stats = ref({ required: 8, pending: 15, expiring: 3, expired: 2 })
+const stats = ref({ required: 12, pending: 8, expiring: 5, expired: 2 })
 
 const documents = ref([
-  { id: 'DOC-001', nombreEmpleado: 'Juan Pérez García', tipo: 'DNI', nombreArchivo: 'dni.pdf', fechaSubida: '2026-01-10', estado: 'VIGENTE' },
-  { id: 'DOC-002', nombreEmpleado: 'María López', tipo: 'CV', nombreArchivo: 'cv.pdf', fechaSubida: '2026-01-10', estado: 'VIGENTE' }
+  { id: 'DOC-001', nombreEmpleado: 'Juan Carlos Pérez García', tipo: 'DNI', nombreArchivo: 'dni_47856321.pdf', fechaSubida: '2025-01-10', estado: 'VIGENTE' },
+  { id: 'DOC-002', nombreEmpleado: 'María Elena López Mendoza', tipo: 'CV', nombreArchivo: 'cv_maria_lopez.pdf', fechaSubida: '2025-01-12', estado: 'VIGENTE' },
+  { id: 'DOC-003', nombreEmpleado: 'Roberto Carlos Mendoza Silva', tipo: 'Contrato', nombreArchivo: 'contrato_roberto.pdf', fechaSubida: '2024-06-01', estado: 'VIGENTE' },
+  { id: 'DOC-004', nombreEmpleado: 'Ana Sofía Torres Ruiz', tipo: 'Certificado de Estudios', nombreArchivo: 'cert_ana_torres.pdf', fechaSubida: '2024-11-15', estado: 'VENCIDO' },
+  { id: 'DOC-005', nombreEmpleado: 'Pedro Andrés Fernández Díaz', tipo: 'Recibo de Haberes', nombreArchivo: 'recibo_pedro_ene2026.pdf', fechaSubida: '2026-01-05', estado: 'VIGENTE' },
+  { id: 'DOC-006', nombreEmpleado: 'Carmen Rosa Vásquez López', tipo: 'AFP', nombreArchivo: 'afp_carmen.pdf', fechaSubida: '2025-08-20', estado: 'VIGENTE' },
+  { id: 'DOC-007', nombreEmpleado: 'Juan Carlos Pérez García', tipo: 'Certificado de Trabajo', nombreArchivo: 'cert_trabajo_juan.pdf', fechaSubida: '2025-03-10', estado: 'VIGENTE' },
+  { id: 'DOC-008', nombreEmpleado: 'María Elena López Mendoza', tipo: 'Licencia de Conducir', nombreArchivo: 'licencia_maria.pdf', fechaSubida: '2024-02-28', estado: 'POR_VENCER' }
 ])
 
 const columns = [

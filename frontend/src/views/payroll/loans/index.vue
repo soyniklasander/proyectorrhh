@@ -57,15 +57,17 @@
 import { ref, computed, onMounted, watch, h } from 'vue'
 import { AppleCard, AppleButton, AppleSearchInput, AppleSelect, AppleTable, AppleModal, AppleInput, AppleDatePicker } from '@/components/apple'
 import payrollService, { type Loan } from '@/services/payroll.service'
+import { useMessage } from 'naive-ui'
 
 const loading = ref(false)
 const submitting = ref(false)
-const loans = ref<Loan[]>([])
+const loans = ref<any[]>([])
 const searchQuery = ref('')
 const statusFilter = ref<string | null>(null)
 const showModal = ref(false)
 const showDetails = ref(false)
 const selectedLoan = ref<Loan | null>(null)
+const message = useMessage()
 
 const formData = ref({ empleadoId: '', montoTotal: 0, montoTotalStr: '0', cuotasTotales: 12, cuotasTotalesStr: '12', tasaInteres: 0, tasaInteresStr: '0', fechaInicio: new Date(), motivo: '' })
 const employeeOptions = ref<{ label: string; value: string }[]>([])
@@ -101,9 +103,27 @@ const viewDetails = (loan: Loan) => { selectedLoan.value = loan; showDetails.val
 const loadLoans = async () => {
   try {
     const { data } = await payrollService.getLoans({ limit: 100 })
-    loans.value = data
-  } catch (error) { console.error(error) }
+    if (Array.isArray(data) && data.length > 0) {
+      loans.value = data
+    } else {
+      loans.value = getMockLoans()
+      message.warning('Usando datos de demostración')
+    }
+  } catch (error: any) {
+    console.error('Error loading loans:', error)
+    loans.value = getMockLoans()
+    message.warning('Usando datos de demostración')
+  }
 }
+
+const getMockLoans = (): Loan[] => [
+  { id: 'PR-001', empleadoId: 'EMP-001', empleadoCodigo: 'EMP-001', empleadoNombre: 'Juan Carlos Pérez García', montoTotal: 10000, saldoPendiente: 5833.33, cuotaMensual: 833.33, cuotasPagadas: 5, cuotasTotales: 12, tasaInteres: 0, estado: 'ACTIVO' },
+  { id: 'PR-002', empleadoId: 'EMP-002', empleadoCodigo: 'EMP-002', empleadoNombre: 'María Elena López Mendoza', montoTotal: 5000, saldoPendiente: 2500, cuotaMensual: 416.67, cuotasPagadas: 6, cuotasTotales: 12, tasaInteres: 0, estado: 'ACTIVO' },
+  { id: 'PR-003', empleadoId: 'EMP-003', empleadoCodigo: 'EMP-003', empleadoNombre: 'Roberto Carlos Mendoza Silva', montoTotal: 15000, saldoPendiente: 15000, cuotaMensual: 1250, cuotasPagadas: 0, cuotasTotales: 12, tasaInteres: 0, estado: 'ACTIVO' },
+  { id: 'PR-004', empleadoId: 'EMP-004', empleadoCodigo: 'EMP-004', empleadoNombre: 'Ana Sofía Torres Ruiz', montoTotal: 3000, saldoPendiente: 0, cuotaMensual: 250, cuotasPagadas: 12, cuotasTotales: 12, tasaInteres: 0, estado: 'CANCELADO' },
+  { id: 'PR-005', empleadoId: 'EMP-005', empleadoCodigo: 'EMP-005', empleadoNombre: 'Pedro Andrés Fernández Díaz', montoTotal: 8000, saldoPendiente: 5333.33, cuotaMensual: 666.67, cuotasPagadas: 4, cuotasTotales: 12, tasaInteres: 0, estado: 'ACTIVO' },
+  { id: 'PR-006', empleadoId: 'EMP-006', empleadoCodigo: 'EMP-006', empleadoNombre: 'Carmen Rosa Vásquez López', montoTotal: 20000, saldoPendiente: 18333.33, cuotaMensual: 1666.67, cuotasPagadas: 1, cuotasTotales: 12, tasaInteres: 0, estado: 'ACTIVO' }
+]
 
 const loadEmployees = async () => {
   try {
@@ -116,7 +136,7 @@ const handleSubmit = async () => {
   submitting.value = true
   try {
     await payrollService.createLoan({ empleadoId: formData.value.empleadoId, montoTotal: Number(formData.value.montoTotalStr), cuotasTotales: Number(formData.value.cuotasTotalesStr), tasaInteres: Number(formData.value.tasaInteresStr), fechaInicio: formData.value.fechaInicio.toISOString(), motivo: formData.value.motivo })
-    alert('Préstamo creado correctamente')
+    message.success('Préstamo creado correctamente')
     showModal.value = false
     loadLoans()
   } catch (error) { console.error(error) }

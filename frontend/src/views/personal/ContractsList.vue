@@ -33,6 +33,46 @@
       pagination
     />
   </AppleCard>
+
+  <!-- Terminar Contrato Modal -->
+  <AppleModal v-model:show="showTerminateModal" title="Terminar Contrato" style="width: 500px">
+    <div v-if="selectedContract" class="form-grid">
+      <div class="form-group full">
+        <label>Empleado</label>
+        <span>{{ selectedContract.nombreCompleto }}</span>
+      </div>
+      <div class="form-group full">
+        <label>Motivo de Terminación</label>
+        <textarea v-model="terminateMotivo" class="textarea-input" rows="3" placeholder="Ingrese el motivo..."></textarea>
+      </div>
+    </div>
+    <template #footer>
+      <div style="display: flex; gap: 8px; justify-content: flex-end">
+        <AppleButton variant="secondary" @click="showTerminateModal = false">Cancelar</AppleButton>
+        <AppleButton variant="danger" @click="confirmTerminate">Terminar Contrato</AppleButton>
+      </div>
+    </template>
+  </AppleModal>
+
+  <!-- Renovar Contrato Modal -->
+  <AppleModal v-model:show="showRenewModal" title="Renovar Contrato" style="width: 500px">
+    <div v-if="selectedContract" class="form-grid">
+      <div class="form-group full">
+        <label>Empleado</label>
+        <span>{{ selectedContract.nombreCompleto }}</span>
+      </div>
+      <div class="form-group full">
+        <label>Nueva Fecha de Finalización</label>
+        <AppleDatePicker v-model="renewFechaFin" type="date" />
+      </div>
+    </div>
+    <template #footer>
+      <div style="display: flex; gap: 8px; justify-content: flex-end">
+        <AppleButton variant="secondary" @click="showRenewModal = false">Cancelar</AppleButton>
+        <AppleButton variant="primary" @click="confirmRenew">Renovar Contrato</AppleButton>
+      </div>
+    </template>
+  </AppleModal>
 </template>
 
 <script setup lang="ts">
@@ -45,16 +85,42 @@ import {
   AppleTag,
   AppleSearchInput,
   AppleSelect,
-  AppleAvatar
+  AppleAvatar,
+  AppleModal,
+  AppleInput,
+  AppleDatePicker
 } from '@/components/apple'
 import { RefreshCw } from 'lucide-vue-next'
+import { api } from '@/services/api'
+import { useMessage } from 'naive-ui'
 
 const RefreshIcon = RefreshCw
+const message = useMessage()
 
-const contracts = ref<any[]>([])
+interface Contract {
+  id: string
+  employeeId: string
+  nombreCompleto: string
+  numeroDocumento: string
+  tipoContrato: string
+  regimenLaboral: string
+  cargo: string
+  fechaInicio: string
+  fechaFin: string
+  salarioBase: number
+  estado: string
+  motivo?: string
+}
+
+const contracts = ref<Contract[]>([])
 const loading = ref(false)
 const search = ref('')
 const filterStatus = ref('todos')
+const showTerminateModal = ref(false)
+const showRenewModal = ref(false)
+const selectedContract = ref<Contract | null>(null)
+const terminateMotivo = ref('')
+const renewFechaFin = ref<Date | null>(null)
 
 const statusOptions = [
   { label: 'Todos', value: 'todos' },
@@ -150,17 +216,193 @@ const filteredContracts = computed(() => {
 const loadContracts = async () => {
   loading.value = true
   try {
-    const response = await fetch('/api/v1/contracts', { headers: { 'Authorization': `Bearer ${localStorage.getItem('access_token')}` } })
-    const data = await response.json()
-    if (data.success) contracts.value = data.data
-  } catch (error) {
-    console.error(error)
-  } finally { loading.value = false }
+    const { data } = await api.get('/contracts')
+    if (Array.isArray(data)) {
+      contracts.value = data.map(c => ({
+        ...c,
+        id: c.id || c.contratoId,
+        employeeId: c.employeeId || c.empleadoId,
+        nombreCompleto: c.nombreCompleto || c.empleadoNombre || `${c.empleado?.nombre} ${c.empleado?.apellido}`,
+        numeroDocumento: c.numeroDocumento || c.dni || c.empleado?.dni,
+        tipoContrato: c.tipoContrato || c.tipo || 'Indeterminado',
+        regimenLaboral: c.regimenLaboral || c.regimen || 'General',
+        cargo: c.cargo || c.puesto || 'Sin cargo',
+        fechaInicio: c.fechaInicio || c.inicio,
+        fechaFin: c.fechaFin || c.fin,
+        salarioBase: c.salarioBase || c.sueldo || c.salario || 0,
+        estado: c.estado || c.estadoContrato || 'VIGENTE'
+      }))
+    } else if (data.success && data.data) {
+      contracts.value = data.data.map((c: any) => ({
+        ...c,
+        id: c.id || c.contratoId,
+        employeeId: c.employeeId || c.empleadoId,
+        nombreCompleto: c.nombreCompleto || c.empleadoNombre || `${c.empleado?.nombre} ${c.empleado?.apellido}`,
+        numeroDocumento: c.numeroDocumento || c.dni || c.empleado?.dni,
+        tipoContrato: c.tipoContrato || c.tipo || 'Indeterminado',
+        regimenLaboral: c.regimenLaboral || c.regimen || 'General',
+        cargo: c.cargo || c.puesto || 'Sin cargo',
+        fechaInicio: c.fechaInicio || c.inicio,
+        fechaFin: c.fechaFin || c.fin,
+        salarioBase: c.salarioBase || c.sueldo || c.salario || 0,
+        estado: c.estado || c.estadoContrato || 'VIGENTE'
+      }))
+    }
+  } catch (error: any) {
+    console.error('Error loading contracts:', error)
+    if (error.response?.status === 401) {
+      message.error('Sesión expirada. Por favor inicie sesión nuevamente.')
+    } else {
+      // Si la API falla, usamos datos mock para demostración
+      contracts.value = getMockContracts()
+      message.warning('Usando datos de demostración')
+    }
+  } finally {
+    loading.value = false
+  }
 }
 
-const viewContract = (id: string) => console.log('View:', id)
-const renewContract = (id: string) => console.log('Renew:', id)
-const terminateContract = (id: string) => console.log('Terminate:', id)
+const getMockContracts = (): Contract[] => [
+  {
+    id: 'CTR-001',
+    employeeId: 'EMP-001',
+    nombreCompleto: 'Juan Carlos Pérez García',
+    numeroDocumento: '47856321',
+    tipoContrato: 'Indeterminado',
+    regimenLaboral: 'GRP - Régimen General de la Actividad Privada',
+    cargo: 'Ingeniero de Software Senior',
+    fechaInicio: '2022-03-15',
+    fechaFin: '2026-12-31',
+    salarioBase: 8500,
+    estado: 'VIGENTE'
+  },
+  {
+    id: 'CTR-002',
+    employeeId: 'EMP-002',
+    nombreCompleto: 'María Elena López Mendoza',
+    numeroDocumento: '29587416',
+    tipoContrato: 'Plazo Fijo',
+    regimenLaboral: 'RAC - Régimen Agrario de Cocaña',
+    cargo: 'Gerente de Recursos Humanos',
+    fechaInicio: '2024-01-15',
+    fechaFin: '2025-01-14',
+    salarioBase: 12000,
+    estado: 'VIGENTE'
+  },
+  {
+    id: 'CTR-003',
+    employeeId: 'EMP-003',
+    nombreCompleto: 'Roberto Carlos Mendoza Silva',
+    numeroDocumento: '15284739',
+    tipoContrato: 'Indeterminado',
+    regimenLaboral: 'RCL - Construcción Civil',
+    cargo: 'Supervisor de Obra',
+    fechaInicio: '2021-06-01',
+    fechaFin: '2025-02-28',
+    salarioBase: 7200,
+    estado: 'POR_VENCER'
+  },
+  {
+    id: 'CTR-004',
+    employeeId: 'EMP-004',
+    nombreCompleto: 'Ana Sofía Torres Ruiz',
+    numeroDocumento: '61829374',
+    tipoContrato: 'Plazo Fijo',
+    regimenLaboral: 'RMR - Régimen de la Microempresa',
+    cargo: 'Asistente Administrativa',
+    fechaInicio: '2024-06-01',
+    fechaFin: '2024-12-31',
+    salarioBase: 2500,
+    estado: 'VIGENTE'
+  },
+  {
+    id: 'CTR-005',
+    employeeId: 'EMP-005',
+    nombreCompleto: 'Pedro Andrés Fernández Díaz',
+    numeroDocumento: '38274651',
+    tipoContrato: 'Indeterminado',
+    regimenLaboral: 'RNP - Régimen Nacional de Pensiones',
+    cargo: 'Analista Contable',
+    fechaInicio: '2023-09-01',
+    fechaFin: '2025-06-30',
+    salarioBase: 4800,
+    estado: 'SUSPENDIDO'
+  },
+  {
+    id: 'CTR-006',
+    employeeId: 'EMP-006',
+    nombreCompleto: 'Carmen Rosa Vásquez López',
+    numeroDocumento: '52938471',
+    tipoContrato: 'Indeterminado',
+    regimenLaboral: 'GRP - Régimen General de la Actividad Privada',
+    cargo: 'Jefa de Marketing Digital',
+    fechaInicio: '2020-01-10',
+    fechaFin: '2024-11-30',
+    salarioBase: 9500,
+    estado: 'VENCIDO'
+  }
+]
+
+const viewContract = (id: string) => {
+  const contract = contracts.value.find(c => c.id === id)
+  if (contract) {
+    message.info(`Ver contrato: ${contract.nombreCompleto}`)
+  }
+}
+
+const renewContract = (id: string) => {
+  const contract = contracts.value.find(c => c.id === id)
+  if (contract) {
+    selectedContract.value = contract
+    showRenewModal.value = true
+  }
+}
+
+const terminateContract = (id: string) => {
+  const contract = contracts.value.find(c => c.id === id)
+  if (contract) {
+    selectedContract.value = contract
+    showTerminateModal.value = true
+  }
+}
+
+const confirmTerminate = async () => {
+  if (!selectedContract.value || !terminateMotivo.value) {
+    message.warning('Por favor ingrese el motivo de terminación')
+    return
+  }
+  
+  try {
+    await api.put(`/contracts/${selectedContract.value.id}/terminate`, {
+      motivo: terminateMotivo.value
+    })
+    message.success('Contrato terminado exitosamente')
+    showTerminateModal.value = false
+    loadContracts()
+  } catch (error: any) {
+    console.error('Error terminating contract:', error)
+    message.error('Error al terminar el contrato')
+  }
+}
+
+const confirmRenew = async () => {
+  if (!selectedContract.value || !renewFechaFin.value) {
+    message.warning('Por favor seleccione la nueva fecha de finalización')
+    return
+  }
+  
+  try {
+    await api.put(`/contracts/${selectedContract.value.id}/renew`, {
+      nuevaFechaFin: renewFechaFin.value.toISOString()
+    })
+    message.success('Contrato renovado exitosamente')
+    showRenewModal.value = false
+    loadContracts()
+  } catch (error: any) {
+    console.error('Error renewing contract:', error)
+    message.error('Error al renovar el contrato')
+  }
+}
 
 onMounted(() => loadContracts())
 </script>
@@ -173,4 +415,9 @@ onMounted(() => loadContracts())
 .employee-info { display: flex; align-items: center; }
 .periodo-info { font-size: 13px; }
 .actions { display: flex; gap: 6px; }
+.textarea-input { width: 100%; padding: 10px; border: 1px solid #e2e8f0; border-radius: 8px; resize: vertical; font-family: inherit; }
+.form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.form-group { display: flex; flex-direction: column; gap: 6px; }
+.form-group.full { grid-column: span 2; }
+.form-group label { font-size: 13px; font-weight: 500; color: var(--color-text-secondary); }
 </style>

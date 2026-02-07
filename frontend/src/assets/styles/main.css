@@ -381,3 +381,163 @@ a:hover {
 ::-webkit-scrollbar-thumb:hover {
   background: var(--text-secondary);
 }
+
+/* ========================================
+   ESTILOS COMPARTIDOS - LIST VIEWS
+   Eliminados de componentes individuales
+   ======================================== */
+
+/* Header de listas */
+.list-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.header-left,
+.header-right {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+/* Celdas de empleado */
+.employee-cell,
+.name-cell,
+.cell {
+  display: flex;
+  align-items: center;
+}
+
+/* Botones de acción */
+.action-buttons,
+.actions {
+  display: flex;
+  gap: 8px;
+}
+
+/* Búsqueda y filtros */
+.search-input {
+  max-width: 200px;
+}
+
+.filter-select {
+  width: 150px;
+}
+
+/* ========================================
+   ESTILOS COMPARTIDOS - MODALS
+   ======================================== */
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal-card {
+  width: 500px;
+  max-width: 90vw;
+}
+
+/* Grid de formularios */
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+/* Items de formulario */
+.form-item,
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.form-item.full-width,
+.form-group.full {
+  grid-column: span 2;
+}
+
+.form-item label,
+.form-group label {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-secondary);
+}
+
+.form-input,
+.form-select,
+.form-textarea {
+  padding: 10px 12px;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  font-size: 14px;
+  background: var(--surface-color);
+}
+
+.form-textarea {
+  min-height: 80px;
+  resize: vertical;
+}
+
+/* Acciones del modal */
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+}
+
+/* Badges de estado */
+.badge {
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.badge.warning {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.badge.success {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.badge.error {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+/* ========================================
+   UTILIDADES DE TABLA
+   ======================================== */
+
+.text-right {
+  text-align: right;
+}
+
+.text-red {
+  color: #ef4444;
+}
+
+.amount-positive {
+  color: var(--success-color);
+  font-weight: 500;
+}
+
+.amount-negative {
+  color: var(--danger-color);
+  font-weight: 500;
+}

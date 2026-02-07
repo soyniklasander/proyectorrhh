@@ -33,8 +33,12 @@ const DownloadIcon = Download
 const loading = ref(false)
 
 const liquidaciones = ref([
-  { id: 'LIQ-001', empleado: 'Juan Pérez García', dni: '12345678', cargo: 'Analista', fechaLiquidacion: '2026-01-15', montoTotal: 12500.50, estado: 'PAGADO' },
-  { id: 'LIQ-002', empleado: 'María López Torres', dni: '87654321', cargo: 'Asistente', fechaLiquidacion: '2026-01-20', montoTotal: 8300.00, estado: 'PENDIENTE' }
+  { id: 'LIQ-001', empleado: 'Juan Carlos Pérez García', dni: '47856321', cargo: 'Ingeniero de Software Senior', fechaLiquidacion: '2026-01-15', montoTotal: 18500.50, estado: 'PAGADO' },
+  { id: 'LIQ-002', empleado: 'María Elena López Mendoza', dni: '29587416', cargo: 'Gerente de RRHH', fechaLiquidacion: '2026-01-20', montoTotal: 28300.00, estado: 'PENDIENTE' },
+  { id: 'LIQ-003', empleado: 'Roberto Carlos Mendoza Silva', dni: '15284739', cargo: 'Supervisor de Obra', fechaLiquidacion: '2025-12-10', montoTotal: 14200.75, estado: 'PAGADO' },
+  { id: 'LIQ-004', empleado: 'Ana Sofía Torres Ruiz', dni: '61829374', cargo: 'Asistente Administrativa', fechaLiquidacion: '2026-02-01', montoTotal: 6800.00, estado: 'EN_PROCESO' },
+  { id: 'LIQ-005', empleado: 'Pedro Andrés Fernández Díaz', dni: '38274651', cargo: 'Analista Contable', fechaLiquidacion: '2026-01-28', montoTotal: 9200.25, estado: 'PAGADO' },
+  { id: 'LIQ-006', empleado: 'Carmen Rosa Vásquez López', dni: '52938471', cargo: 'Jefa de Marketing Digital', fechaLiquidacion: '2026-02-05', montoTotal: 15600.00, estado: 'PENDIENTE' }
 ])
 
 const getStatusType = (status: string): 'default' | 'success' | 'warning' | 'error' | 'primary' => {
