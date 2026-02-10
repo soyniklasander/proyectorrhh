@@ -8,9 +8,9 @@
     "dev": "wrangler dev",
     "build": "echo 'Building with Wrangler during deploy'",
     "deploy": "wrangler deploy",
-    "db:push": "wrangler d1 execute --local --file=schema.sql",
-    "db:push:remote": "wrangler d1 execute --remote --file=schema.sql",
-    "db:reset": "wrangler d1 execute --remote --command='DROP TABLE IF EXISTS users; DROP TABLE IF EXISTS contracts; DROP TABLE IF EXISTS employees; DROP TABLE IF EXISTS companies;'"
+    "db:push": "wrangler d1 execute --local --file=schema.sql --command=\"DROP TABLE IF EXISTS logic_matrix; DROP TABLE IF EXISTS employees; DROP TABLE IF EXISTS venues; DROP TABLE IF EXISTS legal_entities; DROP TABLE IF EXISTS users; DROP TABLE IF EXISTS tenants;\" db_mchk",
+    "db:push:remote": "wrangler d1 execute --remote --file=schema.sql --command=\"DROP TABLE IF EXISTS logic_matrix; DROP TABLE IF EXISTS employees; DROP TABLE IF EXISTS venues; DROP TABLE IF EXISTS legal_entities; DROP TABLE IF EXISTS users; DROP TABLE IF EXISTS tenants;\" db_mchk",
+    "db:reset": "wrangler d1 execute --remote --command=\"DROP TABLE IF EXISTS logic_matrix; DROP TABLE IF EXISTS employees; DROP TABLE IF EXISTS venues; DROP TABLE IF EXISTS legal_entities; DROP TABLE IF EXISTS users; DROP TABLE IF EXISTS tenants;\" db_mchk"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
