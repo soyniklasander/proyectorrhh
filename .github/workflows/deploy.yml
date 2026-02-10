@@ -16,13 +16,8 @@ jobs:
         with:
           node-version: '22'
 
-      - name: Cache backend dependencies
-        uses: actions/cache@v4
-        with:
-          path: backend/node_modules
-          key: ${{ runner.os }}-backend-${{ hashFiles('backend/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-backend-
+      - name: Install root dependencies
+        run: npm ci
 
       - name: Install frontend dependencies
         working-directory: frontend
@@ -36,7 +31,7 @@ jobs:
 
       - name: Install backend dependencies
         working-directory: backend
-        run: npm install
+        run: npm ci
 
       - name: Deploy Backend to Cloudflare Workers
         env:
