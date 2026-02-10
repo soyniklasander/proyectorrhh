@@ -16,15 +16,13 @@ jobs:
         with:
           node-version: '22'
 
-      - name: Cache dependencies
+      - name: Cache backend dependencies
         uses: actions/cache@v4
         with:
-          path: |
-            frontend/node_modules
-            backend/node_modules
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          path: backend/node_modules
+          key: ${{ runner.os }}-backend-${{ hashFiles('backend/package-lock.json') }}
           restore-keys: |
-            ${{ runner.os }}-node-
+            ${{ runner.os }}-backend-
 
       - name: Install frontend dependencies
         working-directory: frontend
