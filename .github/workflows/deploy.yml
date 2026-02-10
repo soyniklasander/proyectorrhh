@@ -40,10 +40,6 @@ jobs:
         working-directory: backend
         run: npm install
 
-      - name: Generate Prisma Client
-        working-directory: backend
-        run: npm run prisma:generate
-
       - name: Deploy Backend to Cloudflare Workers
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
