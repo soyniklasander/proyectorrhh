@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>NexaCorp: Aprobación Masiva de Sobretiempos</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#1152d4",
+                        "primary-dark": "#0d3ca0",
+                        "primary-light": "#3b76e8",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#101622",
+                        "surface-dark": "#1a2233",
+                        "surface-hover": "#232d42",
+                        "success": "#22c55e",
+                        "warning": "#f59e0b",
+                        "danger": "#ef4444",
+                    },
+                    fontFamily: {
+                        "display": ["Manrope", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "2xl": "1rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        /* Custom scrollbar for dark mode tables */
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #1a2233; 
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #334155; 
+            border-radius: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #475569; 
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-800 dark:text-slate-100 antialiased min-h-screen flex flex-col">
+<!-- Navbar -->
+<header class="bg-white dark:bg-surface-dark border-b border-slate-200 dark:border-slate-800 sticky top-0 z-30">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex justify-between h-16">
+<div class="flex">
+<div class="flex-shrink-0 flex items-center gap-3">
+<div class="w-8 h-8 rounded-lg bg-gradient-to-br from-primary to-primary-light flex items-center justify-center text-white font-bold text-lg">
+                            N
+                        </div>
+<span class="font-bold text-xl tracking-tight text-slate-900 dark:text-white">NexaCorp</span>
+</div>
+<nav class="hidden md:ml-8 md:flex md:space-x-8 items-center text-sm font-medium">
+<a class="text-slate-500 dark:text-slate-400 hover:text-primary dark:hover:text-primary transition-colors" href="#">Dashboard</a>
+<a class="text-primary dark:text-primary border-b-2 border-primary h-full flex items-center" href="#">Aprobaciones</a>
+<a class="text-slate-500 dark:text-slate-400 hover:text-primary dark:hover:text-primary transition-colors" href="#">Reportes</a>
+<a class="text-slate-500 dark:text-slate-400 hover:text-primary dark:hover:text-primary transition-colors" href="#">Empleados</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<button class="p-2 rounded-full text-slate-400 hover:text-white hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors relative">
+<span class="material-icons text-[20px]">notifications</span>
+<span class="absolute top-2 right-2 block h-2 w-2 rounded-full bg-red-500 ring-2 ring-white dark:ring-surface-dark"></span>
+</button>
+<div class="flex items-center gap-3 pl-4 border-l border-slate-200 dark:border-slate-700">
+<div class="text-right hidden sm:block">
+<p class="text-sm font-medium text-slate-900 dark:text-white">Carlos Méndez</p>
+<p class="text-xs text-slate-500 dark:text-slate-400">Jefe de Operaciones</p>
+</div>
+<img alt="User Avatar" class="h-9 w-9 rounded-full object-cover border-2 border-primary" data-alt="User avatar profile picture" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB31HM5nBRYr0s2_sua0jKI_FkvD7YXsAz6WHhRKmRfIGLKD2QLE60FZAHEB08n2zmMsa5ZQUlBLnGqLBKyi5n6yGRd1Sz6MmXYMuNoc4lRF8YRSS5tq4VZ52cFToKZYWVsuweFa5J4sgmgWHUUmFXN4QDXBHQPuD5vXrhd6ZrDDoQkS6F4AqGR1c_qMvUieGkeNnZmC3KpqIzxvVE6ph8z81upqgMFuKfUhIjgYxxiAhDLb8CrPW00vrtk-DTyssyX64CW-DW-gvIC"/>
+</div>
+</div>
+</div>
+</div>
+</header>
+<!-- Main Content -->
+<main class="flex-1 py-8 px-4 sm:px-6 lg:px-8 max-w-[1400px] mx-auto w-full">
+<!-- Breadcrumb & Title -->
+<div class="mb-8">
+<nav aria-label="Breadcrumb" class="flex mb-2">
+<ol class="flex items-center space-x-2 text-xs text-slate-500 dark:text-slate-400">
+<li><a class="hover:text-primary" href="#">Inicio</a></li>
+<li><span class="material-icons text-[14px]">chevron_right</span></li>
+<li><a class="hover:text-primary" href="#">Tiempo y Asistencia</a></li>
+<li><span class="material-icons text-[14px]">chevron_right</span></li>
+<li aria-current="page" class="text-slate-800 dark:text-white font-medium">Aprobación Masiva</li>
+</ol>
+</nav>
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
+<div>
+<h1 class="text-3xl font-bold text-slate-900 dark:text-white tracking-tight">Aprobación Masiva de Sobretiempos</h1>
+<p class="mt-1 text-sm text-slate-500 dark:text-slate-400">Gestione y autorice las horas extras del periodo actual para su equipo.</p>
+</div>
+<div class="flex gap-3">
+<button class="inline-flex items-center px-4 py-2 border border-slate-300 dark:border-slate-600 rounded-lg shadow-sm text-sm font-medium text-slate-700 dark:text-slate-200 bg-white dark:bg-surface-dark hover:bg-slate-50 dark:hover:bg-surface-hover focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary transition-colors">
+<span class="material-icons text-[18px] mr-2">file_download</span>
+                        Exportar Reporte
+                    </button>
+<button class="inline-flex items-center px-4 py-2 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-primary hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary transition-colors">
+<span class="material-icons text-[18px] mr-2">history</span>
+                        Historial
+                    </button>
+</div>
+</div>
+</div>
+<!-- Metrics Cards -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+<!-- Metric 1: Total Pending -->
+<div class="bg-white dark:bg-surface-dark rounded-xl p-5 shadow-sm border border-slate-200 dark:border-slate-700 flex items-start justify-between relative overflow-hidden group">
+<div class="relative z-10">
+<p class="text-xs font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wider">Solicitudes Pendientes</p>
+<p class="mt-1 text-3xl font-bold text-slate-900 dark:text-white">42</p>
+<div class="mt-1 flex items-center text-xs text-yellow-600 dark:text-yellow-400">
+<span class="material-icons text-[14px] mr-1">warning</span>
+<span>Requiere acción inmediata</span>
+</div>
+</div>
+<div class="p-3 bg-primary/10 rounded-lg text-primary">
+<span class="material-icons">assignment_late</span>
+</div>
+<div class="absolute right-0 bottom-0 w-24 h-24 bg-gradient-to-br from-primary/5 to-transparent rounded-full translate-x-8 translate-y-8 group-hover:scale-110 transition-transform"></div>
+</div>
+<!-- Metric 2: Estimated Cost -->
+<div class="bg-white dark:bg-surface-dark rounded-xl p-5 shadow-sm border border-slate-200 dark:border-slate-700 flex items-start justify-between relative overflow-hidden group">
+<div class="relative z-10">
+<p class="text-xs font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wider">Costo Est. Total</p>
+<p class="mt-1 text-3xl font-bold text-slate-900 dark:text-white">S/. 5,240.50</p>
+<div class="mt-1 flex items-center text-xs text-emerald-600 dark:text-emerald-400">
+<span class="material-icons text-[14px] mr-1">trending_down</span>
+<span>-12% vs mes anterior</span>
+</div>
+</div>
+<div class="p-3 bg-emerald-500/10 rounded-lg text-emerald-500">
+<span class="material-icons">attach_money</span>
+</div>
+</div>
+<!-- Metric 3: Hours Breakdown -->
+<div class="bg-white dark:bg-surface-dark rounded-xl p-5 shadow-sm border border-slate-200 dark:border-slate-700 flex flex-col justify-between relative overflow-hidden">
+<p class="text-xs font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-2">Desglose de Horas</p>
+<div class="flex items-end justify-between gap-2">
+<div>
+<span class="block text-xl font-bold text-slate-900 dark:text-white">128h</span>
+<span class="text-[10px] text-slate-500">HE 25%</span>
+</div>
+<div class="h-8 w-px bg-slate-200 dark:bg-slate-700"></div>
+<div>
+<span class="block text-xl font-bold text-slate-900 dark:text-white">45h</span>
+<span class="text-[10px] text-slate-500">HE 35%</span>
+</div>
+<div class="h-8 w-px bg-slate-200 dark:bg-slate-700"></div>
+<div>
+<span class="block text-xl font-bold text-slate-900 dark:text-white">12h</span>
+<span class="text-[10px] text-slate-500">Nocturna</span>
+</div>
+</div>
+</div>
+<!-- Metric 4: Team Status -->
+<div class="bg-white dark:bg-surface-dark rounded-xl p-5 shadow-sm border border-slate-200 dark:border-slate-700 flex items-start justify-between relative overflow-hidden">
+<div class="w-full">
+<p class="text-xs font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-3">Departamentos</p>
+<div class="space-y-2">
+<div class="flex items-center justify-between text-xs">
+<span class="text-slate-300">Logística</span>
+<div class="w-24 bg-slate-700 rounded-full h-1.5 ml-2">
+<div class="bg-primary h-1.5 rounded-full" style="width: 70%"></div>
+</div>
+<span class="ml-2 font-medium text-white">70%</span>
+</div>
+<div class="flex items-center justify-between text-xs">
+<span class="text-slate-300">Ventas</span>
+<div class="w-24 bg-slate-700 rounded-full h-1.5 ml-2">
+<div class="bg-purple-500 h-1.5 rounded-full" style="width: 40%"></div>
+</div>
+<span class="ml-2 font-medium text-white">40%</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Filters & Actions -->
+<div class="bg-white dark:bg-surface-dark rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 mb-6 sticky top-20 z-20">
+<div class="p-4 flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+<!-- Left: Filters -->
+<div class="flex flex-col sm:flex-row gap-3 flex-1">
+<div class="relative min-w-[200px]">
+<div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+<span class="material-icons text-slate-400 text-[20px]">search</span>
+</div>
+<input class="block w-full pl-10 pr-3 py-2 border border-slate-300 dark:border-slate-600 rounded-lg leading-5 bg-white dark:bg-background-dark text-slate-900 dark:text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary sm:text-sm" placeholder="Buscar empleado o ID..." type="text"/>
+</div>
+<div class="flex gap-3">
+<select class="block w-full pl-3 pr-10 py-2 text-base border-slate-300 dark:border-slate-600 focus:outline-none focus:ring-primary focus:border-primary sm:text-sm rounded-lg bg-white dark:bg-background-dark text-slate-700 dark:text-slate-200">
+<option>Todos los Departamentos</option>
+<option>Logística</option>
+<option>Operaciones</option>
+<option>Ventas</option>
+<option>Administración</option>
+</select>
+<select class="block w-full pl-3 pr-10 py-2 text-base border-slate-300 dark:border-slate-600 focus:outline-none focus:ring-primary focus:border-primary sm:text-sm rounded-lg bg-white dark:bg-background-dark text-slate-700 dark:text-slate-200">
+<option>Octubre 2023 - Sem 4</option>
+<option>Octubre 2023 - Sem 3</option>
+<option>Octubre 2023 - Sem 2</option>
+</select>
+</div>
+</div>
+<!-- Right: Bulk Actions (Conditional style shown as active for demo) -->
+<div class="flex items-center gap-3 pl-0 lg:pl-4 lg:border-l border-slate-200 dark:border-slate-700">
+<span class="text-sm text-slate-500 dark:text-slate-400 hidden sm:inline-block"><span class="font-bold text-primary">3</span> seleccionados</span>
+<button class="flex-1 sm:flex-none inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-success hover:bg-emerald-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-success transition-colors">
+<span class="material-icons text-[18px] mr-1">check</span>
+                        Aprobar
+                    </button>
+<button class="flex-1 sm:flex-none inline-flex items-center justify-center px-4 py-2 border border-slate-300 dark:border-slate-600 rounded-lg shadow-sm text-sm font-medium text-danger bg-white dark:bg-surface-dark hover:bg-red-50 dark:hover:bg-red-900/20 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-danger transition-colors">
+<span class="material-icons text-[18px] mr-1">close</span>
+                        Rechazar
+                    </button>
+</div>
+</div>
+</div>
+<!-- Data Table -->
+<div class="bg-white dark:bg-surface-dark rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 overflow-hidden">
+<div class="overflow-x-auto custom-scrollbar">
+<table class="min-w-full divide-y divide-slate-200 dark:divide-slate-700">
+<thead class="bg-slate-50 dark:bg-slate-800/50">
+<tr>
+<th class="px-6 py-4 text-left" scope="col">
+<div class="flex items-center">
+<input class="h-4 w-4 text-primary focus:ring-primary border-slate-300 dark:border-slate-600 rounded bg-white dark:bg-surface-dark" id="select-all" type="checkbox"/>
+</div>
+</th>
+<th class="px-6 py-3 text-left text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider cursor-pointer hover:text-primary transition-colors group" scope="col">
+<div class="flex items-center">
+                                    Empleado
+                                    <span class="material-icons text-[14px] ml-1 opacity-0 group-hover:opacity-100">sort</span>
+</div>
+</th>
+<th class="px-6 py-3 text-left text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider" scope="col">
+                                Fecha
+                            </th>
+<th class="px-6 py-3 text-center text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider bg-primary/5 dark:bg-primary/10 border-l border-r border-slate-200 dark:border-slate-700" scope="col">
+                                HE 25%
+                            </th>
+<th class="px-6 py-3 text-center text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider bg-primary/5 dark:bg-primary/10 border-r border-slate-200 dark:border-slate-700" scope="col">
+                                HE 35%
+                            </th>
+<th class="px-6 py-3 text-center text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider bg-indigo-500/5 dark:bg-indigo-500/10 border-r border-slate-200 dark:border-slate-700" scope="col">
+                                S. Nocturna
+                            </th>
+<th class="px-6 py-3 text-right text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider" scope="col">
+                                Costo Est.
+                            </th>
+<th class="px-6 py-3 text-center text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider" scope="col">
+                                Estado
+                            </th>
+<th class="relative px-6 py-3" scope="col">
+<span class="sr-only">Acciones</span>
+</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-slate-200 dark:divide-slate-700 bg-white dark:bg-surface-dark">
+<!-- Row 1 -->
+<tr class="hover:bg-slate-50 dark:hover:bg-surface-hover transition-colors">
+<td class="px-6 py-4 whitespace-nowrap">
+<div class="flex items-center">
+<input checked="" class="h-4 w-4 text-primary focus:ring-primary border-slate-300 dark:border-slate-600 rounded bg-white dark:bg-surface-dark" type="checkbox"/>
+</div>
+</td>
+<td class="px-6 py-4 whitespace-nowrap">
+<div class="flex items-center">
+<div class="h-10 w-10 flex-shrink-0">
+<img alt="Employee Photo" class="h-10 w-10 rounded-full object-cover" data-alt="Portrait of male employee" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAlffkxNVjix7i3qSVqCeHRP96PuvJqj1Xdvjw8y02KPmyrZ-jVSQqmfwkUaVI9Ig7yNt_13ZXiLi9ocZzD9Wl-UCaCPoAjc2PPDJVbVU7oZSUbct2ObmTD7lQfz4NyyjtqttRXAf5r7Tg5ceB3tQDjSkvxAM7_epyCfKPgnXM6w53PlgI29MXWBI4WsZed1SSYELW0IOBc57a0vI2ht4tIv2KJxO7sH6rFwd6zgnQfuTpNf51KRyQFTZJUDm02gHfeZ819aQEy6e8G"/>
+</div>
+<div class="ml-4">
+<div class="text-sm font-medium text-slate-900 dark:text-white">Jorge Rivera</div>
+<div class="text-xs text-slate-500 dark:text-slate-400">ID: NX-0921 • Logística</div>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 whitespace-nowrap">
+<div class="text-sm text-slate-900 dark:text-white">24/10/2023</div>
+<div class="text-xs text-slate-500">Martes</div>
+</td>
+<td class="px-6 py-4 whitespace-nowrap text-center text-sm text-slate-900 dark:text-white bg-slate-50/50 dark:bg-white/5 font-medium">
+                                2.0 h
+                            </td>
+<td class="px-6 py-4 whitespace-nowrap text-center text-sm text-slate-500 dark:text-slate-400 bg-slate-50/50 dark:bg-white/5">
+                                -
+                            </td>
+<td class="px-6 py-4 whitespace-nowrap text-center text-sm text-slate-500 dark:text-slate-400 bg-indigo-50/20 dark:bg-indigo-900/10">
+                                -
+                            </td>
+<td class="px-6 py-4 whitespace-nowrap text-right text-sm font-bold text-slate-900 dark:text-white">
+                                S/. 45.00
+                            </td>
+<td class="px-6 py-4 whitespace-nowrap text-center">
+<span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-400 border border-yellow-200 dark:border-yellow-700">
+                                    Pendiente
+                                </span>
+</td>
+<td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+<div class="flex items-center justify-end gap-2">
+<button class="text-slate-400 hover:text-success transition-colors p-1" title="Aprobar">
+<span class="material-icons">check_circle_outline</span>
+</button>
+<button class="text-slate-400 hover:text-danger transition-colors p-1" title="Rechazar">
+<span class="material-icons">highlight_off</span>
+</button>
+<button class="text-slate-400 hover:text-primary transition-colors p-1" title="Detalles">
+<span class="material-icons">visibility</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-slate-50 dark:hover:bg-surface-hover transition-colors">
+<td class="px-6 py-4 whitespace-nowrap">
+<div class="flex items-center">
+<input checked="" class="h-4 w-4 text-primary focus:ring-primary border-slate-300 dark:border-slate-600 rounded bg-white dark:bg-surface-dark" type="checkbox"/>
+</div>
+</td>
+<td class="px-6 py-4 whitespace-nowrap">
+<div class="flex items-center">
+<div class="h-10 w-10 flex-shrink-0">
+<img alt="Employee Photo" class="h-10 w-10 rounded-full object-cover" data-alt="Portrait of female employee" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDzXs_FRHefhSx9jPRAYpdiec4T_y_Xj-ZbaPJmGQQPnwFw9FZi0BUv_ORRbVuxF7Oj-ZoycnTJMzeFX3AFrD3ruK_lIk8Pw2hMFIdJ43WimhY0yBx-jVGDtv_EHeBZA4ahBN_AggZKPOHldB8aaz4_ouMvXbeawUxlOOzf4em2tbUdMy6jfcYJOrZfZ0Xo10Op2Ky5hnAI9RmxF3SLajOgcW2qwR6lYjV9WAqsMIK8SLNuWKVBdLPh5QegnZBZa85BOzC5fAhOqTQc"/>
+</div>
+<div class="ml-4">
+<div class="text-sm font-medium text-slate-900 dark:text-white">Maria Gonzales</div>
+<div class="text-xs text-slate-500 dark:text-slate-400">ID: NX-1104 • Ventas</div>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 whitespace-nowrap">
+<div class="text-sm text-slate-900 dark:text-white">24/10/2023</div>
+<div class="text-xs text-slate-500">Martes</div>
+</td>
+<td class="px-6 py-4 whitespace-nowrap text-center text-sm text-slate-900 dark:text-white bg-slate-50/50 dark:bg-white/5 font-medium">
+                                2.0 h
+                            </td>
+<td class="px-6 py-4 whitespace-nowrap text-center text-sm text-slate-900 dark:text-white bg-slate-50/50 dark:bg-white/5 font-medium">
+                                1.5 h
+                            </td>
+<td class="px-6 py-4 whitespace-nowrap text-center text-sm text-slate-500 dark:text-slate-400 bg-indigo-50/20 dark:bg-indigo-900/10">
+                                -
+                            </td>
+<td class="px-6 py-4 whitespace-nowrap text-right text-sm font-bold text-slate-900 dark:text-white">
+                                S/. 92.50
+                            </td>
+<td class="px-6 py-4 whitespace-nowrap text-center">
+<span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-400 border border-yellow-200 dark:border-yellow-700">
+                                    Pendiente
+                                </span>
+</td>
+<td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+<div class="flex items-center justify-end gap-2">
+<button class="text-slate-400 hover:text-success transition-colors p-1" title="Aprobar">
+<span class="material-icons">check_circle_outline</span>
+</button>
+<button class="text-slate-400 hover:text-danger transition-colors p-1" title="Rechazar">
+<span class="material-icons">highlight_off</span>
+</button>
+<button class="text-slate-400 hover:text-primary transition-colors p-1" title="Detalles">
+<span class="material-icons">visibility</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-slate-50 dark:hover:bg-surface-hover transition-colors">
+<td class="px-6 py-4 whitespace-nowrap">
+<div class="flex items-center">
+<input checked="" class="h-4 w-4 text-primary focus:ring-primary border-slate-300 dark:border-slate-600 rounded bg-white dark:bg-surface-dark" type="checkbox"/>
+</div>
+</td>
+<td class="px-6 py-4 whitespace-nowrap">
+<div class="flex items-center">
+<div class="h-10 w-10 flex-shrink-0">
+<div class="w-10 h-10 rounded-full bg-slate-700 flex items-center justify-center text-white text-sm font-bold">LP</div>
+</div>
+<div class="ml-4">
+<div class="text-sm font-medium text-slate-900 dark:text-white">Luis Pardo</div>
+<div class="text-xs text-slate-500 dark:text-slate-400">ID: NX-0882 • Operaciones</div>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 whitespace-nowrap">
+<div class="text-sm text-slate-900 dark:text-white">23/10/2023</div>
+<div class="text-xs text-slate-500">Lunes</div>
+</td>
+<td class="px-6 py-4 whitespace-nowrap text-center text-sm text-slate-500 dark:text-slate-400 bg-slate-50/50 dark:bg-white/5">
+                                -
+                            </td>
+<td class="px-6 py-4 whitespace-nowrap text-center text-sm text-slate-900 dark:text-white bg-slate-50/50 dark:bg-white/5 font-medium">
+                                2.0 h
+                            </td>
+<td class="px-6 py-4 whitespace-nowrap text-center text-sm text-slate-900 dark:text-white bg-indigo-50/20 dark:bg-indigo-900/10 font-medium">
+                                4.0 h
+                            </td>
+<td class="px-6 py-4 whitespace-nowrap text-right text-sm font-bold text-slate-900 dark:text-white">
+                                S/. 180.00
+                            </td>
+<td class="px-6 py-4 whitespace-nowrap text-center">
+<span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-400 border border-red-200 dark:border-red-700">
+                                    Exceso Horas
+                                </span>
+</td>
+<td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+<div class="flex items-center justify-end gap-2">
+<button class="text-slate-400 hover:text-success transition-colors p-1" title="Aprobar">
+<span class="material-icons">check_circle_outline</span>
+</button>
+<button class="text-slate-400 hover:text-danger transition-colors p-1" title="Rechazar">
+<span class="material-icons">highlight_off</span>
+</button>
+<button class="text-slate-400 hover:text-primary transition-colors p-1" title="Detalles">
+<span class="material-icons">visibility</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 4 -->
+<tr class="hover:bg-slate-50 dark:hover:bg-surface-hover transition-colors">
+<td class="px-6 py-4 whitespace-nowrap">
+<div class="flex items-center">
+<input class="h-4 w-4 text-primary focus:ring-primary border-slate-300 dark:border-slate-600 rounded bg-white dark:bg-surface-dark" type="checkbox"/>
+</div>
+</td>
+<td class="px-6 py-4 whitespace-nowrap">
+<div class="flex items-center">
+<div class="h-10 w-10 flex-shrink-0">
+<img alt="Employee Photo" class="h-10 w-10 rounded-full object-cover" data-alt="Portrait of male employee" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBODtwJU5MIz-L8suVD5suXneQdNphpxEsie7L1xZNwjjn6D4aLQ2U4dDn0HZBZi334uQtFE26ZOtPXsUVolyeerkLY6_v_R7AhvBnuzgKpJ7Ixvg6bAkc91ST2LHVbq6QX3oM6qWDnaB59epbVsvNYvHbpR1WGJpAuuFPwhOHX4ecYNQwYsnhngBvqpaFW0470eS9kocf8aE20C-quWRAi5v7JPC-NVG62dgUWy7CXlChbyUjv3_deuTw-fxouN-OLGtCkCugBHO-b"/>
+</div>
+<div class="ml-4">
+<div class="text-sm font-medium text-slate-900 dark:text-white">Roberto Chu</div>
+<div class="text-xs text-slate-500 dark:text-slate-400">ID: NX-0542 • Sistemas</div>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 whitespace-nowrap">
+<div class="text-sm text-slate-900 dark:text-white">23/10/2023</div>
+<div class="text-xs text-slate-500">Lunes</div>
+</td>
+<td class="px-6 py-4 whitespace-nowrap text-center text-sm text-slate-900 dark:text-white bg-slate-50/50 dark:bg-white/5 font-medium">
+                                1.0 h
+                            </td>
+<td class="px-6 py-4 whitespace-nowrap text-center text-sm text-slate-500 dark:text-slate-400 bg-slate-50/50 dark:bg-white/5">
+                                -
+                            </td>
+<td class="px-6 py-4 whitespace-nowrap text-center text-sm text-slate-500 dark:text-slate-400 bg-indigo-50/20 dark:bg-indigo-900/10">
+                                -
+                            </td>
+<td class="px-6 py-4 whitespace-nowrap text-right text-sm font-bold text-slate-900 dark:text-white">
+                                S/. 32.00
+                            </td>
+<td class="px-6 py-4 whitespace-nowrap text-center">
+<span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-emerald-100 text-emerald-800 dark:bg-emerald-900/30 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-700">
+                                    Pre-Aprobado
+                                </span>
+</td>
+<td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+<div class="flex items-center justify-end gap-2">
+<button class="text-slate-400 hover:text-success transition-colors p-1" title="Aprobar">
+<span class="material-icons">check_circle_outline</span>
+</button>
+<button class="text-slate-400 hover:text-danger transition-colors p-1" title="Rechazar">
+<span class="material-icons">highlight_off</span>
+</button>
+<button class="text-slate-400 hover:text-primary transition-colors p-1" title="Detalles">
+<span class="material-icons">visibility</span>
+</button>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Pagination -->
+<div class="bg-white dark:bg-surface-dark px-4 py-3 flex items-center justify-between border-t border-slate-200 dark:border-slate-700 sm:px-6">
+<div class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
+<div>
+<p class="text-sm text-slate-700 dark:text-slate-400">
+                            Mostrando <span class="font-medium text-slate-900 dark:text-white">1</span> a <span class="font-medium text-slate-900 dark:text-white">4</span> de <span class="font-medium text-slate-900 dark:text-white">42</span> resultados
+                        </p>
+</div>
+<div>
+<nav aria-label="Pagination" class="relative z-0 inline-flex rounded-md shadow-sm -space-x-px">
+<a class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-slate-300 dark:border-slate-600 bg-white dark:bg-surface-dark text-sm font-medium text-slate-500 hover:bg-slate-50 dark:hover:bg-surface-hover" href="#">
+<span class="sr-only">Anterior</span>
+<span class="material-icons text-[18px]">chevron_left</span>
+</a>
+<a aria-current="page" class="z-10 bg-primary/10 border-primary text-primary relative inline-flex items-center px-4 py-2 border text-sm font-medium" href="#">
+                                1
+                            </a>
+<a class="bg-white dark:bg-surface-dark border-slate-300 dark:border-slate-600 text-slate-500 hover:bg-slate-50 dark:hover:bg-surface-hover relative inline-flex items-center px-4 py-2 border text-sm font-medium" href="#">
+                                2
+                            </a>
+<a class="bg-white dark:bg-surface-dark border-slate-300 dark:border-slate-600 text-slate-500 hover:bg-slate-50 dark:hover:bg-surface-hover relative inline-flex items-center px-4 py-2 border text-sm font-medium" href="#">
+                                3
+                            </a>
+<span class="relative inline-flex items-center px-4 py-2 border border-slate-300 dark:border-slate-600 bg-white dark:bg-surface-dark text-sm font-medium text-slate-700 dark:text-slate-400">
+                                ...
+                            </span>
+<a class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-slate-300 dark:border-slate-600 bg-white dark:bg-surface-dark text-sm font-medium text-slate-500 hover:bg-slate-50 dark:hover:bg-surface-hover" href="#">
+<span class="sr-only">Siguiente</span>
+<span class="material-icons text-[18px]">chevron_right</span>
+</a>
+</nav>
+</div>
+</div>
+</div>
+</div>
+</main>
+</body></html>

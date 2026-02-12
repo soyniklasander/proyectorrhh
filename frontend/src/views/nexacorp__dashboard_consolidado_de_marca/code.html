@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>NexaCorp: Dashboard Consolidado de Marca</title>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<!-- Material Icons -->
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Config -->
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "primary": "#2c60ce",
+              "background-light": "#f6f6f8",
+              "background-dark": "#121720",
+              "surface-dark": "#1a212f",
+              "surface-light": "#ffffff",
+            },
+            fontFamily: {
+              "display": ["Inter", "sans-serif"]
+            },
+            borderRadius: {"DEFAULT": "0.5rem", "lg": "1rem", "xl": "1.5rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+        /* Custom scrollbar for dark mode */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #121720; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #2c60ce; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #1e4bb0; 
+        }
+        
+        .glass-effect {
+            background: rgba(26, 33, 47, 0.7);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-800 dark:text-slate-100 font-display min-h-screen flex flex-col overflow-hidden">
+<!-- Top Navigation with Context Switcher -->
+<nav class="h-16 border-b border-gray-200 dark:border-gray-800 glass-effect z-50 fixed w-full top-0">
+<div class="container mx-auto px-4 h-full flex items-center justify-between">
+<!-- Left: Logo & Brand -->
+<div class="flex items-center gap-6">
+<div class="flex items-center gap-2">
+<div class="w-8 h-8 rounded bg-gradient-to-br from-primary to-blue-400 flex items-center justify-center text-white font-bold text-lg">N</div>
+<span class="text-xl font-bold tracking-tight text-slate-900 dark:text-white">NexaCorp</span>
+</div>
+<!-- Separator -->
+<div class="h-6 w-px bg-gray-300 dark:bg-gray-700 hidden md:block"></div>
+<!-- Context Switcher (Crucial Component) -->
+<div class="hidden md:flex items-center bg-gray-100 dark:bg-surface-dark rounded-lg p-1 border border-gray-200 dark:border-gray-700">
+<button class="flex items-center gap-2 px-3 py-1.5 bg-primary text-white shadow-md rounded text-sm font-medium transition-all">
+<span class="material-icons-outlined text-sm">domain</span>
+                        Holding Global
+                    </button>
+<button class="flex items-center gap-2 px-3 py-1.5 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 rounded text-sm font-medium transition-all">
+<span class="material-icons-outlined text-sm">business</span>
+                        Seleccionar RUC
+                    </button>
+</div>
+</div>
+<!-- Right: Search & Profile -->
+<div class="flex items-center gap-4">
+<div class="relative hidden lg:block">
+<span class="material-icons-outlined absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-lg">search</span>
+<input class="bg-gray-100 dark:bg-surface-dark border-transparent focus:border-primary focus:ring-0 rounded-full py-1.5 pl-10 pr-4 text-sm w-64 text-gray-700 dark:text-gray-200 placeholder-gray-400 dark:placeholder-gray-500" placeholder="Buscar empleados, reportes..." type="text"/>
+</div>
+<button class="relative p-2 text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-full transition-colors">
+<span class="material-icons-outlined">notifications</span>
+<span class="absolute top-2 right-2 w-2 h-2 bg-red-500 rounded-full border-2 border-white dark:border-background-dark"></span>
+</button>
+<div class="flex items-center gap-3 pl-4 border-l border-gray-200 dark:border-gray-700">
+<div class="text-right hidden sm:block">
+<p class="text-sm font-semibold leading-none text-gray-900 dark:text-white">Ana Jiménez</p>
+<p class="text-xs text-gray-500 dark:text-gray-400 mt-1">Directora Financiera</p>
+</div>
+<img alt="User Profile" class="w-9 h-9 rounded-full ring-2 ring-gray-200 dark:ring-gray-700 object-cover" data-alt="Portrait of a female executive" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDcUHoOXIsfx9n--bdl8BDs9YlRGhzeJPcXDNOezUiYG7tkPVsVvl-wpC9eoGgmscwWvzmGvHkcrBN0LgtvfSW7jPUHlE9aBuHM5uiwb3A2Em9RHJndw7uc40AjA4af5vH9vF4whPy35hY2SQOrp43Z87LuMzSbqruyU4mdPhwOuAauTpacWdi_BRj2aEFT2pWp7xAb2dTw12tGIWfJ8qkmRKS4bbAjyyOnrroIqxr3_FrMqG3C69C2KEcf5XvELR-T7kxDU7QezHqG"/>
+</div>
+</div>
+</div>
+</nav>
+<!-- Main Content Layout -->
+<div class="flex pt-16 h-screen">
+<!-- Sidebar Navigation -->
+<aside class="w-64 bg-white dark:bg-surface-dark border-r border-gray-200 dark:border-gray-800 hidden lg:flex flex-col flex-shrink-0 z-40">
+<div class="flex-1 overflow-y-auto py-6 px-3">
+<div class="mb-8">
+<p class="px-3 text-xs font-semibold text-gray-400 dark:text-gray-500 uppercase tracking-wider mb-2">Principal</p>
+<nav class="space-y-1">
+<a class="flex items-center gap-3 px-3 py-2 bg-primary/10 text-primary rounded-lg font-medium" href="#">
+<span class="material-icons-outlined">dashboard</span>
+                            Dashboard Global
+                        </a>
+<a class="flex items-center gap-3 px-3 py-2 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg group transition-colors" href="#">
+<span class="material-icons-outlined group-hover:text-primary transition-colors">analytics</span>
+                            Análisis Financiero
+                        </a>
+<a class="flex items-center gap-3 px-3 py-2 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg group transition-colors" href="#">
+<span class="material-icons-outlined group-hover:text-primary transition-colors">people</span>
+                            Talento Humano
+                        </a>
+</nav>
+</div>
+<div class="mb-8">
+<p class="px-3 text-xs font-semibold text-gray-400 dark:text-gray-500 uppercase tracking-wider mb-2">Entidades (RUCs)</p>
+<nav class="space-y-1">
+<a class="flex items-center justify-between px-3 py-2 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg group transition-colors" href="#">
+<div class="flex items-center gap-3">
+<span class="w-2 h-2 rounded-full bg-green-500"></span>
+                                Nexa Tech S.A.
+                            </div>
+<span class="text-xs bg-gray-200 dark:bg-gray-700 px-1.5 py-0.5 rounded text-gray-500 dark:text-gray-300">HQ</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg group transition-colors" href="#">
+<span class="w-2 h-2 rounded-full bg-blue-500"></span>
+                            Nexa Services Ltd.
+                        </a>
+<a class="flex items-center gap-3 px-3 py-2 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg group transition-colors" href="#">
+<span class="w-2 h-2 rounded-full bg-purple-500"></span>
+                            Nexa Ventures
+                        </a>
+<a class="flex items-center gap-3 px-3 py-2 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg group transition-colors" href="#">
+<span class="w-2 h-2 rounded-full bg-yellow-500"></span>
+                            Nexa Retail Group
+                        </a>
+</nav>
+</div>
+<div>
+<p class="px-3 text-xs font-semibold text-gray-400 dark:text-gray-500 uppercase tracking-wider mb-2">Configuración</p>
+<nav class="space-y-1">
+<a class="flex items-center gap-3 px-3 py-2 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg group transition-colors" href="#">
+<span class="material-icons-outlined group-hover:text-primary transition-colors">settings</span>
+                            Ajustes Generales
+                        </a>
+</nav>
+</div>
+</div>
+<!-- Quick Alert -->
+<div class="p-4 border-t border-gray-200 dark:border-gray-800">
+<div class="bg-primary/20 dark:bg-primary/10 rounded-lg p-3 border border-primary/30">
+<div class="flex items-start gap-3">
+<span class="material-icons-outlined text-primary text-sm mt-0.5">info</span>
+<div>
+<p class="text-xs font-semibold text-primary mb-1">Cierre Fiscal Próximo</p>
+<p class="text-xs text-gray-600 dark:text-gray-400 leading-tight">Queda 3 días para consolidar reportes de Nexa Services Ltd.</p>
+</div>
+</div>
+</div>
+</div>
+</aside>
+<!-- Main Workspace -->
+<main class="flex-1 overflow-y-auto bg-background-light dark:bg-background-dark p-6">
+<div class="max-w-7xl mx-auto space-y-6">
+<!-- Page Header with Context Badge -->
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+<div>
+<div class="flex items-center gap-3 mb-1">
+<h1 class="text-2xl font-bold text-gray-900 dark:text-white">Resumen Ejecutivo</h1>
+<span class="bg-primary/20 text-primary border border-primary/30 text-xs font-bold px-2 py-0.5 rounded-full uppercase tracking-wide">Vista Consolidada</span>
+</div>
+<p class="text-sm text-gray-500 dark:text-gray-400">Datos agregados de 8 entidades fiscales activas.</p>
+</div>
+<div class="flex items-center gap-3">
+<button class="flex items-center gap-2 px-4 py-2 bg-white dark:bg-surface-dark border border-gray-200 dark:border-gray-700 rounded-lg text-sm font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors shadow-sm">
+<span class="material-icons-outlined text-gray-400">download</span>
+                            Exportar PDF
+                        </button>
+<button class="flex items-center gap-2 px-4 py-2 bg-primary text-white rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors shadow-sm shadow-primary/30">
+<span class="material-icons-outlined">add</span>
+                            Nuevo Reporte
+                        </button>
+</div>
+</div>
+<!-- KPI Cards Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+<!-- KPI 1: Payroll -->
+<div class="bg-white dark:bg-surface-dark rounded-xl p-5 border border-gray-200 dark:border-gray-800 shadow-sm relative overflow-hidden group">
+<div class="absolute top-0 right-0 w-24 h-24 bg-primary/5 rounded-full -mr-10 -mt-10 group-hover:bg-primary/10 transition-all"></div>
+<div class="flex justify-between items-start mb-4">
+<div>
+<p class="text-sm font-medium text-gray-500 dark:text-gray-400">Nómina Total (Mensual)</p>
+<h3 class="text-2xl font-bold text-gray-900 dark:text-white mt-1">$12,450,230</h3>
+</div>
+<span class="bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 text-xs font-bold px-2 py-1 rounded-full flex items-center gap-1">
+<span class="material-icons-outlined text-[10px]">arrow_upward</span> 4.2%
+                            </span>
+</div>
+<div class="w-full bg-gray-100 dark:bg-gray-700 h-1.5 rounded-full overflow-hidden">
+<div class="bg-primary h-full rounded-full" style="width: 78%"></div>
+</div>
+<p class="text-xs text-gray-400 mt-2">78% del presupuesto anual ejecutado</p>
+</div>
+<!-- KPI 2: Headcount -->
+<div class="bg-white dark:bg-surface-dark rounded-xl p-5 border border-gray-200 dark:border-gray-800 shadow-sm relative overflow-hidden group">
+<div class="absolute top-0 right-0 w-24 h-24 bg-purple-500/5 rounded-full -mr-10 -mt-10 group-hover:bg-purple-500/10 transition-all"></div>
+<div class="flex justify-between items-start mb-4">
+<div>
+<p class="text-sm font-medium text-gray-500 dark:text-gray-400">Colaboradores Activos</p>
+<h3 class="text-2xl font-bold text-gray-900 dark:text-white mt-1">4,520</h3>
+</div>
+<span class="bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 text-xs font-bold px-2 py-1 rounded-full flex items-center gap-1">
+<span class="material-icons-outlined text-[10px]">arrow_upward</span> 120
+                            </span>
+</div>
+<!-- Mini Sparkline visualization -->
+<div class="flex items-end gap-1 h-8">
+<div class="w-1/6 bg-primary/20 h-3 rounded-t"></div>
+<div class="w-1/6 bg-primary/30 h-4 rounded-t"></div>
+<div class="w-1/6 bg-primary/40 h-3 rounded-t"></div>
+<div class="w-1/6 bg-primary/60 h-5 rounded-t"></div>
+<div class="w-1/6 bg-primary/80 h-6 rounded-t"></div>
+<div class="w-1/6 bg-primary h-8 rounded-t"></div>
+</div>
+<p class="text-xs text-gray-400 mt-2">Distribuidos en 8 RUCs</p>
+</div>
+<!-- KPI 3: Compliance -->
+<div class="bg-white dark:bg-surface-dark rounded-xl p-5 border border-gray-200 dark:border-gray-800 shadow-sm relative overflow-hidden group">
+<div class="absolute top-0 right-0 w-24 h-24 bg-green-500/5 rounded-full -mr-10 -mt-10 group-hover:bg-green-500/10 transition-all"></div>
+<div class="flex justify-between items-start mb-4">
+<div>
+<p class="text-sm font-medium text-gray-500 dark:text-gray-400">Score de Cumplimiento</p>
+<h3 class="text-2xl font-bold text-gray-900 dark:text-white mt-1">98.5%</h3>
+</div>
+<span class="bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 text-xs font-bold px-2 py-1 rounded-full flex items-center gap-1">
+<span class="material-icons-outlined text-[10px]">remove</span> 0.0%
+                            </span>
+</div>
+<div class="flex items-center gap-2">
+<span class="flex h-3 w-3 relative">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+<span class="relative inline-flex rounded-full h-3 w-3 bg-green-500"></span>
+</span>
+<p class="text-xs text-green-500 font-medium">Todas las obligaciones al día</p>
+</div>
+</div>
+<!-- KPI 4: eNPS -->
+<div class="bg-white dark:bg-surface-dark rounded-xl p-5 border border-gray-200 dark:border-gray-800 shadow-sm relative overflow-hidden group">
+<div class="absolute top-0 right-0 w-24 h-24 bg-yellow-500/5 rounded-full -mr-10 -mt-10 group-hover:bg-yellow-500/10 transition-all"></div>
+<div class="flex justify-between items-start mb-4">
+<div>
+<p class="text-sm font-medium text-gray-500 dark:text-gray-400">eNPS Global</p>
+<h3 class="text-2xl font-bold text-gray-900 dark:text-white mt-1">+42</h3>
+</div>
+<span class="bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-400 text-xs font-bold px-2 py-1 rounded-full flex items-center gap-1">
+<span class="material-icons-outlined text-[10px]">arrow_downward</span> 2 pts
+                            </span>
+</div>
+<div class="flex -space-x-2">
+<img alt="Emp 1" class="inline-block h-6 w-6 rounded-full ring-2 ring-white dark:ring-surface-dark object-cover" data-alt="Employee thumbnail 1" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAwsP0yIvqCNCR0UmncFZvKzN3Yl5e0GPrQVG5Hg8jZKHBNG2HbmHjOFvUmUNqmczHKFVCBeAU0BvD4UmZEnBI7crTgOqWeqXSGVbU6g0Dv4knsXh1f9RscKd-pTFlmPKRPngGrGNPAhVJW0T5r81uGFaHplxMfkbyghtdVcGRC0Lm7TDFeU2HZ5EpavrLDc0My61LOLGfzR4_mdf9mP2Z21F7aMVYq5Ae_0pEcjyOzCUkehh_tD8QQMrDgrDMwA-mFoJKl6vV2INz-"/>
+<img alt="Emp 2" class="inline-block h-6 w-6 rounded-full ring-2 ring-white dark:ring-surface-dark object-cover" data-alt="Employee thumbnail 2" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCWKV651uJ6BgBpXNmAx6VXSyO6OA9ktKiQf3Y7n72I2WSggLN61rl42gaQJ5bjQ9gZN-NbRSwRH3Meyrfw1GFHYmDb71PhJb5RAGTDDEqMqbiz3OgVtxNMA7__XfYKiyQTpwYxIQiuB1iXgrOcwi_76TD29mi0MxvLFm-6PWiRt8CndhSyw3iiakdqQ7gSrkbqHsKqxURH61-4Pk9JI2pVkrryMsgbNoxeP0ddA5esxC65WqSSbQaj5TfJg2YWX0i_todnGo71vKh1"/>
+<img alt="Emp 3" class="inline-block h-6 w-6 rounded-full ring-2 ring-white dark:ring-surface-dark object-cover" data-alt="Employee thumbnail 3" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCppl_hxBm0zIM-w2sukgj4BDbGnryLf3BAoyu5LQaH_oK-AeJ2d90nMTsgqBzhcsag3Zg05gh-QKSsdF96jFuzrHMPm4xLXZMlx_93w8dymS1gHf9S0F6hwk4St2_6xOJ7FGLo_hwH2Q1PQlzSXiTKjPo6-L6KMlx0M5zdTNXp-i_Ih22m32GrSzxaXM8LaW5u9b-xVuNnTGw_DSDG25alHHunzY69slp_wbGu4HRWEQ91oHlPINOTfqyw5xhwy9GxFM_2iO4lfAja"/>
+<div class="h-6 w-6 rounded-full ring-2 ring-white dark:ring-surface-dark bg-gray-200 dark:bg-gray-700 flex items-center justify-center text-[9px] font-bold text-gray-600 dark:text-gray-300">+4k</div>
+</div>
+</div>
+</div>
+<!-- Charts Section -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-6 h-auto lg:h-96">
+<!-- Main Chart: Payroll Evolution -->
+<div class="lg:col-span-2 bg-white dark:bg-surface-dark rounded-xl border border-gray-200 dark:border-gray-800 p-6 flex flex-col shadow-sm">
+<div class="flex justify-between items-center mb-6">
+<h3 class="text-lg font-bold text-gray-900 dark:text-white">Evolución de Gasto de Nómina (Global)</h3>
+<select class="bg-gray-50 dark:bg-background-dark border-gray-200 dark:border-gray-700 rounded-lg text-sm text-gray-600 dark:text-gray-300 py-1 pl-3 pr-8 focus:ring-primary focus:border-primary">
+<option>Últimos 12 meses</option>
+<option>Año Fiscal Actual</option>
+<option>YTD</option>
+</select>
+</div>
+<!-- Abstract Chart Representation -->
+<div class="flex-1 w-full relative flex items-end justify-between gap-2 px-2 pb-8 border-b border-gray-200 dark:border-gray-700">
+<!-- Y Axis Lines -->
+<div class="absolute inset-0 flex flex-col justify-between pointer-events-none pb-8 pr-2">
+<div class="w-full border-t border-dashed border-gray-200 dark:border-gray-700/50 h-0"></div>
+<div class="w-full border-t border-dashed border-gray-200 dark:border-gray-700/50 h-0"></div>
+<div class="w-full border-t border-dashed border-gray-200 dark:border-gray-700/50 h-0"></div>
+<div class="w-full border-t border-dashed border-gray-200 dark:border-gray-700/50 h-0"></div>
+</div>
+<!-- Bars -->
+<div class="w-full bg-primary/20 hover:bg-primary/30 h-[40%] rounded-t-sm transition-all relative group">
+<div class="absolute -top-8 left-1/2 -translate-x-1/2 bg-gray-900 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">$8.2M</div>
+</div>
+<div class="w-full bg-primary/20 hover:bg-primary/30 h-[45%] rounded-t-sm transition-all relative group">
+<div class="absolute -top-8 left-1/2 -translate-x-1/2 bg-gray-900 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">$8.9M</div>
+</div>
+<div class="w-full bg-primary/20 hover:bg-primary/30 h-[35%] rounded-t-sm transition-all relative group">
+<div class="absolute -top-8 left-1/2 -translate-x-1/2 bg-gray-900 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">$7.5M</div>
+</div>
+<div class="w-full bg-primary/20 hover:bg-primary/30 h-[50%] rounded-t-sm transition-all relative group">
+<div class="absolute -top-8 left-1/2 -translate-x-1/2 bg-gray-900 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">$9.5M</div>
+</div>
+<div class="w-full bg-primary/20 hover:bg-primary/30 h-[55%] rounded-t-sm transition-all relative group">
+<div class="absolute -top-8 left-1/2 -translate-x-1/2 bg-gray-900 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">$10.2M</div>
+</div>
+<div class="w-full bg-primary/20 hover:bg-primary/30 h-[60%] rounded-t-sm transition-all relative group">
+<div class="absolute -top-8 left-1/2 -translate-x-1/2 bg-gray-900 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">$11.0M</div>
+</div>
+<div class="w-full bg-primary/30 hover:bg-primary/40 h-[65%] rounded-t-sm transition-all relative group">
+<div class="absolute -top-8 left-1/2 -translate-x-1/2 bg-gray-900 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">$11.8M</div>
+</div>
+<div class="w-full bg-primary/40 hover:bg-primary/50 h-[62%] rounded-t-sm transition-all relative group">
+<div class="absolute -top-8 left-1/2 -translate-x-1/2 bg-gray-900 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">$11.5M</div>
+</div>
+<div class="w-full bg-primary/60 hover:bg-primary/70 h-[70%] rounded-t-sm transition-all relative group">
+<div class="absolute -top-8 left-1/2 -translate-x-1/2 bg-gray-900 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">$12.5M</div>
+</div>
+<div class="w-full bg-primary/80 hover:bg-primary/90 h-[75%] rounded-t-sm transition-all relative group">
+<div class="absolute -top-8 left-1/2 -translate-x-1/2 bg-gray-900 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">$13.1M</div>
+</div>
+<div class="w-full bg-primary hover:bg-blue-500 h-[85%] rounded-t-sm transition-all relative group shadow-lg shadow-primary/20">
+<div class="absolute -top-8 left-1/2 -translate-x-1/2 bg-gray-900 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">$14.2M</div>
+</div>
+<div class="w-full bg-primary/50 hover:bg-primary/60 h-[80%] rounded-t-sm transition-all relative group border-2 border-dashed border-primary/30 bg-transparent">
+<div class="absolute -top-8 left-1/2 -translate-x-1/2 bg-gray-900 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">Proyección</div>
+</div>
+</div>
+<!-- X Axis Labels -->
+<div class="flex justify-between mt-4 text-xs text-gray-400 font-mono">
+<span>ENE</span><span>FEB</span><span>MAR</span><span>ABR</span><span>MAY</span><span>JUN</span><span>JUL</span><span>AGO</span><span>SEP</span><span>OCT</span><span>NOV</span><span>DIC</span>
+</div>
+</div>
+<!-- Secondary Chart: Headcount Donut -->
+<div class="bg-white dark:bg-surface-dark rounded-xl border border-gray-200 dark:border-gray-800 p-6 flex flex-col shadow-sm">
+<h3 class="text-lg font-bold text-gray-900 dark:text-white mb-2">Headcount por Entidad</h3>
+<p class="text-xs text-gray-500 dark:text-gray-400 mb-6">Distribución actual de colaboradores</p>
+<div class="flex-1 flex items-center justify-center relative">
+<!-- CSS Conic Gradient Donut -->
+<div class="w-48 h-48 rounded-full relative" style="background: conic-gradient(
+                                #2c60ce 0% 45%, 
+                                #60a5fa 45% 70%, 
+                                #a78bfa 70% 85%, 
+                                #fbbf24 85% 100%
+                            );">
+<div class="absolute inset-0 m-auto w-32 h-32 bg-white dark:bg-surface-dark rounded-full flex flex-col items-center justify-center">
+<span class="text-3xl font-bold text-gray-900 dark:text-white">4,520</span>
+<span class="text-xs text-gray-500 uppercase tracking-wide">Total</span>
+</div>
+</div>
+</div>
+<div class="mt-6 space-y-3">
+<div class="flex items-center justify-between text-sm">
+<div class="flex items-center gap-2">
+<span class="w-3 h-3 rounded-full bg-primary"></span>
+<span class="text-gray-600 dark:text-gray-300">Nexa Tech S.A.</span>
+</div>
+<span class="font-medium text-gray-900 dark:text-white">45%</span>
+</div>
+<div class="flex items-center justify-between text-sm">
+<div class="flex items-center gap-2">
+<span class="w-3 h-3 rounded-full bg-blue-400"></span>
+<span class="text-gray-600 dark:text-gray-300">Nexa Services</span>
+</div>
+<span class="font-medium text-gray-900 dark:text-white">25%</span>
+</div>
+<div class="flex items-center justify-between text-sm">
+<div class="flex items-center gap-2">
+<span class="w-3 h-3 rounded-full bg-purple-400"></span>
+<span class="text-gray-600 dark:text-gray-300">Nexa Ventures</span>
+</div>
+<span class="font-medium text-gray-900 dark:text-white">15%</span>
+</div>
+<div class="flex items-center justify-between text-sm">
+<div class="flex items-center gap-2">
+<span class="w-3 h-3 rounded-full bg-yellow-400"></span>
+<span class="text-gray-600 dark:text-gray-300">Retail Group</span>
+</div>
+<span class="font-medium text-gray-900 dark:text-white">15%</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Bottom Grid: Entity Table & Activity -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+<!-- Table Section -->
+<div class="lg:col-span-2 bg-white dark:bg-surface-dark rounded-xl border border-gray-200 dark:border-gray-800 overflow-hidden shadow-sm">
+<div class="p-6 border-b border-gray-200 dark:border-gray-800 flex justify-between items-center">
+<h3 class="text-lg font-bold text-gray-900 dark:text-white">Resumen por Entidad</h3>
+<button class="text-primary text-sm font-medium hover:underline">Ver todo</button>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-sm text-left">
+<thead class="text-xs text-gray-500 dark:text-gray-400 uppercase bg-gray-50 dark:bg-background-dark">
+<tr>
+<th class="px-6 py-3 font-medium" scope="col">Entidad (RUC)</th>
+<th class="px-6 py-3 font-medium" scope="col">Headcount</th>
+<th class="px-6 py-3 font-medium" scope="col">Gasto Mensual</th>
+<th class="px-6 py-3 font-medium" scope="col">Estado</th>
+<th class="px-6 py-3 font-medium" scope="col">Acción</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-gray-200 dark:divide-gray-800">
+<tr class="hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors">
+<td class="px-6 py-4 font-medium text-gray-900 dark:text-white flex items-center gap-3">
+<div class="w-8 h-8 rounded bg-primary/20 flex items-center justify-center text-primary font-bold text-xs">NT</div>
+                                            Nexa Tech S.A.
+                                        </td>
+<td class="px-6 py-4 text-gray-600 dark:text-gray-300 font-mono">2,034</td>
+<td class="px-6 py-4 text-gray-600 dark:text-gray-300 font-mono">$5,420k</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400">
+<span class="w-1.5 h-1.5 rounded-full bg-green-500"></span>
+                                                Al día
+                                            </span>
+</td>
+<td class="px-6 py-4">
+<button class="text-gray-400 hover:text-primary transition-colors">
+<span class="material-icons-outlined text-lg">visibility</span>
+</button>
+</td>
+</tr>
+<tr class="hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors">
+<td class="px-6 py-4 font-medium text-gray-900 dark:text-white flex items-center gap-3">
+<div class="w-8 h-8 rounded bg-blue-400/20 flex items-center justify-center text-blue-400 font-bold text-xs">NS</div>
+                                            Nexa Services Ltd.
+                                        </td>
+<td class="px-6 py-4 text-gray-600 dark:text-gray-300 font-mono">1,120</td>
+<td class="px-6 py-4 text-gray-600 dark:text-gray-300 font-mono">$3,150k</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-400">
+<span class="w-1.5 h-1.5 rounded-full bg-yellow-500"></span>
+                                                Pendiente
+                                            </span>
+</td>
+<td class="px-6 py-4">
+<button class="text-gray-400 hover:text-primary transition-colors">
+<span class="material-icons-outlined text-lg">visibility</span>
+</button>
+</td>
+</tr>
+<tr class="hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors">
+<td class="px-6 py-4 font-medium text-gray-900 dark:text-white flex items-center gap-3">
+<div class="w-8 h-8 rounded bg-purple-400/20 flex items-center justify-center text-purple-400 font-bold text-xs">NV</div>
+                                            Nexa Ventures
+                                        </td>
+<td class="px-6 py-4 text-gray-600 dark:text-gray-300 font-mono">678</td>
+<td class="px-6 py-4 text-gray-600 dark:text-gray-300 font-mono">$1,890k</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400">
+<span class="w-1.5 h-1.5 rounded-full bg-green-500"></span>
+                                                Al día
+                                            </span>
+</td>
+<td class="px-6 py-4">
+<button class="text-gray-400 hover:text-primary transition-colors">
+<span class="material-icons-outlined text-lg">visibility</span>
+</button>
+</td>
+</tr>
+<tr class="hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors">
+<td class="px-6 py-4 font-medium text-gray-900 dark:text-white flex items-center gap-3">
+<div class="w-8 h-8 rounded bg-yellow-400/20 flex items-center justify-center text-yellow-500 font-bold text-xs">NR</div>
+                                            Nexa Retail Group
+                                        </td>
+<td class="px-6 py-4 text-gray-600 dark:text-gray-300 font-mono">688</td>
+<td class="px-6 py-4 text-gray-600 dark:text-gray-300 font-mono">$1,990k</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-400">
+<span class="w-1.5 h-1.5 rounded-full bg-red-500"></span>
+                                                Alerta
+                                            </span>
+</td>
+<td class="px-6 py-4">
+<button class="text-gray-400 hover:text-primary transition-colors">
+<span class="material-icons-outlined text-lg">visibility</span>
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<!-- Alerts Feed -->
+<div class="bg-white dark:bg-surface-dark rounded-xl border border-gray-200 dark:border-gray-800 p-6 flex flex-col shadow-sm">
+<h3 class="text-lg font-bold text-gray-900 dark:text-white mb-4">Actividad Reciente</h3>
+<div class="space-y-6 overflow-y-auto max-h-[300px] pr-2">
+<!-- Alert Item -->
+<div class="flex gap-3">
+<div class="flex-shrink-0 mt-0.5">
+<div class="w-2 h-2 rounded-full bg-red-500 mt-1.5 ring-4 ring-red-500/20"></div>
+</div>
+<div>
+<p class="text-sm font-medium text-gray-900 dark:text-white">Alerta de Cumplimiento</p>
+<p class="text-xs text-gray-500 dark:text-gray-400 mt-0.5">Nexa Retail Group tiene 2 documentos fiscales pendientes de aprobación.</p>
+<p class="text-[10px] text-gray-400 mt-1">Hace 10 min</p>
+</div>
+</div>
+<!-- Alert Item -->
+<div class="flex gap-3">
+<div class="flex-shrink-0 mt-0.5">
+<div class="w-2 h-2 rounded-full bg-blue-500 mt-1.5"></div>
+</div>
+<div>
+<p class="text-sm font-medium text-gray-900 dark:text-white">Nómina Aprobada</p>
+<p class="text-xs text-gray-500 dark:text-gray-400 mt-0.5">Nexa Tech S.A. completó el ciclo de pago de Marzo.</p>
+<p class="text-[10px] text-gray-400 mt-1">Hace 2 horas</p>
+</div>
+</div>
+<!-- Alert Item -->
+<div class="flex gap-3">
+<div class="flex-shrink-0 mt-0.5">
+<div class="w-2 h-2 rounded-full bg-gray-400 mt-1.5"></div>
+</div>
+<div>
+<p class="text-sm font-medium text-gray-900 dark:text-white">Nuevo Usuario Admin</p>
+<p class="text-xs text-gray-500 dark:text-gray-400 mt-0.5">Carlos Ruiz añadido como Admin de Nexa Services Ltd.</p>
+<p class="text-[10px] text-gray-400 mt-1">Ayer, 16:30</p>
+</div>
+</div>
+<!-- Alert Item -->
+<div class="flex gap-3">
+<div class="flex-shrink-0 mt-0.5">
+<div class="w-2 h-2 rounded-full bg-green-500 mt-1.5"></div>
+</div>
+<div>
+<p class="text-sm font-medium text-gray-900 dark:text-white">Sincronización Exitosa</p>
+<p class="text-xs text-gray-500 dark:text-gray-400 mt-0.5">Datos de nómina consolidados para todas las entidades.</p>
+<p class="text-[10px] text-gray-400 mt-1">Ayer, 09:00</p>
+</div>
+</div>
+</div>
+<button class="w-full mt-4 py-2 text-xs font-medium text-gray-500 hover:text-primary border border-gray-200 dark:border-gray-700 rounded-lg transition-colors">Ver historial completo</button>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>

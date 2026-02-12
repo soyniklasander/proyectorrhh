@@ -64,6 +64,21 @@ CREATE TABLE IF NOT EXISTS logic_matrix (
     created_at INTEGER DEFAULT (strftime('%s', 'now'))
 );
 
+-- Tabla de financial_incidents (Otros Descuentos y Retenciones Judiciales)
+CREATE TABLE IF NOT EXISTS financial_incidents (
+    id TEXT PRIMARY KEY,
+    tenant_id TEXT NOT NULL REFERENCES tenants(id),
+    employee_id TEXT NOT NULL REFERENCES employees(id),
+    type TEXT NOT NULL CHECK(type IN ('LOAN', 'JUDICIAL', 'ADVANCE')),
+    description TEXT,
+    amount INTEGER NOT NULL,
+    installments_total INTEGER NOT NULL DEFAULT 1,
+    installments_paid INTEGER NOT NULL DEFAULT 0,
+    status TEXT NOT NULL DEFAULT 'ACTIVE' CHECK(status IN ('ACTIVE', 'PAID', 'CANCELLED')),
+    start_date INTEGER NOT NULL,
+    created_at INTEGER DEFAULT (strftime('%s', 'now'))
+);
+
 -- Índices para mejorar rendimiento
 CREATE INDEX IF NOT EXISTS idx_users_tenant ON users(tenant_id);
 CREATE INDEX IF NOT EXISTS idx_legal_entities_tenant ON legal_entities(tenant_id);
@@ -73,6 +88,8 @@ CREATE INDEX IF NOT EXISTS idx_employees_venue ON employees(current_venue_id);
 CREATE INDEX IF NOT EXISTS idx_logic_matrix_tenant ON logic_matrix(tenant_id);
 CREATE INDEX IF NOT EXISTS idx_logic_matrix_venue ON logic_matrix(venue_id);
 CREATE INDEX IF NOT EXISTS idx_logic_matrix_target ON logic_matrix(target_legal_entity_id);
+CREATE INDEX IF NOT EXISTS idx_financial_incidents_tenant ON financial_incidents(tenant_id);
+CREATE INDEX IF NOT EXISTS idx_financial_incidents_employee ON financial_incidents(employee_id);
 
 -- Seed data inicial (tenant de prueba)
 INSERT INTO tenants (id, name, status, subscription_plan) 

@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>NexaCorp: Detalle Técnico de Provisión</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">tailwind.config = {darkMode: "class", theme: {extend: {colors: {primary: "#2c60ce", "background-light": "#f6f6f8", "background-dark": "#121720"}, fontFamily: {display: "Inter"}, borderRadius: {DEFAULT: "0.5rem", lg: "1rem", xl: "1.5rem", full: "9999px"}}}};</script>
+</head>
+<body class="font-display bg-background-light dark:bg-background-dark text-slate-800 dark:text-slate-200 antialiased min-h-screen overflow-hidden">
+<!-- Layout Container -->
+<div class="flex h-screen w-full">
+<!-- Sidebar Navigation (Collapsed) -->
+<aside class="w-20 border-r border-slate-200 dark:border-slate-800 flex flex-col items-center py-6 gap-8 bg-white dark:bg-slate-900/50">
+<div class="w-10 h-10 bg-primary rounded-xl flex items-center justify-center">
+<span class="material-icons-round text-white">layers</span>
+</div>
+<nav class="flex flex-col gap-6">
+<div class="p-2 text-primary bg-primary/10 rounded-lg"><span class="material-icons-round">dashboard</span></div>
+<div class="p-2 text-slate-400 hover:text-primary transition-colors cursor-pointer"><span class="material-icons-round">groups</span></div>
+<div class="p-2 text-slate-400 hover:text-primary transition-colors cursor-pointer"><span class="material-icons-round">account_balance_wallet</span></div>
+<div class="p-2 text-slate-400 hover:text-primary transition-colors cursor-pointer"><span class="material-icons-round">description</span></div>
+</nav>
+<div class="mt-auto p-2 text-slate-400 hover:text-primary transition-colors cursor-pointer">
+<span class="material-icons-round">settings</span>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="flex-1 flex flex-col min-w-0">
+<!-- Header -->
+<header class="h-16 px-8 border-bottom border-slate-200 dark:border-slate-800 flex items-center justify-between bg-white/50 dark:bg-slate-900/20 backdrop-blur-sm">
+<div class="flex flex-col">
+<h1 class="text-xl font-bold text-slate-900 dark:text-white leading-none">Provisiones y Pasivos Laborales</h1>
+<span class="text-xs text-slate-500 font-medium">Periodo: Octubre 2023 • Lima, Perú</span>
+</div>
+<div class="flex items-center gap-4">
+<div class="relative">
+<span class="material-icons-round absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-sm">search</span>
+<input class="pl-10 pr-4 py-2 bg-slate-100 dark:bg-slate-800 border-none rounded-lg text-sm w-64 focus:ring-2 focus:ring-primary/50 transition-all" placeholder="Buscar colaborador o DNI..." type="text"/>
+</div>
+<button class="bg-primary hover:bg-primary/90 text-white px-4 py-2 rounded-lg text-sm font-semibold flex items-center gap-2 transition-colors">
+<span class="material-icons-round text-sm">download</span>
+                        Exportar Resumen
+                    </button>
+</div>
+</header>
+<!-- Table Section -->
+<div class="flex-1 p-8 overflow-y-auto">
+<div class="mb-6 flex items-center justify-between">
+<h2 class="text-lg font-semibold text-slate-800 dark:text-slate-100 flex items-center gap-2">
+                        Listado de Colaboradores 
+                        <span class="text-xs font-normal bg-slate-200 dark:bg-slate-800 text-slate-500 px-2 py-0.5 rounded-full">142 Total</span>
+</h2>
+</div>
+<div class="bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 rounded-xl overflow-hidden shadow-sm">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-slate-50 dark:bg-slate-800/50 border-b border-slate-200 dark:border-slate-800">
+<th class="px-6 py-4 text-xs font-bold text-slate-400 uppercase tracking-wider">Colaborador</th>
+<th class="px-6 py-4 text-xs font-bold text-slate-400 uppercase tracking-wider">Régimen</th>
+<th class="px-6 py-4 text-xs font-bold text-slate-400 uppercase tracking-wider">Sueldo Base</th>
+<th class="px-6 py-4 text-xs font-bold text-slate-400 uppercase tracking-wider">Total Provisiones</th>
+<th class="px-6 py-4 text-xs font-bold text-slate-400 uppercase tracking-wider">Estado</th>
+<th class="px-6 py-4 text-xs font-bold text-slate-400 uppercase tracking-wider">Acción</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-slate-200 dark:divide-slate-800">
+<!-- Row 1: Selected Item -->
+<tr class="hover:bg-primary/5 bg-primary/5 dark:bg-primary/10 transition-colors">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-slate-200 dark:bg-slate-700 overflow-hidden flex-shrink-0">
+<img class="w-full h-full object-cover" data-alt="Headshot of a male business professional" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCMB2TitSNk7N8AAv2qcwaQ_hWHXfHyYo5od8L18jMG-oinTXVblqiSDoOtQGNJVryrO6GrK7SzWpH-5NgM8CFfDqO0jQdZpXLV9U7O6QuNusVLOaKlYVV9gsJB6tmfrT1aWB5EtDKSUC4h36yndQRBU6rAV0B0vY4xpHJ2VXVpvN34aDJ0398BUrJYrEWqzqvvRUeJUzxdjid5K3Ia3MxQwlQY9RQfHanLUplAYEcbh7-unH1pGwwRIhxiWgtDaMKqjK3P4KV7UxKZ"/>
+</div>
+<div>
+<div class="text-sm font-bold text-slate-900 dark:text-white">Alejandro Ruiz Vasquez</div>
+<div class="text-xs text-slate-500">ID: 44291022</div>
+</div>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center px-2 py-0.5 rounded-md text-[10px] font-bold bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400 uppercase tracking-tighter">
+                                        Pequeña Empresa
+                                    </span>
+</td>
+<td class="px-6 py-4 text-sm font-medium">S/ 3,500.00</td>
+<td class="px-6 py-4 text-sm font-bold text-primary">S/ 583.33</td>
+<td class="px-6 py-4">
+<span class="flex items-center gap-1.5 text-xs font-medium text-emerald-500">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                                        Calculado
+                                    </span>
+</td>
+<td class="px-6 py-4 text-right">
+<button class="text-primary text-xs font-bold hover:underline">Ver Detalle</button>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-slate-200 dark:bg-slate-700 overflow-hidden flex-shrink-0">
+<img class="w-full h-full object-cover" data-alt="Professional portrait of a female manager" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCBFrtLUgbmbORm0ojBg3xLnOZhekSfNgzh3rZDm5cU_lfQ0DvbPCF_dzJ4aw7DXXXZHg6bysWvX8i1OWaZxoQR3ckenaaoD6ySwl1OluLsK_r7rYLHW7DI96wjQgn0Ql4EVPXvmHk7peQFE02IdB3_X1_2V8HBlR2kPC-o2GctBCVqUo3Cmnik2QNw4lvcKEtSF1gj0GO9kQb9S12FDqZRtRjwqI7AiI9umytMG1So4FzJrsrWtt33xnC0sXr_4zaKfMcu-Plv25DW"/>
+</div>
+<div>
+<div class="text-sm font-bold text-slate-900 dark:text-white">Mariana Costa</div>
+<div class="text-xs text-slate-500">ID: 71203911</div>
+</div>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center px-2 py-0.5 rounded-md text-[10px] font-bold bg-slate-100 text-slate-600 dark:bg-slate-800 dark:text-slate-400 uppercase tracking-tighter">
+                                        Régimen General
+                                    </span>
+</td>
+<td class="px-6 py-4 text-sm font-medium">S/ 5,200.00</td>
+<td class="px-6 py-4 text-sm font-bold">S/ 1,480.00</td>
+<td class="px-6 py-4">
+<span class="flex items-center gap-1.5 text-xs font-medium text-emerald-500">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                                        Calculado
+                                    </span>
+</td>
+<td class="px-6 py-4 text-right">
+<button class="text-slate-400 hover:text-primary text-xs font-bold transition-colors">Ver Detalle</button>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-slate-200 dark:bg-slate-700 overflow-hidden flex-shrink-0">
+<img class="w-full h-full object-cover" data-alt="Friendly male customer service representative" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBv11vZHvQXkxxyMI6NZweEUa3BNFWc1CmS58boYp6rlgPe76hR0FrHvMfO-MLVKXWsBHJgvsBXvnCkUGz3lswmTKL7pDOy4Zs3UpN_biysgh_hftGObAPc9RT6NMhRUxOM4SXBIPqvKzxw9pc81Y04mE_IzWd709v8YgRUQhwkNO5arRMEZJrjwVBkR_yXDrqumaKVHyxcTA6Qpii7d7D9eG-Vqs4kl1aLdgxqpqbnr3flH46-yY3uHTlZ44RL9M5sB0Mbz1-0MFUo"/>
+</div>
+<div>
+<div class="text-sm font-bold text-slate-900 dark:text-white">Roberto Loli P.</div>
+<div class="text-xs text-slate-500">ID: 08291823</div>
+</div>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center px-2 py-0.5 rounded-md text-[10px] font-bold bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400 uppercase tracking-tighter">
+                                        Micro Empresa
+                                    </span>
+</td>
+<td class="px-6 py-4 text-sm font-medium">S/ 1,200.00</td>
+<td class="px-6 py-4 text-sm font-bold">S/ 50.00</td>
+<td class="px-6 py-4">
+<span class="flex items-center gap-1.5 text-xs font-medium text-emerald-500">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                                        Calculado
+                                    </span>
+</td>
+<td class="px-6 py-4 text-right">
+<button class="text-slate-400 hover:text-primary text-xs font-bold transition-colors">Ver Detalle</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</main>
+<!-- Technical Side Panel (Detail View) -->
+<aside class="w-[420px] bg-white dark:bg-slate-900 border-l border-slate-200 dark:border-slate-800 flex flex-col shadow-2xl relative z-10">
+<!-- Panel Header -->
+<div class="p-6 border-b border-slate-200 dark:border-slate-800">
+<div class="flex items-start justify-between mb-4">
+<button class="w-8 h-8 rounded-full flex items-center justify-center bg-slate-100 dark:bg-slate-800 text-slate-500 hover:bg-slate-200 transition-colors">
+<span class="material-icons-round text-sm">close</span>
+</button>
+<div class="flex gap-2">
+<button class="w-8 h-8 rounded-lg flex items-center justify-center bg-slate-100 dark:bg-slate-800 text-slate-500 hover:text-primary transition-colors">
+<span class="material-icons-round text-sm">print</span>
+</button>
+<button class="w-8 h-8 rounded-lg flex items-center justify-center bg-slate-100 dark:bg-slate-800 text-slate-500 hover:text-primary transition-colors">
+<span class="material-icons-round text-sm">share</span>
+</button>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<div class="w-14 h-14 rounded-xl overflow-hidden ring-4 ring-primary/10">
+<img class="w-full h-full object-cover" data-alt="Portrait of Alejandro Ruiz" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAwnOjh6BB2AkMYxRaayVk9Zeerssub8VpItQT-rZN92ANsw8Bbrkozrf5TuG_e4lgxEJvfwwuA64GuN0mAvRQ4YADqq65_ytqfwFiBXqhxOb3UJ-SAeoH8U9VlGiOAt7vNJoIFS0QvtmDRWO_p3chUZekfuQDubJahRfM4D658tMgKt2h7ZfO3vJgPbw7tp9WKnB0Vw0O7tLwIojNAqAjYWEaMn3mBtGaEPvLn3EJdBTvSV_h-qUhdJda7j6T3KqwNgsCtNH2qImrT"/>
+</div>
+<div>
+<h2 class="text-lg font-extrabold text-slate-900 dark:text-white leading-tight">Alejandro Ruiz</h2>
+<div class="flex items-center gap-2">
+<span class="text-xs font-medium text-slate-500">Analista de Marketing</span>
+<span class="w-1 h-1 rounded-full bg-slate-300"></span>
+<span class="text-xs font-medium text-slate-500">DNI 44291022</span>
+</div>
+</div>
+</div>
+<div class="mt-6 flex items-center justify-between p-3 bg-amber-50 dark:bg-amber-900/10 border border-amber-100 dark:border-amber-900/30 rounded-lg">
+<div class="flex items-center gap-2 text-amber-700 dark:text-amber-400">
+<span class="material-icons-round text-sm">business_center</span>
+<span class="text-xs font-bold uppercase tracking-wider">Pequeña Empresa (REMYPE)</span>
+</div>
+<span class="text-[10px] bg-amber-500 text-white px-1.5 py-0.5 rounded font-bold uppercase">50% Beneficios</span>
+</div>
+</div>
+<!-- Panel Content: Calculations -->
+<div class="flex-1 overflow-y-auto p-6 space-y-6">
+<!-- Calc Block: Salary Base -->
+<div class="flex items-center justify-between">
+<span class="text-sm font-semibold text-slate-500">Sueldo Base Mensual</span>
+<span class="text-base font-bold text-slate-900 dark:text-white">S/ 3,500.00</span>
+</div>
+<!-- Calc Section: CTS -->
+<div class="bg-slate-50 dark:bg-slate-800/40 border border-slate-200 dark:border-slate-800 rounded-xl p-4">
+<div class="flex items-center justify-between mb-3">
+<div class="flex items-center gap-2">
+<div class="w-6 h-6 rounded bg-primary/20 text-primary flex items-center justify-center">
+<span class="material-icons-round text-xs">savings</span>
+</div>
+<h3 class="text-xs font-bold uppercase tracking-wide text-slate-600 dark:text-slate-400">Provisión CTS</h3>
+</div>
+<span class="text-sm font-bold text-slate-900 dark:text-white underline decoration-primary/30 underline-offset-4">S/ 145.83</span>
+</div>
+<div class="bg-white dark:bg-slate-900/60 p-3 rounded-lg border border-slate-100 dark:border-slate-800/50">
+<div class="text-[11px] text-slate-400 font-mono mb-1">FÓRMULA APLICADA:</div>
+<div class="text-xs font-medium text-slate-700 dark:text-slate-300 flex items-center justify-between">
+<span>(Sueldo / 12) × 0.5</span>
+<span class="text-primary font-mono">(3,500 / 12) × 0.50</span>
+</div>
+</div>
+</div>
+<!-- Calc Section: Gratificación -->
+<div class="bg-slate-50 dark:bg-slate-800/40 border border-slate-200 dark:border-slate-800 rounded-xl p-4">
+<div class="flex items-center justify-between mb-3">
+<div class="flex items-center gap-2">
+<div class="w-6 h-6 rounded bg-primary/20 text-primary flex items-center justify-center">
+<span class="material-icons-round text-xs">redeem</span>
+</div>
+<h3 class="text-xs font-bold uppercase tracking-wide text-slate-600 dark:text-slate-400">Provisión Gratificación</h3>
+</div>
+<span class="text-sm font-bold text-slate-900 dark:text-white underline decoration-primary/30 underline-offset-4">S/ 291.67</span>
+</div>
+<div class="bg-white dark:bg-slate-900/60 p-3 rounded-lg border border-slate-100 dark:border-slate-800/50">
+<div class="text-[11px] text-slate-400 font-mono mb-1">FÓRMULA APLICADA:</div>
+<div class="text-xs font-medium text-slate-700 dark:text-slate-300 flex items-center justify-between">
+<span>(Sueldo / 6) × 0.5</span>
+<span class="text-primary font-mono">(3,500 / 6) × 0.50</span>
+</div>
+<div class="mt-2 pt-2 border-t border-slate-100 dark:border-slate-800 text-[10px] text-slate-500 italic">
+                            * Incluye Bonificación Extraordinaria del 9% (Ley 30334).
+                        </div>
+</div>
+</div>
+<!-- Calc Section: Vacaciones -->
+<div class="bg-slate-50 dark:bg-slate-800/40 border border-slate-200 dark:border-slate-800 rounded-xl p-4">
+<div class="flex items-center justify-between mb-3">
+<div class="flex items-center gap-2">
+<div class="w-6 h-6 rounded bg-primary/20 text-primary flex items-center justify-center">
+<span class="material-icons-round text-xs">beach_access</span>
+</div>
+<h3 class="text-xs font-bold uppercase tracking-wide text-slate-600 dark:text-slate-400">Provisión Vacaciones</h3>
+</div>
+<span class="text-sm font-bold text-slate-900 dark:text-white underline decoration-primary/30 underline-offset-4">S/ 145.83</span>
+</div>
+<div class="bg-white dark:bg-slate-900/60 p-3 rounded-lg border border-slate-100 dark:border-slate-800/50">
+<div class="text-[11px] text-slate-400 font-mono mb-1">FÓRMULA APLICADA (15 DÍAS):</div>
+<div class="text-xs font-medium text-slate-700 dark:text-slate-300 flex items-center justify-between">
+<span>(Sueldo / 12) × 0.5</span>
+<span class="text-primary font-mono">(3,500 / 12) × 0.50</span>
+</div>
+</div>
+</div>
+<!-- Legal Audit Note -->
+<div class="p-4 rounded-xl border-2 border-dashed border-slate-200 dark:border-slate-800 flex items-start gap-3">
+<span class="material-icons-round text-slate-400">info</span>
+<p class="text-[11px] text-slate-500 leading-relaxed">
+                        El cálculo se rige por el <strong class="text-slate-700 dark:text-slate-300">D.S. N° 013-2013-PRODUCE</strong> (TUO de la Ley de Impulso al Desarrollo Productivo y al Crecimiento Empresarial). Como Pequeña Empresa, los beneficios se calculan al 50% de la ley general.
+                    </p>
+</div>
+</div>
+<!-- Panel Footer -->
+<div class="p-6 bg-slate-50 dark:bg-slate-800/50 border-t border-slate-200 dark:border-slate-800">
+<div class="flex items-center justify-between mb-4">
+<span class="text-sm font-bold text-slate-700 dark:text-slate-300">Total Provisión Mensual</span>
+<div class="text-right">
+<div class="text-2xl font-extrabold text-primary">S/ 583.33</div>
+<div class="text-[10px] text-slate-400 uppercase font-bold">Pasivo Pendiente</div>
+</div>
+</div>
+<button class="w-full bg-slate-900 dark:bg-primary text-white py-3 rounded-xl font-bold text-sm hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center justify-center gap-2">
+<span class="material-icons-round text-sm">assignment</span>
+                    Generar Memoria de Cálculo
+                </button>
+</div>
+</aside>
+</div>
+</body></html>

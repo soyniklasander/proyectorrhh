@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>NexaCorp: Panel de Control de Superadmin</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+            extend: {
+                colors: {
+                    "primary": "#2c60ce",
+                    "background-light": "#f6f6f8",
+                    "background-dark": "#0f172a", 
+                    "surface-dark": "#1e293b",
+                    "surface-light": "#ffffff",
+                },
+                fontFamily: {
+                    "display": ["Inter", "sans-serif"]
+                },
+                borderRadius: {"DEFAULT": "0.5rem", "lg": "1rem", "xl": "1.5rem", "full": "9999px"},
+            },
+            },
+        }
+    </script>
+<style>
+        /* Custom scrollbar for webkit browsers */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #1e293b; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #334155; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #475569; 
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-800 dark:text-slate-200 font-display antialiased min-h-screen flex flex-col md:flex-row overflow-hidden">
+<!-- Sidebar -->
+<aside class="w-full md:w-64 bg-white dark:bg-surface-dark border-r border-slate-200 dark:border-slate-700/50 flex-shrink-0 flex flex-col h-screen fixed md:relative z-30 transition-all duration-300">
+<!-- Logo Area -->
+<div class="h-16 flex items-center px-6 border-b border-slate-200 dark:border-slate-700/50">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-lg bg-gradient-to-br from-primary to-blue-400 flex items-center justify-center text-white font-bold text-lg shadow-lg shadow-primary/20">
+                    N
+                </div>
+<span class="text-lg font-bold tracking-tight text-slate-900 dark:text-white">NexaCorp</span>
+</div>
+</div>
+<!-- Navigation -->
+<nav class="flex-1 overflow-y-auto py-6 px-3 space-y-1">
+<div class="px-3 mb-2 text-xs font-semibold uppercase tracking-wider text-slate-400 dark:text-slate-500">Principal</div>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-primary/10 text-primary dark:text-blue-400 font-medium group" href="#">
+<span class="material-icons text-xl">dashboard</span>
+<span>Vista General</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800/50 hover:text-slate-900 dark:hover:text-slate-200 transition-colors group" href="#">
+<span class="material-icons text-xl group-hover:text-primary dark:group-hover:text-blue-400 transition-colors">business</span>
+<span>Marcas / Tenants</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800/50 hover:text-slate-900 dark:hover:text-slate-200 transition-colors group" href="#">
+<span class="material-icons text-xl group-hover:text-primary dark:group-hover:text-blue-400 transition-colors">payments</span>
+<span>Suscripciones</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800/50 hover:text-slate-900 dark:hover:text-slate-200 transition-colors group" href="#">
+<span class="material-icons text-xl group-hover:text-primary dark:group-hover:text-blue-400 transition-colors">people</span>
+<span>Usuarios Globales</span>
+</a>
+<div class="px-3 mt-8 mb-2 text-xs font-semibold uppercase tracking-wider text-slate-400 dark:text-slate-500">Sistema</div>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800/50 hover:text-slate-900 dark:hover:text-slate-200 transition-colors group" href="#">
+<span class="material-icons text-xl group-hover:text-primary dark:group-hover:text-blue-400 transition-colors">settings</span>
+<span>Configuración</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800/50 hover:text-slate-900 dark:hover:text-slate-200 transition-colors group" href="#">
+<span class="material-icons text-xl group-hover:text-primary dark:group-hover:text-blue-400 transition-colors">security</span>
+<span>Logs de Auditoría</span>
+</a>
+</nav>
+<!-- User Profile -->
+<div class="p-4 border-t border-slate-200 dark:border-slate-700/50">
+<div class="flex items-center gap-3 p-2 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-800/50 cursor-pointer transition-colors">
+<div class="w-10 h-10 rounded-full bg-slate-200 dark:bg-slate-700 overflow-hidden relative border-2 border-slate-100 dark:border-slate-600">
+<img alt="Admin Profile" class="w-full h-full object-cover" data-alt="Avatar of the superadmin user" src="https://lh3.googleusercontent.com/aida-public/AB6AXuClRIpG0HAtoXr9qaUMrKN5pspUw08e4sOWMfcsVer2_0FhOUdDdcOOtmZRh8CkYtqtpHeFFj9_FVHqTjf4Qm5LqjZvx1kYewQa4fd4tEfi4I7xL2jYWhiIDpNScU-44BWMCFWRNo6f1zdz0Lth5xiVrTcF-Pu38ze2xIcoQ72WX9VJQY4liVL5vcuzs1Ro8SHIzbTi_9HfKG2LA1MSCjkG73gsBx37d6mKJiZMvjVddj8nDyyw6d-Wvn57eg8izt-_7vw95ebpjxn9"/>
+</div>
+<div class="flex-1 min-w-0">
+<p class="text-sm font-medium text-slate-900 dark:text-white truncate">Carlos R.</p>
+<p class="text-xs text-slate-500 dark:text-slate-400 truncate">Super Admin</p>
+</div>
+<span class="material-icons text-slate-400 text-lg">more_vert</span>
+</div>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="flex-1 flex flex-col h-screen overflow-hidden bg-background-light dark:bg-background-dark relative">
+<!-- Header Top Bar -->
+<header class="h-16 bg-white dark:bg-surface-dark border-b border-slate-200 dark:border-slate-700/50 flex items-center justify-between px-6 z-20 shadow-sm">
+<div class="flex items-center gap-4">
+<button class="md:hidden text-slate-500 hover:text-primary">
+<span class="material-icons">menu</span>
+</button>
+<div class="hidden md:flex flex-col">
+<h1 class="text-lg font-bold text-slate-900 dark:text-white">Panel de Control</h1>
+<div class="flex items-center text-xs text-slate-500 dark:text-slate-400 gap-2">
+<span>Inicio</span>
+<span class="material-icons text-[10px]">chevron_right</span>
+<span class="text-primary dark:text-blue-400 font-medium">Dashboard</span>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<!-- Search -->
+<div class="relative hidden md:block w-64">
+<span class="material-icons absolute left-3 top-2.5 text-slate-400 text-lg">search</span>
+<input class="w-full pl-10 pr-4 py-2 rounded-lg bg-slate-100 dark:bg-slate-800 border-none focus:ring-2 focus:ring-primary text-sm text-slate-900 dark:text-white placeholder-slate-500 dark:placeholder-slate-400" placeholder="Buscar tenant, usuario..." type="text"/>
+</div>
+<!-- Notification Bell -->
+<button class="relative p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-500 dark:text-slate-400 transition-colors">
+<span class="material-icons">notifications</span>
+<span class="absolute top-2 right-2 w-2 h-2 rounded-full bg-red-500 border border-white dark:border-surface-dark"></span>
+</button>
+<!-- Create Button -->
+<button class="bg-primary hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-medium flex items-center gap-2 shadow-lg shadow-primary/20 transition-all hover:scale-105 active:scale-95">
+<span class="material-icons text-lg">add</span>
+<span class="hidden sm:inline">Nueva Marca</span>
+</button>
+</div>
+</header>
+<!-- Scrollable Content Area -->
+<div class="flex-1 overflow-y-auto p-6 md:p-8 space-y-8">
+<!-- Global Metrics Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+<!-- Metric Card 1 -->
+<div class="bg-white dark:bg-surface-dark p-6 rounded-xl border border-slate-200 dark:border-slate-700/50 shadow-sm relative overflow-hidden group hover:border-primary/50 transition-colors">
+<div class="absolute right-0 top-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+<span class="material-icons text-6xl text-primary">attach_money</span>
+</div>
+<p class="text-sm font-medium text-slate-500 dark:text-slate-400 mb-1">Ingresos Recurrentes (MRR)</p>
+<h3 class="text-3xl font-bold text-slate-900 dark:text-white">$124,500</h3>
+<div class="flex items-center mt-4 text-xs font-medium text-emerald-500 bg-emerald-500/10 w-fit px-2 py-1 rounded-full">
+<span class="material-icons text-sm mr-1">trending_up</span>
+                        +12.5% vs mes anterior
+                    </div>
+</div>
+<!-- Metric Card 2 -->
+<div class="bg-white dark:bg-surface-dark p-6 rounded-xl border border-slate-200 dark:border-slate-700/50 shadow-sm relative overflow-hidden group hover:border-primary/50 transition-colors">
+<div class="absolute right-0 top-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+<span class="material-icons text-6xl text-blue-400">domain</span>
+</div>
+<p class="text-sm font-medium text-slate-500 dark:text-slate-400 mb-1">Tenants Activos</p>
+<h3 class="text-3xl font-bold text-slate-900 dark:text-white">45</h3>
+<div class="flex items-center mt-4 text-xs font-medium text-blue-400 bg-blue-400/10 w-fit px-2 py-1 rounded-full">
+<span class="material-icons text-sm mr-1">add_circle</span>
+                        3 nuevos esta semana
+                    </div>
+</div>
+<!-- Metric Card 3 -->
+<div class="bg-white dark:bg-surface-dark p-6 rounded-xl border border-slate-200 dark:border-slate-700/50 shadow-sm relative overflow-hidden group hover:border-primary/50 transition-colors">
+<div class="absolute right-0 top-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+<span class="material-icons text-6xl text-purple-400">groups</span>
+</div>
+<p class="text-sm font-medium text-slate-500 dark:text-slate-400 mb-1">Total Empleados</p>
+<h3 class="text-3xl font-bold text-slate-900 dark:text-white">12,403</h3>
+<div class="flex items-center mt-4 text-xs font-medium text-purple-400 bg-purple-400/10 w-fit px-2 py-1 rounded-full">
+<span class="material-icons text-sm mr-1">trending_up</span>
+                        +850 usuarios nuevos
+                    </div>
+</div>
+<!-- Metric Card 4 -->
+<div class="bg-white dark:bg-surface-dark p-6 rounded-xl border border-slate-200 dark:border-slate-700/50 shadow-sm relative overflow-hidden group hover:border-primary/50 transition-colors">
+<div class="absolute right-0 top-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+<span class="material-icons text-6xl text-emerald-400">health_and_safety</span>
+</div>
+<p class="text-sm font-medium text-slate-500 dark:text-slate-400 mb-1">Estado del Sistema</p>
+<h3 class="text-3xl font-bold text-emerald-400">99.98%</h3>
+<div class="flex items-center mt-4 text-xs font-medium text-slate-400">
+<span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse mr-2"></span>
+                        Todos los sistemas operativos
+                    </div>
+</div>
+</div>
+<!-- Charts & Secondary Content Section -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+<!-- Main Chart -->
+<div class="lg:col-span-2 bg-white dark:bg-surface-dark p-6 rounded-xl border border-slate-200 dark:border-slate-700/50 shadow-sm">
+<div class="flex items-center justify-between mb-6">
+<h3 class="text-lg font-bold text-slate-900 dark:text-white">Crecimiento de Marcas</h3>
+<select class="bg-slate-50 dark:bg-slate-800 border-none text-xs rounded-lg px-3 py-1.5 text-slate-600 dark:text-slate-300 focus:ring-0 cursor-pointer">
+<option>Últimos 12 meses</option>
+<option>Últimos 30 días</option>
+<option>Este año</option>
+</select>
+</div>
+<!-- Placeholder for Chart -->
+<div class="h-64 w-full bg-gradient-to-b from-primary/10 to-transparent rounded-lg relative overflow-hidden flex items-end justify-between px-4 pb-0 pt-8 gap-2">
+<!-- Simulated Bars -->
+<div class="w-full bg-primary/20 hover:bg-primary/40 rounded-t transition-all h-[30%]"></div>
+<div class="w-full bg-primary/20 hover:bg-primary/40 rounded-t transition-all h-[45%]"></div>
+<div class="w-full bg-primary/20 hover:bg-primary/40 rounded-t transition-all h-[40%]"></div>
+<div class="w-full bg-primary/20 hover:bg-primary/40 rounded-t transition-all h-[60%]"></div>
+<div class="w-full bg-primary/20 hover:bg-primary/40 rounded-t transition-all h-[55%]"></div>
+<div class="w-full bg-primary/20 hover:bg-primary/40 rounded-t transition-all h-[75%]"></div>
+<div class="w-full bg-primary/20 hover:bg-primary/40 rounded-t transition-all h-[65%]"></div>
+<div class="w-full bg-primary/20 hover:bg-primary/40 rounded-t transition-all h-[80%]"></div>
+<div class="w-full bg-primary/20 hover:bg-primary/40 rounded-t transition-all h-[85%]"></div>
+<div class="w-full bg-primary/20 hover:bg-primary/40 rounded-t transition-all h-[95%]"></div>
+<div class="w-full bg-primary/20 hover:bg-primary/40 rounded-t transition-all h-[90%]"></div>
+<div class="w-full bg-primary/60 hover:bg-primary rounded-t transition-all h-[100%] shadow-[0_0_15px_rgba(44,96,206,0.5)]"></div>
+</div>
+<div class="flex justify-between mt-4 text-xs text-slate-400 uppercase tracking-wider font-semibold">
+<span>Ene</span><span>Feb</span><span>Mar</span><span>Abr</span><span>May</span><span>Jun</span><span>Jul</span><span>Ago</span><span>Sep</span><span>Oct</span><span>Nov</span><span>Dic</span>
+</div>
+</div>
+<!-- Recent Activities / Notifications -->
+<div class="bg-white dark:bg-surface-dark p-6 rounded-xl border border-slate-200 dark:border-slate-700/50 shadow-sm">
+<h3 class="text-lg font-bold text-slate-900 dark:text-white mb-6">Alertas Recientes</h3>
+<div class="space-y-6">
+<div class="flex gap-4">
+<div class="w-8 h-8 rounded-full bg-yellow-500/10 flex items-center justify-center flex-shrink-0">
+<span class="material-icons text-yellow-500 text-sm">warning</span>
+</div>
+<div>
+<h4 class="text-sm font-semibold text-slate-900 dark:text-slate-200">Límite de almacenamiento</h4>
+<p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Tenant <span class="text-white font-medium">KFC Peru</span> al 95% de capacidad.</p>
+<span class="text-[10px] text-slate-500 mt-2 block">Hace 2 horas</span>
+</div>
+</div>
+<div class="flex gap-4">
+<div class="w-8 h-8 rounded-full bg-red-500/10 flex items-center justify-center flex-shrink-0">
+<span class="material-icons text-red-500 text-sm">error</span>
+</div>
+<div>
+<h4 class="text-sm font-semibold text-slate-900 dark:text-slate-200">Pago fallido</h4>
+<p class="text-xs text-slate-500 dark:text-slate-400 mt-1">La Lucha: Tarjeta rechazada.</p>
+<span class="text-[10px] text-slate-500 mt-2 block">Hace 5 horas</span>
+</div>
+</div>
+<div class="flex gap-4">
+<div class="w-8 h-8 rounded-full bg-blue-500/10 flex items-center justify-center flex-shrink-0">
+<span class="material-icons text-blue-500 text-sm">info</span>
+</div>
+<div>
+<h4 class="text-sm font-semibold text-slate-900 dark:text-slate-200">Nuevo Tenant Creado</h4>
+<p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Cineplanet activado exitosamente.</p>
+<span class="text-[10px] text-slate-500 mt-2 block">Hace 1 día</span>
+</div>
+</div>
+</div>
+<button class="w-full mt-6 py-2 text-xs font-medium text-slate-500 hover:text-primary dark:text-slate-400 dark:hover:text-white transition-colors border border-dashed border-slate-300 dark:border-slate-700 rounded-lg">
+                        Ver todo el historial
+                    </button>
+</div>
+</div>
+<!-- Tenants Table Section -->
+<div class="bg-white dark:bg-surface-dark rounded-xl border border-slate-200 dark:border-slate-700/50 shadow-sm overflow-hidden">
+<div class="p-6 border-b border-slate-200 dark:border-slate-700/50 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+<div>
+<h3 class="text-lg font-bold text-slate-900 dark:text-white">Gestión de Marcas (Tenants)</h3>
+<p class="text-sm text-slate-500 dark:text-slate-400 mt-1">Administra el acceso y facturación de tus clientes.</p>
+</div>
+<div class="flex items-center gap-3">
+<button class="px-3 py-2 text-sm font-medium text-slate-600 dark:text-slate-300 bg-slate-100 dark:bg-slate-800 rounded-lg hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors flex items-center gap-2">
+<span class="material-icons text-sm">filter_list</span>
+                            Filtros
+                        </button>
+<button class="px-3 py-2 text-sm font-medium text-slate-600 dark:text-slate-300 bg-slate-100 dark:bg-slate-800 rounded-lg hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors flex items-center gap-2">
+<span class="material-icons text-sm">download</span>
+                            Exportar
+                        </button>
+</div>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left text-sm text-slate-500 dark:text-slate-400">
+<thead class="bg-slate-50 dark:bg-slate-800/50 text-xs uppercase font-semibold text-slate-500 dark:text-slate-400">
+<tr>
+<th class="px-6 py-4" scope="col">Marca / Tenant</th>
+<th class="px-6 py-4" scope="col">Plan Actual</th>
+<th class="px-6 py-4 text-center" scope="col">Usuarios</th>
+<th class="px-6 py-4" scope="col">Estado</th>
+<th class="px-6 py-4" scope="col">Facturación</th>
+<th class="px-6 py-4 text-right" scope="col">Acciones</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-slate-200 dark:divide-slate-700/50">
+<!-- Row 1 -->
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/30 transition-colors group">
+<td class="px-6 py-4">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-full bg-white p-1 flex items-center justify-center overflow-hidden shadow-sm">
+<img alt="Logo KFC" class="w-full h-full rounded-full object-cover" data-alt="KFC Brand Logo" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAaH3uSgXHne1itgm9Aw60Xn1udXGJ2XSzHJ0NchqA6m6DV570YEq6s7VJSyFfmEKcisgJNibTOPXTqZ1_tz05xof1DFhcclnyMLrhtSGqNBML3OEpzW10xKWzGU_mCrdZV28AVA7mpqQy2909H8Z-aHt3XDuc8sGRi7mdU8dkPifBk0imqleQBmKSTiK73XHP71SjctFGahRsWcrVV-TsbLpZo4gsbsRGMGHp2U8E4y1vxsoKENpRhstCpwm6OUcWkCj0M4_ArYLVK"/>
+</div>
+<div>
+<div class="font-medium text-slate-900 dark:text-white">KFC Peru</div>
+<div class="text-xs text-slate-500">kfc.nexacorp.com</div>
+</div>
+</div>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2">
+<span class="px-2.5 py-1 rounded-md text-xs font-semibold bg-purple-500/10 text-purple-400 border border-purple-500/20">Enterprise</span>
+</div>
+</td>
+<td class="px-6 py-4 text-center">
+<span class="font-medium text-slate-900 dark:text-white">450</span>
+<span class="text-slate-500 text-xs">/ 500</span>
+<div class="w-full bg-slate-200 dark:bg-slate-700 h-1.5 rounded-full mt-2 overflow-hidden">
+<div class="bg-primary h-1.5 rounded-full" style="width: 90%"></div>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-emerald-500/10 text-emerald-500">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                                        Activo
+                                    </span>
+</td>
+<td class="px-6 py-4">
+<div class="text-slate-900 dark:text-white font-medium">$2,500/mes</div>
+<div class="text-xs text-slate-500">Próx: 15 Oct 2023</div>
+</td>
+<td class="px-6 py-4 text-right">
+<div class="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="p-2 text-slate-400 hover:text-primary dark:hover:text-white transition-colors" title="Editar">
+<span class="material-icons text-lg">edit</span>
+</button>
+<button class="p-2 text-slate-400 hover:text-emerald-400 dark:hover:text-emerald-400 transition-colors" title="Login as Tenant">
+<span class="material-icons text-lg">login</span>
+</button>
+<button class="p-2 text-slate-400 hover:text-red-400 transition-colors" title="Suspender">
+<span class="material-icons text-lg">block</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/30 transition-colors group">
+<td class="px-6 py-4">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-full bg-white p-1 flex items-center justify-center overflow-hidden shadow-sm">
+<img alt="Logo La Lucha" class="w-full h-full rounded-full object-cover" data-alt="La Lucha Brand Logo" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDxp0t0HmTWUTBDZMUBW_HExCOD5QGaBiPj4bw3yPjLX7XyT9fe7ycljSW4KAYRGB-FRmnq9z0JfiUmz34cyeBZwvsAZpb11mUmDiWPAzubjhBPPP8cuJlmSOyLQs3DlSl0o_NvcVZGKhjqnm1XeF62CJYDlHDWxUE_lepQgpaQHKAkgGjxTtEMbQSyyjVDFbmYNm6nfpbYK337PUOGcMVDVcNBJdWOoKDT2Zm2wZeJPvwgbEUvyUc4w61ChidPtcS3H5bv9LZE_sDk"/>
+</div>
+<div>
+<div class="font-medium text-slate-900 dark:text-white">La Lucha</div>
+<div class="text-xs text-slate-500">lalucha.nexacorp.com</div>
+</div>
+</div>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2">
+<span class="px-2.5 py-1 rounded-md text-xs font-semibold bg-blue-500/10 text-blue-400 border border-blue-500/20">Pro</span>
+</div>
+</td>
+<td class="px-6 py-4 text-center">
+<span class="font-medium text-slate-900 dark:text-white">85</span>
+<span class="text-slate-500 text-xs">/ 100</span>
+<div class="w-full bg-slate-200 dark:bg-slate-700 h-1.5 rounded-full mt-2 overflow-hidden">
+<div class="bg-blue-400 h-1.5 rounded-full" style="width: 85%"></div>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-red-500/10 text-red-500">
+<span class="w-1.5 h-1.5 rounded-full bg-red-500"></span>
+                                        Pago Pendiente
+                                    </span>
+</td>
+<td class="px-6 py-4">
+<div class="text-slate-900 dark:text-white font-medium">$850/mes</div>
+<div class="text-xs text-red-400 font-medium">Vencido: 01 Oct 2023</div>
+</td>
+<td class="px-6 py-4 text-right">
+<div class="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="p-2 text-slate-400 hover:text-primary dark:hover:text-white transition-colors">
+<span class="material-icons text-lg">edit</span>
+</button>
+<button class="p-2 text-slate-400 hover:text-emerald-400 dark:hover:text-emerald-400 transition-colors">
+<span class="material-icons text-lg">login</span>
+</button>
+<button class="p-2 text-slate-400 hover:text-red-400 transition-colors">
+<span class="material-icons text-lg">block</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/30 transition-colors group">
+<td class="px-6 py-4">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-full bg-white p-1 flex items-center justify-center overflow-hidden shadow-sm">
+<img alt="Logo Bembos" class="w-full h-full rounded-full object-cover" data-alt="Bembos Brand Logo" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCMKtNeST3iy_tx-qJty2jMF09lINqOqq-EIOBF9fqN8WdLEIUaiTBRV5xMQpOicNWl0JGktRWg5s8Ql1B7JlumnUFvu-lpUcqg3RJZgFLykb4JcXpPNm90VbKDhhRk6qBh95jDF-K1t3Vjsju3FzMvsIHdBulf7XULtTLSy57gn9-1PoEZ9gYFrXJY2ztwLds0f-eZNwJyu0u5aDFDTp3bgkb30b9O1l5uxUdC9tIZ37Oq6T2nxVIbe-ckWm89tlxEK6Do8CbcCavh"/>
+</div>
+<div>
+<div class="font-medium text-slate-900 dark:text-white">Bembos</div>
+<div class="text-xs text-slate-500">bembos.nexacorp.com</div>
+</div>
+</div>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2">
+<span class="px-2.5 py-1 rounded-md text-xs font-semibold bg-purple-500/10 text-purple-400 border border-purple-500/20">Enterprise</span>
+</div>
+</td>
+<td class="px-6 py-4 text-center">
+<span class="font-medium text-slate-900 dark:text-white">320</span>
+<span class="text-slate-500 text-xs">/ 500</span>
+<div class="w-full bg-slate-200 dark:bg-slate-700 h-1.5 rounded-full mt-2 overflow-hidden">
+<div class="bg-primary h-1.5 rounded-full" style="width: 64%"></div>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-emerald-500/10 text-emerald-500">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                                        Activo
+                                    </span>
+</td>
+<td class="px-6 py-4">
+<div class="text-slate-900 dark:text-white font-medium">$2,500/mes</div>
+<div class="text-xs text-slate-500">Próx: 22 Oct 2023</div>
+</td>
+<td class="px-6 py-4 text-right">
+<div class="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="p-2 text-slate-400 hover:text-primary dark:hover:text-white transition-colors">
+<span class="material-icons text-lg">edit</span>
+</button>
+<button class="p-2 text-slate-400 hover:text-emerald-400 dark:hover:text-emerald-400 transition-colors">
+<span class="material-icons text-lg">login</span>
+</button>
+<button class="p-2 text-slate-400 hover:text-red-400 transition-colors">
+<span class="material-icons text-lg">block</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 4 -->
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/30 transition-colors group">
+<td class="px-6 py-4">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-full bg-white p-1 flex items-center justify-center overflow-hidden shadow-sm">
+<img alt="Logo Pardos" class="w-full h-full rounded-full object-cover" data-alt="Pardos Brand Logo" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB9ciXZqu8yZ5CHhZhhs4KMoI1mmH6e-h_SNQVHWgfRmfgegg6wX4AA1tmbzPxSdd99OB_uK6BdkjDj6sDhoIUj23Vbjv4d8CPHlhnYdD6GLlfVBVjNa4cTjqvS4dj496IDbIF3fLW1kAtS2CAT9vWbaeD2O6wPrgHd4MT1NFgJcDxRJCHRQuTfFwDVWuBrjIXYpHmOF_Ztc3iU5KqRpST0JN31UHLDrlb3iFcbsEB4dMVyT9MCnWWMLG1xN4Qp1HAAY-ZwKZaKYZwf"/>
+</div>
+<div>
+<div class="font-medium text-slate-900 dark:text-white">Pardos Chicken</div>
+<div class="text-xs text-slate-500">pardos.nexacorp.com</div>
+</div>
+</div>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2">
+<span class="px-2.5 py-1 rounded-md text-xs font-semibold bg-slate-500/10 text-slate-400 border border-slate-500/20">Basic</span>
+</div>
+</td>
+<td class="px-6 py-4 text-center">
+<span class="font-medium text-slate-900 dark:text-white">42</span>
+<span class="text-slate-500 text-xs">/ 50</span>
+<div class="w-full bg-slate-200 dark:bg-slate-700 h-1.5 rounded-full mt-2 overflow-hidden">
+<div class="bg-slate-400 h-1.5 rounded-full" style="width: 84%"></div>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-emerald-500/10 text-emerald-500">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                                        Activo
+                                    </span>
+</td>
+<td class="px-6 py-4">
+<div class="text-slate-900 dark:text-white font-medium">$299/mes</div>
+<div class="text-xs text-slate-500">Próx: 05 Nov 2023</div>
+</td>
+<td class="px-6 py-4 text-right">
+<div class="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="p-2 text-slate-400 hover:text-primary dark:hover:text-white transition-colors">
+<span class="material-icons text-lg">edit</span>
+</button>
+<button class="p-2 text-slate-400 hover:text-emerald-400 dark:hover:text-emerald-400 transition-colors">
+<span class="material-icons text-lg">login</span>
+</button>
+<button class="p-2 text-slate-400 hover:text-red-400 transition-colors">
+<span class="material-icons text-lg">block</span>
+</button>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Pagination -->
+<div class="px-6 py-4 border-t border-slate-200 dark:border-slate-700/50 flex items-center justify-between">
+<span class="text-xs text-slate-500 dark:text-slate-400">Mostrando <span class="font-medium text-slate-900 dark:text-white">1-4</span> de <span class="font-medium text-slate-900 dark:text-white">45</span> tenants</span>
+<div class="flex items-center gap-2">
+<button class="px-3 py-1 text-xs rounded-md bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700 disabled:opacity-50">
+                            Anterior
+                        </button>
+<button class="px-3 py-1 text-xs rounded-md bg-primary text-white hover:bg-blue-600">
+                            1
+                        </button>
+<button class="px-3 py-1 text-xs rounded-md bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700">
+                            2
+                        </button>
+<span class="text-slate-500 text-xs">...</span>
+<button class="px-3 py-1 text-xs rounded-md bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700">
+                            12
+                        </button>
+<button class="px-3 py-1 text-xs rounded-md bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700">
+                            Siguiente
+                        </button>
+</div>
+</div>
+</div>
+<!-- Footer -->
+<footer class="mt-8 text-center text-xs text-slate-500 dark:text-slate-500 pb-4">
+                © 2023 NexaCorp SaaS Platform. Superadmin Access Level 0.
+            </footer>
+</div>
+</main>
+</body></html>

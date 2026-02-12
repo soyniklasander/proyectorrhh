@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>NexaCorp: Exportación de Interfaces</title>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Theme Configuration -->
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#2c60ce",
+                        "primary-hover": "#244db5",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#121720",
+                        "surface-dark": "#1a212e",
+                        "surface-border": "#2b3545",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.5rem", "lg": "1rem", "xl": "1.5rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<!-- Material Icons -->
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        body { font-family: 'Inter', sans-serif; }
+        /* Custom scrollbar for dark mode */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #121720; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #2b3545; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #2c60ce; 
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-800 dark:text-slate-200 min-h-screen flex flex-col font-display transition-colors duration-200">
+<!-- Navbar / Header -->
+<header class="h-16 border-b border-gray-200 dark:border-surface-border bg-white dark:bg-surface-dark flex items-center px-6 justify-between sticky top-0 z-50">
+<div class="flex items-center gap-4">
+<div class="flex items-center gap-2">
+<div class="w-8 h-8 rounded-lg bg-gradient-to-br from-primary to-blue-400 flex items-center justify-center text-white font-bold">
+                    N
+                </div>
+<span class="font-bold text-lg text-slate-900 dark:text-white tracking-tight">NexaCorp</span>
+</div>
+<div class="h-6 w-px bg-gray-300 dark:bg-surface-border mx-2"></div>
+<nav class="hidden md:flex items-center text-sm font-medium text-slate-500 dark:text-slate-400 space-x-2">
+<span class="hover:text-primary cursor-pointer">Nómina</span>
+<span class="material-icons-round text-base">chevron_right</span>
+<span class="hover:text-primary cursor-pointer">Procesamiento</span>
+<span class="material-icons-round text-base">chevron_right</span>
+<span class="text-slate-900 dark:text-white">Interfaces (5.3)</span>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<div class="hidden md:flex flex-col items-end mr-2">
+<span class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Periodo Actual</span>
+<span class="text-sm font-medium text-white">Octubre 2023</span>
+</div>
+<button class="p-2 rounded-full hover:bg-slate-100 dark:hover:bg-surface-border transition-colors relative">
+<span class="material-icons-round text-slate-500 dark:text-slate-300">notifications</span>
+<span class="absolute top-2 right-2 w-2 h-2 bg-red-500 rounded-full border-2 border-white dark:border-surface-dark"></span>
+</button>
+<img alt="Profile Avatar" class="w-9 h-9 rounded-full ring-2 ring-surface-border" data-alt="User profile picture" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAF2snOvf_z6lvox2H229qR-D9LDQfUvw8tMnr83zqA75b8siTxUgVLXVv6x-C3w5XWfq6kX1LSpHyd6EJaqRT9IjohxDQ4sj6R0g52VNh0B1vywm0VGYmUOA4p5Pq7ZRKcOkdf9q3sbsbs-oaO9SjKRBZR02YyrcxjYHteRS6Tt7125lfrj4D6qD1FJuNmEhLU4L2kMNDrlCh65bEdiku8eTBfczN2gfGChoIfb9gU2o_uQOoN5YvWzuP40FnhCOlyKE5rolBEMqLd"/>
+</div>
+</header>
+<main class="flex-1 p-6 max-w-7xl mx-auto w-full">
+<!-- Page Title & Actions -->
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-8">
+<div>
+<h1 class="text-2xl font-bold text-slate-900 dark:text-white mb-2">Generador de Interfaces y Bancos</h1>
+<p class="text-slate-500 dark:text-slate-400">Exportación final de archivos para PLAME, AFPNet y transferencias bancarias.</p>
+</div>
+<!-- Summary Widget for Treasury Validation -->
+<div class="bg-white dark:bg-surface-dark border border-gray-200 dark:border-surface-border p-4 rounded-xl flex items-center gap-5 shadow-sm">
+<div class="p-3 bg-primary/10 rounded-lg">
+<span class="material-icons-round text-primary text-3xl">account_balance_wallet</span>
+</div>
+<div>
+<div class="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wide">Total Neto a Transferir</div>
+<div class="text-2xl font-bold text-slate-900 dark:text-white tabular-nums">S/ 145,230.50</div>
+</div>
+<div class="h-10 w-px bg-gray-200 dark:bg-surface-border mx-2"></div>
+<div class="flex flex-col text-right">
+<span class="text-xs text-emerald-500 font-medium flex items-center gap-1 justify-end">
+<span class="material-icons-round text-sm">check_circle</span> Validado
+                    </span>
+<span class="text-xs text-slate-500 dark:text-slate-400">vs. Planilla Calculada</span>
+</div>
+</div>
+</div>
+<!-- Main Grid Layout -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+<!-- Section 1: PLAME (SUNAT) - Column Span 4 -->
+<div class="lg:col-span-4 flex flex-col gap-6">
+<div class="bg-white dark:bg-surface-dark border border-gray-200 dark:border-surface-border rounded-xl shadow-sm h-full flex flex-col">
+<div class="p-5 border-b border-gray-200 dark:border-surface-border flex justify-between items-center">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-orange-500/10 flex items-center justify-center">
+<span class="material-icons-round text-orange-600 dark:text-orange-400">description</span>
+</div>
+<div>
+<h2 class="font-bold text-slate-900 dark:text-white">PLAME - SUNAT</h2>
+<p class="text-xs text-slate-500 dark:text-slate-400">T-Registro &amp; Planilla Mensual</p>
+</div>
+</div>
+<span class="px-2 py-1 text-xs font-medium bg-green-500/10 text-green-600 dark:text-green-400 rounded">Listo</span>
+</div>
+<div class="p-5 flex-1 overflow-y-auto">
+<p class="text-sm text-slate-500 dark:text-slate-400 mb-4">Archivos generados para importación en PDT PLAME (Estructuras .rem, .jor, .snl).</p>
+<div class="space-y-3">
+<!-- File Item -->
+<div class="group flex items-center justify-between p-3 rounded-lg bg-background-light dark:bg-background-dark border border-transparent hover:border-primary/30 transition-all cursor-pointer">
+<div class="flex items-center gap-3 overflow-hidden">
+<span class="material-icons-round text-slate-400">text_snippet</span>
+<div class="flex flex-col min-w-0">
+<span class="text-sm font-medium text-slate-900 dark:text-slate-200 truncate">06012023102012345678.rem</span>
+<span class="text-xs text-slate-500">125 KB • Remuneraciones</span>
+</div>
+</div>
+<span class="material-icons-round text-slate-400 group-hover:text-primary">download</span>
+</div>
+<!-- File Item -->
+<div class="group flex items-center justify-between p-3 rounded-lg bg-background-light dark:bg-background-dark border border-transparent hover:border-primary/30 transition-all cursor-pointer">
+<div class="flex items-center gap-3 overflow-hidden">
+<span class="material-icons-round text-slate-400">text_snippet</span>
+<div class="flex flex-col min-w-0">
+<span class="text-sm font-medium text-slate-900 dark:text-slate-200 truncate">06012023102012345678.jor</span>
+<span class="text-xs text-slate-500">45 KB • Jornada Laboral</span>
+</div>
+</div>
+<span class="material-icons-round text-slate-400 group-hover:text-primary">download</span>
+</div>
+<!-- File Item -->
+<div class="group flex items-center justify-between p-3 rounded-lg bg-background-light dark:bg-background-dark border border-transparent hover:border-primary/30 transition-all cursor-pointer">
+<div class="flex items-center gap-3 overflow-hidden">
+<span class="material-icons-round text-slate-400">text_snippet</span>
+<div class="flex flex-col min-w-0">
+<span class="text-sm font-medium text-slate-900 dark:text-slate-200 truncate">06012023102012345678.snl</span>
+<span class="text-xs text-slate-500">12 KB • 4ta Categoría</span>
+</div>
+</div>
+<span class="material-icons-round text-slate-400 group-hover:text-primary">download</span>
+</div>
+</div>
+</div>
+<div class="p-5 border-t border-gray-200 dark:border-surface-border bg-gray-50 dark:bg-surface-dark/50 rounded-b-xl">
+<button class="w-full py-2.5 px-4 bg-white dark:bg-surface-border hover:bg-gray-100 dark:hover:bg-slate-700 text-slate-700 dark:text-white border border-gray-300 dark:border-slate-600 rounded-lg shadow-sm font-medium text-sm flex items-center justify-center gap-2 transition-colors">
+<span class="material-icons-round text-lg">folder_zip</span>
+                            Descargar Todo (.zip)
+                        </button>
+</div>
+</div>
+</div>
+<!-- Section 2 & 3 Combined in a Column -->
+<div class="lg:col-span-8 flex flex-col gap-6">
+<!-- Section 2: AFPNet -->
+<div class="bg-white dark:bg-surface-dark border border-gray-200 dark:border-surface-border rounded-xl shadow-sm">
+<div class="p-5 border-b border-gray-200 dark:border-surface-border flex flex-wrap justify-between items-center gap-4">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-blue-500/10 flex items-center justify-center">
+<span class="material-icons-round text-blue-600 dark:text-blue-400">pie_chart</span>
+</div>
+<div>
+<h2 class="font-bold text-slate-900 dark:text-white">AFPNet</h2>
+<p class="text-xs text-slate-500 dark:text-slate-400">Aportes Previsionales</p>
+</div>
+</div>
+<div class="flex items-center bg-background-light dark:bg-background-dark rounded-lg p-1 border border-gray-200 dark:border-surface-border">
+<button class="px-3 py-1 text-xs font-medium rounded-md bg-white dark:bg-surface-border text-primary shadow-sm">Excel (.xlsx)</button>
+<button class="px-3 py-1 text-xs font-medium rounded-md text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white">Texto (.afp)</button>
+</div>
+</div>
+<div class="p-5">
+<div class="overflow-x-auto">
+<table class="w-full text-sm text-left">
+<thead class="text-xs text-slate-500 dark:text-slate-400 uppercase bg-background-light dark:bg-background-dark/50">
+<tr>
+<th class="px-4 py-3 rounded-l-lg">Administradora</th>
+<th class="px-4 py-3 text-right">Afiliados</th>
+<th class="px-4 py-3 text-right">Fondo</th>
+<th class="px-4 py-3 text-right">Seguro</th>
+<th class="px-4 py-3 text-right">Comisión</th>
+<th class="px-4 py-3 text-right rounded-r-lg">Total</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-gray-100 dark:divide-surface-border">
+<tr class="hover:bg-background-light dark:hover:bg-surface-border/30 transition-colors">
+<td class="px-4 py-3 font-medium text-slate-900 dark:text-white flex items-center gap-2">
+<div class="w-2 h-2 rounded-full bg-purple-500"></div> Integra
+                                        </td>
+<td class="px-4 py-3 text-right">45</td>
+<td class="px-4 py-3 text-right">S/ 12,450.00</td>
+<td class="px-4 py-3 text-right">S/ 420.00</td>
+<td class="px-4 py-3 text-right">S/ 150.00</td>
+<td class="px-4 py-3 text-right font-medium text-slate-900 dark:text-white">S/ 13,020.00</td>
+</tr>
+<tr class="hover:bg-background-light dark:hover:bg-surface-border/30 transition-colors">
+<td class="px-4 py-3 font-medium text-slate-900 dark:text-white flex items-center gap-2">
+<div class="w-2 h-2 rounded-full bg-teal-500"></div> Habitat
+                                        </td>
+<td class="px-4 py-3 text-right">32</td>
+<td class="px-4 py-3 text-right">S/ 9,800.00</td>
+<td class="px-4 py-3 text-right">S/ 310.00</td>
+<td class="px-4 py-3 text-right">S/ 120.00</td>
+<td class="px-4 py-3 text-right font-medium text-slate-900 dark:text-white">S/ 10,230.00</td>
+</tr>
+<tr class="hover:bg-background-light dark:hover:bg-surface-border/30 transition-colors">
+<td class="px-4 py-3 font-medium text-slate-900 dark:text-white flex items-center gap-2">
+<div class="w-2 h-2 rounded-full bg-orange-500"></div> Prima
+                                        </td>
+<td class="px-4 py-3 text-right">28</td>
+<td class="px-4 py-3 text-right">S/ 8,100.00</td>
+<td class="px-4 py-3 text-right">S/ 290.00</td>
+<td class="px-4 py-3 text-right">S/ 110.00</td>
+<td class="px-4 py-3 text-right font-medium text-slate-900 dark:text-white">S/ 8,500.00</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="px-5 pb-5 pt-2 flex justify-end">
+<button class="py-2 px-4 bg-primary hover:bg-primary-hover text-white rounded-lg shadow-lg shadow-primary/20 font-medium text-sm flex items-center gap-2 transition-all">
+<span class="material-icons-round text-lg">cloud_download</span>
+                            Generar Archivo AFPNet
+                        </button>
+</div>
+</div>
+<!-- Section 3: Pago de Haberes (Banks) -->
+<div class="bg-white dark:bg-surface-dark border border-gray-200 dark:border-surface-border rounded-xl shadow-sm flex-1">
+<div class="p-5 border-b border-gray-200 dark:border-surface-border flex justify-between items-center">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-emerald-500/10 flex items-center justify-center">
+<span class="material-icons-round text-emerald-600 dark:text-emerald-400">payments</span>
+</div>
+<div>
+<h2 class="font-bold text-slate-900 dark:text-white">Pago de Haberes</h2>
+<p class="text-xs text-slate-500 dark:text-slate-400">Telecrédito &amp; Transferencias Masivas</p>
+</div>
+</div>
+</div>
+<div class="p-6 grid grid-cols-1 md:grid-cols-2 gap-8">
+<!-- Left: Bank Selection -->
+<div class="space-y-4">
+<label class="text-sm font-semibold text-slate-700 dark:text-slate-300 block mb-2">Seleccione Banco de Destino</label>
+<!-- BCP Option -->
+<label class="relative flex items-center p-4 rounded-xl border-2 cursor-pointer transition-all bg-background-light dark:bg-background-dark border-primary bg-primary/5 dark:bg-primary/10">
+<input checked="" class="w-5 h-5 text-primary border-gray-300 focus:ring-primary bg-transparent" name="bank" type="radio"/>
+<div class="ml-4 flex-1">
+<div class="flex justify-between items-center mb-1">
+<span class="font-bold text-slate-900 dark:text-white">BCP - Telecrédito</span>
+<span class="material-icons-round text-primary">verified</span>
+</div>
+<div class="text-xs text-slate-500 dark:text-slate-400">Macro en soles (.txt)</div>
+</div>
+</label>
+<!-- BBVA Option -->
+<label class="relative flex items-center p-4 rounded-xl border border-gray-200 dark:border-surface-border cursor-pointer hover:border-gray-300 dark:hover:border-slate-600 transition-all">
+<input class="w-5 h-5 text-primary border-gray-300 focus:ring-primary bg-transparent" name="bank" type="radio"/>
+<div class="ml-4 flex-1">
+<div class="flex justify-between items-center mb-1">
+<span class="font-medium text-slate-900 dark:text-white">BBVA - NetCash</span>
+</div>
+<div class="text-xs text-slate-500 dark:text-slate-400">Pagos masivos (.txt)</div>
+</div>
+</label>
+<!-- Scotiabank Option -->
+<label class="relative flex items-center p-4 rounded-xl border border-gray-200 dark:border-surface-border cursor-pointer hover:border-gray-300 dark:hover:border-slate-600 transition-all opacity-60">
+<input class="w-5 h-5 text-primary border-gray-300 focus:ring-primary bg-transparent" disabled="" name="bank" type="radio"/>
+<div class="ml-4 flex-1">
+<div class="flex justify-between items-center mb-1">
+<span class="font-medium text-slate-900 dark:text-white">Scotiabank</span>
+<span class="text-[10px] px-1.5 py-0.5 bg-gray-200 dark:bg-slate-700 rounded text-slate-500">Proximamente</span>
+</div>
+<div class="text-xs text-slate-500 dark:text-slate-400">Telebanking</div>
+</div>
+</label>
+</div>
+<!-- Right: Parameters -->
+<div class="space-y-5">
+<div>
+<label class="text-sm font-medium text-slate-700 dark:text-slate-300 block mb-2">Cuenta de Cargo</label>
+<div class="flex items-center gap-3 p-3 rounded-lg bg-background-light dark:bg-background-dark border border-gray-200 dark:border-surface-border">
+<span class="material-icons-round text-slate-400">credit_card</span>
+<div class="flex-1">
+<div class="text-sm font-medium text-slate-900 dark:text-white">BCP Soles - Principal</div>
+<div class="text-xs text-slate-500">****-8842</div>
+</div>
+<button class="text-primary text-xs font-medium hover:underline">Cambiar</button>
+</div>
+</div>
+<div>
+<label class="text-sm font-medium text-slate-700 dark:text-slate-300 block mb-2">Fecha de Proceso</label>
+<input class="w-full bg-background-light dark:bg-background-dark border border-gray-200 dark:border-surface-border rounded-lg text-slate-900 dark:text-white text-sm focus:ring-primary focus:border-primary p-2.5" type="date" value="2023-10-30"/>
+</div>
+<div class="pt-2">
+<button class="w-full py-3 px-4 bg-primary hover:bg-primary-hover text-white rounded-lg shadow-lg shadow-primary/20 font-semibold text-sm flex items-center justify-center gap-2 transition-all">
+<span class="material-icons-round">file_download</span>
+                                    Generar Macro BCP
+                                </button>
+<p class="text-xs text-center mt-3 text-slate-400">
+<span class="material-icons-round text-xs align-middle mr-1">info</span>
+                                    El archivo incluirá 142 transferencias
+                                </p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</body></html>

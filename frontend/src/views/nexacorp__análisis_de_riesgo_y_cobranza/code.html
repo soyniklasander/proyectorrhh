@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>NexaCorp: Análisis de Riesgo y Cobranza</title>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Theme Configuration -->
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#2c60ce",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#0f172a", /* Deep blue-black for financial feel */
+                        "card-dark": "#1e293b", /* Slightly lighter for cards */
+                        "amber-accent": "#f59e0b",
+                        "amber-bg": "rgba(245, 158, 11, 0.1)",
+                        "danger": "#ef4444",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.5rem", "lg": "1rem", "xl": "1.5rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<!-- Material Icons -->
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        /* Custom Scrollbar for tables */
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #1e293b; 
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #475569; 
+            border-radius: 10px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #64748b; 
+        }
+        
+        /* Chart Styles */
+        .bar-container {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            height: 100%;
+            gap: 12px;
+        }
+        .bar-group {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            height: 100%;
+            justify-content: flex-end;
+            group: true;
+        }
+        .bar {
+            width: 100%;
+            border-radius: 4px 4px 0 0;
+            transition: height 0.5s ease-out, opacity 0.2s;
+            position: relative;
+        }
+        .bar:hover {
+            opacity: 0.8;
+        }
+        /* Tooltip behavior */
+        .bar-group:hover .tooltip {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-800 dark:text-slate-200 min-h-screen flex overflow-hidden">
+<!-- Sidebar -->
+<aside class="w-64 bg-white dark:bg-card-dark border-r border-slate-200 dark:border-slate-800 hidden lg:flex flex-col z-20">
+<div class="h-16 flex items-center px-6 border-b border-slate-200 dark:border-slate-800">
+<div class="flex items-center gap-2 font-display font-bold text-xl tracking-tight text-primary dark:text-white">
+<span class="material-icons-outlined text-primary">account_balance</span>
+                NexaCorp
+            </div>
+</div>
+<div class="flex-1 overflow-y-auto py-6 px-3 space-y-1 custom-scrollbar">
+<div class="px-3 mb-2 text-xs font-semibold text-slate-400 uppercase tracking-wider">Financiamiento</div>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors group" href="#">
+<span class="material-icons-outlined group-hover:text-primary transition-colors">dashboard</span>
+<span class="font-medium">Dashboard General</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors group" href="#">
+<span class="material-icons-outlined group-hover:text-primary transition-colors">payments</span>
+<span class="font-medium">Cuentas Corrientes</span>
+</a>
+<div class="px-3 mt-6 mb-2 text-xs font-semibold text-slate-400 uppercase tracking-wider">Reportes</div>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-primary/10 text-primary dark:text-white dark:bg-primary transition-colors" href="#">
+<span class="material-icons-outlined">assessment</span>
+<span class="font-medium">Riesgo y Cobranza</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors group" href="#">
+<span class="material-icons-outlined group-hover:text-primary transition-colors">people</span>
+<span class="font-medium">Historial Empleados</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors group" href="#">
+<span class="material-icons-outlined group-hover:text-primary transition-colors">settings</span>
+<span class="font-medium">Configuración</span>
+</a>
+</div>
+<div class="p-4 border-t border-slate-200 dark:border-slate-800">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-gradient-to-tr from-primary to-blue-400 flex items-center justify-center text-white font-bold text-sm">
+                    JP
+                </div>
+<div>
+<div class="text-sm font-semibold dark:text-white">Juan Pérez</div>
+<div class="text-xs text-slate-500 dark:text-slate-400">Analista Financiero</div>
+</div>
+</div>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="flex-1 flex flex-col h-screen overflow-hidden relative">
+<!-- Header -->
+<header class="h-16 bg-white/80 dark:bg-card-dark/80 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 flex items-center justify-between px-6 lg:px-8 z-10">
+<div class="flex items-center gap-4">
+<button class="lg:hidden p-2 -ml-2 text-slate-600 dark:text-slate-300">
+<span class="material-icons-outlined">menu</span>
+</button>
+<nav class="hidden sm:flex text-sm font-medium text-slate-500 dark:text-slate-400">
+<span class="hover:text-primary cursor-pointer">Inicio</span>
+<span class="mx-2">/</span>
+<span class="hover:text-primary cursor-pointer">Financiamiento</span>
+<span class="mx-2">/</span>
+<span class="text-primary dark:text-white font-semibold">Riesgo y Cobranza</span>
+</nav>
+</div>
+<div class="flex items-center gap-3">
+<span class="text-xs text-slate-500 hidden sm:block">Última actualización: Hoy, 09:45 AM</span>
+<button class="p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-300 relative">
+<span class="material-icons-outlined">notifications</span>
+<span class="absolute top-2 right-2 w-2 h-2 rounded-full bg-amber-accent"></span>
+</button>
+<button class="flex items-center gap-2 px-4 py-2 bg-primary hover:bg-blue-700 text-white text-sm font-medium rounded-lg transition-colors shadow-lg shadow-primary/20">
+<span class="material-icons-outlined text-lg">download</span>
+<span>Exportar Reporte</span>
+</button>
+</div>
+</header>
+<!-- Dashboard Content -->
+<div class="flex-1 overflow-y-auto p-6 lg:p-8 custom-scrollbar">
+<div class="max-w-7xl mx-auto space-y-6">
+<!-- Page Title Section -->
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
+<div>
+<h1 class="text-2xl font-bold text-slate-900 dark:text-white mb-1">NexaCorp: Análisis de Riesgo y Cobranza</h1>
+<p class="text-slate-500 dark:text-slate-400 text-sm">Monitoreo de deudas de personal y proyección de flujo de caja.</p>
+</div>
+<!-- Top Warning Alert -->
+<div class="flex items-center gap-3 px-4 py-3 bg-amber-bg border border-amber-accent/20 rounded-lg max-w-lg w-full md:w-auto">
+<span class="material-icons-outlined text-amber-accent">warning</span>
+<div class="flex-1">
+<h3 class="text-sm font-semibold text-amber-accent">Alerta de Exposición Crítica</h3>
+<p class="text-xs text-amber-100/70">12 empleados superan el 30% de descuento en sueldo neto.</p>
+</div>
+<button class="text-xs font-medium text-amber-accent hover:text-white underline decoration-amber-accent/50">Ver detalles</button>
+</div>
+</div>
+<!-- KPI Cards -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+<!-- Card 1 -->
+<div class="bg-white dark:bg-card-dark p-5 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm relative overflow-hidden group">
+<div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+<span class="material-icons-outlined text-6xl text-primary">account_balance_wallet</span>
+</div>
+<p class="text-sm font-medium text-slate-500 dark:text-slate-400">Deuda Total Pendiente</p>
+<h3 class="text-2xl font-bold text-slate-900 dark:text-white mt-1">S/ 1,245,890</h3>
+<div class="flex items-center gap-1 mt-2 text-xs text-green-500 font-medium">
+<span class="material-icons-outlined text-sm">trending_down</span>
+<span>-2.4% vs mes anterior</span>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="bg-white dark:bg-card-dark p-5 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm relative overflow-hidden group">
+<div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+<span class="material-icons-outlined text-6xl text-primary">event_available</span>
+</div>
+<p class="text-sm font-medium text-slate-500 dark:text-slate-400">Proyección Recupero (6m)</p>
+<h3 class="text-2xl font-bold text-slate-900 dark:text-white mt-1">S/ 485,200</h3>
+<div class="flex items-center gap-1 mt-2 text-xs text-primary font-medium">
+<span class="material-icons-outlined text-sm">info</span>
+<span>39% de la cartera total</span>
+</div>
+</div>
+<!-- Card 3 -->
+<div class="bg-white dark:bg-card-dark p-5 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm relative overflow-hidden group">
+<div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+<span class="material-icons-outlined text-6xl text-amber-accent">person_off</span>
+</div>
+<p class="text-sm font-medium text-slate-500 dark:text-slate-400">Tasa de Morosidad</p>
+<h3 class="text-2xl font-bold text-slate-900 dark:text-white mt-1">4.2%</h3>
+<div class="flex items-center gap-1 mt-2 text-xs text-red-400 font-medium">
+<span class="material-icons-outlined text-sm">trending_up</span>
+<span>+0.5% Riesgo Moderado</span>
+</div>
+</div>
+<!-- Card 4 -->
+<div class="bg-white dark:bg-card-dark p-5 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm relative overflow-hidden group">
+<div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+<span class="material-icons-outlined text-6xl text-primary">groups</span>
+</div>
+<p class="text-sm font-medium text-slate-500 dark:text-slate-400">Empleados con Deuda</p>
+<h3 class="text-2xl font-bold text-slate-900 dark:text-white mt-1">342</h3>
+<div class="flex items-center gap-1 mt-2 text-xs text-slate-500 font-medium">
+<span>15% de la planilla activa</span>
+</div>
+</div>
+</div>
+<!-- Main Grid Layout -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-6 h-auto lg:h-[450px]">
+<!-- Chart Section -->
+<div class="lg:col-span-2 bg-white dark:bg-card-dark p-6 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm flex flex-col">
+<div class="flex items-center justify-between mb-6">
+<div>
+<h3 class="text-lg font-bold text-slate-900 dark:text-white">Proyección de Cobranza (6 Meses)</h3>
+<p class="text-xs text-slate-500 dark:text-slate-400">Estimación de flujo de caja basado en descuentos por planilla.</p>
+</div>
+<select class="bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs rounded-md px-3 py-1.5 focus:outline-none focus:ring-1 focus:ring-primary dark:text-slate-300">
+<option>Todos los departamentos</option>
+<option>Ventas</option>
+<option>Operaciones</option>
+</select>
+</div>
+<!-- CSS Bar Chart -->
+<div class="flex-1 w-full relative pt-8 pb-2">
+<div class="absolute inset-0 grid grid-rows-4 pointer-events-none">
+<div class="border-t border-slate-100 dark:border-slate-700/50 relative"><span class="absolute -top-3 left-0 text-[10px] text-slate-400">100k</span></div>
+<div class="border-t border-slate-100 dark:border-slate-700/50 relative"><span class="absolute -top-3 left-0 text-[10px] text-slate-400">75k</span></div>
+<div class="border-t border-slate-100 dark:border-slate-700/50 relative"><span class="absolute -top-3 left-0 text-[10px] text-slate-400">50k</span></div>
+<div class="border-t border-slate-100 dark:border-slate-700/50 relative"><span class="absolute -top-3 left-0 text-[10px] text-slate-400">25k</span></div>
+</div>
+<div class="bar-container pl-8 pr-2 relative z-10">
+<!-- Bar 1 -->
+<div class="bar-group">
+<div class="relative w-full flex justify-center h-full items-end">
+<div class="tooltip absolute -top-10 bg-slate-800 text-white text-xs px-2 py-1 rounded opacity-0 transition-opacity duration-200 pointer-events-none z-20">S/ 78,500</div>
+<div class="bar bg-primary dark:bg-primary w-1/2" style="height: 78%;"></div>
+</div>
+<span class="text-xs text-slate-500 mt-2 font-medium">Nov</span>
+</div>
+<!-- Bar 2 -->
+<div class="bar-group">
+<div class="relative w-full flex justify-center h-full items-end">
+<div class="tooltip absolute -top-10 bg-slate-800 text-white text-xs px-2 py-1 rounded opacity-0 transition-opacity duration-200 pointer-events-none z-20">S/ 92,100</div>
+<div class="bar bg-primary dark:bg-primary w-1/2" style="height: 92%;"></div>
+</div>
+<span class="text-xs text-slate-500 mt-2 font-medium">Dic</span>
+</div>
+<!-- Bar 3 -->
+<div class="bar-group">
+<div class="relative w-full flex justify-center h-full items-end">
+<div class="tooltip absolute -top-10 bg-slate-800 text-white text-xs px-2 py-1 rounded opacity-0 transition-opacity duration-200 pointer-events-none z-20">S/ 65,400</div>
+<div class="bar bg-primary dark:bg-primary w-1/2" style="height: 65%;"></div>
+</div>
+<span class="text-xs text-slate-500 mt-2 font-medium">Ene</span>
+</div>
+<!-- Bar 4 -->
+<div class="bar-group">
+<div class="relative w-full flex justify-center h-full items-end">
+<div class="tooltip absolute -top-10 bg-slate-800 text-white text-xs px-2 py-1 rounded opacity-0 transition-opacity duration-200 pointer-events-none z-20">S/ 60,200</div>
+<div class="bar bg-primary/60 dark:bg-primary/60 w-1/2" style="height: 60%;"></div>
+</div>
+<span class="text-xs text-slate-500 mt-2 font-medium">Feb</span>
+</div>
+<!-- Bar 5 -->
+<div class="bar-group">
+<div class="relative w-full flex justify-center h-full items-end">
+<div class="tooltip absolute -top-10 bg-slate-800 text-white text-xs px-2 py-1 rounded opacity-0 transition-opacity duration-200 pointer-events-none z-20">S/ 58,100</div>
+<div class="bar bg-primary/60 dark:bg-primary/60 w-1/2" style="height: 58%;"></div>
+</div>
+<span class="text-xs text-slate-500 mt-2 font-medium">Mar</span>
+</div>
+<!-- Bar 6 -->
+<div class="bar-group">
+<div class="relative w-full flex justify-center h-full items-end">
+<div class="tooltip absolute -top-10 bg-slate-800 text-white text-xs px-2 py-1 rounded opacity-0 transition-opacity duration-200 pointer-events-none z-20">S/ 55,000</div>
+<div class="bar bg-primary/60 dark:bg-primary/60 w-1/2" style="height: 55%;"></div>
+</div>
+<span class="text-xs text-slate-500 mt-2 font-medium">Abr</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Risk Gauge / Distribution -->
+<div class="bg-white dark:bg-card-dark p-6 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm flex flex-col justify-between">
+<div>
+<h3 class="text-lg font-bold text-slate-900 dark:text-white mb-1">Distribución de Riesgo</h3>
+<p class="text-xs text-slate-500 dark:text-slate-400 mb-6">Clasificación de la cartera según nivel de endeudamiento.</p>
+</div>
+<div class="relative w-48 h-48 mx-auto flex items-center justify-center">
+<!-- Simple SVG Gauge Visualization -->
+<svg class="w-full h-full transform -rotate-90" viewbox="0 0 100 100">
+<circle class="text-slate-200 dark:text-slate-800" cx="50" cy="50" fill="transparent" r="40" stroke="currentColor" stroke-width="10"></circle>
+<circle class="text-primary" cx="50" cy="50" fill="transparent" r="40" stroke="currentColor" stroke-dasharray="251.2" stroke-dashoffset="100" stroke-width="10"></circle>
+<circle class="text-amber-accent" cx="50" cy="50" fill="transparent" r="40" stroke="currentColor" stroke-dasharray="251.2" stroke-dashoffset="220" stroke-width="10" style="transform: rotate(200deg); transform-origin: 50% 50%;"></circle>
+</svg>
+<div class="absolute inset-0 flex flex-col items-center justify-center">
+<span class="text-3xl font-bold text-slate-900 dark:text-white">65%</span>
+<span class="text-[10px] uppercase font-bold tracking-wider text-slate-400">Saludable</span>
+</div>
+</div>
+<div class="space-y-3 mt-4">
+<div class="flex items-center justify-between text-sm">
+<div class="flex items-center gap-2">
+<span class="w-3 h-3 rounded-full bg-primary"></span>
+<span class="text-slate-600 dark:text-slate-300">Riesgo Bajo (&lt;20%)</span>
+</div>
+<span class="font-semibold dark:text-white">65%</span>
+</div>
+<div class="flex items-center justify-between text-sm">
+<div class="flex items-center gap-2">
+<span class="w-3 h-3 rounded-full bg-blue-400"></span>
+<span class="text-slate-600 dark:text-slate-300">Riesgo Medio (20-30%)</span>
+</div>
+<span class="font-semibold dark:text-white">25%</span>
+</div>
+<div class="flex items-center justify-between text-sm">
+<div class="flex items-center gap-2">
+<span class="w-3 h-3 rounded-full bg-amber-accent animate-pulse"></span>
+<span class="text-slate-600 dark:text-slate-300 font-medium text-amber-600 dark:text-amber-500">Crítico (&gt;30%)</span>
+</div>
+<span class="font-semibold text-amber-600 dark:text-amber-500">10%</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Critical Exposure Table -->
+<div class="bg-white dark:bg-card-dark rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm overflow-hidden">
+<div class="p-6 border-b border-slate-200 dark:border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+<div>
+<h3 class="text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2">
+<span class="material-icons-outlined text-amber-accent">error_outline</span>
+                                Detalle de Exposición Crítica
+                            </h3>
+<p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Listado de empleados con capacidad de pago comprometida (Descuento &gt; 30% Sueldo Neto).</p>
+</div>
+<div class="flex gap-2">
+<div class="relative">
+<input class="pl-9 pr-4 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg text-sm text-slate-900 dark:text-white focus:ring-1 focus:ring-primary focus:outline-none w-full sm:w-64" placeholder="Buscar empleado..." type="text"/>
+<span class="material-icons-outlined absolute left-2.5 top-2 text-slate-400 text-lg">search</span>
+</div>
+<button class="p-2 border border-slate-200 dark:border-slate-700 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-300">
+<span class="material-icons-outlined">filter_list</span>
+</button>
+</div>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left text-sm text-slate-600 dark:text-slate-300">
+<thead class="bg-slate-50 dark:bg-slate-800/50 text-xs uppercase font-semibold text-slate-500">
+<tr>
+<th class="px-6 py-4">Empleado</th>
+<th class="px-6 py-4">Departamento</th>
+<th class="px-6 py-4 text-right">Deuda Total</th>
+<th class="px-6 py-4 text-right">Sueldo Neto</th>
+<th class="px-6 py-4 text-right">Cuota Mensual</th>
+<th class="px-6 py-4 text-center">% Impacto</th>
+<th class="px-6 py-4 text-center">Acción</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-slate-200 dark:divide-slate-800">
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/30 transition-colors">
+<td class="px-6 py-4 font-medium text-slate-900 dark:text-white flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-slate-200 dark:bg-slate-700 overflow-hidden">
+<img alt="Portrait of Carlos Mendoza, a corporate employee" class="w-full h-full object-cover" data-alt="Portrait of corporate employee" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAzQ1E2gQQOLI3xKI663rBDxXcm748nbbUtJWIjh3uZpr-5CitGsdRQT9-6L3PCGUjveVFRihyvttw9i0iyq2LlAvRlIni_awUYhlYeRARqcW6LSMglk4rKtQVWPZxBl2Q1OydFCGhhAN2zWt-T1DGeXVuBv0I2ZTntK3CCPq0X-9KlGdeoodBHWm3GS_rzd5_PzwAg3gYtbGCp-lk8SVJTZ0_XjnTtrxJQuaL5H0-Q_gmXYqPEeuH_s8WMJu8C4GeLQcaG38LM1JcN"/>
+</div>
+<div>
+<div>Carlos Mendoza</div>
+<div class="text-xs text-slate-400">ID: NX-8821</div>
+</div>
+</td>
+<td class="px-6 py-4">Ventas</td>
+<td class="px-6 py-4 text-right font-mono text-slate-900 dark:text-white">S/ 15,400</td>
+<td class="px-6 py-4 text-right font-mono">S/ 3,200</td>
+<td class="px-6 py-4 text-right font-mono">S/ 1,120</td>
+<td class="px-6 py-4 text-center">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold bg-amber-bg text-amber-accent border border-amber-accent/20">
+                                            35.0%
+                                        </span>
+</td>
+<td class="px-6 py-4 text-center">
+<button class="text-primary hover:text-blue-400 font-medium text-xs">Revisar</button>
+</td>
+</tr>
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/30 transition-colors">
+<td class="px-6 py-4 font-medium text-slate-900 dark:text-white flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-slate-200 dark:bg-slate-700 overflow-hidden">
+<img alt="Portrait of Ana Torres, a logistics manager" class="w-full h-full object-cover" data-alt="Portrait of corporate employee" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB-7WFgtWD524V8mdAcYedo3-D-GJC0fExxH91sQCFvNFXp90VYMDlmJvJq8FpkNrACHTlncYLoDhIZhNAxmhCfjI0l8Rk_lS2toe0XD3aanCnW9sr5EmE_VWESu4Aud_amWSNTCd9Y95tYo7VlNsAYMnAGQ67R8WRn4vscgEWwAyXQQ2bsYaP8HEPE6zemzLnxE25sBuTGtmMAQJ06yDPKX-SY-dJGRdGwddv-Ojs8fUWR6tsefzJuUu6a73BmOBLzGcvZMyMdUcO0"/>
+</div>
+<div>
+<div>Ana Torres</div>
+<div class="text-xs text-slate-400">ID: NX-4412</div>
+</div>
+</td>
+<td class="px-6 py-4">Logística</td>
+<td class="px-6 py-4 text-right font-mono text-slate-900 dark:text-white">S/ 8,200</td>
+<td class="px-6 py-4 text-right font-mono">S/ 2,800</td>
+<td class="px-6 py-4 text-right font-mono">S/ 980</td>
+<td class="px-6 py-4 text-center">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold bg-amber-bg text-amber-accent border border-amber-accent/20">
+                                            35.0%
+                                        </span>
+</td>
+<td class="px-6 py-4 text-center">
+<button class="text-primary hover:text-blue-400 font-medium text-xs">Revisar</button>
+</td>
+</tr>
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/30 transition-colors">
+<td class="px-6 py-4 font-medium text-slate-900 dark:text-white flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-slate-200 dark:bg-slate-700 overflow-hidden">
+<img alt="Portrait of Luis Ramirez, an operations staff member" class="w-full h-full object-cover" data-alt="Portrait of corporate employee" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCm0u4YsuBLnVi_AUOaYidF_pWlfxpmDPhxohYc3KzdCgnKAQ3lzMocpQ0psRMrG-N1KI58bDoBTho4sq0S6bdS2DpF0tUh5bcZgsKURfrqugN1rPMR-8BPOqRjpcu2bNG4RvwYHqqC6hkTNiXid0II8NNMD-a3zRYW0GDPzHtXz_gISzI1KxRNwm_ZYBBKIHD2TG81vq4iEnsIGU_w84iu3aXeu_6-swxyeGDM-0tE9G3ndEUJ25fzMMQtRE0eVGBtE7DfZUZDnKPW"/>
+</div>
+<div>
+<div>Luis Ramirez</div>
+<div class="text-xs text-slate-400">ID: NX-9920</div>
+</div>
+</td>
+<td class="px-6 py-4">Operaciones</td>
+<td class="px-6 py-4 text-right font-mono text-slate-900 dark:text-white">S/ 12,000</td>
+<td class="px-6 py-4 text-right font-mono">S/ 2,500</td>
+<td class="px-6 py-4 text-right font-mono">S/ 850</td>
+<td class="px-6 py-4 text-center">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold bg-amber-bg text-amber-accent border border-amber-accent/20">
+                                            34.0%
+                                        </span>
+</td>
+<td class="px-6 py-4 text-center">
+<button class="text-primary hover:text-blue-400 font-medium text-xs">Revisar</button>
+</td>
+</tr>
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/30 transition-colors">
+<td class="px-6 py-4 font-medium text-slate-900 dark:text-white flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-slate-200 dark:bg-slate-700 overflow-hidden">
+<div class="w-full h-full flex items-center justify-center bg-slate-600 text-white text-xs font-bold">MR</div>
+</div>
+<div>
+<div>María Rojas</div>
+<div class="text-xs text-slate-400">ID: NX-1102</div>
+</div>
+</td>
+<td class="px-6 py-4">RR.HH.</td>
+<td class="px-6 py-4 text-right font-mono text-slate-900 dark:text-white">S/ 24,000</td>
+<td class="px-6 py-4 text-right font-mono">S/ 4,000</td>
+<td class="px-6 py-4 text-right font-mono">S/ 1,280</td>
+<td class="px-6 py-4 text-center">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold bg-amber-bg text-amber-accent border border-amber-accent/20">
+                                            32.0%
+                                        </span>
+</td>
+<td class="px-6 py-4 text-center">
+<button class="text-primary hover:text-blue-400 font-medium text-xs">Revisar</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="px-6 py-4 border-t border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/30 flex items-center justify-between">
+<span class="text-xs text-slate-500">Mostrando 4 de 12 registros críticos</span>
+<div class="flex gap-1">
+<button class="px-3 py-1 text-xs rounded border border-slate-300 dark:border-slate-600 text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-700 disabled:opacity-50">Anterior</button>
+<button class="px-3 py-1 text-xs rounded border border-slate-300 dark:border-slate-600 text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-700">Siguiente</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</body></html>

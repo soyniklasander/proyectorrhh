@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>NexaCorp: Parámetros Legales Globales</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<!-- Icons -->
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">tailwind.config = {darkMode: "class", theme: {extend: {colors: {primary: "#2c60ce", "background-light": "#f6f6f8", "background-dark": "#121720", "surface-dark": "#18262e", "surface-hover": "#21323c"}, fontFamily: {display: "Inter"}, borderRadius: {DEFAULT: "0.5rem", lg: "1rem", xl: "1.5rem", full: "9999px"}}}};</script>
+<style>
+        /* Custom scrollbar for dark mode tables */
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #101c22;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #25aff4;
+            border-radius: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #1e8cc3;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-800 dark:text-slate-200 font-display antialiased min-h-screen flex flex-col">
+<!-- Navbar -->
+<nav class="sticky top-0 z-50 border-b border-slate-200 dark:border-slate-800 bg-white/80 dark:bg-surface-dark/90 backdrop-blur-md">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex items-center justify-between h-16">
+<div class="flex items-center gap-4">
+<div class="flex-shrink-0">
+<span class="text-2xl font-bold text-primary tracking-tight">NexaCorp</span>
+</div>
+<div class="hidden md:block">
+<div class="ml-10 flex items-baseline space-x-4">
+<a class="text-slate-500 hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition-colors" href="#">Dashboard</a>
+<a class="text-slate-500 hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition-colors" href="#">Planillas</a>
+<a class="bg-primary/10 text-primary px-3 py-2 rounded-lg text-sm font-medium transition-colors" href="#">Configuración</a>
+<a class="text-slate-500 hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition-colors" href="#">Reportes</a>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<button class="p-2 rounded-full text-slate-400 hover:text-primary hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
+<span class="material-icons text-xl">notifications</span>
+</button>
+<div class="h-8 w-8 rounded-full bg-primary/20 flex items-center justify-center text-primary font-bold text-sm border border-primary/30">
+                        AD
+                    </div>
+</div>
+</div>
+</div>
+</nav>
+<!-- Main Content -->
+<main class="flex-grow container mx-auto px-4 sm:px-6 lg:px-8 py-8">
+<!-- Header Section -->
+<header class="mb-8">
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+<div>
+<nav aria-label="Breadcrumb" class="flex text-sm text-slate-500 mb-1">
+<ol class="flex items-center space-x-2">
+<li><a class="hover:text-primary transition-colors" href="#">Configuración</a></li>
+<li><span class="material-icons text-xs">chevron_right</span></li>
+<li><span class="text-primary font-medium">Parámetros Globales</span></li>
+</ol>
+</nav>
+<h1 class="text-3xl font-bold text-slate-900 dark:text-white">Parámetros Legales (Perú)</h1>
+<p class="mt-1 text-slate-500 dark:text-slate-400 text-sm">Define las variables fiscales y laborales vigentes para el cálculo de nóminas.</p>
+</div>
+<div class="flex items-center gap-3">
+<div class="relative">
+<select class="appearance-none bg-surface-dark border border-slate-700 text-white py-2.5 pl-4 pr-10 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent cursor-pointer font-medium text-sm">
+<option selected="" value="2026">Periodo Fiscal 2026</option>
+<option value="2025">Periodo Fiscal 2025</option>
+<option value="2024">Periodo Fiscal 2024</option>
+</select>
+<span class="material-icons absolute right-2 top-2.5 text-slate-400 pointer-events-none">expand_more</span>
+</div>
+<button class="flex items-center gap-2 bg-primary hover:bg-primary/90 text-white px-5 py-2.5 rounded-lg font-medium text-sm transition-all shadow-lg shadow-primary/25">
+<span class="material-icons text-sm">save</span>
+                        Guardar Cambios
+                    </button>
+</div>
+</div>
+</header>
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+<!-- Left Column: Inputs Form -->
+<div class="lg:col-span-8 space-y-6">
+<!-- Macro Indicators Card -->
+<section class="bg-white dark:bg-surface-dark rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden">
+<div class="px-6 py-4 border-b border-slate-200 dark:border-slate-700/50 flex justify-between items-center bg-slate-50 dark:bg-surface-hover/30">
+<h2 class="text-lg font-semibold text-slate-900 dark:text-white flex items-center gap-2">
+<span class="material-icons text-primary">account_balance</span>
+                            Indicadores Macroeconómicos
+                        </h2>
+<span class="text-xs font-medium px-2 py-1 rounded bg-green-500/10 text-green-500 border border-green-500/20">Vigente</span>
+</div>
+<div class="p-6 grid grid-cols-1 md:grid-cols-2 gap-6">
+<!-- UIT Input -->
+<div class="group">
+<label class="block text-sm font-medium text-slate-400 mb-2 flex items-center gap-1">
+                                Unidad Impositiva Tributaria (UIT)
+                                <span class="material-icons text-xs text-slate-600 hover:text-primary cursor-help" title="Valor referencial para normas tributarias">help</span>
+</label>
+<div class="relative">
+<span class="absolute left-3 top-2.5 text-slate-500">S/</span>
+<input class="w-full bg-background-light dark:bg-background-dark border border-slate-300 dark:border-slate-700 rounded-lg py-2.5 pl-8 pr-4 text-slate-900 dark:text-white focus:ring-2 focus:ring-primary focus:border-primary transition-colors font-mono font-medium group-hover:border-slate-500" type="text" value="5,350.00"/>
+<span class="absolute right-3 top-3 text-xs text-slate-500">PEN</span>
+</div>
+<p class="mt-1.5 text-xs text-slate-500">Base para cálculo de impuestos y multas.</p>
+</div>
+<!-- RMV Input -->
+<div class="group">
+<label class="block text-sm font-medium text-slate-400 mb-2 flex items-center gap-1">
+                                Remuneración Mínima Vital (RMV)
+                                <span class="material-icons text-xs text-slate-600 hover:text-primary cursor-help" title="Sueldo mínimo legal vigente">help</span>
+</label>
+<div class="relative">
+<span class="absolute left-3 top-2.5 text-slate-500">S/</span>
+<input class="w-full bg-background-light dark:bg-background-dark border border-slate-300 dark:border-slate-700 rounded-lg py-2.5 pl-8 pr-4 text-slate-900 dark:text-white focus:ring-2 focus:ring-primary focus:border-primary transition-colors font-mono font-medium group-hover:border-slate-500" type="text" value="1,025.00"/>
+<span class="absolute right-3 top-3 text-xs text-slate-500">PEN</span>
+</div>
+<p class="mt-1.5 text-xs text-slate-500">Base para cálculo de Asignación Familiar.</p>
+</div>
+</div>
+</section>
+<!-- Social Benefits & Rates Card -->
+<section class="bg-white dark:bg-surface-dark rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden">
+<div class="px-6 py-4 border-b border-slate-200 dark:border-slate-700/50 flex justify-between items-center bg-slate-50 dark:bg-surface-hover/30">
+<h2 class="text-lg font-semibold text-slate-900 dark:text-white flex items-center gap-2">
+<span class="material-icons text-primary">percent</span>
+                            Tasas y Aportes
+                        </h2>
+</div>
+<div class="p-6">
+<!-- Asignación Familiar Row -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-6 mb-8 items-start">
+<div class="md:col-span-5">
+<h3 class="text-sm font-semibold text-white">Asignación Familiar</h3>
+<p class="text-xs text-slate-500 mt-1">Beneficio para trabajadores con hijos menores o estudiantes.</p>
+</div>
+<div class="md:col-span-3">
+<label class="block text-xs font-medium text-slate-400 mb-1.5">Tasa (%)</label>
+<div class="relative">
+<input class="w-full bg-background-light dark:bg-background-dark border border-slate-300 dark:border-slate-700 rounded-lg py-2 pl-3 pr-8 text-slate-900 dark:text-white focus:ring-2 focus:ring-primary focus:border-primary transition-colors font-mono text-sm" type="text" value="10.00"/>
+<span class="absolute right-3 top-2 text-slate-500 text-sm">%</span>
+</div>
+</div>
+<div class="md:col-span-4">
+<label class="block text-xs font-medium text-slate-400 mb-1.5">Monto Calculado</label>
+<div class="relative">
+<span class="absolute left-3 top-2 text-slate-500 text-sm">S/</span>
+<input class="w-full bg-slate-100 dark:bg-surface-hover/50 border border-transparent rounded-lg py-2 pl-7 pr-3 text-slate-500 cursor-not-allowed font-mono text-sm" disabled="" type="text" value="102.50"/>
+</div>
+</div>
+</div>
+<hr class="border-slate-200 dark:border-slate-700 my-6"/>
+<!-- Contributions Grid -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+<!-- Essalud -->
+<div class="p-4 rounded-lg border border-slate-200 dark:border-slate-700/60 bg-background-light dark:bg-background-dark/50">
+<div class="flex justify-between items-start mb-3">
+<label class="font-medium text-sm text-slate-300">Essalud</label>
+<span class="h-2 w-2 rounded-full bg-green-500"></span>
+</div>
+<div class="relative">
+<input class="w-full bg-white dark:bg-surface-dark border border-slate-300 dark:border-slate-600 rounded-lg py-2 pl-3 pr-8 text-slate-900 dark:text-white focus:ring-2 focus:ring-primary text-right font-mono font-bold" type="text" value="9.00"/>
+<span class="absolute right-3 top-2.5 text-slate-500 text-sm">%</span>
+</div>
+<p class="text-[10px] text-slate-500 mt-2">Aporte del empleador</p>
+</div>
+<!-- SCTR Salud -->
+<div class="p-4 rounded-lg border border-slate-200 dark:border-slate-700/60 bg-background-light dark:bg-background-dark/50">
+<div class="flex justify-between items-start mb-3">
+<label class="font-medium text-sm text-slate-300">SCTR Salud</label>
+<span class="h-2 w-2 rounded-full bg-yellow-500"></span>
+</div>
+<div class="relative">
+<input class="w-full bg-white dark:bg-surface-dark border border-slate-300 dark:border-slate-600 rounded-lg py-2 pl-3 pr-8 text-slate-900 dark:text-white focus:ring-2 focus:ring-primary text-right font-mono font-bold" type="text" value="1.20"/>
+<span class="absolute right-3 top-2.5 text-slate-500 text-sm">%</span>
+</div>
+<p class="text-[10px] text-slate-500 mt-2">Tasa promedio (Variable)</p>
+</div>
+<!-- SCTR Pension -->
+<div class="p-4 rounded-lg border border-slate-200 dark:border-slate-700/60 bg-background-light dark:bg-background-dark/50">
+<div class="flex justify-between items-start mb-3">
+<label class="font-medium text-sm text-slate-300">SCTR Pensión</label>
+<span class="h-2 w-2 rounded-full bg-yellow-500"></span>
+</div>
+<div class="relative">
+<input class="w-full bg-white dark:bg-surface-dark border border-slate-300 dark:border-slate-600 rounded-lg py-2 pl-3 pr-8 text-slate-900 dark:text-white focus:ring-2 focus:ring-primary text-right font-mono font-bold" type="text" value="0.85"/>
+<span class="absolute right-3 top-2.5 text-slate-500 text-sm">%</span>
+</div>
+<p class="text-[10px] text-slate-500 mt-2">ONP / Privado</p>
+</div>
+<!-- Senati -->
+<div class="p-4 rounded-lg border border-slate-200 dark:border-slate-700/60 bg-background-light dark:bg-background-dark/50">
+<div class="flex justify-between items-start mb-3">
+<label class="font-medium text-sm text-slate-300">Senati</label>
+<span class="h-2 w-2 rounded-full bg-slate-500"></span>
+</div>
+<div class="relative">
+<input class="w-full bg-white dark:bg-surface-dark border border-slate-300 dark:border-slate-600 rounded-lg py-2 pl-3 pr-8 text-slate-900 dark:text-white focus:ring-2 focus:ring-primary text-right font-mono font-bold" type="text" value="0.75"/>
+<span class="absolute right-3 top-2.5 text-slate-500 text-sm">%</span>
+</div>
+<p class="text-[10px] text-slate-500 mt-2">Empresas industriales</p>
+</div>
+<!-- ONP -->
+<div class="p-4 rounded-lg border border-slate-200 dark:border-slate-700/60 bg-background-light dark:bg-background-dark/50">
+<div class="flex justify-between items-start mb-3">
+<label class="font-medium text-sm text-slate-300">ONP (SNP)</label>
+<span class="h-2 w-2 rounded-full bg-green-500"></span>
+</div>
+<div class="relative">
+<input class="w-full bg-white dark:bg-surface-dark border border-slate-300 dark:border-slate-600 rounded-lg py-2 pl-3 pr-8 text-slate-900 dark:text-white focus:ring-2 focus:ring-primary text-right font-mono font-bold" type="text" value="13.00"/>
+<span class="absolute right-3 top-2.5 text-slate-500 text-sm">%</span>
+</div>
+<p class="text-[10px] text-slate-500 mt-2">Retención al trabajador</p>
+</div>
+<!-- Sistema Privado (AFP) -->
+<div class="p-4 rounded-lg border border-dashed border-slate-600 dark:bg-transparent flex flex-col justify-center items-center text-center cursor-pointer hover:border-primary hover:text-primary transition-all group">
+<span class="material-icons text-slate-500 group-hover:text-primary mb-2">settings_applications</span>
+<span class="text-xs font-medium text-slate-400 group-hover:text-primary">Configurar Comisiones AFP</span>
+</div>
+</div>
+</div>
+</section>
+</div>
+<!-- Right Column: Audit Log -->
+<div class="lg:col-span-4 space-y-6">
+<!-- Quick Summary Card -->
+<div class="bg-gradient-to-br from-primary/20 to-surface-dark rounded-xl border border-primary/20 p-6 relative overflow-hidden">
+<!-- Abstract graphic detail -->
+<div class="absolute -top-10 -right-10 w-32 h-32 bg-primary/10 rounded-full blur-2xl"></div>
+<h3 class="text-white font-semibold text-lg mb-4 relative z-10">Resumen Fiscal 2026</h3>
+<ul class="space-y-3 relative z-10">
+<li class="flex justify-between items-center text-sm">
+<span class="text-slate-400">UIT Anual</span>
+<span class="text-white font-mono font-bold">S/ 5,350.00</span>
+</li>
+<li class="flex justify-between items-center text-sm">
+<span class="text-slate-400">Sueldo Mínimo</span>
+<span class="text-white font-mono font-bold">S/ 1,025.00</span>
+</li>
+<li class="flex justify-between items-center text-sm">
+<span class="text-slate-400">Asig. Familiar</span>
+<span class="text-white font-mono font-bold">S/ 102.50</span>
+</li>
+</ul>
+</div>
+<!-- Audit Log Section -->
+<section class="bg-white dark:bg-surface-dark rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm flex flex-col h-[600px]">
+<div class="px-6 py-4 border-b border-slate-200 dark:border-slate-700/50 flex justify-between items-center">
+<h2 class="text-base font-semibold text-slate-900 dark:text-white flex items-center gap-2">
+<span class="material-icons text-slate-400 text-sm">history</span>
+                            Historial de Cambios
+                        </h2>
+<button class="text-primary text-xs font-medium hover:underline">Exportar</button>
+</div>
+<div class="overflow-y-auto custom-scrollbar flex-grow p-4">
+<div class="relative pl-4 border-l border-slate-700 space-y-8">
+<!-- Timeline Item 1 -->
+<div class="relative">
+<span class="absolute -left-[21px] top-1 h-2.5 w-2.5 rounded-full bg-primary border-2 border-surface-dark"></span>
+<div class="mb-1 flex items-center justify-between">
+<span class="text-xs font-bold text-white bg-slate-700 px-2 py-0.5 rounded">Hace 2 horas</span>
+</div>
+<p class="text-sm text-slate-300 font-medium">Actualización de UIT</p>
+<div class="mt-2 text-xs bg-background-dark p-2 rounded border border-slate-700/50">
+<div class="flex justify-between mb-1">
+<span class="text-slate-500">Usuario:</span>
+<span class="text-slate-300">carlos.admin</span>
+</div>
+<div class="flex justify-between mb-1">
+<span class="text-slate-500">Valor anterior:</span>
+<span class="text-red-400 line-through">S/ 5,150.00</span>
+</div>
+<div class="flex justify-between">
+<span class="text-slate-500">Nuevo valor:</span>
+<span class="text-green-400 font-bold">S/ 5,350.00</span>
+</div>
+</div>
+</div>
+<!-- Timeline Item 2 -->
+<div class="relative">
+<span class="absolute -left-[21px] top-1 h-2.5 w-2.5 rounded-full bg-slate-500 border-2 border-surface-dark"></span>
+<div class="mb-1 flex items-center justify-between">
+<span class="text-xs text-slate-500">15 Ene 2026, 09:30 AM</span>
+</div>
+<p class="text-sm text-slate-300 font-medium">Modificación SCTR Salud</p>
+<div class="mt-2 text-xs bg-background-dark p-2 rounded border border-slate-700/50">
+<div class="flex justify-between mb-1">
+<span class="text-slate-500">Usuario:</span>
+<span class="text-slate-300">marina.rrhh</span>
+</div>
+<div class="flex justify-between">
+<span class="text-slate-500">Cambio:</span>
+<span class="text-slate-300">1.15% → 1.20%</span>
+</div>
+</div>
+</div>
+<!-- Timeline Item 3 -->
+<div class="relative">
+<span class="absolute -left-[21px] top-1 h-2.5 w-2.5 rounded-full bg-slate-500 border-2 border-surface-dark"></span>
+<div class="mb-1 flex items-center justify-between">
+<span class="text-xs text-slate-500">01 Ene 2026, 00:01 AM</span>
+</div>
+<p class="text-sm text-slate-300 font-medium">Inicio Periodo Fiscal 2026</p>
+<p class="text-xs text-slate-500 mt-1">Sistema automático: Clonación de parámetros del periodo 2025.</p>
+</div>
+<!-- Timeline Item 4 -->
+<div class="relative">
+<span class="absolute -left-[21px] top-1 h-2.5 w-2.5 rounded-full bg-slate-500 border-2 border-surface-dark"></span>
+<div class="mb-1 flex items-center justify-between">
+<span class="text-xs text-slate-500">28 Dic 2025, 15:45 PM</span>
+</div>
+<p class="text-sm text-slate-300 font-medium">Actualización Masiva</p>
+<p class="text-xs text-slate-500 mt-1">Aprobación de tasas Essalud y Senati por Gerencia.</p>
+</div>
+</div>
+</div>
+</section>
+</div>
+</div>
+</main>
+</body></html>

@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>NexaCorp: Resumen y Cierre de Sobretiempos</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#1152d4",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#101622",
+                    },
+                    fontFamily: {
+                        "display": ["Manrope", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        /* Custom scrollbar for dark mode */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #101622; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #1f2937; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #374151; 
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-gray-900 dark:text-gray-100 font-display min-h-screen flex flex-col md:flex-row overflow-hidden">
+<!-- Sidebar -->
+<aside class="w-full md:w-64 bg-white dark:bg-[#151e2e] border-r border-gray-200 dark:border-gray-800 flex-shrink-0 flex flex-col h-screen overflow-y-auto hidden md:flex">
+<div class="p-6 flex items-center gap-3">
+<div class="w-8 h-8 rounded bg-gradient-to-br from-primary to-blue-600 flex items-center justify-center text-white font-bold text-lg">N</div>
+<span class="text-xl font-bold tracking-tight dark:text-white">NexaCorp</span>
+</div>
+<nav class="flex-1 px-4 space-y-2 mt-4">
+<a class="flex items-center gap-3 px-4 py-3 text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors" href="#">
+<span class="material-icons text-xl">dashboard</span>
+<span class="font-medium">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors" href="#">
+<span class="material-icons text-xl">people</span>
+<span class="font-medium">Personal</span>
+</a>
+<div class="pt-4 pb-2 px-4">
+<span class="text-xs font-semibold uppercase tracking-wider text-gray-400 dark:text-gray-500">Gestión de Tiempo</span>
+</div>
+<a class="flex items-center gap-3 px-4 py-3 text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors" href="#">
+<span class="material-icons text-xl">schedule</span>
+<span class="font-medium">Asistencia</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 bg-primary/10 text-primary dark:text-blue-400 rounded-lg transition-colors border-l-4 border-primary" href="#">
+<span class="material-icons text-xl">av_timer</span>
+<span class="font-medium">Horas Extras</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors" href="#">
+<span class="material-icons text-xl">event_busy</span>
+<span class="font-medium">Ausencias</span>
+</a>
+<div class="pt-4 pb-2 px-4">
+<span class="text-xs font-semibold uppercase tracking-wider text-gray-400 dark:text-gray-500">Reportes</span>
+</div>
+<a class="flex items-center gap-3 px-4 py-3 text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors" href="#">
+<span class="material-icons text-xl">bar_chart</span>
+<span class="font-medium">Analíticas</span>
+</a>
+</nav>
+<div class="p-4 border-t border-gray-200 dark:border-gray-800">
+<button class="flex items-center gap-3 w-full px-4 py-3 text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors">
+<span class="material-icons text-xl">logout</span>
+<span class="font-medium">Cerrar Sesión</span>
+</button>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="flex-1 flex flex-col h-screen overflow-hidden relative">
+<!-- Top Bar -->
+<header class="h-16 bg-white dark:bg-[#151e2e] border-b border-gray-200 dark:border-gray-800 flex items-center justify-between px-6 flex-shrink-0 z-20">
+<div class="flex items-center gap-4">
+<button class="md:hidden text-gray-500 dark:text-gray-400">
+<span class="material-icons">menu</span>
+</button>
+<div class="hidden sm:flex items-center text-sm breadcrumbs text-gray-500 dark:text-gray-400">
+<span>Gestión de Tiempo</span>
+<span class="material-icons text-xs mx-2">chevron_right</span>
+<span>Horas Extras</span>
+<span class="material-icons text-xs mx-2">chevron_right</span>
+<span class="text-primary font-medium dark:text-blue-400">Cierre de Periodo</span>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<button class="relative p-2 text-gray-400 hover:text-primary transition-colors">
+<span class="material-icons">notifications</span>
+<span class="absolute top-1.5 right-1.5 w-2 h-2 bg-red-500 rounded-full"></span>
+</button>
+<div class="flex items-center gap-3 pl-4 border-l border-gray-200 dark:border-gray-700">
+<div class="text-right hidden md:block">
+<p class="text-sm font-semibold text-gray-900 dark:text-white">Carlos Ramirez</p>
+<p class="text-xs text-gray-500 dark:text-gray-400">Administrador RRHH</p>
+</div>
+<img alt="Avatar del usuario" class="w-10 h-10 rounded-full ring-2 ring-primary/20" data-alt="User profile photo showing a smiling professional man" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA5lrwwSm-suKw4saHFF8ol8u4mjYYYEIDjT5v53mSUhTmrxrsK3SXOu7Ludbl_pegV11a-Qmlmjo2qr2i_y2IsHz1FYOEgtj_o8zQLdVLzNTsu_8v3U_yXaJdR8mPEdLIFAJjxI1HWa2m1YPeJc9l3mM68j0xBTtMsVc-f6yKRKoyuobRNuSEClwPNi5Z-Ddu3FGJ_GkdJgvRYtfCTsMhFck4uvgDJc9MwDPOyjkn1FEZz3AKS_sWPoiFMBHz73GZMuY293AjhfCKq"/>
+</div>
+</div>
+</header>
+<!-- Scrollable Dashboard Content -->
+<div class="flex-1 overflow-y-auto p-4 md:p-8 space-y-6 md:space-y-8 scroll-smooth">
+<!-- Header Section -->
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+<div>
+<h1 class="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white">Resumen y Cierre de Sobretiempos</h1>
+<p class="text-gray-500 dark:text-gray-400 mt-1">Periodo: <span class="text-gray-900 dark:text-gray-200 font-medium">1 - 31 Octubre 2023</span> | Estado: <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-400 ml-2">En Revisión</span></p>
+</div>
+<div class="flex gap-3">
+<button class="px-4 py-2 bg-white dark:bg-[#1e293b] border border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-200 rounded-lg text-sm font-medium hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors flex items-center gap-2">
+<span class="material-icons text-base">file_download</span>
+                        Exportar Excel
+                    </button>
+<button class="px-4 py-2 bg-white dark:bg-[#1e293b] border border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-200 rounded-lg text-sm font-medium hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors flex items-center gap-2">
+<span class="material-icons text-base">print</span>
+                        Imprimir
+                    </button>
+</div>
+</div>
+<!-- KPI Cards Row -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+<!-- Card 1: Approved -->
+<div class="bg-white dark:bg-[#1e293b] rounded-xl p-6 shadow-sm border border-gray-100 dark:border-gray-800 relative overflow-hidden group">
+<div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+<span class="material-icons text-6xl text-green-500">check_circle</span>
+</div>
+<p class="text-sm font-medium text-gray-500 dark:text-gray-400">Total Aprobado</p>
+<div class="flex items-baseline mt-2">
+<span class="text-3xl font-bold text-gray-900 dark:text-white">1,240h</span>
+<span class="ml-2 text-sm font-medium text-green-500 flex items-center">
+<span class="material-icons text-xs mr-1">trending_up</span> +2.5%
+                        </span>
+</div>
+<div class="w-full bg-gray-100 dark:bg-gray-700 rounded-full h-1.5 mt-4">
+<div class="bg-green-500 h-1.5 rounded-full" style="width: 85%"></div>
+</div>
+</div>
+<!-- Card 2: Rejected -->
+<div class="bg-white dark:bg-[#1e293b] rounded-xl p-6 shadow-sm border border-gray-100 dark:border-gray-800 relative overflow-hidden group">
+<div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+<span class="material-icons text-6xl text-red-500">cancel</span>
+</div>
+<p class="text-sm font-medium text-gray-500 dark:text-gray-400">Horas Rechazadas</p>
+<div class="flex items-baseline mt-2">
+<span class="text-3xl font-bold text-gray-900 dark:text-white">45h</span>
+<span class="ml-2 text-sm font-medium text-red-500 flex items-center">
+<span class="material-icons text-xs mr-1">trending_down</span> -1.2%
+                        </span>
+</div>
+<div class="w-full bg-gray-100 dark:bg-gray-700 rounded-full h-1.5 mt-4">
+<div class="bg-red-500 h-1.5 rounded-full" style="width: 15%"></div>
+</div>
+</div>
+<!-- Card 3: Pending -->
+<div class="bg-white dark:bg-[#1e293b] rounded-xl p-6 shadow-sm border border-gray-100 dark:border-gray-800 relative overflow-hidden group border-l-4 border-l-yellow-500">
+<div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+<span class="material-icons text-6xl text-yellow-500">hourglass_empty</span>
+</div>
+<p class="text-sm font-medium text-gray-500 dark:text-gray-400">Pendientes de Revisión</p>
+<div class="flex items-baseline mt-2">
+<span class="text-3xl font-bold text-gray-900 dark:text-white">12h</span>
+<span class="ml-2 text-sm font-medium text-yellow-500 flex items-center">Acción Requerida</span>
+</div>
+<div class="mt-4 flex gap-2">
+<a class="text-xs font-semibold text-primary dark:text-blue-400 hover:underline" href="#">Revisar lista &gt;</a>
+</div>
+</div>
+<!-- Card 4: Financial Impact -->
+<div class="bg-gradient-to-br from-primary to-blue-900 rounded-xl p-6 shadow-lg text-white relative overflow-hidden">
+<!-- Decorative circles -->
+<div class="absolute -top-10 -right-10 w-32 h-32 bg-white/10 rounded-full blur-xl"></div>
+<div class="absolute bottom-0 left-0 w-24 h-24 bg-black/10 rounded-full blur-xl"></div>
+<p class="text-sm font-medium text-blue-100">Impacto en Planilla (Proyectado)</p>
+<div class="flex items-baseline mt-2">
+<span class="text-3xl font-bold">S/. 15,450.00</span>
+</div>
+<p class="text-xs text-blue-200 mt-2 opacity-80">Calculado base + recargos nocturnos</p>
+<div class="mt-4 pt-4 border-t border-white/10 flex justify-between items-center">
+<span class="text-xs font-medium">Presupuesto Mensual</span>
+<span class="text-xs font-bold">92% Utilizado</span>
+</div>
+</div>
+</div>
+<!-- Main Content Grid -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+<!-- Chart Section -->
+<div class="lg:col-span-2 bg-white dark:bg-[#1e293b] rounded-xl shadow-sm border border-gray-100 dark:border-gray-800 p-6">
+<div class="flex items-center justify-between mb-6">
+<h3 class="text-lg font-bold text-gray-900 dark:text-white">Distribución por Áreas</h3>
+<select class="bg-gray-50 dark:bg-[#151e2e] border border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 text-sm rounded-lg focus:ring-primary focus:border-primary block p-2">
+<option>Último Mes</option>
+<option>Último Trimestre</option>
+</select>
+</div>
+<!-- CSS-only Bar Chart simulation -->
+<div class="relative h-64 w-full flex items-end justify-between gap-2 md:gap-8 px-2 md:px-4">
+<!-- Grid lines background -->
+<div class="absolute inset-0 flex flex-col justify-between pointer-events-none z-0">
+<div class="w-full h-px bg-gray-100 dark:bg-gray-700 border-dashed border-t border-gray-200 dark:border-gray-700"></div>
+<div class="w-full h-px bg-gray-100 dark:bg-gray-700 border-dashed border-t border-gray-200 dark:border-gray-700"></div>
+<div class="w-full h-px bg-gray-100 dark:bg-gray-700 border-dashed border-t border-gray-200 dark:border-gray-700"></div>
+<div class="w-full h-px bg-gray-100 dark:bg-gray-700 border-dashed border-t border-gray-200 dark:border-gray-700"></div>
+<div class="w-full h-px bg-gray-200 dark:bg-gray-600"></div>
+</div>
+<!-- Bar: Cocina -->
+<div class="relative z-10 w-full flex flex-col items-center group">
+<div class="w-full max-w-[50px] bg-primary/80 dark:bg-primary rounded-t-sm hover:opacity-100 transition-all duration-300 relative group-hover:shadow-[0_0_15px_rgba(17,82,212,0.5)]" style="height: 75%">
+<div class="absolute -top-8 left-1/2 transform -translate-x-1/2 bg-gray-900 text-white text-xs py-1 px-2 rounded opacity-0 group-hover:opacity-100 transition-opacity">450h</div>
+</div>
+<span class="mt-3 text-xs font-medium text-gray-500 dark:text-gray-400 text-center">Cocina</span>
+</div>
+<!-- Bar: Salón -->
+<div class="relative z-10 w-full flex flex-col items-center group">
+<div class="w-full max-w-[50px] bg-primary/60 dark:bg-primary/70 rounded-t-sm hover:opacity-100 transition-all duration-300 relative group-hover:shadow-[0_0_15px_rgba(17,82,212,0.5)]" style="height: 55%">
+<div class="absolute -top-8 left-1/2 transform -translate-x-1/2 bg-gray-900 text-white text-xs py-1 px-2 rounded opacity-0 group-hover:opacity-100 transition-opacity">320h</div>
+</div>
+<span class="mt-3 text-xs font-medium text-gray-500 dark:text-gray-400 text-center">Salón</span>
+</div>
+<!-- Bar: Barra -->
+<div class="relative z-10 w-full flex flex-col items-center group">
+<div class="w-full max-w-[50px] bg-primary/40 dark:bg-primary/50 rounded-t-sm hover:opacity-100 transition-all duration-300 relative group-hover:shadow-[0_0_15px_rgba(17,82,212,0.5)]" style="height: 40%">
+<div class="absolute -top-8 left-1/2 transform -translate-x-1/2 bg-gray-900 text-white text-xs py-1 px-2 rounded opacity-0 group-hover:opacity-100 transition-opacity">180h</div>
+</div>
+<span class="mt-3 text-xs font-medium text-gray-500 dark:text-gray-400 text-center">Barra</span>
+</div>
+<!-- Bar: Logística -->
+<div class="relative z-10 w-full flex flex-col items-center group">
+<div class="w-full max-w-[50px] bg-primary/30 dark:bg-primary/40 rounded-t-sm hover:opacity-100 transition-all duration-300 relative group-hover:shadow-[0_0_15px_rgba(17,82,212,0.5)]" style="height: 30%">
+<div class="absolute -top-8 left-1/2 transform -translate-x-1/2 bg-gray-900 text-white text-xs py-1 px-2 rounded opacity-0 group-hover:opacity-100 transition-opacity">120h</div>
+</div>
+<span class="mt-3 text-xs font-medium text-gray-500 dark:text-gray-400 text-center">Logística</span>
+</div>
+<!-- Bar: Admin -->
+<div class="relative z-10 w-full flex flex-col items-center group">
+<div class="w-full max-w-[50px] bg-primary/20 dark:bg-primary/30 rounded-t-sm hover:opacity-100 transition-all duration-300 relative group-hover:shadow-[0_0_15px_rgba(17,82,212,0.5)]" style="height: 15%">
+<div class="absolute -top-8 left-1/2 transform -translate-x-1/2 bg-gray-900 text-white text-xs py-1 px-2 rounded opacity-0 group-hover:opacity-100 transition-opacity">60h</div>
+</div>
+<span class="mt-3 text-xs font-medium text-gray-500 dark:text-gray-400 text-center">Admin</span>
+</div>
+</div>
+<div class="mt-6 grid grid-cols-2 md:grid-cols-4 gap-4 border-t border-gray-100 dark:border-gray-800 pt-4">
+<div>
+<p class="text-xs text-gray-500 dark:text-gray-400">Mayor Incidencia</p>
+<p class="font-bold text-gray-900 dark:text-white">Cocina (36%)</p>
+</div>
+<div>
+<p class="text-xs text-gray-500 dark:text-gray-400">Promedio x Empleado</p>
+<p class="font-bold text-gray-900 dark:text-white">4.2 Horas</p>
+</div>
+</div>
+</div>
+<!-- Recent Activity / Breakdown -->
+<div class="lg:col-span-1 bg-white dark:bg-[#1e293b] rounded-xl shadow-sm border border-gray-100 dark:border-gray-800 flex flex-col">
+<div class="p-6 border-b border-gray-100 dark:border-gray-800">
+<h3 class="text-lg font-bold text-gray-900 dark:text-white">Últimas Aprobaciones</h3>
+<p class="text-sm text-gray-500 dark:text-gray-400">Registros procesados hoy</p>
+</div>
+<div class="flex-1 overflow-y-auto p-0 max-h-[320px] custom-scrollbar">
+<div class="divide-y divide-gray-100 dark:divide-gray-800">
+<!-- Item 1 -->
+<div class="p-4 hover:bg-gray-50 dark:hover:bg-[#253146] transition-colors flex justify-between items-center group cursor-pointer">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-blue-100 dark:bg-blue-900/30 text-primary dark:text-blue-400 flex items-center justify-center text-xs font-bold">
+                                        JL
+                                    </div>
+<div>
+<p class="text-sm font-semibold text-gray-900 dark:text-white">Juan Lopez</p>
+<p class="text-xs text-gray-500 dark:text-gray-400">Cocina • 2 Oct</p>
+</div>
+</div>
+<div class="text-right">
+<p class="text-sm font-bold text-gray-900 dark:text-white">+3.5h</p>
+<p class="text-xs text-green-600 dark:text-green-400">Aprobado</p>
+</div>
+</div>
+<!-- Item 2 -->
+<div class="p-4 hover:bg-gray-50 dark:hover:bg-[#253146] transition-colors flex justify-between items-center group cursor-pointer">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 flex items-center justify-center text-xs font-bold">
+                                        MR
+                                    </div>
+<div>
+<p class="text-sm font-semibold text-gray-900 dark:text-white">Maria Rodriguez</p>
+<p class="text-xs text-gray-500 dark:text-gray-400">Salón • 2 Oct</p>
+</div>
+</div>
+<div class="text-right">
+<p class="text-sm font-bold text-gray-900 dark:text-white">+2.0h</p>
+<p class="text-xs text-green-600 dark:text-green-400">Aprobado</p>
+</div>
+</div>
+<!-- Item 3 -->
+<div class="p-4 hover:bg-gray-50 dark:hover:bg-[#253146] transition-colors flex justify-between items-center group cursor-pointer">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-pink-100 dark:bg-pink-900/30 text-pink-600 dark:text-pink-400 flex items-center justify-center text-xs font-bold">
+                                        CS
+                                    </div>
+<div>
+<p class="text-sm font-semibold text-gray-900 dark:text-white">Carlos Sanchez</p>
+<p class="text-xs text-gray-500 dark:text-gray-400">Barra • 1 Oct</p>
+</div>
+</div>
+<div class="text-right">
+<p class="text-sm font-bold text-gray-900 dark:text-white">+4.0h</p>
+<p class="text-xs text-green-600 dark:text-green-400">Aprobado</p>
+</div>
+</div>
+<!-- Item 4 -->
+<div class="p-4 hover:bg-gray-50 dark:hover:bg-[#253146] transition-colors flex justify-between items-center group cursor-pointer">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-orange-100 dark:bg-orange-900/30 text-orange-600 dark:text-orange-400 flex items-center justify-center text-xs font-bold">
+                                        AT
+                                    </div>
+<div>
+<p class="text-sm font-semibold text-gray-900 dark:text-white">Ana Torres</p>
+<p class="text-xs text-gray-500 dark:text-gray-400">Logística • 1 Oct</p>
+</div>
+</div>
+<div class="text-right">
+<p class="text-sm font-bold text-gray-900 dark:text-white">+1.5h</p>
+<p class="text-xs text-green-600 dark:text-green-400">Aprobado</p>
+</div>
+</div>
+</div>
+</div>
+<div class="p-4 border-t border-gray-100 dark:border-gray-800 text-center">
+<a class="text-sm text-primary dark:text-blue-400 font-medium hover:underline" href="#">Ver todo el historial</a>
+</div>
+</div>
+</div>
+<!-- Warning/Alert Area before Action -->
+<div class="bg-yellow-50 dark:bg-yellow-900/10 border border-yellow-200 dark:border-yellow-900/50 rounded-lg p-4 flex items-start gap-4">
+<span class="material-icons text-yellow-600 dark:text-yellow-500 mt-0.5">warning</span>
+<div>
+<h4 class="text-sm font-bold text-yellow-800 dark:text-yellow-400">Atención: Pendientes sin resolver</h4>
+<p class="text-sm text-yellow-700 dark:text-yellow-500 mt-1">
+                        Existen <span class="font-bold">12 horas pendientes de revisión</span>. Si cierras el periodo ahora, estas horas pasarán automáticamente al siguiente ciclo de facturación y no se pagarán en esta planilla.
+                    </p>
+</div>
+</div>
+<div class="h-20"></div> <!-- Spacer for footer -->
+</div>
+<!-- Sticky Footer Action -->
+<footer class="absolute bottom-0 w-full bg-white dark:bg-[#151e2e] border-t border-gray-200 dark:border-gray-800 p-4 md:px-8 flex flex-col md:flex-row items-center justify-between gap-4 shadow-[0_-10px_40px_rgba(0,0,0,0.1)] z-30">
+<div class="flex flex-col">
+<span class="text-xs uppercase tracking-wider text-gray-500 dark:text-gray-400 font-semibold">Total Final a Procesar</span>
+<span class="text-2xl font-bold text-gray-900 dark:text-white">1,240 Horas <span class="text-sm font-normal text-gray-500 dark:text-gray-400 mx-2">|</span> S/. 15,450.00</span>
+</div>
+<div class="flex items-center gap-4 w-full md:w-auto">
+<button class="px-6 py-3 rounded-lg text-gray-600 dark:text-gray-300 font-semibold hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors flex-1 md:flex-none">
+                    Cancelar
+                </button>
+<button class="px-8 py-3 bg-primary hover:bg-blue-700 text-white rounded-lg shadow-lg shadow-blue-900/50 font-bold flex items-center justify-center gap-2 transition-all transform hover:scale-[1.02] active:scale-[0.98] flex-1 md:flex-none">
+<span class="material-icons">lock_clock</span>
+                    Cerrar y Enviar a Planilla
+                </button>
+</div>
+</footer>
+</main>
+</body></html>

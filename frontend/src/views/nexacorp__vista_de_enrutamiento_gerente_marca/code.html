@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>NexaCorp - Dashboard Gerente de Marca</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#2c60ce",
+                        "primary-hover": "#244eb5",
+                        "primary-light": "#6b94ea",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#121720",
+                        "surface-dark": "#1e2532",
+                        "surface-darker": "#181e29",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.5rem", "lg": "1rem", "xl": "1.5rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        /* Custom scrollbar for dark mode elegance */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #121720;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #2c60ce;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #6b94ea;
+        }
+        
+        .glass-effect {
+            background: rgba(30, 37, 50, 0.7);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+
+        .gradient-card {
+            background: linear-gradient(145deg, rgba(44, 96, 206, 0.1) 0%, rgba(30, 37, 50, 0) 100%);
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-gray-900 dark:text-gray-100 min-h-screen flex flex-col">
+<!-- Top Navigation Bar -->
+<nav class="sticky top-0 z-50 glass-effect border-b border-gray-200 dark:border-gray-800">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex justify-between h-16">
+<!-- Left Side: Logo & Brand Context -->
+<div class="flex items-center gap-4">
+<div class="flex-shrink-0 flex items-center gap-2">
+<div class="w-8 h-8 rounded-lg bg-primary flex items-center justify-center text-white font-bold text-lg shadow-lg shadow-primary/30">
+                            N
+                        </div>
+<span class="font-semibold text-xl tracking-tight text-gray-900 dark:text-white">NexaCorp</span>
+</div>
+<div class="hidden md:block h-6 w-px bg-gray-300 dark:bg-gray-700"></div>
+<div class="hidden md:flex items-center gap-2 px-3 py-1 rounded-full bg-gray-100 dark:bg-surface-darker border border-gray-200 dark:border-gray-700">
+<span class="material-icons text-sm text-primary">business</span>
+<span class="text-sm font-medium text-gray-600 dark:text-gray-300">Grupo Empresarial Andino S.A.</span>
+</div>
+</div>
+<!-- Right Side: Notifications & Profile -->
+<div class="flex items-center gap-4">
+<button class="relative p-2 rounded-full text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-surface-dark transition-colors">
+<span class="material-icons">notifications_none</span>
+<span class="absolute top-2 right-2 block h-2 w-2 rounded-full bg-red-500 ring-2 ring-white dark:ring-background-dark"></span>
+</button>
+<div class="flex items-center gap-3 pl-4 border-l border-gray-200 dark:border-gray-700">
+<div class="text-right hidden sm:block">
+<p class="text-sm font-medium text-gray-900 dark:text-white">Carlos Mendoza</p>
+<p class="text-xs text-gray-500 dark:text-gray-400">Gerente de Marca</p>
+</div>
+<div class="h-10 w-10 rounded-full bg-gradient-to-br from-primary to-blue-400 p-0.5 cursor-pointer hover:shadow-lg hover:shadow-primary/20 transition-all">
+<img alt="Profile" class="h-full w-full rounded-full object-cover border-2 border-white dark:border-background-dark" data-alt="Portrait of a smiling man in business attire" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBfym3TPc7r1vuXuvPlaSjp13Yu0LhBJDvy4cGk_20k4OrwiohvZwBpMq1EFmtFsWnJNSNKgJknHa_Y5K3U0sGGrTyDQxcSbzfkv9PYaxMDGrbwSo2GYp4qwHbS9Hth-Ss_yVH0B_lqxlyE30hbqkbGEqQ-wH47t5Xgmkx-fg70Vj9VgWDsbe8slRuwCszo4DzTh_I0An8l3_muRPF9CLn7_Z72_KvmKV6Bd52prPjy2W9FEap4AcWOP8-RJdp_cs-uaTOFHUEFCrVy"/>
+</div>
+</div>
+</div>
+</div>
+</div>
+</nav>
+<!-- Main Content Area -->
+<main class="flex-1 py-8 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full">
+<!-- Welcome Header -->
+<header class="mb-8">
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
+<div>
+<h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-2">
+                        Hola Carlos, este es el estado de tu Marca
+                    </h1>
+<p class="text-gray-500 dark:text-gray-400 flex items-center gap-2">
+<span class="material-icons text-base text-green-500">check_circle</span>
+                        Vista consolidada del holding actualizada al <span class="font-medium text-gray-700 dark:text-gray-300">24 Oct, 2023</span>
+</p>
+</div>
+<div class="flex gap-3">
+<button class="inline-flex items-center px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg shadow-sm text-sm font-medium text-gray-700 dark:text-gray-200 bg-white dark:bg-surface-dark hover:bg-gray-50 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary transition-colors">
+<span class="material-icons text-sm mr-2">download</span>
+                        Exportar Reporte
+                    </button>
+<button class="inline-flex items-center px-4 py-2 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-primary hover:bg-primary-hover focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary shadow-lg shadow-primary/30 transition-all">
+<span class="material-icons text-sm mr-2">add</span>
+                        Gestionar RUCs
+                    </button>
+</div>
+</div>
+</header>
+<!-- KPI Grid -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+<!-- Metric 1: Total Revenue -->
+<div class="bg-white dark:bg-surface-dark rounded-xl p-6 shadow-sm border border-gray-100 dark:border-gray-800 relative overflow-hidden group hover:border-primary/50 transition-colors">
+<div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+<span class="material-icons text-6xl text-primary">payments</span>
+</div>
+<p class="text-sm font-medium text-gray-500 dark:text-gray-400 mb-1">Ingresos Totales (YTD)</p>
+<h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-2">$4,250,500</h3>
+<div class="flex items-center text-sm">
+<span class="text-green-500 flex items-center font-medium bg-green-500/10 px-1.5 py-0.5 rounded">
+<span class="material-icons text-sm mr-1">trending_up</span> 12.5%
+                    </span>
+<span class="text-gray-400 ml-2">vs año anterior</span>
+</div>
+</div>
+<!-- Metric 2: Net Profit -->
+<div class="bg-white dark:bg-surface-dark rounded-xl p-6 shadow-sm border border-gray-100 dark:border-gray-800 relative overflow-hidden group hover:border-primary/50 transition-colors">
+<div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+<span class="material-icons text-6xl text-primary">account_balance_wallet</span>
+</div>
+<p class="text-sm font-medium text-gray-500 dark:text-gray-400 mb-1">Utilidad Neta</p>
+<h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-2">$845,200</h3>
+<div class="flex items-center text-sm">
+<span class="text-green-500 flex items-center font-medium bg-green-500/10 px-1.5 py-0.5 rounded">
+<span class="material-icons text-sm mr-1">trending_up</span> 8.2%
+                    </span>
+<span class="text-gray-400 ml-2">vs mes anterior</span>
+</div>
+</div>
+<!-- Metric 3: Active RUCs -->
+<div class="bg-white dark:bg-surface-dark rounded-xl p-6 shadow-sm border border-gray-100 dark:border-gray-800 relative overflow-hidden group hover:border-primary/50 transition-colors">
+<div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+<span class="material-icons text-6xl text-primary">domain</span>
+</div>
+<p class="text-sm font-medium text-gray-500 dark:text-gray-400 mb-1">RUCs Activos</p>
+<h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-2">5 / 6</h3>
+<div class="flex items-center text-sm">
+<span class="text-yellow-500 flex items-center font-medium bg-yellow-500/10 px-1.5 py-0.5 rounded">
+<span class="material-icons text-sm mr-1">warning</span> 1 Inactivo
+                    </span>
+<span class="text-gray-400 ml-2">Requiere atención</span>
+</div>
+</div>
+<!-- Metric 4: Total Personnel -->
+<div class="bg-white dark:bg-surface-dark rounded-xl p-6 shadow-sm border border-gray-100 dark:border-gray-800 relative overflow-hidden group hover:border-primary/50 transition-colors">
+<div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+<span class="material-icons text-6xl text-primary">groups</span>
+</div>
+<p class="text-sm font-medium text-gray-500 dark:text-gray-400 mb-1">Total Colaboradores</p>
+<h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-2">1,248</h3>
+<div class="flex items-center text-sm">
+<span class="text-primary flex items-center font-medium bg-primary/10 px-1.5 py-0.5 rounded">
+<span class="material-icons text-sm mr-1">add</span> 24
+                    </span>
+<span class="text-gray-400 ml-2">Nuevos este mes</span>
+</div>
+</div>
+</div>
+<!-- Charts Section -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8">
+<!-- Main Chart: Consolidated Finance -->
+<div class="lg:col-span-2 bg-white dark:bg-surface-dark rounded-xl p-6 shadow-sm border border-gray-100 dark:border-gray-800">
+<div class="flex items-center justify-between mb-6">
+<h3 class="text-lg font-semibold text-gray-900 dark:text-white">Tendencia Financiera Consolidada</h3>
+<select class="bg-gray-50 dark:bg-surface-darker border border-gray-300 dark:border-gray-700 text-gray-700 dark:text-gray-300 text-sm rounded-lg focus:ring-primary focus:border-primary block p-2">
+<option>Últimos 6 meses</option>
+<option>Este Año</option>
+<option>Año Pasado</option>
+</select>
+</div>
+<!-- Abstract Chart Representation using CSS Gradients/Shapes -->
+<div class="relative h-64 w-full flex items-end justify-between gap-2 px-2">
+<!-- Grid lines background -->
+<div class="absolute inset-0 flex flex-col justify-between pointer-events-none">
+<div class="w-full h-px bg-gray-100 dark:bg-gray-800"></div>
+<div class="w-full h-px bg-gray-100 dark:bg-gray-800"></div>
+<div class="w-full h-px bg-gray-100 dark:bg-gray-800"></div>
+<div class="w-full h-px bg-gray-100 dark:bg-gray-800"></div>
+<div class="w-full h-px bg-gray-100 dark:bg-gray-800"></div>
+</div>
+<!-- Bars -->
+<div class="w-1/12 bg-primary/20 hover:bg-primary/40 rounded-t-sm h-[40%] relative group transition-all">
+<div class="absolute -top-8 left-1/2 transform -translate-x-1/2 bg-gray-800 text-white text-xs py-1 px-2 rounded opacity-0 group-hover:opacity-100 transition-opacity">$450k</div>
+</div>
+<div class="w-1/12 bg-primary/30 hover:bg-primary/50 rounded-t-sm h-[55%] relative group transition-all">
+<div class="absolute -top-8 left-1/2 transform -translate-x-1/2 bg-gray-800 text-white text-xs py-1 px-2 rounded opacity-0 group-hover:opacity-100 transition-opacity">$620k</div>
+</div>
+<div class="w-1/12 bg-primary/40 hover:bg-primary/60 rounded-t-sm h-[45%] relative group transition-all">
+<div class="absolute -top-8 left-1/2 transform -translate-x-1/2 bg-gray-800 text-white text-xs py-1 px-2 rounded opacity-0 group-hover:opacity-100 transition-opacity">$510k</div>
+</div>
+<div class="w-1/12 bg-primary/50 hover:bg-primary/70 rounded-t-sm h-[70%] relative group transition-all">
+<div class="absolute -top-8 left-1/2 transform -translate-x-1/2 bg-gray-800 text-white text-xs py-1 px-2 rounded opacity-0 group-hover:opacity-100 transition-opacity">$780k</div>
+</div>
+<div class="w-1/12 bg-primary/60 hover:bg-primary/80 rounded-t-sm h-[60%] relative group transition-all">
+<div class="absolute -top-8 left-1/2 transform -translate-x-1/2 bg-gray-800 text-white text-xs py-1 px-2 rounded opacity-0 group-hover:opacity-100 transition-opacity">$680k</div>
+</div>
+<div class="w-1/12 bg-primary hover:bg-primary-hover rounded-t-sm h-[85%] relative group transition-all shadow-[0_0_15px_rgba(44,96,206,0.3)]">
+<div class="absolute -top-8 left-1/2 transform -translate-x-1/2 bg-gray-800 text-white text-xs py-1 px-2 rounded opacity-0 group-hover:opacity-100 transition-opacity">$950k</div>
+</div>
+</div>
+<!-- X-Axis Labels -->
+<div class="flex justify-between mt-2 text-xs text-gray-500 dark:text-gray-400 px-2">
+<span>May</span>
+<span>Jun</span>
+<span>Jul</span>
+<span>Ago</span>
+<span>Sep</span>
+<span>Oct</span>
+</div>
+</div>
+<!-- Secondary Chart: Personnel Distribution -->
+<div class="bg-white dark:bg-surface-dark rounded-xl p-6 shadow-sm border border-gray-100 dark:border-gray-800 flex flex-col">
+<h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-6">Distribución de Personal</h3>
+<div class="flex-1 flex flex-col items-center justify-center relative">
+<!-- Donut Chart Representation -->
+<div class="relative w-48 h-48 rounded-full bg-gradient-to-tr from-primary to-blue-300" style="background: conic-gradient(#2c60ce 0% 45%, #6b94ea 45% 70%, #1e2532 70% 100%);">
+<div class="absolute inset-4 bg-white dark:bg-surface-dark rounded-full flex items-center justify-center">
+<div class="text-center">
+<span class="block text-3xl font-bold text-gray-900 dark:text-white">1,248</span>
+<span class="text-xs text-gray-500">Total</span>
+</div>
+</div>
+</div>
+</div>
+<div class="mt-6 space-y-3">
+<div class="flex items-center justify-between text-sm">
+<div class="flex items-center">
+<span class="w-3 h-3 rounded-full bg-primary mr-2"></span>
+<span class="text-gray-600 dark:text-gray-300">Operaciones (Nexa Ops)</span>
+</div>
+<span class="font-medium text-gray-900 dark:text-white">45%</span>
+</div>
+<div class="flex items-center justify-between text-sm">
+<div class="flex items-center">
+<span class="w-3 h-3 rounded-full bg-[#6b94ea] mr-2"></span>
+<span class="text-gray-600 dark:text-gray-300">Ventas (Andino Sales)</span>
+</div>
+<span class="font-medium text-gray-900 dark:text-white">25%</span>
+</div>
+<div class="flex items-center justify-between text-sm">
+<div class="flex items-center">
+<span class="w-3 h-3 rounded-full bg-surface-darker border border-gray-600 mr-2"></span>
+<span class="text-gray-600 dark:text-gray-300">Administrativo</span>
+</div>
+<span class="font-medium text-gray-900 dark:text-white">30%</span>
+</div>
+</div>
+</div>
+</div>
+<!-- RUC List Table -->
+<div class="bg-white dark:bg-surface-dark rounded-xl shadow-sm border border-gray-100 dark:border-gray-800 overflow-hidden">
+<div class="p-6 border-b border-gray-100 dark:border-gray-800 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+<div>
+<h3 class="text-lg font-semibold text-gray-900 dark:text-white">Resumen de Entidades (RUCs)</h3>
+<p class="text-sm text-gray-500 dark:text-gray-400 mt-1">Gestión y estado financiero de sus empresas vinculadas.</p>
+</div>
+<div class="relative">
+<input class="pl-10 pr-4 py-2 border border-gray-300 dark:border-gray-700 rounded-lg text-sm bg-gray-50 dark:bg-surface-darker text-gray-900 dark:text-white focus:ring-primary focus:border-primary w-full sm:w-64" placeholder="Buscar RUC o empresa..." type="text"/>
+<span class="material-icons absolute left-3 top-2.5 text-gray-400 text-sm">search</span>
+</div>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-gray-50 dark:bg-surface-darker text-xs uppercase tracking-wider text-gray-500 dark:text-gray-400 font-semibold">
+<th class="px-6 py-4">Entidad</th>
+<th class="px-6 py-4">RUC ID</th>
+<th class="px-6 py-4 text-center">Estado</th>
+<th class="px-6 py-4 text-right">Personal</th>
+<th class="px-6 py-4 text-right">Utilidad Neta</th>
+<th class="px-6 py-4 text-center">Acciones</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-gray-100 dark:divide-gray-800 text-sm">
+<!-- Row 1 -->
+<tr class="hover:bg-gray-50 dark:hover:bg-surface-darker transition-colors group">
+<td class="px-6 py-4">
+<div class="flex items-center">
+<div class="h-10 w-10 rounded-lg bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center text-primary mr-3">
+<span class="material-icons">business</span>
+</div>
+<div>
+<p class="font-medium text-gray-900 dark:text-white">Nexa Ops S.A.C.</p>
+<p class="text-xs text-gray-500">Servicios Operativos</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 font-mono text-gray-600 dark:text-gray-300">20100123456</td>
+<td class="px-6 py-4 text-center">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400">
+<span class="w-1.5 h-1.5 bg-green-500 rounded-full mr-1.5"></span>
+                                    Activo
+                                </span>
+</td>
+<td class="px-6 py-4 text-right text-gray-600 dark:text-gray-300">562</td>
+<td class="px-6 py-4 text-right font-medium text-gray-900 dark:text-white">$320,000</td>
+<td class="px-6 py-4 text-center">
+<button class="text-gray-400 hover:text-primary transition-colors">
+<span class="material-icons text-base">arrow_forward</span>
+</button>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-gray-50 dark:hover:bg-surface-darker transition-colors group">
+<td class="px-6 py-4">
+<div class="flex items-center">
+<div class="h-10 w-10 rounded-lg bg-indigo-100 dark:bg-indigo-900/30 flex items-center justify-center text-indigo-600 dark:text-indigo-400 mr-3">
+<span class="material-icons">storefront</span>
+</div>
+<div>
+<p class="font-medium text-gray-900 dark:text-white">Andino Sales Corp</p>
+<p class="text-xs text-gray-500">Retail y Ventas</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 font-mono text-gray-600 dark:text-gray-300">20550987654</td>
+<td class="px-6 py-4 text-center">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400">
+<span class="w-1.5 h-1.5 bg-green-500 rounded-full mr-1.5"></span>
+                                    Activo
+                                </span>
+</td>
+<td class="px-6 py-4 text-right text-gray-600 dark:text-gray-300">315</td>
+<td class="px-6 py-4 text-right font-medium text-gray-900 dark:text-white">$185,500</td>
+<td class="px-6 py-4 text-center">
+<button class="text-gray-400 hover:text-primary transition-colors">
+<span class="material-icons text-base">arrow_forward</span>
+</button>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-gray-50 dark:hover:bg-surface-darker transition-colors group">
+<td class="px-6 py-4">
+<div class="flex items-center">
+<div class="h-10 w-10 rounded-lg bg-orange-100 dark:bg-orange-900/30 flex items-center justify-center text-orange-600 dark:text-orange-400 mr-3">
+<span class="material-icons">local_shipping</span>
+</div>
+<div>
+<p class="font-medium text-gray-900 dark:text-white">Logística Express S.A.</p>
+<p class="text-xs text-gray-500">Distribución</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 font-mono text-gray-600 dark:text-gray-300">20600112233</td>
+<td class="px-6 py-4 text-center">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-400">
+<span class="w-1.5 h-1.5 bg-yellow-500 rounded-full mr-1.5"></span>
+                                    Revisión
+                                </span>
+</td>
+<td class="px-6 py-4 text-right text-gray-600 dark:text-gray-300">120</td>
+<td class="px-6 py-4 text-right font-medium text-gray-900 dark:text-white">$98,200</td>
+<td class="px-6 py-4 text-center">
+<button class="text-gray-400 hover:text-primary transition-colors">
+<span class="material-icons text-base">arrow_forward</span>
+</button>
+</td>
+</tr>
+<!-- Row 4 -->
+<tr class="hover:bg-gray-50 dark:hover:bg-surface-darker transition-colors group">
+<td class="px-6 py-4">
+<div class="flex items-center">
+<div class="h-10 w-10 rounded-lg bg-gray-200 dark:bg-gray-700 flex items-center justify-center text-gray-500 dark:text-gray-300 mr-3">
+<span class="material-icons">domain_disabled</span>
+</div>
+<div>
+<p class="font-medium text-gray-900 dark:text-white">Inversiones Beta (Liquidación)</p>
+<p class="text-xs text-gray-500">Inmobiliaria</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 font-mono text-gray-600 dark:text-gray-300">20109988776</td>
+<td class="px-6 py-4 text-center">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-400">
+<span class="w-1.5 h-1.5 bg-red-500 rounded-full mr-1.5"></span>
+                                    Inactivo
+                                </span>
+</td>
+<td class="px-6 py-4 text-right text-gray-600 dark:text-gray-300">0</td>
+<td class="px-6 py-4 text-right font-medium text-gray-900 dark:text-white">$0</td>
+<td class="px-6 py-4 text-center">
+<button class="text-gray-400 hover:text-primary transition-colors">
+<span class="material-icons text-base">arrow_forward</span>
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="px-6 py-4 border-t border-gray-100 dark:border-gray-800 bg-gray-50 dark:bg-surface-darker flex items-center justify-between">
+<span class="text-xs text-gray-500 dark:text-gray-400">Mostrando 4 de 6 empresas vinculadas</span>
+<div class="flex gap-2">
+<button class="p-1 rounded hover:bg-gray-200 dark:hover:bg-gray-700 text-gray-500 dark:text-gray-400 disabled:opacity-50">
+<span class="material-icons text-sm">chevron_left</span>
+</button>
+<button class="p-1 rounded hover:bg-gray-200 dark:hover:bg-gray-700 text-gray-500 dark:text-gray-400">
+<span class="material-icons text-sm">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+</main>
+<!-- Footer Context -->
+<footer class="mt-auto border-t border-gray-200 dark:border-gray-800 bg-white dark:bg-surface-dark py-6">
+<div class="max-w-7xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center text-xs text-gray-500 dark:text-gray-400">
+<div class="flex items-center gap-4 mb-4 md:mb-0">
+<span>© 2023 NexaCorp Inc. Todos los derechos reservados.</span>
+<a class="hover:text-primary transition-colors" href="#">Privacidad</a>
+<a class="hover:text-primary transition-colors" href="#">Términos</a>
+</div>
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-green-500"></span>
+<span>Sistemas Operativos</span>
+</div>
+</div>
+</footer>
+</body></html>

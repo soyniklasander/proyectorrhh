@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>NexaCorp: Cálculo y Consolidación de Planilla</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#2c60ce",
+                        "primary-hover": "#2450b0",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#121720",
+                        "surface-dark": "#1a222e",
+                        "surface-darker": "#151b25",
+                        "table-header": "#1f293b",
+                        "table-row-even": "#1a222e",
+                        "table-row-odd": "#171e29",
+                        "border-dark": "#2d3748",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.5rem", "lg": "1rem", "xl": "1.5rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        /* Custom scrollbar for dark theme */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #121720; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #2d3748; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #4a5568; 
+        }
+        
+        .table-cell-input {
+            background: transparent;
+            border: 1px solid transparent;
+            color: inherit;
+            width: 100%;
+            padding: 2px 4px;
+            border-radius: 4px;
+            transition: all 0.2s;
+            text-align: right;
+        }
+        .table-cell-input:hover, .table-cell-input:focus {
+            background-color: #1f293b;
+            border-color: #4a5568;
+            outline: none;
+        }
+        .sticky-col-left {
+            position: sticky;
+            left: 0;
+            background-color: inherit;
+            z-index: 10;
+        }
+        .sticky-col-right {
+            position: sticky;
+            right: 0;
+            background-color: inherit;
+            z-index: 10;
+            box-shadow: -5px 0 5px -5px rgba(0,0,0,0.5);
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-800 dark:text-slate-300 font-display h-screen flex flex-col overflow-hidden">
+<!-- Top Navigation -->
+<header class="h-16 bg-white dark:bg-surface-dark border-b dark:border-border-dark flex items-center justify-between px-6 shrink-0 z-20">
+<div class="flex items-center gap-4">
+<div class="flex items-center gap-2">
+<div class="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
+<span class="text-white font-bold text-lg">N</span>
+</div>
+<span class="text-xl font-bold dark:text-white tracking-tight">NexaCorp <span class="text-slate-400 font-normal">| Payroll Core</span></span>
+</div>
+<div class="h-6 w-px bg-slate-200 dark:bg-slate-700 mx-2"></div>
+<nav class="hidden md:flex gap-1">
+<a class="px-3 py-1.5 text-sm font-medium rounded-md text-slate-500 hover:text-primary dark:text-slate-400 dark:hover:text-white transition-colors" href="#">Dashboard</a>
+<a class="px-3 py-1.5 text-sm font-medium rounded-md bg-primary/10 text-primary dark:bg-primary/20 dark:text-blue-300" href="#">Cálculo Planilla</a>
+<a class="px-3 py-1.5 text-sm font-medium rounded-md text-slate-500 hover:text-primary dark:text-slate-400 dark:hover:text-white transition-colors" href="#">Reportes</a>
+<a class="px-3 py-1.5 text-sm font-medium rounded-md text-slate-500 hover:text-primary dark:text-slate-400 dark:hover:text-white transition-colors" href="#">Configuración</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<button class="relative p-2 text-slate-500 hover:text-primary dark:text-slate-400 dark:hover:text-white">
+<span class="material-icons text-[20px]">notifications</span>
+<span class="absolute top-1.5 right-1.5 w-2 h-2 bg-red-500 rounded-full"></span>
+</button>
+<div class="flex items-center gap-3 pl-4 border-l dark:border-slate-700">
+<div class="text-right hidden sm:block">
+<p class="text-sm font-medium dark:text-white">Carlos Méndez</p>
+<p class="text-xs text-slate-500 dark:text-slate-400">Admin. Nóminas</p>
+</div>
+<img alt="Profile avatar of current user" class="w-9 h-9 rounded-full ring-2 ring-primary/20" data-alt="Profile avatar of current user" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDbXmP3mTyLgAN6d__Saelf9kTf6-bjXzjhH_sP0RcZLWr2MkBIt9ZCXjdbbLqr_-u7fg7JA7GbBEnqONUi52t-iW4gvR1Qg-oQDfKKFQGmjfiUWbfIQE8SinA2QyRh4gubuQJ1cV30CpQRJKrEFCB_QKKyoVDdYEpYH6gLUEisJBmMh5sI3YJOBAUvZW2BK83SgxKJSafRwNyJPzG5t5g_tbbeiEaarGBQEQkGLx0wwCBgxJhdf_kvQeXqoXPyJqEN3WWOxNr4H0HP"/>
+</div>
+</div>
+</header>
+<!-- Main Content Area -->
+<main class="flex-1 flex overflow-hidden">
+<!-- Left Panel: Data Table & Controls -->
+<div class="flex-1 flex flex-col min-w-0">
+<!-- Toolbar -->
+<div class="px-6 py-4 flex flex-col md:flex-row md:items-center justify-between gap-4 shrink-0">
+<div class="flex items-center gap-4">
+<div>
+<h1 class="text-2xl font-bold dark:text-white">Cálculo de Planilla</h1>
+<p class="text-sm text-slate-500 dark:text-slate-400">Periodo: <span class="text-primary font-medium">Octubre 2023</span> • Estado: <span class="text-yellow-500 font-medium">En Proceso</span></p>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<div class="flex bg-white dark:bg-surface-dark rounded-lg border dark:border-border-dark p-1">
+<button class="px-3 py-1.5 text-xs font-medium rounded bg-primary text-white shadow-sm">Mensual</button>
+<button class="px-3 py-1.5 text-xs font-medium rounded text-slate-500 hover:text-primary dark:text-slate-400 dark:hover:text-white">Quincenal</button>
+<button class="px-3 py-1.5 text-xs font-medium rounded text-slate-500 hover:text-primary dark:text-slate-400 dark:hover:text-white">Semanal</button>
+</div>
+<div class="h-8 w-px bg-slate-200 dark:bg-slate-700"></div>
+<button class="flex items-center gap-2 px-4 py-2 bg-white dark:bg-surface-dark border dark:border-border-dark rounded-lg text-sm font-medium hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors">
+<span class="material-icons text-[18px]">filter_list</span>
+                        Filtros
+                    </button>
+<button class="flex items-center gap-2 px-4 py-2 bg-primary hover:bg-primary-hover text-white rounded-lg text-sm font-medium transition-colors shadow-lg shadow-primary/20 group">
+<span class="material-icons text-[18px] group-hover:animate-spin">refresh</span>
+                        Recalcular Todo
+                    </button>
+</div>
+</div>
+<!-- Alerts Section -->
+<div class="px-6 pb-2 shrink-0">
+<div class="flex items-start gap-3 p-3 bg-amber-500/10 border border-amber-500/20 rounded-lg">
+<span class="material-icons text-amber-500 text-[20px] mt-0.5">warning</span>
+<div class="flex-1">
+<h4 class="text-sm font-semibold text-amber-500">Inconsistencias Detectadas (3)</h4>
+<p class="text-xs text-amber-500/80 mt-1">Se detectaron 2 empleados sin código de AFP y 1 con sueldo neto negativo. Por favor, revise las filas marcadas.</p>
+</div>
+<button class="text-amber-500 hover:text-amber-400 text-xs font-medium underline">Ver Detalles</button>
+</div>
+</div>
+<!-- Table Container -->
+<div class="flex-1 overflow-auto px-6 pb-6">
+<div class="min-w-full inline-block align-middle">
+<div class="border dark:border-border-dark rounded-lg overflow-hidden shadow-sm">
+<table class="min-w-full divide-y divide-slate-200 dark:divide-slate-700">
+<thead class="bg-gray-50 dark:bg-table-header sticky top-0 z-20">
+<tr>
+<th class="sticky-col-left bg-gray-50 dark:bg-table-header px-4 py-3 text-left text-xs font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wider w-64 shadow-[2px_0_5px_-2px_rgba(0,0,0,0.3)]" scope="col">Empleado</th>
+<!-- Ingresos Header Group -->
+<th class="px-4 py-2 text-center text-xs font-bold text-emerald-500 uppercase tracking-wider bg-emerald-500/5 border-b border-emerald-500/20" colspan="4" scope="col">Ingresos</th>
+<!-- Descuentos Header Group -->
+<th class="px-4 py-2 text-center text-xs font-bold text-rose-500 uppercase tracking-wider bg-rose-500/5 border-b border-rose-500/20" colspan="4" scope="col">Descuentos</th>
+<!-- Totales Header Group -->
+<th class="px-4 py-2 text-center text-xs font-bold text-blue-400 uppercase tracking-wider bg-blue-500/5 border-b border-blue-500/20" colspan="3" scope="col">Totales</th>
+<th class="relative px-4 py-3 bg-gray-50 dark:bg-table-header sticky-col-right w-10" scope="col"></th>
+</tr>
+<tr>
+<!-- Sticky Employee Header -->
+<th class="sticky-col-left bg-gray-50 dark:bg-table-header px-4 py-2 text-left text-xs font-medium text-slate-500 dark:text-slate-400 shadow-[2px_0_5px_-2px_rgba(0,0,0,0.3)]" scope="col">Nombre / Cargo</th>
+<!-- Ingresos Sub-headers -->
+<th class="px-4 py-2 text-right text-xs font-medium text-slate-500 dark:text-slate-400 w-28" scope="col">Básico</th>
+<th class="px-4 py-2 text-right text-xs font-medium text-slate-500 dark:text-slate-400 w-24" scope="col">Asig. Fam</th>
+<th class="px-4 py-2 text-right text-xs font-medium text-slate-500 dark:text-slate-400 w-24" scope="col">H.E. (S/.)</th>
+<th class="px-4 py-2 text-right text-xs font-medium text-slate-500 dark:text-slate-400 w-24" scope="col">Bonos</th>
+<!-- Descuentos Sub-headers -->
+<th class="px-4 py-2 text-right text-xs font-medium text-slate-500 dark:text-slate-400 w-24" scope="col">AFP/ONP</th>
+<th class="px-4 py-2 text-right text-xs font-medium text-slate-500 dark:text-slate-400 w-24" scope="col">5ta Cat.</th>
+<th class="px-4 py-2 text-right text-xs font-medium text-slate-500 dark:text-slate-400 w-24" scope="col">Prést.</th>
+<th class="px-4 py-2 text-right text-xs font-medium text-slate-500 dark:text-slate-400 w-24" scope="col">Tard.</th>
+<!-- Totales Sub-headers -->
+<th class="px-4 py-2 text-right text-xs font-medium text-slate-500 dark:text-slate-400 bg-slate-100/50 dark:bg-slate-800/50 w-28" scope="col">Bruto</th>
+<th class="px-4 py-2 text-right text-xs font-medium text-slate-500 dark:text-slate-400 bg-slate-100/50 dark:bg-slate-800/50 w-28" scope="col">Desc. Total</th>
+<th class="px-4 py-2 text-right text-xs font-bold text-primary dark:text-blue-400 bg-primary/5 w-32 border-l dark:border-slate-700" scope="col">Neto</th>
+<th class="sticky-col-right bg-gray-50 dark:bg-table-header w-10" scope="col"></th>
+</tr>
+</thead>
+<tbody class="bg-white dark:bg-surface-dark divide-y divide-slate-200 dark:divide-slate-700">
+<!-- Row 1: Normal -->
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors group">
+<td class="sticky-col-left bg-white dark:bg-table-row-odd group-hover:bg-slate-50 dark:group-hover:bg-slate-800/50 px-4 py-3 whitespace-nowrap shadow-[2px_0_5px_-2px_rgba(0,0,0,0.3)]">
+<div class="flex items-center">
+<div class="flex-shrink-0 h-8 w-8">
+<img alt="Employee avatar" class="h-8 w-8 rounded-full" data-alt="Employee avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBFXh3hpEwp5AFJGThYZ9lrVbTVQbD5FAgfzr9wfKqgL3HkbOUwF_2gg0id3-VsLoC4AXXRZAzE7XmwteV45nC8W3b-dXyKJ9NBIQ4SRGnJv92NgJoePXAT6LU4ZXh_NFFW-CYHW0HAjSYcwhH_lxL2nTvrVcFfD45vZNaECFWBSaO8fs9jitvR1-qT4BzeHwpNqJ0taGIrZfViw_5gtU4arsGVzsd98lDD4AbmOHOyXyyXGOKcGrkEOPFzLMnHD9bWHaagcE_bZqQt"/>
+</div>
+<div class="ml-3">
+<div class="text-sm font-medium text-slate-900 dark:text-white">Flores, Ana Maria</div>
+<div class="text-xs text-slate-500 dark:text-slate-400">Analista Sr. • ADM-001</div>
+</div>
+</div>
+</td>
+<td class="px-4 py-3 whitespace-nowrap text-right text-sm text-slate-500 dark:text-slate-300">4,500.00</td>
+<td class="px-4 py-3 whitespace-nowrap text-right text-sm text-slate-500 dark:text-slate-300">102.50</td>
+<td class="px-4 py-3 whitespace-nowrap text-right text-sm text-slate-500 dark:text-slate-300">
+<input class="table-cell-input text-slate-400" type="text" value="0.00"/>
+</td>
+<td class="px-4 py-3 whitespace-nowrap text-right text-sm text-slate-500 dark:text-slate-300">
+<input class="table-cell-input" type="text" value="500.00"/>
+</td>
+<td class="px-4 py-3 whitespace-nowrap text-right text-sm text-slate-500 dark:text-slate-300">589.00</td>
+<td class="px-4 py-3 whitespace-nowrap text-right text-sm text-slate-500 dark:text-slate-300">145.20</td>
+<td class="px-4 py-3 whitespace-nowrap text-right text-sm text-slate-500 dark:text-slate-300">0.00</td>
+<td class="px-4 py-3 whitespace-nowrap text-right text-sm text-slate-500 dark:text-slate-300">0.00</td>
+<td class="px-4 py-3 whitespace-nowrap text-right text-sm font-medium text-emerald-600 dark:text-emerald-400 bg-slate-50 dark:bg-slate-800/30">5,102.50</td>
+<td class="px-4 py-3 whitespace-nowrap text-right text-sm font-medium text-rose-600 dark:text-rose-400 bg-slate-50 dark:bg-slate-800/30">734.20</td>
+<td class="px-4 py-3 whitespace-nowrap text-right text-sm font-bold text-slate-900 dark:text-white bg-primary/5 border-l dark:border-slate-700">4,368.30</td>
+<td class="sticky-col-right px-4 py-3 whitespace-nowrap text-center text-sm font-medium group-hover:bg-slate-50 dark:group-hover:bg-slate-800/50 bg-white dark:bg-table-row-odd">
+<button class="text-slate-400 hover:text-primary"><span class="material-icons text-[18px]">more_vert</span></button>
+</td>
+</tr>
+<!-- Row 2: Warning -->
+<tr class="bg-slate-50 dark:bg-table-row-even hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors group">
+<td class="sticky-col-left bg-slate-50 dark:bg-table-row-even group-hover:bg-slate-100 dark:group-hover:bg-slate-800 px-4 py-3 whitespace-nowrap shadow-[2px_0_5px_-2px_rgba(0,0,0,0.3)]">
+<div class="flex items-center">
+<div class="flex-shrink-0 h-8 w-8 relative">
+<img alt="Employee avatar" class="h-8 w-8 rounded-full opacity-50" data-alt="Employee avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAEATxEg2pFKyPtJakd1WavVtCiZQ8XbLh_k1DegMmNDrWR07e8ySQ1KXDs1eRua1IV0_-adklrDXJYqNiY-RzAnzcqjsWUSLCWZNYu1lFvyG0nqCSNXD3ZUD6Dg-6rI6yCTWtfiMVVP46MHElwC1sF1HuKcVXuS3DsFf4_72vOfTWWLMev0BBi2XT8n7sBx5OwjGFCLj51ohjEezHbIj4JBcab1jR4C3XNxlvSXpIVyK2iyzR9mQkRXh3FhI645wwnPcRNigR7cE7o"/>
+<div class="absolute -top-1 -right-1 bg-amber-500 rounded-full p-0.5 border border-surface-dark"><span class="material-icons text-[10px] text-white block">priority_high</span></div>
+</div>
+<div class="ml-3">
+<div class="text-sm font-medium text-slate-900 dark:text-white">Gomez, Roberto</div>
+<div class="text-xs text-amber-500">Ops. Manager • OPS-102</div>
+</div>
+</div>
+</td>
+<td class="px-4 py-3 whitespace-nowrap text-right text-sm text-slate-500 dark:text-slate-300">6,200.00</td>
+<td class="px-4 py-3 whitespace-nowrap text-right text-sm text-slate-500 dark:text-slate-300">102.50</td>
+<td class="px-4 py-3 whitespace-nowrap text-right text-sm text-slate-500 dark:text-slate-300">
+<input class="table-cell-input" type="text" value="350.00"/>
+</td>
+<td class="px-4 py-3 whitespace-nowrap text-right text-sm text-slate-500 dark:text-slate-300">
+<input class="table-cell-input text-slate-400" type="text" value="0.00"/>
+</td>
+<td class="px-4 py-3 whitespace-nowrap text-right text-sm text-amber-500 font-bold bg-amber-500/10 rounded">ERROR</td>
+<td class="px-4 py-3 whitespace-nowrap text-right text-sm text-slate-500 dark:text-slate-300">320.10</td>
+<td class="px-4 py-3 whitespace-nowrap text-right text-sm text-slate-500 dark:text-slate-300">1,500.00</td>
+<td class="px-4 py-3 whitespace-nowrap text-right text-sm text-slate-500 dark:text-slate-300">0.00</td>
+<td class="px-4 py-3 whitespace-nowrap text-right text-sm font-medium text-emerald-600 dark:text-emerald-400 bg-slate-50 dark:bg-slate-800/30">6,652.50</td>
+<td class="px-4 py-3 whitespace-nowrap text-right text-sm font-medium text-rose-600 dark:text-rose-400 bg-slate-50 dark:bg-slate-800/30">1,820.10</td>
+<td class="px-4 py-3 whitespace-nowrap text-right text-sm font-bold text-slate-900 dark:text-white bg-primary/5 border-l dark:border-slate-700">4,832.40</td>
+<td class="sticky-col-right px-4 py-3 whitespace-nowrap text-center text-sm font-medium group-hover:bg-slate-100 dark:group-hover:bg-slate-800 bg-slate-50 dark:bg-table-row-even">
+<button class="text-slate-400 hover:text-primary"><span class="material-icons text-[18px]">more_vert</span></button>
+</td>
+</tr>
+<!-- Row 3: Normal -->
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors group">
+<td class="sticky-col-left bg-white dark:bg-table-row-odd group-hover:bg-slate-50 dark:group-hover:bg-slate-800/50 px-4 py-3 whitespace-nowrap shadow-[2px_0_5px_-2px_rgba(0,0,0,0.3)]">
+<div class="flex items-center">
+<div class="flex-shrink-0 h-8 w-8">
+<img alt="Employee avatar" class="h-8 w-8 rounded-full" data-alt="Employee avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBglEpWYTJZXmL3N8_-7QRDBrb1A7lqx3z959D_1x2X_Ab84ruqrxzngrA-Cw_jt_vdv-T6ljdXIW5ZrQTr1Q-O1l25O2WIijS7UmQLQyPDC_7uNBbUivDi6hbkhw1g-Ms9O4defnTktCPgPy76cpaL8gvqhuOn8qg3n4vQ5Fn1srDnhAItmPxEL4Ws8oOHz0_EtARYohRqtEqbpq5_X38WW81vBx7v1NqrUJ_bBahfjPnL274UGWOdHP-Ogdc2jpkD1NJA5vB5gVk9"/>
+</div>
+<div class="ml-3">
+<div class="text-sm font-medium text-slate-900 dark:text-white">Ruiz, Carlos</div>
+<div class="text-xs text-slate-500 dark:text-slate-400">Desarrollador • TEC-044</div>
+</div>
+</div>
+</td>
+<td class="px-4 py-3 whitespace-nowrap text-right text-sm text-slate-500 dark:text-slate-300">5,000.00</td>
+<td class="px-4 py-3 whitespace-nowrap text-right text-sm text-slate-500 dark:text-slate-300">0.00</td>
+<td class="px-4 py-3 whitespace-nowrap text-right text-sm text-slate-500 dark:text-slate-300">
+<input class="table-cell-input text-emerald-400 font-medium" type="text" value="1,200.00"/>
+</td>
+<td class="px-4 py-3 whitespace-nowrap text-right text-sm text-slate-500 dark:text-slate-300">
+<input class="table-cell-input text-slate-400" type="text" value="0.00"/>
+</td>
+<td class="px-4 py-3 whitespace-nowrap text-right text-sm text-slate-500 dark:text-slate-300">650.00</td>
+<td class="px-4 py-3 whitespace-nowrap text-right text-sm text-slate-500 dark:text-slate-300">220.00</td>
+<td class="px-4 py-3 whitespace-nowrap text-right text-sm text-slate-500 dark:text-slate-300">0.00</td>
+<td class="px-4 py-3 whitespace-nowrap text-right text-sm text-slate-500 dark:text-slate-300">0.00</td>
+<td class="px-4 py-3 whitespace-nowrap text-right text-sm font-medium text-emerald-600 dark:text-emerald-400 bg-slate-50 dark:bg-slate-800/30">6,200.00</td>
+<td class="px-4 py-3 whitespace-nowrap text-right text-sm font-medium text-rose-600 dark:text-rose-400 bg-slate-50 dark:bg-slate-800/30">870.00</td>
+<td class="px-4 py-3 whitespace-nowrap text-right text-sm font-bold text-slate-900 dark:text-white bg-primary/5 border-l dark:border-slate-700">5,330.00</td>
+<td class="sticky-col-right px-4 py-3 whitespace-nowrap text-center text-sm font-medium group-hover:bg-slate-50 dark:group-hover:bg-slate-800/50 bg-white dark:bg-table-row-odd">
+<button class="text-slate-400 hover:text-primary"><span class="material-icons text-[18px]">more_vert</span></button>
+</td>
+</tr>
+<!-- Row 4: Negative Net Pay (Critical Error) -->
+<tr class="bg-slate-50 dark:bg-table-row-even hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors group border-l-2 border-red-500">
+<td class="sticky-col-left bg-slate-50 dark:bg-table-row-even group-hover:bg-slate-100 dark:group-hover:bg-slate-800 px-4 py-3 whitespace-nowrap shadow-[2px_0_5px_-2px_rgba(0,0,0,0.3)]">
+<div class="flex items-center">
+<div class="flex-shrink-0 h-8 w-8 relative">
+<img alt="Employee avatar" class="h-8 w-8 rounded-full opacity-50 grayscale" data-alt="Employee avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDcvXpV4iHakp4Yv5W6fHB3r62MiJJhiZRxrx-5mFFXknVPm7OAVMQ_7q_9bHsN85_Gs4AYL9t42Rc0NkZWxPs-bqEt1hVL60vHsCDM2V5QNsRKBu8wkXyf7wHlTNCoxybK4g5YcAxpfSLibwTZl32HewXut0Ld9LgQkwU1MJyBGex4cHe_vYfoRi5VD7CHrr1Q9hjm8CfHmzS3644SRDAyR_snKDRaJlYUAKYS2WhqlPJMHlNAjjN9QqC64Es51cI3p4niZdA4pKou"/>
+<div class="absolute -top-1 -right-1 bg-red-500 rounded-full p-0.5 border border-surface-dark"><span class="material-icons text-[10px] text-white block">close</span></div>
+</div>
+<div class="ml-3">
+<div class="text-sm font-medium text-red-500 dark:text-red-400">Vargas, Luis</div>
+<div class="text-xs text-red-400/70">Asistente • ADM-099</div>
+</div>
+</div>
+</td>
+<td class="px-4 py-3 whitespace-nowrap text-right text-sm text-slate-500 dark:text-slate-300">1,200.00</td>
+<td class="px-4 py-3 whitespace-nowrap text-right text-sm text-slate-500 dark:text-slate-300">0.00</td>
+<td class="px-4 py-3 whitespace-nowrap text-right text-sm text-slate-500 dark:text-slate-300">
+<input class="table-cell-input text-slate-400" type="text" value="0.00"/>
+</td>
+<td class="px-4 py-3 whitespace-nowrap text-right text-sm text-slate-500 dark:text-slate-300">
+<input class="table-cell-input text-slate-400" type="text" value="0.00"/>
+</td>
+<td class="px-4 py-3 whitespace-nowrap text-right text-sm text-slate-500 dark:text-slate-300">140.00</td>
+<td class="px-4 py-3 whitespace-nowrap text-right text-sm text-slate-500 dark:text-slate-300">0.00</td>
+<td class="px-4 py-3 whitespace-nowrap text-right text-sm text-slate-500 dark:text-slate-300 font-bold text-red-400">1,500.00</td>
+<td class="px-4 py-3 whitespace-nowrap text-right text-sm text-slate-500 dark:text-slate-300">50.00</td>
+<td class="px-4 py-3 whitespace-nowrap text-right text-sm font-medium text-emerald-600 dark:text-emerald-400 bg-slate-50 dark:bg-slate-800/30">1,200.00</td>
+<td class="px-4 py-3 whitespace-nowrap text-right text-sm font-medium text-rose-600 dark:text-rose-400 bg-slate-50 dark:bg-slate-800/30">1,690.00</td>
+<td class="px-4 py-3 whitespace-nowrap text-right text-sm font-bold text-red-500 bg-red-500/10 border-l border-red-500/20">-490.00</td>
+<td class="sticky-col-right px-4 py-3 whitespace-nowrap text-center text-sm font-medium group-hover:bg-slate-100 dark:group-hover:bg-slate-800 bg-slate-50 dark:bg-table-row-even">
+<button class="text-red-400 hover:text-red-500"><span class="material-icons text-[18px]">error</span></button>
+</td>
+</tr>
+<!-- Row 5: Normal -->
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors group">
+<td class="sticky-col-left bg-white dark:bg-table-row-odd group-hover:bg-slate-50 dark:group-hover:bg-slate-800/50 px-4 py-3 whitespace-nowrap shadow-[2px_0_5px_-2px_rgba(0,0,0,0.3)]">
+<div class="flex items-center">
+<div class="flex-shrink-0 h-8 w-8">
+<img alt="Employee avatar" class="h-8 w-8 rounded-full" data-alt="Employee avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCnPxyKyft6Y4b3v_vqHeRyuPjoxpQx5bjvFrIF6fu0FvL6JiGKBatKvIMpyK6ABny_EQmuGeSRTkF4GKPyZ5h6RxZcnlZCPTDdJ35VTQxvqQGpzyLW0KhQEEluF5icweDEp8ATPn_NBN68udYQCyVtHAH0wZUqCfEJta0MTP8QidaBvjCQZKW1g40OEaDgxIeslsPpGDTqJsQsUxCQ1EQe7yBgcrBDMKpxsXQZHDZD1MzKI1YTw04g-o1NPIYoe86Htl7avJ41hMCh"/>
+</div>
+<div class="ml-3">
+<div class="text-sm font-medium text-slate-900 dark:text-white">Mendoza, Sofia</div>
+<div class="text-xs text-slate-500 dark:text-slate-400">Marketing • MKT-012</div>
+</div>
+</div>
+</td>
+<td class="px-4 py-3 whitespace-nowrap text-right text-sm text-slate-500 dark:text-slate-300">3,800.00</td>
+<td class="px-4 py-3 whitespace-nowrap text-right text-sm text-slate-500 dark:text-slate-300">0.00</td>
+<td class="px-4 py-3 whitespace-nowrap text-right text-sm text-slate-500 dark:text-slate-300">
+<input class="table-cell-input text-slate-400" type="text" value="0.00"/>
+</td>
+<td class="px-4 py-3 whitespace-nowrap text-right text-sm text-slate-500 dark:text-slate-300">
+<input class="table-cell-input" type="text" value="200.00"/>
+</td>
+<td class="px-4 py-3 whitespace-nowrap text-right text-sm text-slate-500 dark:text-slate-300">490.00</td>
+<td class="px-4 py-3 whitespace-nowrap text-right text-sm text-slate-500 dark:text-slate-300">85.00</td>
+<td class="px-4 py-3 whitespace-nowrap text-right text-sm text-slate-500 dark:text-slate-300">0.00</td>
+<td class="px-4 py-3 whitespace-nowrap text-right text-sm text-slate-500 dark:text-slate-300">15.00</td>
+<td class="px-4 py-3 whitespace-nowrap text-right text-sm font-medium text-emerald-600 dark:text-emerald-400 bg-slate-50 dark:bg-slate-800/30">4,000.00</td>
+<td class="px-4 py-3 whitespace-nowrap text-right text-sm font-medium text-rose-600 dark:text-rose-400 bg-slate-50 dark:bg-slate-800/30">590.00</td>
+<td class="px-4 py-3 whitespace-nowrap text-right text-sm font-bold text-slate-900 dark:text-white bg-primary/5 border-l dark:border-slate-700">3,410.00</td>
+<td class="sticky-col-right px-4 py-3 whitespace-nowrap text-center text-sm font-medium group-hover:bg-slate-50 dark:group-hover:bg-slate-800/50 bg-white dark:bg-table-row-odd">
+<button class="text-slate-400 hover:text-primary"><span class="material-icons text-[18px]">more_vert</span></button>
+</td>
+</tr>
+<!-- Row 6: Normal -->
+<tr class="bg-slate-50 dark:bg-table-row-even hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors group">
+<td class="sticky-col-left bg-slate-50 dark:bg-table-row-even group-hover:bg-slate-100 dark:group-hover:bg-slate-800 px-4 py-3 whitespace-nowrap shadow-[2px_0_5px_-2px_rgba(0,0,0,0.3)]">
+<div class="flex items-center">
+<div class="flex-shrink-0 h-8 w-8">
+<img alt="Employee avatar" class="h-8 w-8 rounded-full" data-alt="Employee avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCqQdi_IoR1Xjf6b_gXTjLLxyKMOWJ3V-v49vGWDXVfGZRjN_kIccoJDkNeJ98Q6S6rJO59ZeMTxroFfjMpsEOc22tKRpCgiq-50_KdH91clJb7d1Kx1zIDxCcyQn91eMkyz4OEkwpip81pBWkqzVaB6vXe9CB_Oog9fDfCAI8HE7UtiF275VR_BBgWJV37y456d1o9cIZYMjHfOp4i5-SL-3b7PsqoVM25wL6EbqooGcGzUvG_0ZVDl0mdkOWmBN9DQOwEeIcsNPOC"/>
+</div>
+<div class="ml-3">
+<div class="text-sm font-medium text-slate-900 dark:text-white">Paredes, Jorge</div>
+<div class="text-xs text-slate-500 dark:text-slate-400">Logística • LOG-005</div>
+</div>
+</div>
+</td>
+<td class="px-4 py-3 whitespace-nowrap text-right text-sm text-slate-500 dark:text-slate-300">2,800.00</td>
+<td class="px-4 py-3 whitespace-nowrap text-right text-sm text-slate-500 dark:text-slate-300">102.50</td>
+<td class="px-4 py-3 whitespace-nowrap text-right text-sm text-slate-500 dark:text-slate-300">
+<input class="table-cell-input text-emerald-400 font-medium" type="text" value="450.00"/>
+</td>
+<td class="px-4 py-3 whitespace-nowrap text-right text-sm text-slate-500 dark:text-slate-300">
+<input class="table-cell-input text-slate-400" type="text" value="0.00"/>
+</td>
+<td class="px-4 py-3 whitespace-nowrap text-right text-sm text-slate-500 dark:text-slate-300">360.00</td>
+<td class="px-4 py-3 whitespace-nowrap text-right text-sm text-slate-500 dark:text-slate-300">0.00</td>
+<td class="px-4 py-3 whitespace-nowrap text-right text-sm text-slate-500 dark:text-slate-300">0.00</td>
+<td class="px-4 py-3 whitespace-nowrap text-right text-sm text-slate-500 dark:text-slate-300">0.00</td>
+<td class="px-4 py-3 whitespace-nowrap text-right text-sm font-medium text-emerald-600 dark:text-emerald-400 bg-slate-50 dark:bg-slate-800/30">3,352.50</td>
+<td class="px-4 py-3 whitespace-nowrap text-right text-sm font-medium text-rose-600 dark:text-rose-400 bg-slate-50 dark:bg-slate-800/30">360.00</td>
+<td class="px-4 py-3 whitespace-nowrap text-right text-sm font-bold text-slate-900 dark:text-white bg-primary/5 border-l dark:border-slate-700">2,992.50</td>
+<td class="sticky-col-right px-4 py-3 whitespace-nowrap text-center text-sm font-medium group-hover:bg-slate-100 dark:group-hover:bg-slate-800 bg-slate-50 dark:bg-table-row-even">
+<button class="text-slate-400 hover:text-primary"><span class="material-icons text-[18px]">more_vert</span></button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<!-- Pagination -->
+<div class="flex items-center justify-between mt-4">
+<div class="text-sm text-slate-500 dark:text-slate-400">
+                        Mostrando <span class="font-medium text-slate-900 dark:text-white">1</span> a <span class="font-medium text-slate-900 dark:text-white">6</span> de <span class="font-medium text-slate-900 dark:text-white">124</span> empleados
+                    </div>
+<div class="flex gap-2">
+<button class="px-3 py-1 text-sm bg-white dark:bg-surface-dark border dark:border-border-dark rounded hover:bg-slate-50 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-300 disabled:opacity-50">Anterior</button>
+<button class="px-3 py-1 text-sm bg-white dark:bg-surface-dark border dark:border-border-dark rounded hover:bg-slate-50 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-300">Siguiente</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Sidebar: Summary & Actions -->
+<aside class="w-80 bg-white dark:bg-surface-darker border-l dark:border-border-dark flex flex-col shrink-0 z-10 shadow-xl overflow-y-auto">
+<div class="p-6">
+<h3 class="text-lg font-bold dark:text-white mb-6 flex items-center gap-2">
+<span class="material-icons text-primary text-[22px]">analytics</span> Resumen de Totales
+                </h3>
+<!-- Top Cards -->
+<div class="space-y-4 mb-8">
+<div class="bg-gradient-to-br from-primary/20 to-primary/5 dark:from-primary/30 dark:to-transparent p-4 rounded-xl border border-primary/20">
+<p class="text-sm font-medium text-slate-600 dark:text-slate-300 mb-1">Total Bruto</p>
+<p class="text-2xl font-bold text-slate-900 dark:text-white">S/. 450,200.00</p>
+<div class="mt-2 text-xs flex items-center gap-1 text-emerald-500">
+<span class="material-icons text-[14px]">arrow_upward</span> +2.5% vs. mes anterior
+                        </div>
+</div>
+<div class="bg-surface-dark border border-slate-200 dark:border-border-dark p-4 rounded-xl">
+<p class="text-sm font-medium text-slate-600 dark:text-slate-400 mb-1">Total Descuentos</p>
+<p class="text-xl font-bold text-rose-500">S/. 58,420.00</p>
+<div class="w-full bg-slate-200 dark:bg-slate-700 h-1.5 rounded-full mt-3 overflow-hidden">
+<div class="bg-rose-500 h-1.5 rounded-full" style="width: 13%"></div>
+</div>
+<p class="text-xs text-slate-500 mt-1">13% del bruto</p>
+</div>
+<div class="bg-surface-dark border border-slate-200 dark:border-border-dark p-4 rounded-xl shadow-lg dark:shadow-black/50">
+<p class="text-sm font-medium text-slate-600 dark:text-slate-400 mb-1">Neto a Pagar</p>
+<p class="text-2xl font-bold text-primary dark:text-blue-400">S/. 391,780.00</p>
+</div>
+</div>
+<hr class="border-slate-200 dark:border-border-dark mb-6"/>
+<!-- Company Cost Breakdown -->
+<div class="mb-8">
+<h4 class="text-sm font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-4">Costo Empresa</h4>
+<div class="space-y-4">
+<div class="flex justify-between items-center text-sm">
+<span class="text-slate-600 dark:text-slate-300 flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-blue-500"></span> EsSalud (9%)
+                            </span>
+<span class="font-medium dark:text-white">40,518.00</span>
+</div>
+<div class="flex justify-between items-center text-sm">
+<span class="text-slate-600 dark:text-slate-300 flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-indigo-500"></span> SCTR
+                            </span>
+<span class="font-medium dark:text-white">4,500.00</span>
+</div>
+<div class="flex justify-between items-center text-sm">
+<span class="text-slate-600 dark:text-slate-300 flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-purple-500"></span> Seguro Vida Ley
+                            </span>
+<span class="font-medium dark:text-white">2,250.00</span>
+</div>
+<div class="flex justify-between items-center text-sm">
+<span class="text-slate-600 dark:text-slate-300 flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-slate-500"></span> Senati
+                            </span>
+<span class="font-medium dark:text-white">1,350.00</span>
+</div>
+<div class="pt-3 border-t dark:border-border-dark flex justify-between items-center mt-2">
+<span class="font-bold text-slate-700 dark:text-white">Costo Total</span>
+<span class="font-bold text-slate-900 dark:text-white text-lg">S/. 498,818.00</span>
+</div>
+</div>
+</div>
+<!-- Export Section -->
+<div class="mb-4">
+<h4 class="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-500 mb-3">Exportar</h4>
+<div class="grid grid-cols-2 gap-2">
+<button class="flex items-center justify-center gap-2 py-2 px-3 border dark:border-border-dark rounded-lg hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors">
+<span class="material-icons text-green-600 text-[18px]">description</span>
+<span class="text-xs font-medium dark:text-slate-300">Excel</span>
+</button>
+<button class="flex items-center justify-center gap-2 py-2 px-3 border dark:border-border-dark rounded-lg hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors">
+<span class="material-icons text-red-500 text-[18px]">picture_as_pdf</span>
+<span class="text-xs font-medium dark:text-slate-300">PDF</span>
+</button>
+<button class="flex items-center justify-center gap-2 py-2 px-3 border dark:border-border-dark rounded-lg hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors col-span-2">
+<span class="material-icons text-blue-500 text-[18px]">account_balance</span>
+<span class="text-xs font-medium dark:text-slate-300">Archivo Banco (TXT)</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Bottom Actions -->
+<div class="mt-auto p-6 bg-slate-50 dark:bg-black/20 border-t dark:border-border-dark">
+<button class="w-full bg-primary hover:bg-primary-hover text-white font-bold py-3 px-4 rounded-xl shadow-lg shadow-primary/30 flex items-center justify-center gap-2 transition-all hover:scale-[1.02]">
+<span class="material-icons">check_circle</span>
+                    Aprobar y Cerrar Planilla
+                </button>
+<p class="text-xs text-center text-slate-500 mt-3">Al aprobar, se generarán las boletas y asientos contables.</p>
+</div>
+</aside>
+</main>
+</body></html>

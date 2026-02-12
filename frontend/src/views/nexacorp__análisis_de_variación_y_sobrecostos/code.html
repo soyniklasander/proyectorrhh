@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>NexaCorp: Análisis de Variación y Sobrecostos</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#1152d4",
+                        "primary-light": "#3b76e8",
+                        "primary-dark": "#0a3a9e",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#101622",
+                        "surface-dark": "#1a2234",
+                        "surface-light": "#ffffff",
+                    },
+                    fontFamily: {
+                        "display": ["Manrope", "sans-serif"]
+                    },
+                    borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "2xl": "1rem", "full": "9999px" },
+                },
+            },
+        }
+    </script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        /* Custom scrollbar for table */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #101622;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #2d3748;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #4a5568;
+        }
+        
+        /* Chart bar animation simulation */
+        .bar-anim {
+            transition: height 1s ease-out;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-800 dark:text-slate-200 font-display min-h-screen flex flex-col">
+<!-- Top Navigation / Header -->
+<header class="bg-white dark:bg-surface-dark border-b border-slate-200 dark:border-slate-800 sticky top-0 z-50">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex justify-between h-20 items-center">
+<div class="flex items-center gap-4">
+<div class="flex-shrink-0 flex items-center gap-3">
+<div class="w-10 h-10 bg-primary rounded-lg flex items-center justify-center text-white font-bold text-xl shadow-lg shadow-primary/30">
+                            N
+                        </div>
+<div class="hidden md:block">
+<h1 class="text-xl font-bold tracking-tight text-slate-900 dark:text-white leading-none">NexaCorp</h1>
+<p class="text-xs text-slate-500 dark:text-slate-400 font-medium mt-1">Módulo de Analítica Financiera</p>
+</div>
+</div>
+<div class="h-8 w-px bg-slate-200 dark:bg-slate-700 mx-2 hidden md:block"></div>
+<h2 class="text-lg font-semibold text-slate-700 dark:text-slate-200 hidden md:block">Análisis de Variación y Sobrecostos</h2>
+</div>
+<div class="flex items-center gap-4">
+<button class="p-2 rounded-lg text-slate-500 hover:text-primary dark:text-slate-400 dark:hover:text-primary transition-colors">
+<span class="material-icons">notifications</span>
+</button>
+<div class="flex items-center gap-3 pl-4 border-l border-slate-200 dark:border-slate-700">
+<div class="text-right hidden sm:block">
+<p class="text-sm font-medium text-slate-900 dark:text-white">Carlos Rivera</p>
+<p class="text-xs text-slate-500 dark:text-slate-400">Analista Financiero</p>
+</div>
+<img alt="User profile photo" class="h-10 w-10 rounded-full border-2 border-slate-200 dark:border-slate-700 object-cover" data-alt="User profile picture of a man" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC0smLs7SSsn1TROThRy0jvT4DKC6jyivLMRWxxQwFOY_EhJpX--0QbeiuEjmCVwhffDf2lN3zMztd0Uqq15TvfC28frRAtFXPmNXWGFzmMolDhB2CBwOBjwn9RcbS8HT1sPcPH4Fd_nweN_YaSeVsp6zFC1KTNG_gVZCuA_3TBReebQ5PKyG63Hlha2jCJ477wTMA_QJLwQ5UoKnJFFZuDAvhc_ipIfZV2W673ReGf4VS-Je9YxZJtVpQJ5wEsh8ZQyZbLF1tkGi72"/>
+</div>
+</div>
+</div>
+</div>
+</header>
+<!-- Main Content -->
+<main class="flex-1 py-8 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full space-y-8">
+<!-- Controls & Title for Mobile -->
+<div class="md:hidden mb-4">
+<h2 class="text-xl font-bold text-white mb-4">Análisis de Variación y Sobrecostos</h2>
+</div>
+<!-- Filter Bar -->
+<div class="bg-white dark:bg-surface-dark rounded-xl p-4 shadow-sm border border-slate-200 dark:border-slate-800 flex flex-col md:flex-row gap-4 justify-between items-center">
+<div class="flex flex-col sm:flex-row gap-4 w-full md:w-auto">
+<div class="relative group">
+<div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+<span class="material-icons text-slate-400 text-sm">calendar_today</span>
+</div>
+<select class="pl-10 pr-8 py-2.5 bg-background-light dark:bg-background-dark border border-slate-200 dark:border-slate-700 rounded-lg text-sm text-slate-700 dark:text-slate-300 focus:ring-2 focus:ring-primary focus:border-transparent outline-none appearance-none w-full sm:w-48 transition-all hover:border-primary/50">
+<option>Últimos 6 Meses</option>
+<option>Año Actual (2023)</option>
+<option>Año Anterior (2022)</option>
+</select>
+</div>
+<div class="relative group">
+<div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+<span class="material-icons text-slate-400 text-sm">domain</span>
+</div>
+<select class="pl-10 pr-8 py-2.5 bg-background-light dark:bg-background-dark border border-slate-200 dark:border-slate-700 rounded-lg text-sm text-slate-700 dark:text-slate-300 focus:ring-2 focus:ring-primary focus:border-transparent outline-none appearance-none w-full sm:w-56 transition-all hover:border-primary/50">
+<option value="all">Todos los Centros</option>
+<option value="cocina">Cocina</option>
+<option value="salon">Salón</option>
+<option value="admin">Administración</option>
+</select>
+</div>
+</div>
+<div class="flex gap-3 w-full md:w-auto">
+<button class="flex-1 md:flex-none flex items-center justify-center gap-2 px-4 py-2.5 bg-background-light dark:bg-background-dark hover:bg-slate-200 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300 rounded-lg text-sm font-medium transition-colors border border-slate-200 dark:border-slate-700">
+<span class="material-icons text-lg">print</span>
+<span class="hidden sm:inline">Imprimir</span>
+</button>
+<button class="flex-1 md:flex-none flex items-center justify-center gap-2 px-5 py-2.5 bg-primary hover:bg-primary-dark text-white rounded-lg text-sm font-medium shadow-lg shadow-primary/25 transition-all active:scale-95">
+<span class="material-icons text-lg">file_download</span>
+                    Exportar Excel
+                </button>
+</div>
+</div>
+<!-- KPI Grid -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<!-- Total Payroll -->
+<div class="bg-white dark:bg-surface-dark rounded-xl p-6 border border-slate-200 dark:border-slate-800 shadow-sm relative overflow-hidden group">
+<div class="absolute right-0 top-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+<span class="material-icons text-6xl text-slate-400">account_balance_wallet</span>
+</div>
+<p class="text-sm font-medium text-slate-500 dark:text-slate-400 mb-1">Total Planilla (YTD)</p>
+<h3 class="text-3xl font-bold text-slate-900 dark:text-white mb-4">S/ 4,250,200</h3>
+<div class="flex items-center gap-2">
+<span class="flex items-center text-xs font-semibold text-emerald-500 bg-emerald-500/10 px-2 py-1 rounded-full">
+<span class="material-icons text-sm mr-1">trending_up</span> +2.4%
+                    </span>
+<span class="text-xs text-slate-500 dark:text-slate-500">vs mes anterior</span>
+</div>
+</div>
+<!-- Overtime Cost -->
+<div class="bg-white dark:bg-surface-dark rounded-xl p-6 border border-slate-200 dark:border-slate-800 shadow-sm relative overflow-hidden group">
+<div class="absolute right-0 top-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+<span class="material-icons text-6xl text-orange-400">access_time</span>
+</div>
+<p class="text-sm font-medium text-slate-500 dark:text-slate-400 mb-1">Costo Total Horas Extras</p>
+<h3 class="text-3xl font-bold text-slate-900 dark:text-white mb-4">S/ 527,120</h3>
+<div class="flex items-center gap-2">
+<span class="flex items-center text-xs font-semibold text-rose-500 bg-rose-500/10 px-2 py-1 rounded-full">
+<span class="material-icons text-sm mr-1">trending_up</span> +8.1%
+                    </span>
+<span class="text-xs text-slate-500 dark:text-slate-500">Alerta de incremento</span>
+</div>
+</div>
+<!-- Central KPI: % Overcost -->
+<div class="bg-gradient-to-br from-primary/90 to-primary-dark rounded-xl p-6 border border-primary/50 shadow-lg shadow-primary/20 relative overflow-hidden text-white">
+<div class="absolute -right-6 -bottom-6 w-32 h-32 bg-white/10 rounded-full blur-2xl"></div>
+<div class="relative z-10">
+<div class="flex justify-between items-start mb-2">
+<p class="text-sm font-medium text-blue-100">KPI: % Sobrecosto por HE</p>
+<span class="material-icons text-blue-200 bg-white/20 p-1 rounded-md">analytics</span>
+</div>
+<h3 class="text-4xl font-bold mb-2">12.4%</h3>
+<p class="text-sm text-blue-100 mb-4 opacity-90">Sobre la planilla total</p>
+<div class="w-full bg-black/20 rounded-full h-1.5 mb-2 overflow-hidden">
+<div class="bg-white h-1.5 rounded-full" style="width: 65%"></div>
+</div>
+<div class="flex justify-between text-xs text-blue-200">
+<span>Meta: &lt; 10%</span>
+<span class="font-bold text-white">Desviación: +2.4%</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Main Chart Section -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+<div class="lg:col-span-3 bg-white dark:bg-surface-dark rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm p-6">
+<div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8 gap-4">
+<div>
+<h3 class="text-lg font-bold text-slate-900 dark:text-white">Evolución Mensual: Básico vs. Horas Extras</h3>
+<p class="text-sm text-slate-500 dark:text-slate-400">Comparativa de peso salarial últimos 6 meses</p>
+</div>
+<div class="flex flex-wrap items-center gap-4 text-xs sm:text-sm">
+<div class="flex items-center gap-2">
+<span class="w-3 h-3 rounded-full bg-primary"></span>
+<span class="text-slate-600 dark:text-slate-300">Básico</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="w-3 h-3 rounded-full bg-cyan-400"></span>
+<span class="text-slate-600 dark:text-slate-300">HE 25%</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="w-3 h-3 rounded-full bg-amber-400"></span>
+<span class="text-slate-600 dark:text-slate-300">HE 35%</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="w-3 h-3 rounded-full bg-indigo-500"></span>
+<span class="text-slate-600 dark:text-slate-300">Nocturna</span>
+</div>
+</div>
+</div>
+<!-- Custom CSS Chart Implementation -->
+<div class="relative h-64 w-full flex items-end justify-between gap-2 sm:gap-4 px-2">
+<!-- Y-Axis Grid Lines -->
+<div class="absolute inset-0 flex flex-col justify-between pointer-events-none z-0">
+<div class="w-full border-t border-slate-100 dark:border-slate-700/50 relative"><span class="absolute -top-3 left-0 text-[10px] text-slate-400">100%</span></div>
+<div class="w-full border-t border-slate-100 dark:border-slate-700/50 relative"><span class="absolute -top-3 left-0 text-[10px] text-slate-400">75%</span></div>
+<div class="w-full border-t border-slate-100 dark:border-slate-700/50 relative"><span class="absolute -top-3 left-0 text-[10px] text-slate-400">50%</span></div>
+<div class="w-full border-t border-slate-100 dark:border-slate-700/50 relative"><span class="absolute -top-3 left-0 text-[10px] text-slate-400">25%</span></div>
+<div class="w-full border-t border-slate-100 dark:border-slate-700/50 relative"><span class="absolute -top-3 left-0 text-[10px] text-slate-400">0%</span></div>
+</div>
+<!-- Bars -->
+<!-- Month 1 -->
+<div class="h-full flex flex-col justify-end w-full group relative z-10">
+<div class="w-full rounded-t-sm flex flex-col-reverse h-[75%] max-w-[60px] mx-auto overflow-hidden">
+<!-- Nocturna -->
+<div class="bg-indigo-500 w-full h-[5%] hover:opacity-90 transition-opacity relative group/seg" title="Nocturna: S/ 2,400"></div>
+<!-- 35% -->
+<div class="bg-amber-400 w-full h-[8%] hover:opacity-90 transition-opacity relative group/seg" title="HE 35%: S/ 4,100"></div>
+<!-- 25% -->
+<div class="bg-cyan-400 w-full h-[12%] hover:opacity-90 transition-opacity relative group/seg" title="HE 25%: S/ 6,200"></div>
+<!-- Basico -->
+<div class="bg-primary w-full h-[75%] hover:opacity-90 transition-opacity relative group/seg" title="Básico: S/ 45,000"></div>
+</div>
+<div class="text-center mt-3 text-xs font-medium text-slate-500 dark:text-slate-400">ENE</div>
+</div>
+<!-- Month 2 -->
+<div class="h-full flex flex-col justify-end w-full group relative z-10">
+<div class="w-full rounded-t-sm flex flex-col-reverse h-[78%] max-w-[60px] mx-auto overflow-hidden">
+<div class="bg-indigo-500 w-full h-[6%] hover:opacity-90 transition-opacity"></div>
+<div class="bg-amber-400 w-full h-[9%] hover:opacity-90 transition-opacity"></div>
+<div class="bg-cyan-400 w-full h-[10%] hover:opacity-90 transition-opacity"></div>
+<div class="bg-primary w-full h-[75%] hover:opacity-90 transition-opacity"></div>
+</div>
+<div class="text-center mt-3 text-xs font-medium text-slate-500 dark:text-slate-400">FEB</div>
+</div>
+<!-- Month 3 -->
+<div class="h-full flex flex-col justify-end w-full group relative z-10">
+<div class="w-full rounded-t-sm flex flex-col-reverse h-[82%] max-w-[60px] mx-auto overflow-hidden">
+<div class="bg-indigo-500 w-full h-[5%] hover:opacity-90 transition-opacity"></div>
+<div class="bg-amber-400 w-full h-[12%] hover:opacity-90 transition-opacity"></div>
+<div class="bg-cyan-400 w-full h-[15%] hover:opacity-90 transition-opacity"></div>
+<div class="bg-primary w-full h-[68%] hover:opacity-90 transition-opacity"></div>
+</div>
+<div class="text-center mt-3 text-xs font-medium text-slate-500 dark:text-slate-400">MAR</div>
+</div>
+<!-- Month 4 -->
+<div class="h-full flex flex-col justify-end w-full group relative z-10">
+<div class="w-full rounded-t-sm flex flex-col-reverse h-[76%] max-w-[60px] mx-auto overflow-hidden">
+<div class="bg-indigo-500 w-full h-[4%] hover:opacity-90 transition-opacity"></div>
+<div class="bg-amber-400 w-full h-[8%] hover:opacity-90 transition-opacity"></div>
+<div class="bg-cyan-400 w-full h-[10%] hover:opacity-90 transition-opacity"></div>
+<div class="bg-primary w-full h-[78%] hover:opacity-90 transition-opacity"></div>
+</div>
+<div class="text-center mt-3 text-xs font-medium text-slate-500 dark:text-slate-400">ABR</div>
+</div>
+<!-- Month 5 -->
+<div class="h-full flex flex-col justify-end w-full group relative z-10">
+<div class="w-full rounded-t-sm flex flex-col-reverse h-[90%] max-w-[60px] mx-auto overflow-hidden shadow-[0_0_15px_rgba(17,82,212,0.15)] ring-1 ring-primary/20">
+<div class="bg-indigo-500 w-full h-[8%] hover:opacity-90 transition-opacity"></div>
+<div class="bg-amber-400 w-full h-[15%] hover:opacity-90 transition-opacity"></div>
+<div class="bg-cyan-400 w-full h-[18%] hover:opacity-90 transition-opacity"></div>
+<div class="bg-primary w-full h-[59%] hover:opacity-90 transition-opacity"></div>
+</div>
+<div class="text-center mt-3 text-xs font-bold text-primary dark:text-primary-light">MAY</div>
+<!-- Alert Badge -->
+<div class="absolute -top-4 left-1/2 -translate-x-1/2 bg-red-500 text-white text-[10px] px-1.5 rounded font-bold animate-bounce z-20">!</div>
+</div>
+<!-- Month 6 -->
+<div class="h-full flex flex-col justify-end w-full group relative z-10">
+<div class="w-full rounded-t-sm flex flex-col-reverse h-[85%] max-w-[60px] mx-auto overflow-hidden">
+<div class="bg-indigo-500 w-full h-[6%] hover:opacity-90 transition-opacity"></div>
+<div class="bg-amber-400 w-full h-[10%] hover:opacity-90 transition-opacity"></div>
+<div class="bg-cyan-400 w-full h-[14%] hover:opacity-90 transition-opacity"></div>
+<div class="bg-primary w-full h-[70%] hover:opacity-90 transition-opacity"></div>
+</div>
+<div class="text-center mt-3 text-xs font-medium text-slate-500 dark:text-slate-400">JUN</div>
+</div>
+</div>
+<!-- Chart Summary Note -->
+<div class="mt-6 pt-4 border-t border-slate-100 dark:border-slate-700/50 text-xs text-slate-500 flex justify-between items-center">
+<span>* Datos actualizados al cierre del mes de Junio.</span>
+<a class="text-primary hover:text-primary-light font-semibold flex items-center gap-1" href="#">
+                        Ver detalle histórico <span class="material-icons text-sm">arrow_forward</span>
+</a>
+</div>
+</div>
+</div>
+<!-- Detailed Table Section -->
+<div class="bg-white dark:bg-surface-dark rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden">
+<div class="p-6 border-b border-slate-200 dark:border-slate-800 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+<div>
+<h3 class="text-lg font-bold text-slate-900 dark:text-white">Detalle por Centro de Costos</h3>
+<p class="text-sm text-slate-500 dark:text-slate-400">Desglose de horas extras por área operativa</p>
+</div>
+<div class="relative">
+<span class="material-icons absolute left-3 top-2.5 text-slate-400 text-sm">search</span>
+<input class="pl-9 pr-4 py-2 bg-background-light dark:bg-background-dark border border-slate-200 dark:border-slate-700 rounded-lg text-sm text-slate-700 dark:text-slate-300 focus:ring-2 focus:ring-primary focus:border-transparent outline-none w-full sm:w-64" placeholder="Buscar área..." type="text"/>
+</div>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left text-sm text-slate-600 dark:text-slate-300">
+<thead class="bg-background-light dark:bg-background-dark text-xs uppercase font-semibold text-slate-500 dark:text-slate-400">
+<tr>
+<th class="px-6 py-4 rounded-tl-lg" scope="col">Centro de Costos</th>
+<th class="px-6 py-4 text-right" scope="col">Sueldo Básico</th>
+<th class="px-6 py-4 text-right" scope="col">HE 25%</th>
+<th class="px-6 py-4 text-right" scope="col">HE 35%</th>
+<th class="px-6 py-4 text-right" scope="col">HE Noct.</th>
+<th class="px-6 py-4 text-right" scope="col">Total Costo</th>
+<th class="px-6 py-4 text-right rounded-tr-lg" scope="col">% Sobrecosto</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-slate-100 dark:divide-slate-800">
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors group">
+<td class="px-6 py-4 font-medium text-slate-900 dark:text-white flex items-center gap-3">
+<span class="w-2 h-2 rounded-full bg-red-500"></span>
+                                Cocina
+                            </td>
+<td class="px-6 py-4 text-right">S/ 120,500</td>
+<td class="px-6 py-4 text-right">S/ 8,400</td>
+<td class="px-6 py-4 text-right">S/ 12,100</td>
+<td class="px-6 py-4 text-right">S/ 4,200</td>
+<td class="px-6 py-4 text-right font-bold text-slate-900 dark:text-white">S/ 145,200</td>
+<td class="px-6 py-4 text-right">
+<span class="bg-red-100 dark:bg-red-500/20 text-red-700 dark:text-red-300 px-2 py-1 rounded-md text-xs font-bold">20.5%</span>
+</td>
+</tr>
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
+<td class="px-6 py-4 font-medium text-slate-900 dark:text-white flex items-center gap-3">
+<span class="w-2 h-2 rounded-full bg-yellow-500"></span>
+                                Salón
+                            </td>
+<td class="px-6 py-4 text-right">S/ 98,200</td>
+<td class="px-6 py-4 text-right">S/ 5,100</td>
+<td class="px-6 py-4 text-right">S/ 3,800</td>
+<td class="px-6 py-4 text-right">S/ 1,200</td>
+<td class="px-6 py-4 text-right font-bold text-slate-900 dark:text-white">S/ 108,300</td>
+<td class="px-6 py-4 text-right">
+<span class="bg-yellow-100 dark:bg-yellow-500/20 text-yellow-700 dark:text-yellow-300 px-2 py-1 rounded-md text-xs font-bold">10.3%</span>
+</td>
+</tr>
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
+<td class="px-6 py-4 font-medium text-slate-900 dark:text-white flex items-center gap-3">
+<span class="w-2 h-2 rounded-full bg-green-500"></span>
+                                Administración
+                            </td>
+<td class="px-6 py-4 text-right">S/ 85,000</td>
+<td class="px-6 py-4 text-right">S/ 1,200</td>
+<td class="px-6 py-4 text-right">S/ 0</td>
+<td class="px-6 py-4 text-right">S/ 0</td>
+<td class="px-6 py-4 text-right font-bold text-slate-900 dark:text-white">S/ 86,200</td>
+<td class="px-6 py-4 text-right">
+<span class="bg-green-100 dark:bg-green-500/20 text-green-700 dark:text-green-300 px-2 py-1 rounded-md text-xs font-bold">1.4%</span>
+</td>
+</tr>
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
+<td class="px-6 py-4 font-medium text-slate-900 dark:text-white flex items-center gap-3">
+<span class="w-2 h-2 rounded-full bg-green-500"></span>
+                                Logística
+                            </td>
+<td class="px-6 py-4 text-right">S/ 45,600</td>
+<td class="px-6 py-4 text-right">S/ 2,100</td>
+<td class="px-6 py-4 text-right">S/ 800</td>
+<td class="px-6 py-4 text-right">S/ 0</td>
+<td class="px-6 py-4 text-right font-bold text-slate-900 dark:text-white">S/ 48,500</td>
+<td class="px-6 py-4 text-right">
+<span class="bg-green-100 dark:bg-green-500/20 text-green-700 dark:text-green-300 px-2 py-1 rounded-md text-xs font-bold">6.3%</span>
+</td>
+</tr>
+<tr class="bg-slate-50 dark:bg-slate-800/30 font-semibold border-t-2 border-slate-200 dark:border-slate-700">
+<td class="px-6 py-4 text-slate-900 dark:text-white">TOTAL GENERAL</td>
+<td class="px-6 py-4 text-right">S/ 349,300</td>
+<td class="px-6 py-4 text-right">S/ 16,800</td>
+<td class="px-6 py-4 text-right">S/ 16,700</td>
+<td class="px-6 py-4 text-right">S/ 5,400</td>
+<td class="px-6 py-4 text-right text-primary">S/ 388,200</td>
+<td class="px-6 py-4 text-right">11.1%</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="px-6 py-4 border-t border-slate-200 dark:border-slate-800 flex flex-col sm:flex-row justify-between items-center gap-4">
+<p class="text-xs text-slate-500">Mostrando 4 de 12 Centros de Costos</p>
+<div class="flex gap-2">
+<button class="px-3 py-1 rounded border border-slate-200 dark:border-slate-700 text-xs text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800">Anterior</button>
+<button class="px-3 py-1 rounded border border-slate-200 dark:border-slate-700 text-xs text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800">Siguiente</button>
+</div>
+</div>
+</div>
+</main>
+</body></html>

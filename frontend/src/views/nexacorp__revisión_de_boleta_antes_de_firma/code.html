@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>NexaCorp: Revisión de Boleta antes de Firma</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">tailwind.config = {darkMode: "class", theme: {extend: {colors: {primary: "#2c60ce", "background-light": "#f6f6f8", "background-dark": "#121720"}, fontFamily: {display: "Inter"}, borderRadius: {DEFAULT: "0.5rem", lg: "1rem", xl: "1.5rem", full: "9999px"}}}};</script>
+<style>
+        /* Custom scrollbar for dark mode professional feel */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #101c22; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #263c47; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #25aff4; 
+        }
+        
+        .pdf-shadow {
+            box-shadow: 0 10px 40px -10px rgba(0,0,0,0.5);
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-800 dark:text-slate-200 font-display min-h-screen flex flex-col">
+<!-- Top Navigation Bar -->
+<nav class="bg-white dark:bg-[#15232b] border-b border-slate-200 dark:border-slate-800 sticky top-0 z-50">
+<div class="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex justify-between h-16">
+<div class="flex items-center gap-4">
+<!-- Logo Placeholder -->
+<div class="flex-shrink-0 flex items-center gap-2">
+<div class="w-8 h-8 rounded-lg bg-gradient-to-br from-primary to-blue-600 flex items-center justify-center text-white font-bold text-lg">N</div>
+<span class="font-bold text-xl tracking-tight text-slate-900 dark:text-white">NexaCorp</span>
+</div>
+<div class="hidden md:block w-px h-6 bg-slate-200 dark:bg-slate-700 mx-2"></div>
+<span class="hidden md:block text-sm text-slate-500 dark:text-slate-400">Portal del Colaborador</span>
+</div>
+<div class="flex items-center gap-4">
+<button class="p-2 rounded-full text-slate-500 hover:text-primary dark:text-slate-400 dark:hover:text-primary transition-colors relative">
+<span class="material-icons-outlined">notifications</span>
+<span class="absolute top-2 right-2 w-2 h-2 bg-red-500 rounded-full"></span>
+</button>
+<div class="flex items-center gap-3 pl-4 border-l border-slate-200 dark:border-slate-700">
+<div class="text-right hidden sm:block">
+<p class="text-sm font-semibold text-slate-900 dark:text-white">Carlos Mendoza</p>
+<p class="text-xs text-slate-500 dark:text-slate-400">Desarrollador Senior</p>
+</div>
+<img alt="Profile picture of employee" class="h-9 w-9 rounded-full ring-2 ring-primary/20 object-cover" data-alt="Professional headshot of a smiling man" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDlI8-prAtg7-HxhnkWQycAf1UTpalrjIFxXXDEJcMgpM91ZzCh7bJxmmr8MLYxx-5NDEYVI3MLYDkE8I_udDGFiM1jEI9BWrY_CQnWIQ6KNruZfKkOCeSixSqxqSgEYOcg66-Y8zU0IyAKRe-U5tlYb8v31NZ_16VO9Rk77vUImU0ysU7vSxPuAjdL4Mr2nzVFFN7dZ2wZYnxZrho7F5KAkpaynJb3HdJ7zYMpNMvPu5SOxtNaxdqdJQYsAs-Pj8ifL4y1eI0UOyfF"/>
+</div>
+</div>
+</div>
+</div>
+</nav>
+<!-- Main Content Layout -->
+<main class="flex-1 max-w-8xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-8 flex flex-col lg:flex-row gap-8">
+<!-- Left Column: Document Viewer -->
+<div class="flex-1 flex flex-col gap-6 min-w-0">
+<!-- Breadcrumb & Title -->
+<div>
+<nav class="flex text-sm text-slate-500 dark:text-slate-400 mb-2">
+<ol class="flex items-center gap-2">
+<li><a class="hover:text-primary transition-colors" href="#">Inicio</a></li>
+<li><span class="material-icons-outlined text-[16px]">chevron_right</span></li>
+<li><a class="hover:text-primary transition-colors" href="#">Mis Boletas</a></li>
+<li><span class="material-icons-outlined text-[16px]">chevron_right</span></li>
+<li class="text-slate-900 dark:text-white font-medium">Revisión Agosto 2023</li>
+</ol>
+</nav>
+<h1 class="text-2xl font-bold text-slate-900 dark:text-white flex items-center gap-3">
+                    Boleta de Pago: Agosto 2023
+                    <span class="px-3 py-1 rounded-full bg-yellow-500/10 text-yellow-500 text-xs font-medium border border-yellow-500/20">Pendiente de Firma</span>
+</h1>
+</div>
+<!-- PDF Viewer Container -->
+<div class="flex-1 bg-slate-200 dark:bg-[#15232b] rounded-xl border border-slate-300 dark:border-slate-700 flex flex-col overflow-hidden h-[800px] lg:h-auto relative group">
+<!-- PDF Toolbar -->
+<div class="h-14 bg-white dark:bg-[#1a2c36] border-b border-slate-300 dark:border-slate-700 flex items-center justify-between px-4 sticky top-0 z-10">
+<div class="flex items-center gap-2">
+<button class="p-1.5 rounded hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-500 dark:text-slate-400 transition-colors" title="Toggle Sidebar">
+<span class="material-icons-outlined text-xl">grid_view</span>
+</button>
+<div class="h-4 w-px bg-slate-300 dark:bg-slate-600 mx-1"></div>
+<span class="text-sm font-medium text-slate-600 dark:text-slate-300">Página 1 de 1</span>
+</div>
+<div class="flex items-center gap-2 bg-slate-100 dark:bg-slate-800 rounded-lg p-1">
+<button class="p-1 rounded hover:bg-white dark:hover:bg-slate-700 shadow-sm text-slate-600 dark:text-slate-300 transition-all">
+<span class="material-icons-outlined text-lg">remove</span>
+</button>
+<span class="text-xs font-medium w-12 text-center text-slate-600 dark:text-slate-300">100%</span>
+<button class="p-1 rounded hover:bg-white dark:hover:bg-slate-700 shadow-sm text-slate-600 dark:text-slate-300 transition-all">
+<span class="material-icons-outlined text-lg">add</span>
+</button>
+</div>
+<div class="flex items-center gap-2">
+<button class="p-1.5 rounded hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-500 dark:text-slate-400 transition-colors" title="Download PDF">
+<span class="material-icons-outlined text-xl">download</span>
+</button>
+<button class="p-1.5 rounded hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-500 dark:text-slate-400 transition-colors" title="Print">
+<span class="material-icons-outlined text-xl">print</span>
+</button>
+</div>
+</div>
+<!-- PDF Content Simulation -->
+<div class="flex-1 overflow-y-auto p-8 flex justify-center bg-slate-200/50 dark:bg-[#0d151a]">
+<div class="w-full max-w-[700px] aspect-[1/1.414] bg-white text-slate-900 shadow-2xl pdf-shadow p-12 text-[10px] leading-relaxed relative">
+<!-- Watermark -->
+<div class="absolute inset-0 flex items-center justify-center pointer-events-none opacity-[0.03] select-none">
+<span class="text-6xl font-black transform -rotate-45">NEXACORP</span>
+</div>
+<!-- Header -->
+<div class="flex justify-between items-start border-b-2 border-slate-800 pb-4 mb-6">
+<div>
+<h2 class="text-xl font-bold text-slate-900">BOLETA DE PAGO</h2>
+<p class="text-slate-500 font-medium">RUC: 20123456789</p>
+<p class="mt-1">NexaCorp Perú S.A.C.</p>
+<p>Av. Javier Prado Este 456, San Isidro</p>
+</div>
+<div class="text-right">
+<div class="bg-slate-100 p-2 rounded">
+<p class="font-bold">Periodo: Agosto 2023</p>
+<p>Fecha de Emisión: 30/08/2023</p>
+</div>
+</div>
+</div>
+<!-- Employee Info -->
+<div class="grid grid-cols-2 gap-4 mb-6 text-xs">
+<div>
+<p><span class="font-bold">Trabajador:</span> MENDOZA RIOS, CARLOS ALBERTO</p>
+<p><span class="font-bold">Código:</span> E-004321</p>
+<p><span class="font-bold">Cargo:</span> DESARROLLADOR SENIOR</p>
+<p><span class="font-bold">Fecha Ingreso:</span> 15/03/2019</p>
+</div>
+<div>
+<p><span class="font-bold">DNI:</span> 45678901</p>
+<p><span class="font-bold">CUSPP:</span> 564231897412</p>
+<p><span class="font-bold">Régimen Pensionario:</span> AFP INTEGRA</p>
+<p><span class="font-bold">Días Laborados:</span> 30</p>
+</div>
+</div>
+<!-- Table Header -->
+<div class="grid grid-cols-12 gap-2 bg-slate-100 p-2 font-bold border-y border-slate-300 mb-2">
+<div class="col-span-1">Cód.</div>
+<div class="col-span-5">Concepto</div>
+<div class="col-span-2 text-right">Ingresos</div>
+<div class="col-span-2 text-right">Descuentos</div>
+<div class="col-span-2 text-right">Aportes</div>
+</div>
+<!-- Table Rows -->
+<div class="space-y-1 mb-8">
+<div class="grid grid-cols-12 gap-2 px-2 py-1">
+<div class="col-span-1 text-slate-500">101</div>
+<div class="col-span-5">Sueldo Básico</div>
+<div class="col-span-2 text-right">5,000.00</div>
+<div class="col-span-2 text-right"></div>
+<div class="col-span-2 text-right"></div>
+</div>
+<div class="grid grid-cols-12 gap-2 px-2 py-1">
+<div class="col-span-1 text-slate-500">102</div>
+<div class="col-span-5">Asignación Familiar</div>
+<div class="col-span-2 text-right">102.50</div>
+<div class="col-span-2 text-right"></div>
+<div class="col-span-2 text-right"></div>
+</div>
+<div class="grid grid-cols-12 gap-2 px-2 py-1">
+<div class="col-span-1 text-slate-500">601</div>
+<div class="col-span-5">AFP Aporte Obligatorio (10%)</div>
+<div class="col-span-2 text-right"></div>
+<div class="col-span-2 text-right">510.25</div>
+<div class="col-span-2 text-right"></div>
+</div>
+<div class="grid grid-cols-12 gap-2 px-2 py-1">
+<div class="col-span-1 text-slate-500">602</div>
+<div class="col-span-5">AFP Prima de Seguro (1.74%)</div>
+<div class="col-span-2 text-right"></div>
+<div class="col-span-2 text-right">88.78</div>
+<div class="col-span-2 text-right"></div>
+</div>
+<div class="grid grid-cols-12 gap-2 px-2 py-1">
+<div class="col-span-1 text-slate-500">603</div>
+<div class="col-span-5">AFP Comisión (1.47%)</div>
+<div class="col-span-2 text-right"></div>
+<div class="col-span-2 text-right">75.00</div>
+<div class="col-span-2 text-right"></div>
+</div>
+<div class="grid grid-cols-12 gap-2 px-2 py-1">
+<div class="col-span-1 text-slate-500">505</div>
+<div class="col-span-5">Renta de 5ta Categoría</div>
+<div class="col-span-2 text-right"></div>
+<div class="col-span-2 text-right">175.97</div>
+<div class="col-span-2 text-right"></div>
+</div>
+<div class="grid grid-cols-12 gap-2 px-2 py-1">
+<div class="col-span-1 text-slate-500">801</div>
+<div class="col-span-5">EsSalud (9%)</div>
+<div class="col-span-2 text-right"></div>
+<div class="col-span-2 text-right"></div>
+<div class="col-span-2 text-right">459.22</div>
+</div>
+</div>
+<!-- Totals -->
+<div class="border-t-2 border-slate-800 pt-2 mb-8">
+<div class="grid grid-cols-12 gap-2 px-2 font-bold text-sm">
+<div class="col-span-6 text-right uppercase">Totales</div>
+<div class="col-span-2 text-right">5,102.50</div>
+<div class="col-span-2 text-right">850.00</div>
+<div class="col-span-2 text-right">459.22</div>
+</div>
+</div>
+<!-- Net Pay Box -->
+<div class="flex justify-end mb-12">
+<div class="border-2 border-slate-900 p-3 w-1/3">
+<p class="uppercase text-[9px] font-bold text-slate-500 mb-1">Neto a Pagar</p>
+<p class="text-xl font-black text-right">S/ 4,252.50</p>
+</div>
+</div>
+<!-- Signature Lines (Empty) -->
+<div class="grid grid-cols-2 gap-12 mt-auto">
+<div class="border-t border-slate-400 pt-2 text-center">
+<p>EMPLEADOR</p>
+</div>
+<div class="border-t border-slate-400 pt-2 text-center relative">
+<p>TRABAJADOR</p>
+<div class="absolute -top-12 left-1/2 transform -translate-x-1/2 w-32 h-10 border-2 border-dashed border-slate-300 rounded flex items-center justify-center bg-yellow-50 text-yellow-600 text-[9px]">
+                                    Espacio para Firma Digital
+                                </div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Column: Sidebar Actions -->
+<div class="w-full lg:w-96 flex flex-col gap-6 shrink-0">
+<!-- Step Progress -->
+<div class="bg-white dark:bg-[#15232b] p-6 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm">
+<div class="flex items-center justify-between mb-4">
+<span class="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">Progreso</span>
+<span class="text-xs font-bold text-primary">Paso 2 de 3</span>
+</div>
+<div class="relative">
+<div class="overflow-hidden h-2 text-xs flex rounded bg-slate-100 dark:bg-slate-700">
+<div class="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-primary transition-all duration-500" style="width: 66%"></div>
+</div>
+<div class="flex justify-between mt-2 text-[10px] text-slate-400 dark:text-slate-500 font-medium uppercase">
+<span>Selección</span>
+<span class="text-primary dark:text-primary">Validación</span>
+<span>Firma</span>
+</div>
+</div>
+</div>
+<!-- Summary Card -->
+<div class="bg-white dark:bg-[#15232b] p-0 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden flex flex-col">
+<div class="p-6 border-b border-slate-100 dark:border-slate-800">
+<h3 class="font-bold text-lg text-slate-900 dark:text-white mb-1">Resumen de Importes</h3>
+<p class="text-sm text-slate-500 dark:text-slate-400">Verifique los montos antes de continuar.</p>
+</div>
+<div class="p-6 space-y-4">
+<div class="flex justify-between items-center group">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+<span class="text-sm text-slate-600 dark:text-slate-300">Total Haberes</span>
+</div>
+<span class="font-mono font-medium text-slate-900 dark:text-white group-hover:text-emerald-500 transition-colors">S/ 5,102.50</span>
+</div>
+<div class="flex justify-between items-center group">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-rose-500"></span>
+<span class="text-sm text-slate-600 dark:text-slate-300">Total Descuentos</span>
+</div>
+<span class="font-mono font-medium text-slate-900 dark:text-white group-hover:text-rose-500 transition-colors">- S/ 850.00</span>
+</div>
+<div class="h-px bg-slate-100 dark:bg-slate-700 my-2"></div>
+<div class="bg-slate-50 dark:bg-slate-800/50 rounded-lg p-4 flex flex-col gap-1 border border-slate-100 dark:border-slate-700">
+<span class="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wide">Neto a Pagar</span>
+<div class="flex justify-between items-baseline">
+<span class="text-3xl font-bold text-primary dark:text-primary tracking-tight">S/ 4,252.50</span>
+<span class="text-xs font-medium text-slate-400 dark:text-slate-500">PEN</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Action Card -->
+<div class="bg-white dark:bg-[#15232b] p-6 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm flex-1 flex flex-col">
+<h3 class="font-bold text-lg text-slate-900 dark:text-white mb-4">Validación</h3>
+<form class="flex flex-col gap-6 h-full" onsubmit="event.preventDefault();">
+<!-- Checkbox -->
+<label class="flex items-start gap-3 cursor-pointer group">
+<div class="relative flex items-center pt-0.5">
+<input class="peer h-5 w-5 cursor-pointer appearance-none rounded border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 checked:border-primary checked:bg-primary transition-all focus:ring-2 focus:ring-primary/20 focus:outline-none" id="agreement" type="checkbox"/>
+<span class="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-white opacity-0 peer-checked:opacity-100 transition-opacity">
+<svg class="h-3.5 w-3.5" fill="currentColor" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+<path clip-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" fill-rule="evenodd"></path>
+</svg>
+</span>
+</div>
+<div class="text-sm text-slate-600 dark:text-slate-300 leading-tight group-hover:text-slate-900 dark:group-hover:text-white transition-colors">
+                            He revisado mis montos, los conceptos detallados y <span class="font-bold">estoy de acuerdo</span> con la información presentada.
+                        </div>
+</label>
+<!-- Info Box -->
+<div class="bg-blue-50 dark:bg-blue-900/10 border border-blue-100 dark:border-blue-800/30 p-3 rounded-lg flex gap-3 items-start">
+<span class="material-icons-outlined text-blue-500 text-sm mt-0.5">info</span>
+<p class="text-xs text-blue-700 dark:text-blue-300 leading-relaxed">
+                            Al proceder, se generará un certificado digital con marca de tiempo que valida legalmente su conformidad.
+                        </p>
+</div>
+<div class="mt-auto pt-4 flex flex-col gap-3">
+<button class="w-full py-3.5 px-4 bg-primary hover:bg-blue-500 text-white font-semibold rounded-lg shadow-lg shadow-primary/20 hover:shadow-primary/40 focus:ring-4 focus:ring-primary/30 transition-all transform active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 group" type="submit">
+<span>Proceder a Firma Digital</span>
+<span class="material-icons-outlined text-lg group-hover:translate-x-1 transition-transform">arrow_forward</span>
+</button>
+<button class="w-full py-2.5 px-4 bg-transparent hover:bg-slate-50 dark:hover:bg-slate-800 text-slate-500 dark:text-slate-400 font-medium rounded-lg transition-colors text-sm flex items-center justify-center gap-2" type="button">
+<span class="material-icons-outlined text-base">report_problem</span>
+                            Reportar Error o Inconsistencia
+                        </button>
+</div>
+</form>
+</div>
+<!-- Footer Links -->
+<div class="text-center">
+<a class="text-xs text-slate-400 hover:text-primary transition-colors" href="#">Política de Firma Digital</a>
+<span class="text-slate-600 mx-2">•</span>
+<a class="text-xs text-slate-400 hover:text-primary transition-colors" href="#">Ayuda</a>
+</div>
+</div>
+</main>
+<!-- Pattern Background Decoration -->
+<div aria-hidden="true" class="fixed top-0 left-0 w-full h-full pointer-events-none z-[-1] opacity-50 overflow-hidden">
+<div class="absolute top-[-10%] right-[-5%] w-[500px] h-[500px] bg-primary/5 rounded-full blur-3xl"></div>
+<div class="absolute bottom-[-10%] left-[-5%] w-[600px] h-[600px] bg-blue-600/5 rounded-full blur-3xl"></div>
+</div>
+</body></html>

@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>NexaCorp: Reporte de Cartera y Saldos Pendientes</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#2c60ce",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#121720",
+                        "surface-dark": "#1e2532", // Slightly lighter than bg-dark for cards
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.5rem",
+                        "lg": "1rem",
+                        "xl": "1.5rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        /* Custom scrollbar for dark mode table */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #121720; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #2c3b55; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #3b4d6b; 
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-gray-900 dark:text-gray-100 antialiased min-h-screen flex flex-col">
+<!-- Navbar -->
+<nav class="bg-white dark:bg-surface-dark border-b border-gray-200 dark:border-gray-800 sticky top-0 z-30">
+<div class="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex items-center justify-between h-16">
+<!-- Logo & Title -->
+<div class="flex items-center gap-4">
+<div class="flex-shrink-0 flex items-center gap-2">
+<div class="w-8 h-8 rounded bg-gradient-to-br from-primary to-blue-600 flex items-center justify-center text-white font-bold text-lg shadow-lg shadow-primary/30">
+                            N
+                        </div>
+<span class="font-bold text-xl tracking-tight text-gray-900 dark:text-white hidden sm:block">NexaCorp</span>
+</div>
+<div class="hidden md:block h-6 w-px bg-gray-300 dark:bg-gray-700 mx-2"></div>
+<h1 class="text-sm font-medium text-gray-500 dark:text-gray-400 hidden md:block">Módulo de Financiamiento</h1>
+</div>
+<!-- Right Actions -->
+<div class="flex items-center gap-4">
+<button class="p-2 rounded-full text-gray-500 hover:text-primary dark:text-gray-400 dark:hover:text-primary transition-colors">
+<span class="material-icons">notifications</span>
+</button>
+<div class="flex items-center gap-3 pl-4 border-l border-gray-200 dark:border-gray-700">
+<div class="text-right hidden sm:block">
+<p class="text-sm font-medium text-gray-900 dark:text-white">Carlos Rivera</p>
+<p class="text-xs text-gray-500 dark:text-gray-400">Analista Financiero Sr.</p>
+</div>
+<img alt="User profile picture of a man" class="h-9 w-9 rounded-full object-cover border-2 border-primary/20" data-alt="User profile photo" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCmojTN3VgetL75f9CdUyNwe7wRqDcr3qBDtsrlEKjGi_4jHww6Afg3ON5t-IF6hg9EBrHXBq3QMbGGQDPfoLJ69dIHasz-Wj9RM0uuMJLyVFlW6SgW2B71wUNhkPcd5_fhvvk2GzWSaNKok1l7yvWPa52mEp6mUKvF7b9UfCxemzln7vd75Cwi1oh36fRcccBGFJ8-605RS0H5VTJZYyUztBoYbncrgRQDOL5Wy-N2q5tFbY_wtpdBxK8hQULCkcCTACuqZv9L-uym"/>
+</div>
+</div>
+</div>
+</div>
+</nav>
+<!-- Main Content -->
+<main class="flex-1 max-w-8xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full">
+<!-- Header Section -->
+<div class="mb-8 flex flex-col sm:flex-row sm:items-end justify-between gap-4">
+<div>
+<h2 class="text-2xl font-bold text-gray-900 dark:text-white">Reporte de Cartera y Saldos Pendientes</h2>
+<p class="mt-1 text-sm text-gray-500 dark:text-gray-400">
+                    Consolidado de deudas por colaborador actualizado al <span class="text-primary font-medium">24 de Octubre, 2023</span>.
+                </p>
+</div>
+<div class="flex gap-2">
+<button class="inline-flex items-center gap-2 px-4 py-2 bg-white dark:bg-surface-dark border border-gray-200 dark:border-gray-700 rounded-lg text-sm font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors shadow-sm">
+<span class="material-icons text-base">print</span>
+                    Imprimir
+                </button>
+<button class="inline-flex items-center gap-2 px-4 py-2 bg-primary hover:bg-blue-700 text-white rounded-lg text-sm font-medium transition-colors shadow-lg shadow-primary/25">
+<span class="material-icons text-base">download</span>
+                    Exportar Excel
+                </button>
+</div>
+</div>
+<!-- KPI Grid -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+<!-- KPI 1 -->
+<div class="bg-white dark:bg-surface-dark rounded-xl p-6 shadow-sm border border-gray-200 dark:border-gray-800 relative overflow-hidden group">
+<div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+<span class="material-icons text-6xl text-primary">account_balance_wallet</span>
+</div>
+<div class="relative z-10">
+<p class="text-sm font-medium text-gray-500 dark:text-gray-400 mb-1">Total Cartera por Cobrar</p>
+<h3 class="text-3xl font-bold text-gray-900 dark:text-white">S/ 1,245,800.50</h3>
+<div class="mt-4 flex items-center text-sm">
+<span class="text-emerald-500 flex items-center font-medium bg-emerald-500/10 px-2 py-0.5 rounded mr-2">
+<span class="material-icons text-sm mr-1">trending_up</span> +2.4%
+                        </span>
+<span class="text-gray-500 dark:text-gray-400">vs mes anterior</span>
+</div>
+</div>
+</div>
+<!-- KPI 2 -->
+<div class="bg-white dark:bg-surface-dark rounded-xl p-6 shadow-sm border border-gray-200 dark:border-gray-800 relative overflow-hidden group">
+<div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+<span class="material-icons text-6xl text-blue-400">donut_large</span>
+</div>
+<div class="relative z-10">
+<p class="text-sm font-medium text-gray-500 dark:text-gray-400 mb-1">Tasa de Recuperación Mensual</p>
+<h3 class="text-3xl font-bold text-gray-900 dark:text-white">94.8%</h3>
+<div class="mt-4 flex items-center text-sm">
+<span class="text-emerald-500 flex items-center font-medium bg-emerald-500/10 px-2 py-0.5 rounded mr-2">
+<span class="material-icons text-sm mr-1">check_circle</span> Meta: 90%
+                        </span>
+<span class="text-gray-500 dark:text-gray-400">Cumplimiento OK</span>
+</div>
+</div>
+</div>
+<!-- KPI 3 -->
+<div class="bg-white dark:bg-surface-dark rounded-xl p-6 shadow-sm border border-gray-200 dark:border-gray-800 relative overflow-hidden group">
+<div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+<span class="material-icons text-6xl text-amber-500">warning</span>
+</div>
+<div class="relative z-10">
+<p class="text-sm font-medium text-gray-500 dark:text-gray-400 mb-1">Deuda en Riesgo (Por Vencer)</p>
+<h3 class="text-3xl font-bold text-gray-900 dark:text-white">S/ 42,300.00</h3>
+<div class="mt-4 flex items-center text-sm">
+<span class="text-amber-500 flex items-center font-medium bg-amber-500/10 px-2 py-0.5 rounded mr-2">
+<span class="material-icons text-sm mr-1">priority_high</span> 15 Casos
+                        </span>
+<span class="text-gray-500 dark:text-gray-400">Requiere gestión</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Filter & Search Bar -->
+<div class="bg-white dark:bg-surface-dark rounded-xl shadow-sm border border-gray-200 dark:border-gray-800 mb-6">
+<div class="p-4 flex flex-col lg:flex-row gap-4 justify-between items-center">
+<!-- Search -->
+<div class="w-full lg:w-1/3 relative">
+<div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+<span class="material-icons text-gray-400">search</span>
+</div>
+<input class="block w-full pl-10 pr-3 py-2.5 border border-gray-200 dark:border-gray-700 rounded-lg leading-5 bg-gray-50 dark:bg-gray-900/50 text-gray-900 dark:text-white placeholder-gray-500 focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary sm:text-sm transition-shadow" placeholder="Buscar por nombre, DNI o código..." type="text"/>
+</div>
+<!-- Filters -->
+<div class="flex flex-col sm:flex-row gap-3 w-full lg:w-auto">
+<!-- Department Select -->
+<div class="relative min-w-[180px]">
+<select class="block w-full pl-3 pr-10 py-2.5 text-base border border-gray-200 dark:border-gray-700 focus:outline-none focus:ring-primary focus:border-primary sm:text-sm rounded-lg bg-gray-50 dark:bg-gray-900/50 text-gray-900 dark:text-white appearance-none cursor-pointer">
+<option>Todos los Dptos.</option>
+<option>Administración</option>
+<option>Comercial</option>
+<option>Operaciones</option>
+<option>Tecnología</option>
+</select>
+<div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-500">
+<span class="material-icons text-sm">expand_more</span>
+</div>
+</div>
+<!-- Status Select -->
+<div class="relative min-w-[160px]">
+<select class="block w-full pl-3 pr-10 py-2.5 text-base border border-gray-200 dark:border-gray-700 focus:outline-none focus:ring-primary focus:border-primary sm:text-sm rounded-lg bg-gray-50 dark:bg-gray-900/50 text-gray-900 dark:text-white appearance-none cursor-pointer">
+<option>Estado: Todos</option>
+<option>Al día</option>
+<option>Por vencer</option>
+<option>Vencido</option>
+<option>Liquidado</option>
+</select>
+<div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-500">
+<span class="material-icons text-sm">expand_more</span>
+</div>
+</div>
+<button class="flex items-center justify-center px-4 py-2 border border-gray-200 dark:border-gray-700 rounded-lg text-sm font-medium text-gray-700 dark:text-gray-300 bg-white dark:bg-surface-dark hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
+<span class="material-icons text-sm mr-2">filter_list</span>
+                        Más Filtros
+                    </button>
+</div>
+</div>
+</div>
+<!-- Data Table -->
+<div class="bg-white dark:bg-surface-dark rounded-xl shadow-lg border border-gray-200 dark:border-gray-800 overflow-hidden">
+<div class="overflow-x-auto">
+<table class="min-w-full divide-y divide-gray-200 dark:divide-gray-800">
+<thead class="bg-gray-50 dark:bg-gray-900/50">
+<tr>
+<th class="px-6 py-4 text-left text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider" scope="col">
+                                Colaborador
+                            </th>
+<th class="px-6 py-4 text-left text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider" scope="col">
+                                Departamento
+                            </th>
+<th class="px-6 py-4 text-right text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider" scope="col">
+                                Total Prestado
+                            </th>
+<th class="px-6 py-4 text-right text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider" scope="col">
+                                Saldo Pendiente
+                            </th>
+<th class="px-6 py-4 text-right text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider" scope="col">
+                                Próxima Cuota
+                            </th>
+<th class="px-6 py-4 text-center text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider" scope="col">
+                                Estado
+                            </th>
+<th class="relative px-6 py-4" scope="col">
+<span class="sr-only">Acciones</span>
+</th>
+</tr>
+</thead>
+<tbody class="bg-white dark:bg-surface-dark divide-y divide-gray-200 dark:divide-gray-800">
+<!-- Row 1 -->
+<tr class="hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors">
+<td class="px-6 py-4 whitespace-nowrap">
+<div class="flex items-center">
+<div class="flex-shrink-0 h-10 w-10">
+<img alt="Female employee portrait" class="h-10 w-10 rounded-full object-cover" data-alt="Portrait of Ana Garcia" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAKXVne6r__DH5YXT2zH3fZNXYyNAj6mEJwitJm8i3QT6hjbcra7_9Rlm0IA8P1nZNLsL8rIgiFeeRc28fGvjKo8ACaTc_kdUSbt9vA_IBLY3141EDsGasj9jkWtl9MWR7AiLFmGevZPCtehqafJn0Z0vT4cyBKMqsjtJpMdGH-Q8dueUDflAVsx0qR5-7SajeO4mwQTQlKsfKYm-AnuUHXNqM-5sToS66LIW3EqhcbgQSpe98tgyYBZIdy1ZnNxinnuCg9fYnyFowt"/>
+</div>
+<div class="ml-4">
+<div class="text-sm font-medium text-gray-900 dark:text-white">Ana García</div>
+<div class="text-xs text-gray-500 dark:text-gray-400">ID: NX-8842</div>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 whitespace-nowrap">
+<span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-300">
+                                    Comercial
+                                </span>
+</td>
+<td class="px-6 py-4 whitespace-nowrap text-right text-sm text-gray-500 dark:text-gray-400 font-mono">
+                                S/ 15,000.00
+                            </td>
+<td class="px-6 py-4 whitespace-nowrap text-right text-sm font-bold text-gray-900 dark:text-white font-mono">
+                                S/ 12,450.00
+                            </td>
+<td class="px-6 py-4 whitespace-nowrap text-right text-sm text-gray-500 dark:text-gray-400 font-mono">
+                                30 Oct
+                            </td>
+<td class="px-6 py-4 whitespace-nowrap text-center">
+<span class="px-2.5 py-0.5 rounded-full text-xs font-medium bg-emerald-100 text-emerald-800 dark:bg-emerald-900/30 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-800">
+                                    Al día
+                                </span>
+</td>
+<td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+<a class="text-primary hover:text-blue-400 transition-colors" href="#">Ver Detalle</a>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors">
+<td class="px-6 py-4 whitespace-nowrap">
+<div class="flex items-center">
+<div class="flex-shrink-0 h-10 w-10">
+<div class="h-10 w-10 rounded-full bg-purple-600 flex items-center justify-center text-white font-bold text-sm">LM</div>
+</div>
+<div class="ml-4">
+<div class="text-sm font-medium text-gray-900 dark:text-white">Luis Mendoza</div>
+<div class="text-xs text-gray-500 dark:text-gray-400">ID: NX-9201</div>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 whitespace-nowrap">
+<span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-purple-100 text-purple-800 dark:bg-purple-900/30 dark:text-purple-300">
+                                    Operaciones
+                                </span>
+</td>
+<td class="px-6 py-4 whitespace-nowrap text-right text-sm text-gray-500 dark:text-gray-400 font-mono">
+                                S/ 5,000.00
+                            </td>
+<td class="px-6 py-4 whitespace-nowrap text-right text-sm font-bold text-gray-900 dark:text-white font-mono">
+                                S/ 1,200.00
+                            </td>
+<td class="px-6 py-4 whitespace-nowrap text-right text-sm text-gray-500 dark:text-gray-400 font-mono">
+                                25 Oct
+                            </td>
+<td class="px-6 py-4 whitespace-nowrap text-center">
+<span class="px-2.5 py-0.5 rounded-full text-xs font-medium bg-amber-100 text-amber-800 dark:bg-amber-900/30 dark:text-amber-400 border border-amber-200 dark:border-amber-800 flex items-center justify-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse"></span>
+                                    Por vencer
+                                </span>
+</td>
+<td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+<a class="text-primary hover:text-blue-400 transition-colors" href="#">Ver Detalle</a>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors">
+<td class="px-6 py-4 whitespace-nowrap">
+<div class="flex items-center">
+<div class="flex-shrink-0 h-10 w-10">
+<img alt="Male employee portrait" class="h-10 w-10 rounded-full object-cover" data-alt="Portrait of Carlos Ruiz" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCP_tF80K-ozzgAgadeVfp1VyDNl04Fv1_DRzbpaT4IJS62_XNk_eXLvjZi8vytHsMpHsCj14yVyBlrPChm7yLsHuiAL8eaQEnK1TpiaqGDi2sFtbZenjSt7iehQbBoFzee3HOj1w7a6yN5OigNvstb24jTay8qL_FXobSAHuqE4gHSVaptVswUqDTJfTUg06LRUIFs95HJ6uyk340OfbjHxGBOVqwgD2wDY9UsullCUR89ZTgaTSiZjwgpz9t010np2QSpD6CRzPBH"/>
+</div>
+<div class="ml-4">
+<div class="text-sm font-medium text-gray-900 dark:text-white">Carlos Ruiz</div>
+<div class="text-xs text-gray-500 dark:text-gray-400">ID: NX-7734</div>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 whitespace-nowrap">
+<span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-indigo-100 text-indigo-800 dark:bg-indigo-900/30 dark:text-indigo-300">
+                                    Tecnología
+                                </span>
+</td>
+<td class="px-6 py-4 whitespace-nowrap text-right text-sm text-gray-500 dark:text-gray-400 font-mono">
+                                S/ 8,500.00
+                            </td>
+<td class="px-6 py-4 whitespace-nowrap text-right text-sm font-bold text-gray-900 dark:text-white font-mono">
+                                S/ 0.00
+                            </td>
+<td class="px-6 py-4 whitespace-nowrap text-right text-sm text-gray-500 dark:text-gray-400 font-mono">
+                                -
+                            </td>
+<td class="px-6 py-4 whitespace-nowrap text-center">
+<span class="px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800 dark:bg-gray-700/50 dark:text-gray-400 border border-gray-200 dark:border-gray-600">
+                                    Liquidado
+                                </span>
+</td>
+<td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+<a class="text-primary hover:text-blue-400 transition-colors" href="#">Ver Detalle</a>
+</td>
+</tr>
+<!-- Row 4 -->
+<tr class="hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors">
+<td class="px-6 py-4 whitespace-nowrap">
+<div class="flex items-center">
+<div class="flex-shrink-0 h-10 w-10">
+<div class="h-10 w-10 rounded-full bg-pink-600 flex items-center justify-center text-white font-bold text-sm">MV</div>
+</div>
+<div class="ml-4">
+<div class="text-sm font-medium text-gray-900 dark:text-white">María Vargas</div>
+<div class="text-xs text-gray-500 dark:text-gray-400">ID: NX-9921</div>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 whitespace-nowrap">
+<span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-300">
+                                    Comercial
+                                </span>
+</td>
+<td class="px-6 py-4 whitespace-nowrap text-right text-sm text-gray-500 dark:text-gray-400 font-mono">
+                                S/ 2,000.00
+                            </td>
+<td class="px-6 py-4 whitespace-nowrap text-right text-sm font-bold text-gray-900 dark:text-white font-mono">
+                                S/ 1,850.00
+                            </td>
+<td class="px-6 py-4 whitespace-nowrap text-right text-sm text-gray-500 dark:text-gray-400 font-mono">
+                                30 Oct
+                            </td>
+<td class="px-6 py-4 whitespace-nowrap text-center">
+<span class="px-2.5 py-0.5 rounded-full text-xs font-medium bg-emerald-100 text-emerald-800 dark:bg-emerald-900/30 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-800">
+                                    Al día
+                                </span>
+</td>
+<td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+<a class="text-primary hover:text-blue-400 transition-colors" href="#">Ver Detalle</a>
+</td>
+</tr>
+<!-- Row 5 -->
+<tr class="hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors">
+<td class="px-6 py-4 whitespace-nowrap">
+<div class="flex items-center">
+<div class="flex-shrink-0 h-10 w-10">
+<img alt="Male employee portrait" class="h-10 w-10 rounded-full object-cover" data-alt="Portrait of Jorge Davila" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDXroUpIs_GnfpntAB1Iug8FL4drQ66aGc_o8WxIlOWdac3frNb1GqkgP00jNX_IfTt1KI6CLChJVRwmmzxxZ7jNwwOXu0mL3fqK0AxoDAUhEvTByzPndgmr1vk_e_wl5bk91Ct89jGcC-NFDu6RIGPX4J0ba2gq3-ER7vE_29CW7fkPhSY_cPmfhTn6T3103plXwUIy4Ef_o0LeWVAzG_Fufwh46RUaoSUDN1aDg5EWLZ6Bw7Nf6UzmgepC2kfN-YjkaPitkJEf9ot"/>
+</div>
+<div class="ml-4">
+<div class="text-sm font-medium text-gray-900 dark:text-white">Jorge Dávila</div>
+<div class="text-xs text-gray-500 dark:text-gray-400">ID: NX-8112</div>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 whitespace-nowrap">
+<span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-300">
+                                    Finanzas
+                                </span>
+</td>
+<td class="px-6 py-4 whitespace-nowrap text-right text-sm text-gray-500 dark:text-gray-400 font-mono">
+                                S/ 10,000.00
+                            </td>
+<td class="px-6 py-4 whitespace-nowrap text-right text-sm font-bold text-gray-900 dark:text-white font-mono">
+                                S/ 5,430.00
+                            </td>
+<td class="px-6 py-4 whitespace-nowrap text-right text-sm text-red-500 font-medium font-mono">
+                                15 Oct
+                            </td>
+<td class="px-6 py-4 whitespace-nowrap text-center">
+<span class="px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-400 border border-red-200 dark:border-red-800 flex items-center justify-center gap-1">
+<span class="material-icons text-[10px]">error</span>
+                                    Vencido
+                                </span>
+</td>
+<td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+<a class="text-primary hover:text-blue-400 transition-colors" href="#">Ver Detalle</a>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Pagination -->
+<div class="px-6 py-4 bg-gray-50 dark:bg-gray-900/50 border-t border-gray-200 dark:border-gray-800 flex items-center justify-between">
+<div class="text-sm text-gray-500 dark:text-gray-400">
+                    Mostrando <span class="font-medium">1</span> a <span class="font-medium">5</span> de <span class="font-medium">142</span> resultados
+                </div>
+<div class="flex items-center space-x-2">
+<button class="px-3 py-1 rounded-md border border-gray-300 dark:border-gray-700 bg-white dark:bg-surface-dark text-sm font-medium text-gray-500 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800 disabled:opacity-50">Anterior</button>
+<button class="px-3 py-1 rounded-md bg-primary text-white text-sm font-medium hover:bg-blue-700">1</button>
+<button class="px-3 py-1 rounded-md border border-gray-300 dark:border-gray-700 bg-white dark:bg-surface-dark text-sm font-medium text-gray-500 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800">2</button>
+<button class="px-3 py-1 rounded-md border border-gray-300 dark:border-gray-700 bg-white dark:bg-surface-dark text-sm font-medium text-gray-500 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800">3</button>
+<span class="text-gray-500">...</span>
+<button class="px-3 py-1 rounded-md border border-gray-300 dark:border-gray-700 bg-white dark:bg-surface-dark text-sm font-medium text-gray-500 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800">Siguiente</button>
+</div>
+</div>
+</div>
+</main>
+<!-- Simple Footer -->
+<footer class="mt-auto border-t border-gray-200 dark:border-gray-800 bg-white dark:bg-surface-dark py-6">
+<div class="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center text-sm text-gray-500 dark:text-gray-400">
+<p>© 2023 NexaCorp Financial Services. Todos los derechos reservados.</p>
+<div class="flex gap-6 mt-4 md:mt-0">
+<a class="hover:text-primary transition-colors" href="#">Política de Privacidad</a>
+<a class="hover:text-primary transition-colors" href="#">Términos de Uso</a>
+<a class="hover:text-primary transition-colors" href="#">Soporte</a>
+</div>
+</div>
+</footer>
+</body></html>

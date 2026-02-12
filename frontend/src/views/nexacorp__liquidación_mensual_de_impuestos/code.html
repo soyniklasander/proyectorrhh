@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>NexaCorp: Liquidación Mensual de Impuestos</title>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<!-- Material Icons -->
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS config -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#256af4",
+                        "primary-dark": "#1a4dbf",
+                        "primary-light": "#6b9bff",
+                        "background-light": "#f5f6f8",
+                        "background-dark": "#101622",
+                        "surface-dark": "#1c2536",
+                        "surface-light": "#ffffff",
+                    },
+                    fontFamily: {
+                        "display": ["Manrope", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "2xl": "1rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        /* Custom scrollbar for better aesthetics in dark mode */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #101622; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #2d3b55; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #256af4; 
+        }
+        .chart-donut {
+            background: conic-gradient(
+                #256af4 0% 65%, 
+                #10b981 65% 85%, 
+                #f59e0b 85% 100%
+            );
+            border-radius: 50%;
+        }
+        .chart-hole {
+            background-color: #1c2536; /* surface-dark */
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-800 dark:text-slate-100 font-display min-h-screen flex flex-col">
+<!-- Navbar / Sidebar Placeholder (Simplified for single screen view) -->
+<nav class="border-b border-slate-200 dark:border-slate-800 bg-white dark:bg-surface-dark py-4 px-6 md:px-10 flex justify-between items-center sticky top-0 z-50 shadow-sm">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 bg-primary/20 rounded-lg flex items-center justify-center text-primary">
+<span class="material-icons-round text-2xl">account_balance</span>
+</div>
+<div>
+<h1 class="text-xl font-bold tracking-tight text-slate-900 dark:text-white">NexaCorp</h1>
+<p class="text-xs text-slate-500 dark:text-slate-400 font-medium uppercase tracking-wider">Tesorería &amp; Cumplimiento</p>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<div class="flex items-center gap-2 px-3 py-1.5 bg-slate-100 dark:bg-slate-800 rounded-lg text-sm font-medium">
+<span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+<span>Conectado a SUNAT</span>
+</div>
+<img class="w-9 h-9 rounded-full ring-2 ring-primary/20 cursor-pointer" data-alt="User Avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBJCgVzzG-QUDN3NrSUCT5XyNjZ2wJY39Jf8j8DD5LWXZwzjIgolZZsngjTLkuI7qb5Q6Tf4cLPj6CCuSSh2uQH_zyK_DTPhsclW0qy72e2_m02x4JLe-bOEI8THsKmFnRqVgbs75jkFw3LExsYxQD-800fFp2AdHUSMVv7ZKe7C7C0xchtlTS9IREUGOpglCD9-5jbo8624vAdRFuz9EqZINJpDPHCz4eYOss-QnU-mzw93g8KtLYS0RtmoySlMsXgksr8vmUCfMbb"/>
+</div>
+</nav>
+<!-- Main Content -->
+<main class="flex-grow p-6 md:p-10 max-w-7xl mx-auto w-full space-y-8">
+<!-- Page Header & Controls -->
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-6">
+<div class="space-y-2">
+<div class="flex items-center gap-2 text-primary text-sm font-semibold">
+<span class="material-icons-round text-base">arrow_back</span>
+<span>Volver a Panel General</span>
+</div>
+<h2 class="text-3xl font-bold text-slate-900 dark:text-white">Liquidación Mensual de Impuestos</h2>
+<p class="text-slate-500 dark:text-slate-400 max-w-xl">
+                    Resumen consolidado de obligaciones tributarias y laborales correspondientes al periodo seleccionado.
+                </p>
+</div>
+<div class="flex flex-col sm:flex-row gap-3 items-end sm:items-center">
+<!-- Date Picker Mock -->
+<div class="relative group">
+<div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+<span class="material-icons-round text-slate-400">calendar_month</span>
+</div>
+<input class="bg-white dark:bg-surface-dark border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 text-sm rounded-lg focus:ring-primary focus:border-primary block w-48 pl-10 p-2.5 font-medium cursor-pointer shadow-sm hover:border-primary/50 transition-colors" readonly="" type="text" value="Octubre 2023"/>
+</div>
+<!-- Action Buttons -->
+<div class="flex gap-2">
+<button class="flex items-center gap-2 px-4 py-2.5 text-sm font-medium text-slate-700 dark:text-slate-200 bg-white dark:bg-surface-dark border border-slate-200 dark:border-slate-700 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-800 focus:ring-2 focus:ring-offset-2 focus:ring-slate-200 dark:focus:ring-slate-700 transition-all shadow-sm">
+<span class="material-icons-round text-green-600 text-[18px]">table_view</span>
+                        Excel
+                    </button>
+<button class="flex items-center gap-2 px-4 py-2.5 text-sm font-medium text-slate-700 dark:text-slate-200 bg-white dark:bg-surface-dark border border-slate-200 dark:border-slate-700 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-800 focus:ring-2 focus:ring-offset-2 focus:ring-slate-200 dark:focus:ring-slate-700 transition-all shadow-sm">
+<span class="material-icons-round text-red-500 text-[18px]">picture_as_pdf</span>
+                        PDF
+                    </button>
+<button class="flex items-center gap-2 px-5 py-2.5 text-sm font-semibold text-white bg-primary rounded-lg hover:bg-primary-dark focus:ring-4 focus:ring-primary/30 transition-all shadow-lg shadow-primary/20">
+<span class="material-icons-round text-[18px]">send</span>
+                        Declarar
+                    </button>
+</div>
+</div>
+</div>
+<!-- KPI Cards Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+<!-- Card 1: Aportes Empleador -->
+<div class="bg-white dark:bg-surface-dark rounded-xl border border-slate-200 dark:border-slate-700/50 p-6 shadow-sm hover:shadow-md transition-shadow relative overflow-hidden group">
+<div class="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-full -mr-10 -mt-10 group-hover:scale-110 transition-transform duration-500"></div>
+<div class="flex justify-between items-start mb-4 relative z-10">
+<div class="p-2.5 bg-blue-500/10 dark:bg-blue-500/20 rounded-lg text-blue-600 dark:text-blue-400">
+<span class="material-icons-round text-2xl">business_center</span>
+</div>
+<span class="text-xs font-semibold text-emerald-600 dark:text-emerald-400 bg-emerald-100 dark:bg-emerald-900/30 px-2 py-1 rounded">Al día</span>
+</div>
+<h3 class="text-slate-500 dark:text-slate-400 text-sm font-medium uppercase tracking-wide mb-1">Aportes del Empleador</h3>
+<p class="text-3xl font-bold text-slate-900 dark:text-white mb-6 font-display tracking-tight">S/ 42,850.20</p>
+<div class="space-y-3 relative z-10">
+<div class="flex justify-between items-center text-sm">
+<div class="flex items-center gap-2">
+<span class="w-1.5 h-1.5 rounded-full bg-blue-500"></span>
+<span class="text-slate-600 dark:text-slate-300">Essalud (9%)</span>
+</div>
+<span class="font-semibold text-slate-900 dark:text-white">S/ 32,450.00</span>
+</div>
+<div class="flex justify-between items-center text-sm">
+<div class="flex items-center gap-2">
+<span class="w-1.5 h-1.5 rounded-full bg-blue-400"></span>
+<span class="text-slate-600 dark:text-slate-300">SCTR Pensión/Salud</span>
+</div>
+<span class="font-semibold text-slate-900 dark:text-white">S/ 6,820.20</span>
+</div>
+<div class="flex justify-between items-center text-sm">
+<div class="flex items-center gap-2">
+<span class="w-1.5 h-1.5 rounded-full bg-blue-300"></span>
+<span class="text-slate-600 dark:text-slate-300">Seguro Vida Ley</span>
+</div>
+<span class="font-semibold text-slate-900 dark:text-white">S/ 3,580.00</span>
+</div>
+</div>
+</div>
+<!-- Card 2: Retenciones Trabajador -->
+<div class="bg-white dark:bg-surface-dark rounded-xl border border-slate-200 dark:border-slate-700/50 p-6 shadow-sm hover:shadow-md transition-shadow relative overflow-hidden group">
+<div class="absolute top-0 right-0 w-32 h-32 bg-amber-500/5 rounded-full -mr-10 -mt-10 group-hover:scale-110 transition-transform duration-500"></div>
+<div class="flex justify-between items-start mb-4 relative z-10">
+<div class="p-2.5 bg-amber-500/10 dark:bg-amber-500/20 rounded-lg text-amber-600 dark:text-amber-400">
+<span class="material-icons-round text-2xl">group</span>
+</div>
+<span class="text-xs font-semibold text-slate-500 dark:text-slate-400 bg-slate-100 dark:bg-slate-800 px-2 py-1 rounded">Pendiente</span>
+</div>
+<h3 class="text-slate-500 dark:text-slate-400 text-sm font-medium uppercase tracking-wide mb-1">Retenciones Trabajador</h3>
+<p class="text-3xl font-bold text-slate-900 dark:text-white mb-6 font-display tracking-tight">S/ 38,125.45</p>
+<div class="space-y-3 relative z-10">
+<div class="flex justify-between items-center text-sm">
+<div class="flex items-center gap-2">
+<span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span>
+<span class="text-slate-600 dark:text-slate-300">AFP (Integra, Prima...)</span>
+</div>
+<span class="font-semibold text-slate-900 dark:text-white">S/ 24,500.15</span>
+</div>
+<div class="flex justify-between items-center text-sm">
+<div class="flex items-center gap-2">
+<span class="w-1.5 h-1.5 rounded-full bg-amber-400"></span>
+<span class="text-slate-600 dark:text-slate-300">ONP (Sistema Nacional)</span>
+</div>
+<span class="font-semibold text-slate-900 dark:text-white">S/ 5,125.30</span>
+</div>
+<div class="flex justify-between items-center text-sm">
+<div class="flex items-center gap-2">
+<span class="w-1.5 h-1.5 rounded-full bg-amber-300"></span>
+<span class="text-slate-600 dark:text-slate-300">Renta 5ta Categoría</span>
+</div>
+<span class="font-semibold text-slate-900 dark:text-white">S/ 8,500.00</span>
+</div>
+</div>
+</div>
+<!-- Card 3: Total Payable -->
+<div class="bg-gradient-to-br from-primary/10 to-transparent dark:from-primary/20 dark:to-transparent rounded-xl border border-primary/30 dark:border-primary/40 p-6 shadow-lg shadow-primary/5 hover:shadow-primary/10 transition-all relative overflow-hidden">
+<div class="absolute -bottom-10 -right-10 text-primary/10 dark:text-primary/10">
+<span class="material-icons-round text-9xl">payments</span>
+</div>
+<div class="flex flex-col h-full justify-between relative z-10">
+<div>
+<div class="flex justify-between items-start mb-6">
+<div class="p-2.5 bg-primary text-white rounded-lg shadow-md shadow-primary/30">
+<span class="material-icons-round text-2xl">attach_money</span>
+</div>
+<div class="text-right">
+<p class="text-xs text-slate-500 dark:text-slate-400 font-medium mb-1">Vencimiento</p>
+<p class="text-sm font-bold text-red-500 flex items-center gap-1 justify-end">
+<span class="material-icons-round text-base">warning</span>
+                                    18 Oct 2023
+                                </p>
+</div>
+</div>
+<h3 class="text-primary-dark dark:text-primary-light text-sm font-bold uppercase tracking-wide mb-1">Total a Pagar (SUNAT + AFP)</h3>
+<p class="text-4xl lg:text-5xl font-extrabold text-slate-900 dark:text-white mb-2 font-display tracking-tight">S/ 80,975.65</p>
+<p class="text-sm text-slate-500 dark:text-slate-400">Total calculado al tipo de cambio 3.845</p>
+</div>
+<div class="mt-8">
+<button class="w-full group flex items-center justify-center gap-2 py-3 px-4 bg-primary hover:bg-primary-dark text-white text-sm font-bold rounded-lg shadow-lg shadow-primary/30 hover:shadow-primary/50 transition-all transform hover:-translate-y-0.5">
+                            Generar Ticket de Pago
+                            <span class="material-icons-round group-hover:translate-x-1 transition-transform">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Lower Section: Chart & Detailed Breakdown -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+<!-- Chart Section -->
+<div class="bg-white dark:bg-surface-dark rounded-xl border border-slate-200 dark:border-slate-700/50 p-6 shadow-sm">
+<div class="flex items-center justify-between mb-6">
+<h3 class="font-bold text-slate-900 dark:text-white">Distribución de Costos</h3>
+<button class="text-slate-400 hover:text-primary transition-colors">
+<span class="material-icons-round">more_horiz</span>
+</button>
+</div>
+<div class="relative w-48 h-48 mx-auto mb-6 chart-donut flex items-center justify-center shadow-inner">
+<div class="w-32 h-32 rounded-full chart-hole flex items-center justify-center flex-col">
+<span class="text-xs text-slate-400 uppercase">Costo Total</span>
+<span class="text-lg font-bold text-slate-900 dark:text-white">100%</span>
+</div>
+</div>
+<div class="space-y-4">
+<div class="flex items-center justify-between p-2 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
+<div class="flex items-center gap-3">
+<span class="w-3 h-3 rounded bg-blue-600"></span> <!-- Primary Color -->
+<span class="text-sm text-slate-600 dark:text-slate-300 font-medium">Planilla Neta</span>
+</div>
+<span class="text-sm font-bold text-slate-900 dark:text-white">65%</span>
+</div>
+<div class="flex items-center justify-between p-2 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
+<div class="flex items-center gap-3">
+<span class="w-3 h-3 rounded bg-emerald-500"></span>
+<span class="text-sm text-slate-600 dark:text-slate-300 font-medium">Impuestos</span>
+</div>
+<span class="text-sm font-bold text-slate-900 dark:text-white">20%</span>
+</div>
+<div class="flex items-center justify-between p-2 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
+<div class="flex items-center gap-3">
+<span class="w-3 h-3 rounded bg-amber-500"></span>
+<span class="text-sm text-slate-600 dark:text-slate-300 font-medium">Aportes</span>
+</div>
+<span class="text-sm font-bold text-slate-900 dark:text-white">15%</span>
+</div>
+</div>
+</div>
+<!-- Detailed Table Section -->
+<div class="lg:col-span-2 bg-white dark:bg-surface-dark rounded-xl border border-slate-200 dark:border-slate-700/50 p-6 shadow-sm overflow-hidden flex flex-col">
+<div class="flex items-center justify-between mb-6">
+<h3 class="font-bold text-slate-900 dark:text-white">Detalle por Entidad (Top 5)</h3>
+<a class="text-primary text-sm font-medium hover:underline" href="#">Ver reporte completo</a>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="border-b border-slate-200 dark:border-slate-700">
+<th class="pb-3 text-xs font-semibold text-slate-400 uppercase tracking-wider">Entidad / Concepto</th>
+<th class="pb-3 text-xs font-semibold text-slate-400 uppercase tracking-wider text-right">Base Imponible</th>
+<th class="pb-3 text-xs font-semibold text-slate-400 uppercase tracking-wider text-right">Tasa</th>
+<th class="pb-3 text-xs font-semibold text-slate-400 uppercase tracking-wider text-right">Importe</th>
+<th class="pb-3 text-xs font-semibold text-slate-400 uppercase tracking-wider text-center">Estado</th>
+</tr>
+</thead>
+<tbody class="text-sm">
+<tr class="group border-b border-slate-100 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
+<td class="py-4 pl-2 font-medium text-slate-800 dark:text-slate-200 flex items-center gap-3">
+<div class="w-8 h-8 rounded bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center text-blue-600 dark:text-blue-400">
+<span class="material-icons-round text-sm">local_hospital</span>
+</div>
+                                    ESSALUD
+                                </td>
+<td class="py-4 text-right text-slate-600 dark:text-slate-400">S/ 360,555.00</td>
+<td class="py-4 text-right text-slate-600 dark:text-slate-400">9.00%</td>
+<td class="py-4 text-right font-bold text-slate-900 dark:text-white">S/ 32,450.00</td>
+<td class="py-4 text-center">
+<span class="inline-flex items-center px-2 py-1 rounded text-xs font-medium bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400">
+                                        Calculado
+                                    </span>
+</td>
+</tr>
+<tr class="group border-b border-slate-100 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
+<td class="py-4 pl-2 font-medium text-slate-800 dark:text-slate-200 flex items-center gap-3">
+<div class="w-8 h-8 rounded bg-amber-100 dark:bg-amber-900/30 flex items-center justify-center text-amber-600 dark:text-amber-400">
+<span class="material-icons-round text-sm">account_balance_wallet</span>
+</div>
+                                    AFP Integra (Fondo 2)
+                                </td>
+<td class="py-4 text-right text-slate-600 dark:text-slate-400">S/ 120,400.00</td>
+<td class="py-4 text-right text-slate-600 dark:text-slate-400">Variable</td>
+<td class="py-4 text-right font-bold text-slate-900 dark:text-white">S/ 15,200.50</td>
+<td class="py-4 text-center">
+<span class="inline-flex items-center px-2 py-1 rounded text-xs font-medium bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400">
+                                        Calculado
+                                    </span>
+</td>
+</tr>
+<tr class="group border-b border-slate-100 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
+<td class="py-4 pl-2 font-medium text-slate-800 dark:text-slate-200 flex items-center gap-3">
+<div class="w-8 h-8 rounded bg-slate-100 dark:bg-slate-700 flex items-center justify-center text-slate-600 dark:text-slate-300">
+<span class="material-icons-round text-sm">gavel</span>
+</div>
+                                    SUNAT - 5ta Categoria
+                                </td>
+<td class="py-4 text-right text-slate-600 dark:text-slate-400">S/ 85,000.00</td>
+<td class="py-4 text-right text-slate-600 dark:text-slate-400">Escala</td>
+<td class="py-4 text-right font-bold text-slate-900 dark:text-white">S/ 8,500.00</td>
+<td class="py-4 text-center">
+<span class="inline-flex items-center px-2 py-1 rounded text-xs font-medium bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400">
+                                        Pendiente
+                                    </span>
+</td>
+</tr>
+<tr class="group hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
+<td class="py-4 pl-2 font-medium text-slate-800 dark:text-slate-200 flex items-center gap-3">
+<div class="w-8 h-8 rounded bg-indigo-100 dark:bg-indigo-900/30 flex items-center justify-center text-indigo-600 dark:text-indigo-400">
+<span class="material-icons-round text-sm">security</span>
+</div>
+                                    SCTR (Mapfre)
+                                </td>
+<td class="py-4 text-right text-slate-600 dark:text-slate-400">S/ 360,555.00</td>
+<td class="py-4 text-right text-slate-600 dark:text-slate-400">1.80%</td>
+<td class="py-4 text-right font-bold text-slate-900 dark:text-white">S/ 6,820.20</td>
+<td class="py-4 text-center">
+<span class="inline-flex items-center px-2 py-1 rounded text-xs font-medium bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400">
+                                        Calculado
+                                    </span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Summary Footer inside table card -->
+<div class="mt-auto pt-4 border-t border-slate-200 dark:border-slate-700 flex justify-end gap-8 text-sm">
+<div class="text-right">
+<span class="block text-slate-500 dark:text-slate-400 text-xs uppercase">Total Base Imponible</span>
+<span class="font-bold text-slate-900 dark:text-white">S/ 926,510.00</span>
+</div>
+<div class="text-right">
+<span class="block text-slate-500 dark:text-slate-400 text-xs uppercase">Empleados Procesados</span>
+<span class="font-bold text-slate-900 dark:text-white">142</span>
+</div>
+</div>
+</div>
+</div>
+</main>
+</body></html>

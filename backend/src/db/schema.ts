@@ -88,3 +88,28 @@ export const logicMatrix = sqliteTable('logic_matrix', {
   venueIdIdx: index('logic_matrix_venue_id_idx').on(table.venue_id),
   targetLegalEntityIdIdx: index('logic_matrix_target_legal_entity_id_idx').on(table.target_legal_entity_id),
 }));
+
+// Tabla para manejar "Otros Descuentos" y "Retenciones Judiciales"
+export const financialIncidents = sqliteTable('financial_incidents', {
+  id: text('id').primaryKey(),
+  tenant_id: text('tenant_id').notNull().references(() => tenants.id),
+  employee_id: text('employee_id').notNull().references(() => employees.id),
+  type: text('type', { enum: ['LOAN', 'JUDICIAL', 'ADVANCE'] }).notNull(),
+  description: text('description'),
+  amount: integer('amount').notNull(), // Amount in cents
+  installments_total: integer('installments_total').notNull().default(1),
+  installments_paid: integer('installments_paid').notNull().default(0),
+  status: text('status', { enum: ['ACTIVE', 'PAID', 'CANCELLED'] }).notNull().default('ACTIVE'),
+  start_date: integer('start_date', { mode: 'timestamp' }).notNull(),
+  created_at: integer('created_at', { mode: 'timestamp' }).default(sql`(strftime('%s', 'now'))`),
+}, (table) => ({
+  tenantIdIdx: index('financial_incidents_tenant_id_idx').on(table.tenant_id),
+  employeeIdIdx: index('financial_incidents_employee_id_idx').on(table.employee_id),
+}));
+
+export const financialIncidentsRelations = relations(financialIncidents, ({ one }) => ({
+  employee: one(employees, {
+    fields: [financialIncidents.employee_id],
+    references: [employees.id],
+  }),
+}));

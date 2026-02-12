@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>NexaCorp: Instantánea de Periodo Cerrado</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#2c60ce",
+                        "primary-dim": "#1e4bb5",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#121720",
+                        "surface-dark": "#1a2230",
+                        "surface-dim": "#161c27",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.5rem", "lg": "1rem", "xl": "1.5rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        /* Custom watermark style */
+        .watermark {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(-45deg);
+            font-size: 15vw;
+            font-weight: 800;
+            color: rgba(255, 255, 255, 0.03);
+            pointer-events: none;
+            z-index: 0;
+            white-space: nowrap;
+            user-select: none;
+        }
+        
+        /* Custom scrollbar for dark mode tables */
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #121720; 
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #2c3b55; 
+            border-radius: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #3b4e70; 
+        }
+
+        /* Read-only overlay pattern for inputs */
+        .readonly-stripes {
+            background-image: repeating-linear-gradient(
+                45deg,
+                transparent,
+                transparent 10px,
+                rgba(255,255,255,0.02) 10px,
+                rgba(255,255,255,0.02) 20px
+            );
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-800 dark:text-slate-200 font-display antialiased min-h-screen flex flex-col relative overflow-x-hidden">
+<!-- Watermark -->
+<div class="watermark">CERRADO</div>
+<!-- Top Navigation / Header -->
+<header class="bg-white dark:bg-surface-dark border-b border-slate-200 dark:border-slate-800 sticky top-0 z-30 shadow-sm">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex justify-between h-16 items-center">
+<!-- Left: Logo & Context -->
+<div class="flex items-center gap-4">
+<div class="flex items-center gap-2">
+<div class="bg-primary/20 p-2 rounded-lg">
+<span class="material-icons text-primary text-xl">history_edu</span>
+</div>
+<div>
+<h1 class="text-lg font-bold text-slate-900 dark:text-white leading-tight">NexaCorp</h1>
+<p class="text-xs text-slate-500 dark:text-slate-400 font-medium">Auditoría Histórica Inmutable</p>
+</div>
+</div>
+<div class="h-8 w-px bg-slate-200 dark:bg-slate-700 mx-2"></div>
+<div class="flex items-center gap-2 bg-slate-100 dark:bg-surface-dim px-3 py-1.5 rounded-full border border-slate-200 dark:border-slate-700">
+<span class="material-icons text-slate-500 text-sm">lock</span>
+<span class="text-sm font-semibold text-slate-600 dark:text-slate-300">Periodo: Octubre 2023</span>
+</div>
+</div>
+<!-- Right: Meta Info & Actions -->
+<div class="flex items-center gap-4">
+<div class="text-right hidden sm:block">
+<div class="text-xs text-slate-500 dark:text-slate-400">Snapshot ID</div>
+<div class="text-sm font-mono text-primary font-medium">#8823-XA-FINAL</div>
+</div>
+<button class="flex items-center gap-2 bg-primary hover:bg-primary-dim text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors shadow-lg shadow-primary/20">
+<span class="material-icons text-sm">print</span>
+<span>Exportar Reporte</span>
+</button>
+<div class="h-10 w-10 rounded-full bg-slate-200 dark:bg-slate-700 flex items-center justify-center overflow-hidden border border-slate-300 dark:border-slate-600">
+<img alt="Auditor User Profile" class="h-full w-full object-cover" data-alt="Profile picture of the current auditor viewing the page" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDg5MRgiB8PTGffMyJh92oYOCFouSY1mRl0vtJgpytxcpgU0z6wzfaQDEFqe2HTGPscyhuQ63hJxL_kGmVRN6ZdJHu2LBSdtxJe_UEJ2W109pXqzNs9B7BxPnemXIMQ09_2G79QS9ljhcup4-1A-S1SL3-TJYoRe8GmPnn_PzrrD4XFWmu7TgsXVIDhu2_TUYgW3e7heiV3PPxC8p6UuIUpzQJja_5S_xWB_7tm4uOKwg97G0gYNBpuuslGMU0tKrIdMSVSB1jJlHmY"/>
+</div>
+</div>
+</div>
+</div>
+<!-- Sub-header Alert -->
+<div class="bg-primary/10 dark:bg-primary/5 border-b border-primary/20 px-4 py-2">
+<div class="max-w-7xl mx-auto flex items-center justify-center gap-2 text-primary dark:text-blue-400 text-xs sm:text-sm font-medium">
+<span class="material-icons text-sm">info</span>
+                Este es un visor de solo lectura. El periodo fue cerrado el 31/10/2023 a las 23:59:45 por Admin Sistema.
+            </div>
+</div>
+</header>
+<main class="flex-1 max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-8 relative z-10">
+<!-- Header Section -->
+<div class="mb-8">
+<h2 class="text-2xl font-bold text-slate-900 dark:text-white">Instantánea de Periodo Cerrado</h2>
+<p class="text-slate-500 dark:text-slate-400 mt-1">Visualización forense de la planilla tal como se procesó al cierre.</p>
+</div>
+<!-- KPI Grid (Read Only State) -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+<!-- Card 1 -->
+<div class="bg-white dark:bg-surface-dark p-5 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm opacity-90">
+<div class="flex justify-between items-start mb-4">
+<div>
+<p class="text-xs font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wider">Total Planilla</p>
+<h3 class="text-2xl font-bold text-slate-900 dark:text-slate-200 mt-1">S/ 1,250,420.00</h3>
+</div>
+<div class="p-2 bg-slate-100 dark:bg-slate-800 rounded-lg text-slate-400">
+<span class="material-icons">account_balance_wallet</span>
+</div>
+</div>
+<div class="w-full bg-slate-100 dark:bg-slate-800 h-1.5 rounded-full overflow-hidden">
+<div class="bg-slate-400 h-1.5 rounded-full" style="width: 100%"></div>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="bg-white dark:bg-surface-dark p-5 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm opacity-90">
+<div class="flex justify-between items-start mb-4">
+<div>
+<p class="text-xs font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wider">Neto a Pagar</p>
+<h3 class="text-2xl font-bold text-slate-900 dark:text-slate-200 mt-1">S/ 985,210.50</h3>
+</div>
+<div class="p-2 bg-slate-100 dark:bg-slate-800 rounded-lg text-slate-400">
+<span class="material-icons">payments</span>
+</div>
+</div>
+<div class="w-full bg-slate-100 dark:bg-slate-800 h-1.5 rounded-full overflow-hidden">
+<div class="bg-slate-400 h-1.5 rounded-full" style="width: 78%"></div>
+</div>
+</div>
+<!-- Card 3 -->
+<div class="bg-white dark:bg-surface-dark p-5 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm opacity-90">
+<div class="flex justify-between items-start mb-4">
+<div>
+<p class="text-xs font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wider">Impuestos (5ta)</p>
+<h3 class="text-2xl font-bold text-slate-900 dark:text-slate-200 mt-1">S/ 142,050.20</h3>
+</div>
+<div class="p-2 bg-slate-100 dark:bg-slate-800 rounded-lg text-slate-400">
+<span class="material-icons">receipt_long</span>
+</div>
+</div>
+<div class="w-full bg-slate-100 dark:bg-slate-800 h-1.5 rounded-full overflow-hidden">
+<div class="bg-slate-400 h-1.5 rounded-full" style="width: 12%"></div>
+</div>
+</div>
+<!-- Card 4 -->
+<div class="bg-white dark:bg-surface-dark p-5 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm opacity-90">
+<div class="flex justify-between items-start mb-4">
+<div>
+<p class="text-xs font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wider">Colaboradores</p>
+<h3 class="text-2xl font-bold text-slate-900 dark:text-slate-200 mt-1">452</h3>
+</div>
+<div class="p-2 bg-slate-100 dark:bg-slate-800 rounded-lg text-slate-400">
+<span class="material-icons">groups</span>
+</div>
+</div>
+<div class="w-full bg-slate-100 dark:bg-slate-800 h-1.5 rounded-full overflow-hidden">
+<div class="bg-slate-400 h-1.5 rounded-full" style="width: 100%"></div>
+</div>
+</div>
+</div>
+<!-- Main Content Grid -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+<!-- Left Column: Consolidated Details & Logs (2/3 width) -->
+<div class="lg:col-span-2 space-y-8">
+<!-- Consolidated Table Section -->
+<div class="bg-white dark:bg-surface-dark rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm overflow-hidden">
+<div class="px-6 py-4 border-b border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-surface-dim flex justify-between items-center">
+<h3 class="text-sm font-semibold text-slate-900 dark:text-white uppercase tracking-wide">Desglose por Centro de Costos</h3>
+<span class="px-2 py-1 rounded bg-slate-200 dark:bg-slate-700 text-xs text-slate-600 dark:text-slate-400 font-mono">MD5: a1b2...e9f0</span>
+</div>
+<div class="overflow-x-auto custom-scrollbar">
+<table class="w-full text-sm text-left">
+<thead class="text-xs text-slate-500 dark:text-slate-400 uppercase bg-slate-50 dark:bg-surface-dim border-b border-slate-200 dark:border-slate-700">
+<tr>
+<th class="px-6 py-3 font-medium" scope="col">Centro de Costo</th>
+<th class="px-6 py-3 font-medium" scope="col">Headcount</th>
+<th class="px-6 py-3 font-medium text-right" scope="col">Total Bruto</th>
+<th class="px-6 py-3 font-medium text-right" scope="col">Deducciones</th>
+<th class="px-6 py-3 font-medium text-right" scope="col">Neto</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-slate-200 dark:divide-slate-700">
+<tr class="bg-white dark:bg-surface-dark hover:bg-slate-50 dark:hover:bg-surface-dim transition-colors">
+<td class="px-6 py-4 font-medium text-slate-900 dark:text-slate-200">Administración</td>
+<td class="px-6 py-4 text-slate-600 dark:text-slate-400">45</td>
+<td class="px-6 py-4 text-right text-slate-600 dark:text-slate-400 font-mono">S/ 320,000.00</td>
+<td class="px-6 py-4 text-right text-slate-600 dark:text-slate-400 font-mono">S/ 45,000.00</td>
+<td class="px-6 py-4 text-right font-medium text-slate-900 dark:text-slate-200 font-mono">S/ 275,000.00</td>
+</tr>
+<tr class="bg-white dark:bg-surface-dark hover:bg-slate-50 dark:hover:bg-surface-dim transition-colors">
+<td class="px-6 py-4 font-medium text-slate-900 dark:text-slate-200">Operaciones - Lima</td>
+<td class="px-6 py-4 text-slate-600 dark:text-slate-400">120</td>
+<td class="px-6 py-4 text-right text-slate-600 dark:text-slate-400 font-mono">S/ 480,000.00</td>
+<td class="px-6 py-4 text-right text-slate-600 dark:text-slate-400 font-mono">S/ 72,000.00</td>
+<td class="px-6 py-4 text-right font-medium text-slate-900 dark:text-slate-200 font-mono">S/ 408,000.00</td>
+</tr>
+<tr class="bg-white dark:bg-surface-dark hover:bg-slate-50 dark:hover:bg-surface-dim transition-colors">
+<td class="px-6 py-4 font-medium text-slate-900 dark:text-slate-200">Operaciones - Provincia</td>
+<td class="px-6 py-4 text-slate-600 dark:text-slate-400">80</td>
+<td class="px-6 py-4 text-right text-slate-600 dark:text-slate-400 font-mono">S/ 290,000.00</td>
+<td class="px-6 py-4 text-right text-slate-600 dark:text-slate-400 font-mono">S/ 43,500.00</td>
+<td class="px-6 py-4 text-right font-medium text-slate-900 dark:text-slate-200 font-mono">S/ 246,500.00</td>
+</tr>
+<tr class="bg-white dark:bg-surface-dark hover:bg-slate-50 dark:hover:bg-surface-dim transition-colors">
+<td class="px-6 py-4 font-medium text-slate-900 dark:text-slate-200">Ventas</td>
+<td class="px-6 py-4 text-slate-600 dark:text-slate-400">207</td>
+<td class="px-6 py-4 text-right text-slate-600 dark:text-slate-400 font-mono">S/ 160,420.00</td>
+<td class="px-6 py-4 text-right text-slate-600 dark:text-slate-400 font-mono">S/ 24,000.00</td>
+<td class="px-6 py-4 text-right font-medium text-slate-900 dark:text-slate-200 font-mono">S/ 136,420.00</td>
+</tr>
+</tbody>
+<tfoot class="bg-slate-50 dark:bg-surface-dim border-t border-slate-200 dark:border-slate-700">
+<tr>
+<td class="px-6 py-4 font-bold text-slate-900 dark:text-white">Total General</td>
+<td class="px-6 py-4 font-bold text-slate-900 dark:text-white">452</td>
+<td class="px-6 py-4 font-bold text-right text-slate-900 dark:text-white font-mono">S/ 1,250,420.00</td>
+<td class="px-6 py-4 font-bold text-right text-slate-900 dark:text-white font-mono">S/ 184,500.00</td>
+<td class="px-6 py-4 font-bold text-right text-primary font-mono">S/ 1,065,920.00</td>
+</tr>
+</tfoot>
+</table>
+</div>
+</div>
+<!-- Security Logs -->
+<div class="bg-white dark:bg-surface-dark rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm">
+<div class="px-6 py-4 border-b border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-surface-dim flex justify-between items-center">
+<div class="flex items-center gap-2">
+<span class="material-icons text-slate-400 text-lg">security</span>
+<h3 class="text-sm font-semibold text-slate-900 dark:text-white uppercase tracking-wide">Logs de Auditoría y Cierre</h3>
+</div>
+</div>
+<div class="p-6">
+<div class="relative border-l-2 border-slate-200 dark:border-slate-700 ml-3 space-y-6">
+<!-- Log Item 1 -->
+<div class="relative pl-8">
+<span class="absolute -left-[9px] top-1 h-4 w-4 rounded-full bg-red-500 border-2 border-white dark:border-surface-dark"></span>
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1">
+<h4 class="text-sm font-semibold text-slate-900 dark:text-slate-200">Cierre Definitivo de Periodo</h4>
+<span class="text-xs text-slate-500 dark:text-slate-400 font-mono">31 Oct 2023, 23:59:45</span>
+</div>
+<p class="text-sm text-slate-600 dark:text-slate-400 mt-1">
+                                    Usuario: <span class="text-slate-900 dark:text-slate-300 font-medium">admin.sistema</span> | IP: 192.168.1.45
+                                </p>
+<div class="mt-2 text-xs font-mono text-slate-400 bg-slate-100 dark:bg-black/30 p-2 rounded border border-slate-200 dark:border-slate-800 truncate">
+                                    HASH: 7f83b1657ff1fc53b92dc18148a1d65dfc2d4b1fa3d677284addd200126d9069
+                                </div>
+</div>
+<!-- Log Item 2 -->
+<div class="relative pl-8">
+<span class="absolute -left-[9px] top-1 h-4 w-4 rounded-full bg-primary border-2 border-white dark:border-surface-dark"></span>
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1">
+<h4 class="text-sm font-semibold text-slate-900 dark:text-slate-200">Carga de Acta Firmada</h4>
+<span class="text-xs text-slate-500 dark:text-slate-400 font-mono">31 Oct 2023, 22:15:10</span>
+</div>
+<p class="text-sm text-slate-600 dark:text-slate-400 mt-1">
+                                    Usuario: <span class="text-slate-900 dark:text-slate-300 font-medium">juan.perez (Gerente RRHH)</span>
+</p>
+</div>
+<!-- Log Item 3 -->
+<div class="relative pl-8">
+<span class="absolute -left-[9px] top-1 h-4 w-4 rounded-full bg-slate-400 border-2 border-white dark:border-surface-dark"></span>
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1">
+<h4 class="text-sm font-semibold text-slate-900 dark:text-slate-200">Generación de Reportes Finales</h4>
+<span class="text-xs text-slate-500 dark:text-slate-400 font-mono">31 Oct 2023, 21:30:00</span>
+</div>
+<p class="text-sm text-slate-600 dark:text-slate-400 mt-1">
+                                    Sistema Automático
+                                </p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Column: Signed Document Viewer (1/3 width) -->
+<div class="lg:col-span-1 space-y-8">
+<!-- Document Viewer -->
+<div class="bg-white dark:bg-surface-dark rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm flex flex-col h-full max-h-[800px]">
+<div class="px-6 py-4 border-b border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-surface-dim flex justify-between items-center">
+<h3 class="text-sm font-semibold text-slate-900 dark:text-white uppercase tracking-wide">Acta de Aprobación</h3>
+<span class="material-icons text-green-500 text-sm" title="Documento Verificado">verified</span>
+</div>
+<!-- PDF Preview Mockup -->
+<div class="flex-1 bg-slate-100 dark:bg-slate-800 p-4 overflow-y-auto custom-scrollbar relative">
+<div class="bg-white text-slate-800 p-6 shadow-md min-h-[500px] text-[10px] leading-relaxed relative">
+<!-- Document Watermark -->
+<div class="absolute inset-0 flex items-center justify-center opacity-10 pointer-events-none">
+<span class="text-6xl font-bold -rotate-45">COPIA FIEL</span>
+</div>
+<!-- Document Content Mock -->
+<div class="text-center mb-4">
+<h4 class="font-bold text-xs uppercase">Acta de Cierre de Planilla - Octubre 2023</h4>
+<p class="text-[9px] text-slate-500">Lima, 31 de Octubre de 2023</p>
+</div>
+<p class="mb-2">Por medio de la presente, se certifica que se ha procedido con la revisión y validación de la planilla correspondiente al periodo Octubre 2023.</p>
+<p class="mb-2">Los montos totales ascienden a S/ 1,250,420.00, habiéndose realizado todas las deducciones de ley.</p>
+<p class="mb-6">Se aprueba el pago para los 452 colaboradores activos.</p>
+<!-- Signatures -->
+<div class="mt-8 grid grid-cols-1 gap-6">
+<div class="border-t border-slate-900 pt-2 text-center">
+<!-- Signature Image Mock -->
+<div class="h-8 mb-1 mx-auto w-24 opacity-80" style="background: url('data:image/svg+xml;utf8,&lt;svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 30\'&gt;&lt;path d=\'M10,20 Q30,5 50,20 T90,20\' stroke=\'blue\' fill=\'none\' stroke-width=\'2\'/&gt;&lt;/svg&gt;') no-repeat center;"></div>
+<p class="font-bold">Juan Perez</p>
+<p class="text-[8px]">Gerente de Recursos Humanos</p>
+<p class="text-[8px] text-blue-600 font-mono mt-1">Firmado Digitalmente: 31/10/23 22:15</p>
+</div>
+<div class="border-t border-slate-900 pt-2 text-center">
+<!-- Signature Image Mock -->
+<div class="h-8 mb-1 mx-auto w-24 opacity-80" style="background: url('data:image/svg+xml;utf8,&lt;svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 30\'&gt;&lt;path d=\'M10,15 Q25,25 40,15 T80,15\' stroke=\'black\' fill=\'none\' stroke-width=\'2\'/&gt;&lt;/svg&gt;') no-repeat center;"></div>
+<p class="font-bold">Maria Gonzalez</p>
+<p class="text-[8px]">Gerente de Finanzas</p>
+<p class="text-[8px] text-blue-600 font-mono mt-1">Firmado Digitalmente: 31/10/23 22:45</p>
+</div>
+</div>
+</div>
+</div>
+<div class="p-4 border-t border-slate-200 dark:border-slate-700 bg-white dark:bg-surface-dark flex justify-center">
+<button class="text-primary hover:text-primary-dim text-sm font-medium flex items-center gap-1">
+<span class="material-icons text-sm">open_in_new</span>
+                            Ver Documento Original
+                        </button>
+</div>
+</div>
+<!-- Snapshot Meta Card -->
+<div class="bg-surface-dark/50 dark:bg-surface-dark border border-slate-200 dark:border-slate-700 rounded-xl p-4">
+<h4 class="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase mb-3">Integridad de Datos</h4>
+<div class="flex items-start gap-3 mb-3">
+<div class="bg-green-500/20 text-green-500 dark:text-green-400 p-1.5 rounded">
+<span class="material-icons text-lg">gpp_good</span>
+</div>
+<div>
+<p class="text-sm font-medium text-slate-900 dark:text-slate-200">Periodo Validado</p>
+<p class="text-xs text-slate-500 dark:text-slate-400">Sin alteraciones desde cierre.</p>
+</div>
+</div>
+<div class="text-xs font-mono text-slate-500 break-all bg-slate-100 dark:bg-black/20 p-2 rounded">
+                        Merkle Root: 0x8a9f...b2c1
+                    </div>
+</div>
+</div>
+</div>
+</main>
+<footer class="mt-8 border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-surface-dim py-6">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center gap-4">
+<p class="text-sm text-slate-500 dark:text-slate-400">© 2023 NexaCorp Audit Module. Todos los derechos reservados.</p>
+<div class="flex items-center gap-4">
+<span class="text-xs text-slate-400">Versión 2.4.1 (LTS)</span>
+<span class="h-3 w-px bg-slate-300 dark:bg-slate-700"></span>
+<span class="flex items-center gap-1 text-xs text-slate-500">
+<span class="w-2 h-2 rounded-full bg-green-500"></span>
+                    Sistema Online
+                </span>
+</div>
+</div>
+</footer>
+</body></html>

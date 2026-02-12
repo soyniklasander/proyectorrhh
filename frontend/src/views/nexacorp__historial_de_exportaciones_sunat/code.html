@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>NexaCorp: Historial de Exportaciones SUNAT</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<!-- Material Icons -->
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#256af4",
+                        "primary-hover": "#1d54c4",
+                        "background-light": "#f5f6f8",
+                        "background-dark": "#101622",
+                        "surface-dark": "#1a2332",
+                        "border-dark": "#2a3447",
+                    },
+                    fontFamily: {
+                        "display": ["Manrope", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Manrope', sans-serif;
+        }
+        /* Custom Scrollbar for dark theme */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #101622; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #2a3447; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #3b4760; 
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-gray-800 dark:text-gray-200 font-display min-h-screen flex flex-col md:flex-row overflow-hidden">
+<!-- Sidebar -->
+<aside class="w-full md:w-64 bg-white dark:bg-surface-dark border-r border-gray-200 dark:border-border-dark flex-shrink-0 md:h-screen flex flex-col z-20">
+<div class="h-16 flex items-center px-6 border-b border-gray-200 dark:border-border-dark">
+<div class="flex items-center gap-2 text-primary font-bold text-xl tracking-tight">
+<span class="material-icons">corporate_fare</span>
+                NexaCorp
+            </div>
+</div>
+<nav class="flex-1 overflow-y-auto py-4">
+<div class="px-4 mb-2 text-xs font-semibold text-gray-400 uppercase tracking-wider">Cumplimiento</div>
+<ul class="space-y-1 px-2">
+<li>
+<a class="flex items-center gap-3 px-4 py-2.5 text-sm font-medium rounded-lg text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-primary/10 hover:text-primary transition-colors" href="#">
+<span class="material-icons-outlined text-[20px]">dashboard</span>
+                        Dashboard
+                    </a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-4 py-2.5 text-sm font-medium rounded-lg text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-primary/10 hover:text-primary transition-colors" href="#">
+<span class="material-icons-outlined text-[20px]">assignment</span>
+                        Declaraciones
+                    </a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-4 py-2.5 text-sm font-medium rounded-lg bg-primary/10 text-primary transition-colors" href="#">
+<span class="material-icons text-[20px]">history</span>
+                        Historial PLAME
+                    </a>
+</li>
+</ul>
+<div class="px-4 mt-6 mb-2 text-xs font-semibold text-gray-400 uppercase tracking-wider">Configuración</div>
+<ul class="space-y-1 px-2">
+<li>
+<a class="flex items-center gap-3 px-4 py-2.5 text-sm font-medium rounded-lg text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-primary/10 hover:text-primary transition-colors" href="#">
+<span class="material-icons-outlined text-[20px]">settings</span>
+                        Parámetros
+                    </a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-4 py-2.5 text-sm font-medium rounded-lg text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-primary/10 hover:text-primary transition-colors" href="#">
+<span class="material-icons-outlined text-[20px]">people</span>
+                        Usuarios
+                    </a>
+</li>
+</ul>
+</nav>
+<div class="p-4 border-t border-gray-200 dark:border-border-dark">
+<div class="flex items-center gap-3">
+<img class="w-9 h-9 rounded-full object-cover ring-2 ring-primary/20" data-alt="Profile picture of user" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB3OHYxqY0DBjGRfMSQoX1c8ZpSW6hG--UprkkVCzPYrU5AzxgT6Pvepof6RE01SuHEz7INSDXVSuHNRyc3cni6nyOEt048pP9qvzXq4g2bqs5pgTRwGMGoDhI20b6Lo_1Qu6fXR-Ij1VwrSSzMQNcWK9uKgzuck8mItMZBxPEuBs7ywRrH0nGLGeLsfRmMzkPe5u7-bZadxMEB-h9nGe0vomgbsx4zOooOM8puNDS8Bs5C5rpcjJMCRBcZRLGlQFRTolTTqStXDuOB"/>
+<div class="flex-1 min-w-0">
+<p class="text-sm font-medium text-gray-900 dark:text-white truncate">Carlos Mendoza</p>
+<p class="text-xs text-gray-500 dark:text-gray-400 truncate">Contador General</p>
+</div>
+<button class="text-gray-400 hover:text-white transition-colors">
+<span class="material-icons-outlined text-[20px]">logout</span>
+</button>
+</div>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="flex-1 flex flex-col h-screen overflow-hidden relative">
+<!-- Top Bar -->
+<header class="h-16 flex items-center justify-between px-6 bg-white dark:bg-surface-dark border-b border-gray-200 dark:border-border-dark z-10">
+<div class="flex items-center gap-4">
+<button class="md:hidden text-gray-500 hover:text-primary">
+<span class="material-icons">menu</span>
+</button>
+<nav aria-label="Breadcrumb" class="hidden sm:flex">
+<ol class="flex items-center space-x-2">
+<li><a class="text-gray-400 hover:text-gray-200 text-sm" href="#">Finanzas</a></li>
+<li><span class="text-gray-600">/</span></li>
+<li><a class="text-gray-400 hover:text-gray-200 text-sm" href="#">SUNAT</a></li>
+<li><span class="text-gray-600">/</span></li>
+<li class="text-sm font-medium text-primary">Historial PLAME</li>
+</ol>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<button class="relative p-2 text-gray-400 hover:text-primary transition-colors">
+<span class="material-icons-outlined">notifications</span>
+<span class="absolute top-1.5 right-1.5 w-2 h-2 bg-red-500 rounded-full border-2 border-surface-dark"></span>
+</button>
+<button class="p-2 text-gray-400 hover:text-primary transition-colors">
+<span class="material-icons-outlined">help_outline</span>
+</button>
+</div>
+</header>
+<!-- Scrollable Content Area -->
+<div class="flex-1 overflow-y-auto p-6 md:p-8 bg-background-light dark:bg-background-dark">
+<div class="max-w-7xl mx-auto space-y-8">
+<!-- Page Header & Actions -->
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
+<div>
+<h1 class="text-2xl font-bold text-gray-900 dark:text-white mb-1">Historial de Exportaciones</h1>
+<p class="text-sm text-gray-500 dark:text-gray-400 max-w-2xl">
+                            Consulte y descargue los archivos generados para el Programa de Declaración Telemática (PLAME). 
+                            Monitoree el estado de presentación ante SUNAT.
+                        </p>
+</div>
+<div class="flex gap-3">
+<button class="flex items-center justify-center gap-2 px-4 py-2.5 bg-surface-dark border border-border-dark text-gray-300 rounded-lg hover:bg-border-dark hover:text-white transition-all text-sm font-medium shadow-sm">
+<span class="material-icons-outlined text-[18px]">refresh</span>
+                            Actualizar
+                        </button>
+<button class="flex items-center justify-center gap-2 px-4 py-2.5 bg-primary hover:bg-primary-hover text-white rounded-lg shadow-lg shadow-primary/20 transition-all text-sm font-medium">
+<span class="material-icons text-[18px]">add</span>
+                            Nueva Exportación
+                        </button>
+</div>
+</div>
+<!-- Stats Cards -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<div class="bg-white dark:bg-surface-dark rounded-xl p-6 border border-gray-200 dark:border-border-dark shadow-sm flex items-center gap-4 relative overflow-hidden group">
+<div class="absolute right-0 top-0 h-full w-1 bg-primary"></div>
+<div class="w-12 h-12 rounded-full bg-primary/20 flex items-center justify-center text-primary">
+<span class="material-icons-outlined">description</span>
+</div>
+<div>
+<p class="text-sm text-gray-500 dark:text-gray-400">Total Generados</p>
+<p class="text-2xl font-bold text-gray-900 dark:text-white mt-0.5">24</p>
+<p class="text-xs text-green-500 mt-1 flex items-center gap-1">
+<span class="material-icons text-[12px]">trending_up</span> +2 este mes
+                            </p>
+</div>
+</div>
+<div class="bg-white dark:bg-surface-dark rounded-xl p-6 border border-gray-200 dark:border-border-dark shadow-sm flex items-center gap-4 relative overflow-hidden group">
+<div class="absolute right-0 top-0 h-full w-1 bg-yellow-500"></div>
+<div class="w-12 h-12 rounded-full bg-yellow-500/10 flex items-center justify-center text-yellow-500">
+<span class="material-icons-outlined">pending_actions</span>
+</div>
+<div>
+<p class="text-sm text-gray-500 dark:text-gray-400">Pendientes SUNAT</p>
+<p class="text-2xl font-bold text-gray-900 dark:text-white mt-0.5">3</p>
+<p class="text-xs text-gray-500 mt-1">Requieren atención</p>
+</div>
+</div>
+<div class="bg-white dark:bg-surface-dark rounded-xl p-6 border border-gray-200 dark:border-border-dark shadow-sm flex items-center gap-4 relative overflow-hidden group">
+<div class="absolute right-0 top-0 h-full w-1 bg-green-500"></div>
+<div class="w-12 h-12 rounded-full bg-green-500/10 flex items-center justify-center text-green-500">
+<span class="material-icons-outlined">check_circle</span>
+</div>
+<div>
+<p class="text-sm text-gray-500 dark:text-gray-400">Declarados</p>
+<p class="text-2xl font-bold text-gray-900 dark:text-white mt-0.5">21</p>
+<p class="text-xs text-green-500 mt-1">100% cumplimiento</p>
+</div>
+</div>
+</div>
+<!-- Filters & Table Section -->
+<div class="bg-white dark:bg-surface-dark rounded-xl border border-gray-200 dark:border-border-dark shadow-sm overflow-hidden">
+<!-- Filters Toolbar -->
+<div class="p-5 border-b border-gray-200 dark:border-border-dark flex flex-col lg:flex-row gap-4 justify-between items-center">
+<div class="flex items-center gap-3 w-full lg:w-auto">
+<div class="relative w-full lg:w-64">
+<span class="material-icons absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-[20px]">search</span>
+<input class="w-full bg-gray-50 dark:bg-background-dark border-gray-200 dark:border-border-dark rounded-lg pl-10 pr-4 py-2 text-sm text-gray-900 dark:text-gray-200 focus:ring-2 focus:ring-primary/50 focus:border-primary placeholder-gray-400 dark:placeholder-gray-500 transition-all" placeholder="Buscar por archivo o periodo..." type="text"/>
+</div>
+</div>
+<div class="flex flex-wrap items-center gap-3 w-full lg:w-auto">
+<div class="flex items-center gap-2">
+<span class="text-sm text-gray-500 dark:text-gray-400 hidden sm:inline">Filtrar:</span>
+<select class="bg-gray-50 dark:bg-background-dark border-gray-200 dark:border-border-dark rounded-lg px-3 py-2 text-sm text-gray-700 dark:text-gray-300 focus:ring-2 focus:ring-primary/50 focus:border-primary">
+<option value="2024">Año 2024</option>
+<option value="2023">Año 2023</option>
+<option value="2022">Año 2022</option>
+</select>
+</div>
+<select class="bg-gray-50 dark:bg-background-dark border-gray-200 dark:border-border-dark rounded-lg px-3 py-2 text-sm text-gray-700 dark:text-gray-300 focus:ring-2 focus:ring-primary/50 focus:border-primary">
+<option value="all">Todos los estados</option>
+<option value="pendiente">Pendiente</option>
+<option value="declarado">Declarado</option>
+</select>
+<button class="p-2 text-gray-400 hover:text-primary border border-transparent hover:border-border-dark rounded-lg transition-colors">
+<span class="material-icons-outlined">filter_list</span>
+</button>
+</div>
+</div>
+<!-- Table -->
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-gray-50 dark:bg-[#151b26] text-xs uppercase tracking-wider text-gray-500 dark:text-gray-400 font-semibold border-b border-gray-200 dark:border-border-dark">
+<th class="px-6 py-4">Periodo</th>
+<th class="px-6 py-4">Archivos Generados</th>
+<th class="px-6 py-4">Fecha de Generación</th>
+<th class="px-6 py-4">Usuario</th>
+<th class="px-6 py-4 text-center">Estado</th>
+<th class="px-6 py-4 text-right">Acciones</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-gray-200 dark:divide-border-dark text-sm">
+<!-- Row 1 (Pending) -->
+<tr class="group hover:bg-gray-50 dark:hover:bg-primary/5 transition-colors">
+<td class="px-6 py-4 font-medium text-gray-900 dark:text-white">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-blue-500/10 flex items-center justify-center text-blue-500 font-bold text-xs">
+                                                FEB
+                                            </div>
+<span>2024-02</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<div class="flex flex-col">
+<span class="text-gray-200 font-medium">060120240220100123456.zip</span>
+<span class="text-xs text-gray-500 mt-0.5 flex gap-1 items-center">
+<span class="w-1.5 h-1.5 rounded-full bg-primary"></span> RP
+                                                <span class="w-1.5 h-1.5 rounded-full bg-primary ml-1"></span> JOR
+                                                <span class="w-1.5 h-1.5 rounded-full bg-primary ml-1"></span> SNL
+                                            </span>
+</div>
+</td>
+<td class="px-6 py-4 text-gray-500 dark:text-gray-400 tabular-nums">
+                                        15/03/2024 <span class="text-xs text-gray-600 dark:text-gray-500 ml-1">10:45 AM</span>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2">
+<div class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 flex items-center justify-center text-xs font-bold">CM</div>
+<span class="text-gray-400 text-xs">Carlos M.</span>
+</div>
+</td>
+<td class="px-6 py-4 text-center">
+<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium bg-yellow-500/10 text-yellow-500 border border-yellow-500/20">
+<span class="w-1.5 h-1.5 rounded-full bg-yellow-500 animate-pulse"></span>
+                                            Pendiente
+                                        </span>
+</td>
+<td class="px-6 py-4 text-right">
+<div class="flex items-center justify-end gap-2 opacity-100 sm:opacity-60 group-hover:opacity-100 transition-opacity">
+<button class="p-2 text-gray-400 hover:text-white hover:bg-border-dark rounded-lg transition-colors" title="Ver detalle">
+<span class="material-icons-outlined text-[18px]">visibility</span>
+</button>
+<button class="p-2 text-primary hover:text-white hover:bg-primary rounded-lg transition-colors" title="Descargar paquete">
+<span class="material-icons text-[18px]">download</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 2 (Declared) -->
+<tr class="group hover:bg-gray-50 dark:hover:bg-primary/5 transition-colors">
+<td class="px-6 py-4 font-medium text-gray-900 dark:text-white">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-gray-700/30 flex items-center justify-center text-gray-400 font-bold text-xs">
+                                                ENE
+                                            </div>
+<span>2024-01</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<div class="flex flex-col">
+<span class="text-gray-200 font-medium">060120240120100123456.zip</span>
+<span class="text-xs text-gray-500 mt-0.5 flex gap-1 items-center">
+<span class="w-1.5 h-1.5 rounded-full bg-primary"></span> RP
+                                                <span class="w-1.5 h-1.5 rounded-full bg-primary ml-1"></span> JOR
+                                                <span class="w-1.5 h-1.5 rounded-full bg-primary ml-1"></span> SNL
+                                            </span>
+</div>
+</td>
+<td class="px-6 py-4 text-gray-500 dark:text-gray-400 tabular-nums">
+                                        14/02/2024 <span class="text-xs text-gray-600 dark:text-gray-500 ml-1">09:15 AM</span>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2">
+<div class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 flex items-center justify-center text-xs font-bold">CM</div>
+<span class="text-gray-400 text-xs">Carlos M.</span>
+</div>
+</td>
+<td class="px-6 py-4 text-center">
+<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium bg-green-500/10 text-green-500 border border-green-500/20">
+<span class="material-icons text-[14px]">check</span>
+                                            Declarado
+                                        </span>
+</td>
+<td class="px-6 py-4 text-right">
+<div class="flex items-center justify-end gap-2 opacity-100 sm:opacity-60 group-hover:opacity-100 transition-opacity">
+<button class="p-2 text-gray-400 hover:text-white hover:bg-border-dark rounded-lg transition-colors" title="Ver detalle">
+<span class="material-icons-outlined text-[18px]">visibility</span>
+</button>
+<button class="p-2 text-primary hover:text-white hover:bg-primary rounded-lg transition-colors" title="Descargar paquete">
+<span class="material-icons text-[18px]">download</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 3 (Declared) -->
+<tr class="group hover:bg-gray-50 dark:hover:bg-primary/5 transition-colors">
+<td class="px-6 py-4 font-medium text-gray-900 dark:text-white">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-gray-700/30 flex items-center justify-center text-gray-400 font-bold text-xs">
+                                                DIC
+                                            </div>
+<span>2023-12</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<div class="flex flex-col">
+<span class="text-gray-200 font-medium">060120231220100123456.zip</span>
+<span class="text-xs text-gray-500 mt-0.5 flex gap-1 items-center">
+<span class="w-1.5 h-1.5 rounded-full bg-primary"></span> RP
+                                                <span class="w-1.5 h-1.5 rounded-full bg-primary ml-1"></span> JOR
+                                                <span class="w-1.5 h-1.5 rounded-full bg-primary ml-1"></span> SNL
+                                            </span>
+</div>
+</td>
+<td class="px-6 py-4 text-gray-500 dark:text-gray-400 tabular-nums">
+                                        16/01/2024 <span class="text-xs text-gray-600 dark:text-gray-500 ml-1">11:30 AM</span>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2">
+<div class="w-6 h-6 rounded-full bg-blue-500/20 text-blue-400 flex items-center justify-center text-xs font-bold">AL</div>
+<span class="text-gray-400 text-xs">Ana Lopez</span>
+</div>
+</td>
+<td class="px-6 py-4 text-center">
+<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium bg-green-500/10 text-green-500 border border-green-500/20">
+<span class="material-icons text-[14px]">check</span>
+                                            Declarado
+                                        </span>
+</td>
+<td class="px-6 py-4 text-right">
+<div class="flex items-center justify-end gap-2 opacity-100 sm:opacity-60 group-hover:opacity-100 transition-opacity">
+<button class="p-2 text-gray-400 hover:text-white hover:bg-border-dark rounded-lg transition-colors" title="Ver detalle">
+<span class="material-icons-outlined text-[18px]">visibility</span>
+</button>
+<button class="p-2 text-primary hover:text-white hover:bg-primary rounded-lg transition-colors" title="Descargar paquete">
+<span class="material-icons text-[18px]">download</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 4 (Declared) -->
+<tr class="group hover:bg-gray-50 dark:hover:bg-primary/5 transition-colors">
+<td class="px-6 py-4 font-medium text-gray-900 dark:text-white">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-gray-700/30 flex items-center justify-center text-gray-400 font-bold text-xs">
+                                                NOV
+                                            </div>
+<span>2023-11</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<div class="flex flex-col">
+<span class="text-gray-200 font-medium">060120231120100123456.zip</span>
+<span class="text-xs text-gray-500 mt-0.5 flex gap-1 items-center">
+<span class="w-1.5 h-1.5 rounded-full bg-primary"></span> RP
+                                                <span class="w-1.5 h-1.5 rounded-full bg-primary ml-1"></span> JOR
+                                                <span class="w-1.5 h-1.5 rounded-full bg-primary ml-1"></span> SNL
+                                            </span>
+</div>
+</td>
+<td class="px-6 py-4 text-gray-500 dark:text-gray-400 tabular-nums">
+                                        15/12/2023 <span class="text-xs text-gray-600 dark:text-gray-500 ml-1">04:20 PM</span>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2">
+<div class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 flex items-center justify-center text-xs font-bold">CM</div>
+<span class="text-gray-400 text-xs">Carlos M.</span>
+</div>
+</td>
+<td class="px-6 py-4 text-center">
+<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium bg-green-500/10 text-green-500 border border-green-500/20">
+<span class="material-icons text-[14px]">check</span>
+                                            Declarado
+                                        </span>
+</td>
+<td class="px-6 py-4 text-right">
+<div class="flex items-center justify-end gap-2 opacity-100 sm:opacity-60 group-hover:opacity-100 transition-opacity">
+<button class="p-2 text-gray-400 hover:text-white hover:bg-border-dark rounded-lg transition-colors" title="Ver detalle">
+<span class="material-icons-outlined text-[18px]">visibility</span>
+</button>
+<button class="p-2 text-primary hover:text-white hover:bg-primary rounded-lg transition-colors" title="Descargar paquete">
+<span class="material-icons text-[18px]">download</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 5 (Pending with Warning) -->
+<tr class="group hover:bg-gray-50 dark:hover:bg-primary/5 transition-colors">
+<td class="px-6 py-4 font-medium text-gray-900 dark:text-white">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-orange-500/10 flex items-center justify-center text-orange-500 font-bold text-xs">
+                                                OCT
+                                            </div>
+<span>2023-10</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<div class="flex flex-col">
+<span class="text-gray-200 font-medium">060120231020100123456_RECT.zip</span>
+<span class="text-xs text-orange-400 mt-0.5 flex gap-1 items-center">
+<span class="material-icons text-[10px]">warning</span> Rectificatoria
+                                            </span>
+</div>
+</td>
+<td class="px-6 py-4 text-gray-500 dark:text-gray-400 tabular-nums">
+                                        14/11/2023 <span class="text-xs text-gray-600 dark:text-gray-500 ml-1">09:00 AM</span>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2">
+<div class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 flex items-center justify-center text-xs font-bold">CM</div>
+<span class="text-gray-400 text-xs">Carlos M.</span>
+</div>
+</td>
+<td class="px-6 py-4 text-center">
+<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium bg-yellow-500/10 text-yellow-500 border border-yellow-500/20">
+<span class="w-1.5 h-1.5 rounded-full bg-yellow-500"></span>
+                                            Pendiente
+                                        </span>
+</td>
+<td class="px-6 py-4 text-right">
+<div class="flex items-center justify-end gap-2 opacity-100 sm:opacity-60 group-hover:opacity-100 transition-opacity">
+<button class="p-2 text-gray-400 hover:text-white hover:bg-border-dark rounded-lg transition-colors" title="Ver detalle">
+<span class="material-icons-outlined text-[18px]">visibility</span>
+</button>
+<button class="p-2 text-primary hover:text-white hover:bg-primary rounded-lg transition-colors" title="Descargar paquete">
+<span class="material-icons text-[18px]">download</span>
+</button>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Pagination -->
+<div class="px-6 py-4 border-t border-gray-200 dark:border-border-dark flex items-center justify-between">
+<div class="text-sm text-gray-500 dark:text-gray-400">
+                            Mostrando <span class="font-medium text-gray-900 dark:text-white">1-5</span> de <span class="font-medium text-gray-900 dark:text-white">24</span> resultados
+                        </div>
+<div class="flex items-center gap-2">
+<button class="p-2 rounded-lg text-gray-400 hover:text-white hover:bg-border-dark disabled:opacity-50 disabled:cursor-not-allowed transition-colors" disabled="">
+<span class="material-icons text-[18px]">chevron_left</span>
+</button>
+<button class="w-8 h-8 flex items-center justify-center rounded-lg bg-primary text-white text-sm font-medium">1</button>
+<button class="w-8 h-8 flex items-center justify-center rounded-lg text-gray-400 hover:bg-border-dark hover:text-white text-sm font-medium transition-colors">2</button>
+<button class="w-8 h-8 flex items-center justify-center rounded-lg text-gray-400 hover:bg-border-dark hover:text-white text-sm font-medium transition-colors">3</button>
+<span class="text-gray-500">...</span>
+<button class="w-8 h-8 flex items-center justify-center rounded-lg text-gray-400 hover:bg-border-dark hover:text-white text-sm font-medium transition-colors">5</button>
+<button class="p-2 rounded-lg text-gray-400 hover:text-white hover:bg-border-dark transition-colors">
+<span class="material-icons text-[18px]">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Footer Info -->
+<div class="flex flex-col md:flex-row justify-between items-center text-xs text-gray-500 dark:text-gray-500 pt-4 pb-8">
+<p>© 2024 NexaCorp Perú S.A.C. Todos los derechos reservados.</p>
+<div class="flex gap-4 mt-2 md:mt-0">
+<a class="hover:text-gray-300" href="#">Soporte Técnico</a>
+<a class="hover:text-gray-300" href="#">Manual de Usuario</a>
+<span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-green-500"></span> Sistema Operativo</span>
+</div>
+</div>
+</div>
+</div>
+</main>
+</body></html>

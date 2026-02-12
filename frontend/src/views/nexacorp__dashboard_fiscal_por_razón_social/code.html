@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>NexaCorp: Dashboard Fiscal</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#2c60ce",
+                        "primary-dark": "#1a4bb0",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#121720",
+                        "surface-dark": "#1e232e",
+                        "surface-light": "#ffffff",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.5rem",
+                        "lg": "1rem",
+                        "xl": "1.5rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        /* Custom scrollbar for dark mode tables */
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #1e232e; 
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #374151; 
+            border-radius: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #4b5563; 
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 font-display transition-colors duration-200 min-h-screen flex flex-col">
+<!-- Top Navigation with Context Switcher -->
+<header class="sticky top-0 z-50 bg-white dark:bg-surface-dark border-b border-slate-200 dark:border-slate-700/50 shadow-sm">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex justify-between items-center h-16">
+<!-- Logo & Context -->
+<div class="flex items-center gap-6">
+<div class="flex items-center gap-2">
+<div class="w-8 h-8 rounded-lg bg-primary flex items-center justify-center text-white font-bold text-lg">N</div>
+<span class="font-bold text-xl tracking-tight hidden md:block">NexaCorp</span>
+</div>
+<!-- Vertical Separator -->
+<div class="h-6 w-px bg-slate-200 dark:bg-slate-700 hidden md:block"></div>
+<!-- RUC Context Switcher (Critical Component) -->
+<div class="relative group">
+<button class="flex items-center gap-3 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 px-4 py-2 rounded-lg transition-all border border-transparent focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none w-full md:w-80">
+<div class="bg-primary/20 p-1.5 rounded text-primary">
+<span class="material-icons-outlined text-lg">business</span>
+</div>
+<div class="flex flex-col items-start text-sm">
+<span class="font-semibold text-slate-900 dark:text-white leading-tight">Inversiones A SAC</span>
+<span class="text-xs text-slate-500 dark:text-slate-400 font-mono">RUC: 20100098231</span>
+</div>
+<span class="material-icons text-slate-400 ml-auto">expand_more</span>
+</button>
+<!-- Dropdown Mockup (Hidden by default, shown on hover/click interaction logic would go here) -->
+</div>
+</div>
+<!-- Right Actions -->
+<div class="flex items-center gap-4">
+<button class="relative p-2 text-slate-400 hover:text-primary transition-colors">
+<span class="material-icons-outlined">notifications</span>
+<span class="absolute top-2 right-2 w-2 h-2 bg-red-500 rounded-full"></span>
+</button>
+<div class="hidden md:flex items-center gap-3 pl-4 border-l border-slate-200 dark:border-slate-700">
+<div class="text-right hidden lg:block">
+<p class="text-sm font-medium">Carlos Méndez</p>
+<p class="text-xs text-slate-500 dark:text-slate-400">Contador General</p>
+</div>
+<div class="h-10 w-10 rounded-full bg-gradient-to-tr from-primary to-purple-600 p-0.5 cursor-pointer">
+<img alt="User Avatar" class="h-full w-full rounded-full object-cover border-2 border-white dark:border-surface-dark" data-alt="Portrait of a male professional" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCvdYkWEtYYAAoNU6nYL-Q5CP82N-ZTRJ_LpWXbyG9izfNTt2CAhTpBlD5u60a8h8Ozqr1-0lo81_Hm7Uvi2SfRrtHMt4oCc0ZcBxj9b-dsWgcEcdHXwCwn_KWNyIHf7Qu_b4qptc187Ste_Bh1wwf1eCXGdzCnc54CX0jEInrYBhAr1Q3XYYsoXV-natMpz0ZS14RUPC_zQxj9ydPtMRijmDewnN8ZRGmL_uQhxgTrBxWCMZFH4WQrU17rd0P304cZa2FPgi4Z0Q6D"/>
+</div>
+</div>
+</div>
+</div>
+</div>
+</header>
+<!-- Context Banner -->
+<div class="bg-primary/10 dark:bg-primary/5 border-b border-primary/10">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
+<div class="flex items-center justify-between flex-wrap gap-2">
+<div class="flex items-center gap-2 text-primary text-sm font-medium">
+<span class="material-icons-outlined text-base">info</span>
+<span>Visualizando datos fiscales estrictos para la entidad seleccionada.</span>
+</div>
+<div class="flex items-center gap-2 text-xs text-slate-500 dark:text-slate-400">
+<span>Última sincronización SUNAT: Hace 15 min</span>
+<button class="text-primary hover:underline flex items-center gap-1">
+<span class="material-icons-outlined text-sm">refresh</span> Actualizar
+                    </button>
+</div>
+</div>
+</div>
+</div>
+<!-- Main Dashboard Content -->
+<main class="flex-grow p-4 sm:p-6 lg:p-8 max-w-7xl mx-auto w-full space-y-8">
+<!-- Header Section -->
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
+<div>
+<h1 class="text-2xl font-bold text-slate-900 dark:text-white">Resumen Fiscal Mensual</h1>
+<p class="text-slate-500 dark:text-slate-400 mt-1">Periodo: Octubre 2023 • Regimen General</p>
+</div>
+<div class="flex gap-3">
+<button class="px-4 py-2 bg-white dark:bg-surface-dark border border-slate-200 dark:border-slate-700 rounded-lg text-sm font-medium hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors flex items-center gap-2">
+<span class="material-icons-outlined text-base">download</span> Exportar PLE
+                </button>
+<button class="px-4 py-2 bg-primary hover:bg-primary-dark text-white rounded-lg text-sm font-medium shadow-lg shadow-primary/20 transition-all flex items-center gap-2">
+<span class="material-icons-outlined text-base">add</span> Nueva Declaración
+                </button>
+</div>
+</div>
+<!-- KPI Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+<!-- KPI 1: Gasto Operativo -->
+<div class="bg-white dark:bg-surface-dark rounded-xl p-6 border border-slate-200 dark:border-slate-700 shadow-sm relative overflow-hidden group">
+<div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+<span class="material-icons-outlined text-6xl text-primary">account_balance_wallet</span>
+</div>
+<p class="text-sm font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wider">Gasto Total (RUC)</p>
+<div class="mt-2 flex items-baseline gap-2">
+<h3 class="text-3xl font-bold text-slate-900 dark:text-white font-mono">S/ 145,230</h3>
+<span class="text-xs font-medium text-emerald-500 flex items-center">
+<span class="material-icons text-sm">arrow_upward</span> 2.4%
+                    </span>
+</div>
+<div class="mt-4 h-1.5 w-full bg-slate-100 dark:bg-slate-700 rounded-full overflow-hidden">
+<div class="h-full bg-primary w-[75%] rounded-full"></div>
+</div>
+<p class="text-xs text-slate-500 dark:text-slate-400 mt-2">vs. Presupuesto asignado</p>
+</div>
+<!-- KPI 2: Provisión PLAME -->
+<div class="bg-white dark:bg-surface-dark rounded-xl p-6 border border-slate-200 dark:border-slate-700 shadow-sm relative overflow-hidden group">
+<div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+<span class="material-icons-outlined text-6xl text-indigo-500">groups</span>
+</div>
+<p class="text-sm font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wider">Provisión PLAME</p>
+<div class="mt-2 flex items-baseline gap-2">
+<h3 class="text-3xl font-bold text-slate-900 dark:text-white font-mono">S/ 12,400</h3>
+</div>
+<p class="text-xs text-slate-500 dark:text-slate-400 mt-1 mb-3">Vencimiento: 14 Noviembre</p>
+<div class="flex -space-x-2 overflow-hidden">
+<img alt="Employee 1" class="inline-block h-6 w-6 rounded-full ring-2 ring-white dark:ring-surface-dark" data-alt="Portrait of employee" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAW0G0B_m_JIikHSuxCozFAAVkSrdA3yAFOHD_4_0UWgOdukBE4an6wTQc57Z3Fp1l1LqoS-jFHgs0M4weFNw3BPr6lfi70q_XeF68DNhbS4VuXl1ayoj8GTOUEaBNdyn_HZXQdJzDsa_WXOdOJcTnjs3SHJic1qdNV0m2jECT4kVMPzqU7NlWGkIaQJYgGGkxF5E1ZQj5yC6Bu93JaMoZacsfzAnUthogAGuwI_XFijCLT-Lz511GTvAVmF0Nkn2umCOgwAmNSyCDj"/>
+<img alt="Employee 2" class="inline-block h-6 w-6 rounded-full ring-2 ring-white dark:ring-surface-dark" data-alt="Portrait of employee" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCHvnhTBqNyEK-eFwTXUbQNlRYsv3dntpphgPdUdQ28IND7ck9FJIb8NTdu1Q3Ivb6V53hM1P4N_GGMJZwEYTCzaSeDoPy8R48mjKeuxyk984M7hCfc0l7aEg80pENGeCseY780yEXnzUZGb6ROYH4YXlAa585fM33KyoHp_CyDctAxp-ZFSBkx4tDCotdYzV9Jaz3zryIDJRkZy7OBMBwJ5oPMGyyi9uKsrM7NRfKtSDui6G8WrV3PanNdT36l87Zqta83ecgJR8q_"/>
+<img alt="Employee 3" class="inline-block h-6 w-6 rounded-full ring-2 ring-white dark:ring-surface-dark" data-alt="Portrait of employee" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB9CE1oTT3vEnKppK2WGcMfR_1vLp3lH1g46OSCplkFvT5jW27BCoQqWFAoAmGKFxk5Ov87cAOuqUqf15gxpnEwKCBNsxaqfe3_JNCW5gOCeP1MorGBZ7jUp0vf1kmn_rWBeXXZmv4_IYbeBi4F7O0YH0R_1Do3THi7j5T_D-pnenM9GIuDQrEV7qv-pINBnRbBP7oMpHpY5mfq9LNJvBRJFFxCT1WKa_Cyu_UOG9CgKb8V8ZjaL-nujMP36j5cMpHqXnBRnQsGL9uz"/>
+<div class="h-6 w-6 rounded-full ring-2 ring-white dark:ring-surface-dark bg-slate-200 dark:bg-slate-700 flex items-center justify-center text-[10px] font-medium">+42</div>
+</div>
+</div>
+<!-- KPI 3: Alertas SUNAFIL -->
+<div class="bg-white dark:bg-surface-dark rounded-xl p-6 border border-red-200 dark:border-red-900/30 shadow-sm relative overflow-hidden group">
+<div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+<span class="material-icons-outlined text-6xl text-red-500">warning_amber</span>
+</div>
+<p class="text-sm font-medium text-red-600 dark:text-red-400 uppercase tracking-wider flex items-center gap-1">
+<span class="material-icons text-base">gavel</span> Estado SUNAFIL
+                </p>
+<div class="mt-2 flex items-baseline gap-2">
+<h3 class="text-3xl font-bold text-slate-900 dark:text-white">1 Crítica</h3>
+</div>
+<p class="text-sm text-slate-600 dark:text-slate-300 mt-2 font-medium">Casilla Electrónica</p>
+<p class="text-xs text-slate-500 dark:text-slate-400">Requerimiento de Info. pendiente.</p>
+<button class="mt-4 w-full py-1.5 bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-400 text-xs font-bold rounded hover:bg-red-100 dark:hover:bg-red-900/30 transition-colors uppercase tracking-wide">
+                    Ver Buzón
+                </button>
+</div>
+<!-- KPI 4: Retenciones IGV -->
+<div class="bg-white dark:bg-surface-dark rounded-xl p-6 border border-slate-200 dark:border-slate-700 shadow-sm relative overflow-hidden group">
+<div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+<span class="material-icons-outlined text-6xl text-emerald-500">receipt_long</span>
+</div>
+<p class="text-sm font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wider">Crédito Fiscal</p>
+<div class="mt-2 flex items-baseline gap-2">
+<h3 class="text-3xl font-bold text-slate-900 dark:text-white font-mono">S/ 3,850</h3>
+</div>
+<div class="mt-4 flex items-center gap-4 text-xs">
+<div class="flex items-center gap-1 text-slate-500 dark:text-slate-400">
+<div class="w-2 h-2 rounded-full bg-emerald-500"></div> IGV Compras
+                   </div>
+<div class="flex items-center gap-1 text-slate-500 dark:text-slate-400">
+<div class="w-2 h-2 rounded-full bg-blue-500"></div> Detracciones
+                   </div>
+</div>
+</div>
+</div>
+<!-- Main Content Area: Charts & Tables -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+<!-- Left Column: Chart & PLAME Table (2/3) -->
+<div class="lg:col-span-2 space-y-6">
+<!-- Chart Section -->
+<div class="bg-white dark:bg-surface-dark rounded-xl border border-slate-200 dark:border-slate-700 p-6 shadow-sm">
+<div class="flex items-center justify-between mb-6">
+<h3 class="text-lg font-bold text-slate-900 dark:text-white">Evolución de Gasto por Centro de Costos</h3>
+<select class="bg-slate-50 dark:bg-slate-800 border-none text-xs rounded-lg px-3 py-1.5 text-slate-600 dark:text-slate-300 focus:ring-1 focus:ring-primary">
+<option>Últimos 6 meses</option>
+<option>Anual 2023</option>
+</select>
+</div>
+<!-- CSS-only Bar Chart Representation -->
+<div class="h-64 flex items-end justify-between gap-2 sm:gap-4 px-2">
+<!-- Month 1 -->
+<div class="flex flex-col items-center gap-2 group w-full">
+<div class="relative w-full bg-slate-100 dark:bg-slate-800 rounded-t-sm h-full flex items-end">
+<div class="w-full bg-primary/40 group-hover:bg-primary/60 transition-all rounded-t-sm" style="height: 45%"></div>
+<div class="absolute bottom-0 w-full bg-primary group-hover:bg-primary-dark transition-all rounded-t-sm" style="height: 30%"></div>
+</div>
+<span class="text-xs text-slate-500 dark:text-slate-400 font-medium">MAY</span>
+</div>
+<!-- Month 2 -->
+<div class="flex flex-col items-center gap-2 group w-full">
+<div class="relative w-full bg-slate-100 dark:bg-slate-800 rounded-t-sm h-full flex items-end">
+<div class="w-full bg-primary/40 group-hover:bg-primary/60 transition-all rounded-t-sm" style="height: 55%"></div>
+<div class="absolute bottom-0 w-full bg-primary group-hover:bg-primary-dark transition-all rounded-t-sm" style="height: 35%"></div>
+</div>
+<span class="text-xs text-slate-500 dark:text-slate-400 font-medium">JUN</span>
+</div>
+<!-- Month 3 -->
+<div class="flex flex-col items-center gap-2 group w-full">
+<div class="relative w-full bg-slate-100 dark:bg-slate-800 rounded-t-sm h-full flex items-end">
+<div class="w-full bg-primary/40 group-hover:bg-primary/60 transition-all rounded-t-sm" style="height: 60%"></div>
+<div class="absolute bottom-0 w-full bg-primary group-hover:bg-primary-dark transition-all rounded-t-sm" style="height: 48%"></div>
+</div>
+<span class="text-xs text-slate-500 dark:text-slate-400 font-medium">JUL</span>
+</div>
+<!-- Month 4 -->
+<div class="flex flex-col items-center gap-2 group w-full">
+<div class="relative w-full bg-slate-100 dark:bg-slate-800 rounded-t-sm h-full flex items-end">
+<div class="w-full bg-primary/40 group-hover:bg-primary/60 transition-all rounded-t-sm" style="height: 40%"></div>
+<div class="absolute bottom-0 w-full bg-primary group-hover:bg-primary-dark transition-all rounded-t-sm" style="height: 25%"></div>
+</div>
+<span class="text-xs text-slate-500 dark:text-slate-400 font-medium">AGO</span>
+</div>
+<!-- Month 5 -->
+<div class="flex flex-col items-center gap-2 group w-full">
+<div class="relative w-full bg-slate-100 dark:bg-slate-800 rounded-t-sm h-full flex items-end">
+<div class="w-full bg-primary/40 group-hover:bg-primary/60 transition-all rounded-t-sm" style="height: 75%"></div>
+<div class="absolute bottom-0 w-full bg-primary group-hover:bg-primary-dark transition-all rounded-t-sm" style="height: 55%"></div>
+</div>
+<span class="text-xs text-slate-500 dark:text-slate-400 font-medium">SEP</span>
+</div>
+<!-- Month 6 -->
+<div class="flex flex-col items-center gap-2 group w-full">
+<div class="relative w-full bg-slate-100 dark:bg-slate-800 rounded-t-sm h-full flex items-end">
+<div class="w-full bg-primary/40 group-hover:bg-primary/60 transition-all rounded-t-sm" style="height: 65%"></div>
+<div class="absolute bottom-0 w-full bg-primary group-hover:bg-primary-dark transition-all rounded-t-sm" style="height: 50%"></div>
+</div>
+<span class="text-xs text-slate-500 dark:text-slate-400 font-medium">OCT</span>
+</div>
+</div>
+<div class="flex justify-center gap-6 mt-4">
+<div class="flex items-center gap-2">
+<div class="w-3 h-3 bg-primary rounded-sm"></div>
+<span class="text-xs text-slate-500 dark:text-slate-400">Planilla (Remunerativo)</span>
+</div>
+<div class="flex items-center gap-2">
+<div class="w-3 h-3 bg-primary/40 rounded-sm"></div>
+<span class="text-xs text-slate-500 dark:text-slate-400">Servicios Terceros</span>
+</div>
+</div>
+</div>
+<!-- PLAME Detail Table -->
+<div class="bg-white dark:bg-surface-dark rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm overflow-hidden">
+<div class="p-6 border-b border-slate-200 dark:border-slate-700 flex justify-between items-center">
+<h3 class="text-lg font-bold text-slate-900 dark:text-white">Detalle de Conceptos (PLAME)</h3>
+<button class="text-primary text-sm font-medium hover:underline">Ver reporte completo</button>
+</div>
+<div class="overflow-x-auto custom-scrollbar">
+<table class="w-full text-sm text-left">
+<thead class="text-xs text-slate-500 dark:text-slate-400 uppercase bg-slate-50 dark:bg-slate-800">
+<tr>
+<th class="px-6 py-3" scope="col">Código</th>
+<th class="px-6 py-3" scope="col">Concepto</th>
+<th class="px-6 py-3" scope="col">Base Imponible</th>
+<th class="px-6 py-3 text-right" scope="col">Monto (S/)</th>
+<th class="px-6 py-3 text-center" scope="col">Estado</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-slate-200 dark:divide-slate-700">
+<tr class="bg-white dark:bg-surface-dark hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors">
+<td class="px-6 py-4 font-mono text-slate-500">0601</td>
+<td class="px-6 py-4 font-medium text-slate-900 dark:text-white">EsSalud - Seguro Regular</td>
+<td class="px-6 py-4 text-slate-500">S/ 45,200.00</td>
+<td class="px-6 py-4 text-right font-mono font-medium">4,068.00</td>
+<td class="px-6 py-4 text-center">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-emerald-100 text-emerald-800 dark:bg-emerald-900/30 dark:text-emerald-400">
+                                            Calculado
+                                        </span>
+</td>
+</tr>
+<tr class="bg-white dark:bg-surface-dark hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors">
+<td class="px-6 py-4 font-mono text-slate-500">0605</td>
+<td class="px-6 py-4 font-medium text-slate-900 dark:text-white">Renta 5ta Categoría</td>
+<td class="px-6 py-4 text-slate-500">S/ 12,800.00</td>
+<td class="px-6 py-4 text-right font-mono font-medium">1,450.50</td>
+<td class="px-6 py-4 text-center">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-400">
+                                            Revisión
+                                        </span>
+</td>
+</tr>
+<tr class="bg-white dark:bg-surface-dark hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors">
+<td class="px-6 py-4 font-mono text-slate-500">0804</td>
+<td class="px-6 py-4 font-medium text-slate-900 dark:text-white">ONP - SNP</td>
+<td class="px-6 py-4 text-slate-500">S/ 28,400.00</td>
+<td class="px-6 py-4 text-right font-mono font-medium">3,692.00</td>
+<td class="px-6 py-4 text-center">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-emerald-100 text-emerald-800 dark:bg-emerald-900/30 dark:text-emerald-400">
+                                            Calculado
+                                        </span>
+</td>
+</tr>
+<tr class="bg-white dark:bg-surface-dark hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors">
+<td class="px-6 py-4 font-mono text-slate-500">0809</td>
+<td class="px-6 py-4 font-medium text-slate-900 dark:text-white">SCTR Salud</td>
+<td class="px-6 py-4 text-slate-500">S/ 45,200.00</td>
+<td class="px-6 py-4 text-right font-mono font-medium">587.60</td>
+<td class="px-6 py-4 text-center">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-emerald-100 text-emerald-800 dark:bg-emerald-900/30 dark:text-emerald-400">
+                                            Calculado
+                                        </span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<!-- Right Column: Sidebar Widgets (1/3) -->
+<div class="space-y-6">
+<!-- SUNAFIL Notifications -->
+<div class="bg-surface-dark rounded-xl border border-slate-700 shadow-sm p-6 relative overflow-hidden">
+<!-- Background decorative pattern -->
+<div class="absolute -top-10 -right-10 w-32 h-32 bg-primary/10 rounded-full blur-2xl pointer-events-none"></div>
+<div class="flex items-center gap-3 mb-6 relative z-10">
+<div class="p-2 bg-slate-800 rounded-lg border border-slate-700">
+<span class="material-icons-outlined text-slate-300">notifications_active</span>
+</div>
+<div>
+<h3 class="font-bold text-white">Buzón SUNAFIL</h3>
+<p class="text-xs text-slate-400">Entidad: Inversiones A SAC</p>
+</div>
+</div>
+<div class="space-y-4 relative z-10">
+<!-- Alert Item 1 -->
+<div class="flex gap-3 items-start p-3 bg-red-900/10 border border-red-900/30 rounded-lg">
+<div class="mt-0.5 text-red-400">
+<span class="material-icons text-sm">priority_high</span>
+</div>
+<div>
+<h4 class="text-sm font-semibold text-red-200">Requerimiento de Información</h4>
+<p class="text-xs text-slate-400 mt-1">Expediente No. 2390-2023. Plazo vence en 48 horas.</p>
+<button class="mt-2 text-xs text-red-400 font-medium hover:text-red-300">Ver Documento</button>
+</div>
+</div>
+<!-- Alert Item 2 -->
+<div class="flex gap-3 items-start p-3 bg-slate-800/50 border border-slate-700 rounded-lg">
+<div class="mt-0.5 text-blue-400">
+<span class="material-icons text-sm">mail</span>
+</div>
+<div>
+<h4 class="text-sm font-semibold text-slate-200">Notificación de Cierre</h4>
+<p class="text-xs text-slate-400 mt-1">Orden de inspección 002 finalizada sin sanciones.</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Upcoming Deadlines -->
+<div class="bg-white dark:bg-surface-dark rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm p-6">
+<h3 class="font-bold text-slate-900 dark:text-white mb-4">Vencimientos Próximos</h3>
+<div class="relative pl-4 border-l border-slate-200 dark:border-slate-700 space-y-6">
+<!-- Item 1 -->
+<div class="relative">
+<div class="absolute -left-[21px] top-1 h-3 w-3 rounded-full bg-primary ring-4 ring-white dark:ring-surface-dark"></div>
+<p class="text-xs text-slate-500 font-semibold mb-1">14 NOV 2023</p>
+<h4 class="text-sm font-medium text-slate-900 dark:text-white">Declaración PLAME</h4>
+<p class="text-xs text-slate-500 mt-1">Planilla Electrónica Mensual</p>
+</div>
+<!-- Item 2 -->
+<div class="relative">
+<div class="absolute -left-[21px] top-1 h-3 w-3 rounded-full bg-slate-300 dark:bg-slate-600 ring-4 ring-white dark:ring-surface-dark"></div>
+<p class="text-xs text-slate-500 font-semibold mb-1">18 NOV 2023</p>
+<h4 class="text-sm font-medium text-slate-900 dark:text-white">Pago AFP</h4>
+<p class="text-xs text-slate-500 mt-1">Aportes Previsionales</p>
+</div>
+<!-- Item 3 -->
+<div class="relative">
+<div class="absolute -left-[21px] top-1 h-3 w-3 rounded-full bg-slate-300 dark:bg-slate-600 ring-4 ring-white dark:ring-surface-dark"></div>
+<p class="text-xs text-slate-500 font-semibold mb-1">20 NOV 2023</p>
+<h4 class="text-sm font-medium text-slate-900 dark:text-white">Impuesto a la Renta</h4>
+<p class="text-xs text-slate-500 mt-1">Pago a cuenta mensual</p>
+</div>
+</div>
+<button class="w-full mt-6 py-2 border border-slate-200 dark:border-slate-700 rounded-lg text-sm text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors">
+                        Ver Calendario Fiscal
+                    </button>
+</div>
+<!-- Quick Actions Card -->
+<div class="bg-gradient-to-br from-primary to-primary-dark rounded-xl shadow-lg p-6 text-white relative overflow-hidden">
+<div class="absolute top-0 right-0 p-4 opacity-10">
+<span class="material-icons text-8xl">bolt</span>
+</div>
+<h3 class="font-bold text-lg mb-2 relative z-10">Acciones Rápidas</h3>
+<p class="text-primary-100 text-sm mb-4 relative z-10">Gestiona la entidad actual sin salir del dashboard.</p>
+<div class="space-y-2 relative z-10">
+<button class="w-full text-left px-3 py-2 bg-white/10 hover:bg-white/20 rounded-lg text-sm transition-colors flex items-center gap-2">
+<span class="material-icons text-base">file_upload</span> Subir T-Registro
+                        </button>
+<button class="w-full text-left px-3 py-2 bg-white/10 hover:bg-white/20 rounded-lg text-sm transition-colors flex items-center gap-2">
+<span class="material-icons text-base">settings</span> Configurar Centros de Costo
+                        </button>
+</div>
+</div>
+</div>
+</div>
+</main>
+</body></html>

@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>NexaCorp: Control y Renovación de Contratos</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">tailwind.config = {darkMode: "class", theme: {extend: {colors: {primary: "#2c60ce", "primary-dark": "#052c7a", "primary-light": "#3b76f0", "background-light": "#f6f6f8", "background-dark": "#121720", "surface-dark": "#151b2b", "surface-darker": "#101622"}, fontFamily: {display: "Inter"}, borderRadius: {DEFAULT: "0.5rem", lg: "1rem", xl: "1.5rem", full: "9999px"}}}};</script>
+<style type="text/tailwindcss">
+        @layer utilities {
+            .glass-panel {
+                @apply bg-surface-dark/90 backdrop-blur-md border border-white/5 shadow-xl;
+            }
+            .nav-link {
+                @apply flex items-center gap-3 px-4 py-3 rounded-lg text-gray-400 hover:text-white hover:bg-white/5 transition-all duration-200;
+            }
+            .nav-link.active {
+                @apply bg-primary/20 text-primary-light border-l-4 border-primary;
+            }
+            .status-badge {
+                @apply px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider flex items-center gap-1.5 w-fit;
+            }
+            .action-btn {
+                @apply p-2 rounded-lg transition-colors duration-200;
+            }
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-gray-800 dark:text-gray-200 min-h-screen flex overflow-hidden">
+<!-- Sidebar Navigation -->
+<aside class="w-64 bg-surface-darker border-r border-white/5 hidden md:flex flex-col h-screen fixed z-20">
+<div class="p-6 flex items-center gap-3">
+<div class="w-8 h-8 rounded bg-primary flex items-center justify-center text-white font-bold text-lg">N</div>
+<h1 class="text-xl font-bold tracking-tight text-white">NexaCorp</h1>
+</div>
+<nav class="flex-1 px-4 space-y-2 mt-4">
+<a class="nav-link" href="#">
+<span class="material-icons-round">dashboard</span>
+                Dashboard
+            </a>
+<a class="nav-link" href="#">
+<span class="material-icons-round">people</span>
+                Empleados
+            </a>
+<a class="nav-link active" href="#">
+<span class="material-icons-round">description</span>
+                Contratos
+            </a>
+<a class="nav-link" href="#">
+<span class="material-icons-round">payments</span>
+                Nómina
+            </a>
+<a class="nav-link" href="#">
+<span class="material-icons-round">analytics</span>
+                Reportes
+            </a>
+</nav>
+<div class="p-4 border-t border-white/5">
+<div class="flex items-center gap-3 p-2 rounded-lg hover:bg-white/5 cursor-pointer">
+<img alt="Avatar del usuario" class="w-10 h-10 rounded-full border border-primary/30" data-alt="Portrait of a smiling man with a beard" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA-aUffkGogx_yLuItUL3XtWeyri3CmyTtVyHZ1oBeMORf24xK-Ad-7bMDZblj2NmaCDGov41X7ecY-BBzJna9a5lf9VhhhccxkdPHsDxklhMdV8tYyMLn3ZG_rZi8-d1yMEOH2DLOTVFdtDLe73Nss5LjFwiZHa2ZkLQmvuHaQh1GEXi7CbrNX-ty4nHUBTzFOde91JgFSXXQZiIiNTNOZdfyLf70b71ya48c98ksurmn3Wk5s2XbIGK0a6xu3zAfwlEh4_zMFHZeY"/>
+<div>
+<p class="text-sm font-medium text-white">Roberto Díaz</p>
+<p class="text-xs text-gray-500">Admin RRHH</p>
+</div>
+</div>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="flex-1 md:ml-64 h-screen overflow-y-auto bg-background-light dark:bg-background-dark relative">
+<!-- Header -->
+<header class="sticky top-0 z-10 glass-panel border-b border-white/5 px-8 py-5 flex items-center justify-between">
+<div>
+<h2 class="text-2xl font-bold text-white">Gestión de Contratos</h2>
+<p class="text-gray-400 text-sm mt-1">Supervisa renovaciones y estados contractuales</p>
+</div>
+<div class="flex items-center gap-4">
+<button class="p-2 text-gray-400 hover:text-white relative">
+<span class="material-icons-round">notifications</span>
+<span class="absolute top-2 right-2 w-2 h-2 bg-red-500 rounded-full"></span>
+</button>
+<button class="bg-primary hover:bg-primary-light text-white px-4 py-2 rounded-lg flex items-center gap-2 text-sm font-medium transition-colors shadow-lg shadow-primary/20">
+<span class="material-icons-round text-lg">add</span>
+                    Nuevo Contrato
+                </button>
+</div>
+</header>
+<div class="p-8 space-y-8">
+<!-- Summary Stats -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<!-- Card: Vigentes -->
+<div class="bg-surface-dark border border-white/5 p-6 rounded-xl relative overflow-hidden group hover:border-primary/30 transition-colors">
+<div class="absolute right-0 top-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+<span class="material-icons-round text-6xl text-primary">verified_user</span>
+</div>
+<div class="relative z-10">
+<p class="text-gray-400 text-sm font-medium mb-1">Total Vigentes</p>
+<h3 class="text-3xl font-bold text-white">142</h3>
+<div class="flex items-center gap-2 mt-4 text-xs text-green-400">
+<span class="bg-green-500/20 px-1.5 py-0.5 rounded flex items-center">
+<span class="material-icons-round text-sm">trending_up</span> 4%
+                            </span>
+<span class="text-gray-500">vs mes anterior</span>
+</div>
+</div>
+</div>
+<!-- Card: Por Vencer -->
+<div class="bg-surface-dark border border-amber-500/20 p-6 rounded-xl relative overflow-hidden group hover:border-amber-500/40 transition-colors">
+<div class="absolute right-0 top-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+<span class="material-icons-round text-6xl text-amber-500">warning</span>
+</div>
+<div class="relative z-10">
+<p class="text-gray-400 text-sm font-medium mb-1">Por Vencer (30 días)</p>
+<h3 class="text-3xl font-bold text-amber-500">8</h3>
+<div class="mt-4 text-xs text-gray-400">
+<span class="text-amber-400 font-medium">Acción requerida:</span> Revisar renovaciones
+                        </div>
+</div>
+</div>
+<!-- Card: Vencidos -->
+<div class="bg-surface-dark border border-red-500/20 p-6 rounded-xl relative overflow-hidden group hover:border-red-500/40 transition-colors">
+<div class="absolute right-0 top-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+<span class="material-icons-round text-6xl text-red-500">error</span>
+</div>
+<div class="relative z-10">
+<p class="text-gray-400 text-sm font-medium mb-1">Contratos Vencidos</p>
+<h3 class="text-3xl font-bold text-red-500">2</h3>
+<div class="mt-4 text-xs text-gray-400">
+<span class="text-red-400 font-medium">Critico:</span> Regularizar inmediatamente
+                        </div>
+</div>
+</div>
+</div>
+<!-- Filters & Search -->
+<div class="flex flex-col md:flex-row gap-4 items-center justify-between">
+<div class="relative w-full md:w-96 group">
+<span class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 group-focus-within:text-primary transition-colors material-icons-round">search</span>
+<input class="w-full bg-surface-dark border border-white/10 rounded-lg py-2.5 pl-10 pr-4 text-white placeholder-gray-500 focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all" placeholder="Buscar por nombre, cargo o ID..." type="text"/>
+</div>
+<div class="flex items-center gap-3 w-full md:w-auto overflow-x-auto pb-2 md:pb-0">
+<select class="bg-surface-dark border border-white/10 text-gray-300 rounded-lg py-2.5 px-4 text-sm focus:ring-1 focus:ring-primary outline-none cursor-pointer">
+<option>Todos los departamentos</option>
+<option>Tecnología</option>
+<option>Recursos Humanos</option>
+<option>Marketing</option>
+</select>
+<select class="bg-surface-dark border border-white/10 text-gray-300 rounded-lg py-2.5 px-4 text-sm focus:ring-1 focus:ring-primary outline-none cursor-pointer">
+<option>Todos los estados</option>
+<option>Vigente</option>
+<option>Por Vencer</option>
+<option>Vencido</option>
+</select>
+</div>
+</div>
+<!-- Data Table -->
+<div class="bg-surface-dark rounded-xl border border-white/5 shadow-2xl overflow-hidden">
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-white/5 border-b border-white/5 text-xs uppercase text-gray-400 tracking-wider font-semibold">
+<th class="p-4 rounded-tl-xl">Empleado</th>
+<th class="p-4">Cargo</th>
+<th class="p-4">Inicio Contrato</th>
+<th class="p-4">Fin Contrato</th>
+<th class="p-4">Estado</th>
+<th class="p-4 rounded-tr-xl text-center">Acciones</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-white/5 text-sm">
+<!-- Row 1: Vencido (Red) -->
+<tr class="hover:bg-white/[0.02] transition-colors group">
+<td class="p-4">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-gradient-to-br from-gray-700 to-gray-800 flex items-center justify-center text-white font-bold border border-white/10 shadow-sm relative">
+                                            CR
+                                            <div class="absolute bottom-0 right-0 w-3 h-3 bg-red-500 border-2 border-surface-dark rounded-full"></div>
+</div>
+<div>
+<p class="font-medium text-white">Carlos Ruiz</p>
+<p class="text-xs text-gray-500">ID: NX-8821</p>
+</div>
+</div>
+</td>
+<td class="p-4 text-gray-300">Diseñador UX Senior</td>
+<td class="p-4 text-gray-400">20 Sep, 2022</td>
+<td class="p-4 text-red-300 font-medium">20 Sep, 2023</td>
+<td class="p-4">
+<span class="status-badge bg-red-500/10 text-red-500 border border-red-500/20">
+<span class="w-1.5 h-1.5 rounded-full bg-red-500 animate-pulse"></span>
+                                        Vencido
+                                    </span>
+</td>
+<td class="p-4">
+<div class="flex items-center justify-center gap-2 opacity-100 md:opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="action-btn bg-surface-darker text-gray-400 hover:text-white hover:bg-primary/20 hover:border hover:border-primary/30 border border-transparent" title="Generar PDF">
+<span class="material-icons-round text-lg">picture_as_pdf</span>
+</button>
+<button class="action-btn bg-surface-darker text-primary-light hover:text-white hover:bg-primary border border-primary/20" title="Crear Adenda">
+<span class="material-icons-round text-lg">edit_document</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 2: Por Vencer (Amber) -->
+<tr class="hover:bg-white/[0.02] transition-colors group">
+<td class="p-4">
+<div class="flex items-center gap-3">
+<img alt="Avatar de Maria Rodriguez" class="w-10 h-10 rounded-full border border-white/10" data-alt="Portrait of a woman with dark hair" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBXiMgDBu_KZ1m2klXnTTIGe9gO4-rjvD0YFmjzMzgHzKwADsq1MWu0bvw3HRwiL6S0wKszfIG6Gaf8tduiKVLvEPBqG4O4zjVcAkmjAOEv9SEFXRhD6DSSsX5yeVoQudVC5VeMsK13JRvJ6ZwdoxieLQdAjPbmUNupi2bSCPOhXXH05ChQ8oDSqjk_lBPyoP6dts8-cmK7n2YvX17joCwuu3slIE1xfAZgsj4zlbIe5uzZKgfYwJdKsJnD2gaXYMF7-t9KL5KRZgTT"/>
+<div>
+<p class="font-medium text-white">Maria Rodríguez</p>
+<p class="text-xs text-gray-500">ID: NX-9002</p>
+</div>
+</div>
+</td>
+<td class="p-4 text-gray-300">Analista QA</td>
+<td class="p-4 text-gray-400">01 Oct, 2022</td>
+<td class="p-4 text-amber-300 font-medium">15 Nov, 2023</td>
+<td class="p-4">
+<span class="status-badge bg-amber-500/10 text-amber-500 border border-amber-500/20">
+<span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span>
+                                        Por Vencer
+                                    </span>
+</td>
+<td class="p-4">
+<div class="flex items-center justify-center gap-2 opacity-100 md:opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="action-btn bg-surface-darker text-gray-400 hover:text-white hover:bg-primary/20 hover:border hover:border-primary/30 border border-transparent" title="Generar PDF">
+<span class="material-icons-round text-lg">picture_as_pdf</span>
+</button>
+<button class="action-btn bg-surface-darker text-primary-light hover:text-white hover:bg-primary border border-primary/20" title="Crear Adenda">
+<span class="material-icons-round text-lg">edit_document</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 3: Vigente (Green) -->
+<tr class="hover:bg-white/[0.02] transition-colors group">
+<td class="p-4">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-primary/20 text-primary-light flex items-center justify-center font-bold border border-primary/20">
+                                            JP
+                                        </div>
+<div>
+<p class="font-medium text-white">Juan Pérez</p>
+<p class="text-xs text-gray-500">ID: NX-7210</p>
+</div>
+</div>
+</td>
+<td class="p-4 text-gray-300">Desarrollador Full Stack</td>
+<td class="p-4 text-gray-400">15 Mar, 2024</td>
+<td class="p-4 text-gray-300">15 Mar, 2025</td>
+<td class="p-4">
+<span class="status-badge bg-green-500/10 text-green-500 border border-green-500/20">
+<span class="w-1.5 h-1.5 rounded-full bg-green-500"></span>
+                                        Vigente
+                                    </span>
+</td>
+<td class="p-4">
+<div class="flex items-center justify-center gap-2 opacity-100 md:opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="action-btn bg-surface-darker text-gray-400 hover:text-white hover:bg-primary/20 hover:border hover:border-primary/30 border border-transparent" title="Generar PDF">
+<span class="material-icons-round text-lg">picture_as_pdf</span>
+</button>
+<button class="action-btn bg-surface-darker text-primary-light hover:text-white hover:bg-primary border border-primary/20" title="Crear Adenda">
+<span class="material-icons-round text-lg">edit_document</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 4: Vigente (Green) -->
+<tr class="hover:bg-white/[0.02] transition-colors group">
+<td class="p-4">
+<div class="flex items-center gap-3">
+<img alt="Avatar de Luis Gomez" class="w-10 h-10 rounded-full border border-white/10" data-alt="Portrait of a smiling man with glasses" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAHOwmaEeVR9hFvUFsx37gHWEFL-Kd6T31Qv0abXvoEU3qXGXYFkANcpikwqgcpW7yUpaIkHhZiA9WNQEq0H6dzsRspmiiGYNyoVZEHVXvrLmIWzlBKLQlVgzQUOfQo_hXIUmJrkc6d6Dsynn_oUKpPkGu84LyCRtAV3lf0omSgGq9LuAuZQ9rQucbCY4NGXCn8bgXbMj43MM_9H3EcRnqtuc3qJuncxlgzGTaXg9ItrA4p_0dQAn1j5NgK3p8SJ7INY6tyzs3gpdcG"/>
+<div>
+<p class="font-medium text-white">Luis Gómez</p>
+<p class="text-xs text-gray-500">ID: NX-7331</p>
+</div>
+</div>
+</td>
+<td class="p-4 text-gray-300">Gerente de Marketing</td>
+<td class="p-4 text-gray-400">10 Ene, 2023</td>
+<td class="p-4 text-gray-300">Indefinido</td>
+<td class="p-4">
+<span class="status-badge bg-green-500/10 text-green-500 border border-green-500/20">
+<span class="w-1.5 h-1.5 rounded-full bg-green-500"></span>
+                                        Vigente
+                                    </span>
+</td>
+<td class="p-4">
+<div class="flex items-center justify-center gap-2 opacity-100 md:opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="action-btn bg-surface-darker text-gray-400 hover:text-white hover:bg-primary/20 hover:border hover:border-primary/30 border border-transparent" title="Generar PDF">
+<span class="material-icons-round text-lg">picture_as_pdf</span>
+</button>
+<button class="action-btn bg-surface-darker text-primary-light hover:text-white hover:bg-primary border border-primary/20" title="Crear Adenda">
+<span class="material-icons-round text-lg">edit_document</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 5: Por Vencer (Amber) -->
+<tr class="hover:bg-white/[0.02] transition-colors group">
+<td class="p-4">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-amber-500/20 text-amber-500 flex items-center justify-center font-bold border border-amber-500/20">
+                                            SF
+                                        </div>
+<div>
+<p class="font-medium text-white">Sofía Flores</p>
+<p class="text-xs text-gray-500">ID: NX-8105</p>
+</div>
+</div>
+</td>
+<td class="p-4 text-gray-300">Asistente Administrativo</td>
+<td class="p-4 text-gray-400">05 Nov, 2023</td>
+<td class="p-4 text-amber-300 font-medium">05 Nov, 2024</td>
+<td class="p-4">
+<span class="status-badge bg-amber-500/10 text-amber-500 border border-amber-500/20">
+<span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span>
+                                        Por Vencer
+                                    </span>
+</td>
+<td class="p-4">
+<div class="flex items-center justify-center gap-2 opacity-100 md:opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="action-btn bg-surface-darker text-gray-400 hover:text-white hover:bg-primary/20 hover:border hover:border-primary/30 border border-transparent" title="Generar PDF">
+<span class="material-icons-round text-lg">picture_as_pdf</span>
+</button>
+<button class="action-btn bg-surface-darker text-primary-light hover:text-white hover:bg-primary border border-primary/20" title="Crear Adenda">
+<span class="material-icons-round text-lg">edit_document</span>
+</button>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Pagination -->
+<div class="px-6 py-4 border-t border-white/5 flex items-center justify-between">
+<p class="text-sm text-gray-500">Mostrando <span class="text-white font-medium">1-5</span> de <span class="text-white font-medium">142</span> resultados</p>
+<div class="flex gap-2">
+<button class="px-3 py-1 rounded bg-surface-darker border border-white/10 text-gray-400 hover:text-white hover:border-white/20 text-sm disabled:opacity-50">Anterior</button>
+<button class="px-3 py-1 rounded bg-primary text-white text-sm">1</button>
+<button class="px-3 py-1 rounded bg-surface-darker border border-white/10 text-gray-400 hover:text-white hover:border-white/20 text-sm">2</button>
+<button class="px-3 py-1 rounded bg-surface-darker border border-white/10 text-gray-400 hover:text-white hover:border-white/20 text-sm">3</button>
+<button class="px-3 py-1 rounded bg-surface-darker border border-white/10 text-gray-400 hover:text-white hover:border-white/20 text-sm">Siguiente</button>
+</div>
+</div>
+</div>
+</div>
+</main>
+</body></html>

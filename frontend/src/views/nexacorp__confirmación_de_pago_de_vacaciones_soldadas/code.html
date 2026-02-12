@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+
+<html class="light dark" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>NexaCorp: Confirmación de Pago de Vacaciones</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@200..800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script>tailwind.config = {darkMode: "class", theme: {extend: {colors: {primary: "#2c60ce", "primary-dark": "#0f4bc4", "background-light": "#f6f6f8", "background-dark": "#121720"}, fontFamily: {display: "Inter"}, borderRadius: {DEFAULT: "0.5rem", lg: "1rem", xl: "1.5rem", full: "9999px"}}}};</script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-[#0d121b] dark:text-white font-display min-h-screen flex flex-col overflow-x-hidden">
+<!-- Top Navbar -->
+<header class="bg-white dark:bg-[#1a2235] border-b border-[#e7ebf3] dark:border-[#2a3449] sticky top-0 z-50">
+<div class="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex items-center justify-between h-16">
+<!-- Logo -->
+<div class="flex items-center gap-3">
+<div class="size-8 text-primary flex items-center justify-center">
+<span class="material-symbols-outlined text-3xl">domain</span>
+</div>
+<h2 class="text-[#0d121b] dark:text-white text-xl font-bold tracking-tight">NexaCorp</h2>
+</div>
+<!-- Desktop Nav -->
+<nav class="hidden md:flex items-center gap-8">
+<a class="text-[#4c669a] dark:text-[#94a3b8] hover:text-primary dark:hover:text-primary text-sm font-medium transition-colors" href="#">Inicio</a>
+<a class="text-primary dark:text-primary text-sm font-medium" href="#">Mis Solicitudes</a>
+<a class="text-[#4c669a] dark:text-[#94a3b8] hover:text-primary dark:hover:text-primary text-sm font-medium transition-colors" href="#">Planilla</a>
+<a class="text-[#4c669a] dark:text-[#94a3b8] hover:text-primary dark:hover:text-primary text-sm font-medium transition-colors" href="#">Perfil</a>
+</nav>
+<!-- Profile -->
+<div class="flex items-center gap-4">
+<button class="text-[#4c669a] dark:text-[#94a3b8] hover:bg-gray-100 dark:hover:bg-gray-800 p-2 rounded-full transition-colors">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<div class="h-8 w-8 rounded-full bg-cover bg-center border border-gray-200 dark:border-gray-700" data-alt="User profile picture of a smiling man" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuD8WlYoNFJsblPmFKQYXAJmCm2M8ShRZjos2pUaG253DfCXRQRipOnk9HKg9t_w01C_itZO7wmE9Vst48FaQC0Z04fZLzlK7vE09okNul8b3BjLPGLlw9llPQeEHIUY6581UYjSbl3m2_fHkTbTMQJQMB5MQDpx5emE3zKJ03yfrw-44xqWyjEYNzsxZNNEmNcqFTroM_hDFFaZpTqenh5LY53-q0SZDmIs27N9ttPmGaHtPrm_ZsAmNJxhok5JMTTNSkD3WrwPbXQ4");'></div>
+</div>
+</div>
+</div>
+</header>
+<main class="flex-grow w-full max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 py-8">
+<!-- Breadcrumb & Title -->
+<div class="mb-8">
+<div class="flex items-center gap-2 text-sm text-[#4c669a] dark:text-[#94a3b8] mb-2">
+<span>Mis Solicitudes</span>
+<span class="material-symbols-outlined text-[16px]">chevron_right</span>
+<span>Venta de Vacaciones</span>
+<span class="material-symbols-outlined text-[16px]">chevron_right</span>
+<span class="text-primary font-medium">Confirmación</span>
+</div>
+<h1 class="text-2xl md:text-3xl font-bold text-[#0d121b] dark:text-white">Confirmación de Pago</h1>
+</div>
+<!-- Stepper -->
+<div class="mb-10 w-full overflow-x-auto pb-2">
+<div class="min-w-[600px] bg-white dark:bg-[#1a2235] rounded-xl p-2 shadow-sm border border-[#e7ebf3] dark:border-[#2a3449] flex">
+<div class="flex-1 flex items-center justify-center py-2 px-4 gap-2 text-[#4c669a] dark:text-[#94a3b8] opacity-60">
+<span class="flex items-center justify-center size-6 rounded-full border border-current text-xs font-bold">1</span>
+<span class="text-sm font-medium">Solicitud</span>
+</div>
+<div class="w-px h-6 bg-gray-200 dark:bg-gray-700"></div>
+<div class="flex-1 flex items-center justify-center py-2 px-4 gap-2 text-[#4c669a] dark:text-[#94a3b8] opacity-60">
+<span class="flex items-center justify-center size-6 rounded-full border border-current text-xs font-bold">2</span>
+<span class="text-sm font-medium">Cálculo</span>
+</div>
+<div class="w-px h-6 bg-gray-200 dark:bg-gray-700"></div>
+<div class="flex-1 flex items-center justify-center py-2 px-4 gap-2 text-[#4c669a] dark:text-[#94a3b8] opacity-60">
+<span class="flex items-center justify-center size-6 rounded-full border border-current text-xs font-bold">3</span>
+<span class="text-sm font-medium">Aprobación</span>
+</div>
+<div class="w-px h-6 bg-gray-200 dark:bg-gray-700"></div>
+<div class="flex-1 flex items-center justify-center py-2 px-4 gap-2 text-[#0d121b] dark:text-white bg-primary/10 dark:bg-primary/20 rounded-lg text-primary">
+<span class="flex items-center justify-center size-6 rounded-full bg-primary text-white text-xs font-bold"><span class="material-symbols-outlined text-sm">check</span></span>
+<span class="text-sm font-bold">Confirmación</span>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+<!-- Left Column: Success Message & Details -->
+<div class="lg:col-span-2 space-y-6">
+<!-- Success Card -->
+<div class="bg-white dark:bg-[#1a2235] rounded-xl p-8 border border-[#e7ebf3] dark:border-[#2a3449] shadow-sm text-center flex flex-col items-center">
+<div class="size-16 rounded-full bg-green-100 dark:bg-green-900/30 flex items-center justify-center mb-6 text-green-600 dark:text-green-400">
+<span class="material-symbols-outlined text-4xl">verified</span>
+</div>
+<h2 class="text-2xl font-bold text-[#0d121b] dark:text-white mb-2">¡Solicitud Aprobada y Programada!</h2>
+<p class="text-[#4c669a] dark:text-[#94a3b8] max-w-md mx-auto mb-8">
+                        La venta de <strong>7 días</strong> de vacaciones ha sido procesada exitosamente. El monto correspondiente se verá reflejado en tu próxima planilla.
+                    </p>
+<div class="flex flex-wrap justify-center gap-4 w-full">
+<button class="inline-flex items-center justify-center px-6 py-2.5 border border-transparent text-sm font-medium rounded-lg text-white bg-primary hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary transition-colors min-w-[160px]">
+<span class="material-symbols-outlined mr-2 text-lg">download</span>
+                            Descargar Constancia
+                        </button>
+<button class="inline-flex items-center justify-center px-6 py-2.5 border border-[#cfd7e7] dark:border-[#2a3449] text-sm font-medium rounded-lg text-[#0d121b] dark:text-white bg-white dark:bg-[#1a2235] hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors min-w-[160px]">
+                            Volver al Inicio
+                        </button>
+</div>
+</div>
+<!-- Payroll History Table -->
+<div class="bg-white dark:bg-[#1a2235] rounded-xl border border-[#e7ebf3] dark:border-[#2a3449] shadow-sm overflow-hidden">
+<div class="px-6 py-5 border-b border-[#e7ebf3] dark:border-[#2a3449] flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+<h3 class="text-lg font-bold text-[#0d121b] dark:text-white">Historial de Pagos Recientes</h3>
+<span class="text-xs text-[#4c669a] dark:text-[#94a3b8] bg-gray-100 dark:bg-gray-800 px-3 py-1 rounded-full">Actualizado hoy, 14:30 PM</span>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-[#f8f9fc] dark:bg-[#131b2b] text-[#4c669a] dark:text-[#94a3b8] text-xs uppercase tracking-wider font-semibold">
+<th class="px-6 py-4">Periodo</th>
+<th class="px-6 py-4">Concepto</th>
+<th class="px-6 py-4">Monto (PEN)</th>
+<th class="px-6 py-4">Estado</th>
+<th class="px-6 py-4">Fecha Proceso</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-[#e7ebf3] dark:divide-[#2a3449]">
+<!-- Active New Row -->
+<tr class="bg-primary/5 dark:bg-primary/10">
+<td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-[#0d121b] dark:text-white">
+                                        Octubre 2023
+                                    </td>
+<td class="px-6 py-4 whitespace-nowrap text-sm text-[#0d121b] dark:text-white flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-lg">monetization_on</span>
+                                        Venta de Vacaciones
+                                    </td>
+<td class="px-6 py-4 whitespace-nowrap text-sm font-bold text-[#0d121b] dark:text-white">
+                                        S/. 1,250.00
+                                    </td>
+<td class="px-6 py-4 whitespace-nowrap">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-primary/10 text-primary border border-primary/20">
+                                            Programado para Pago
+                                        </span>
+</td>
+<td class="px-6 py-4 whitespace-nowrap text-sm text-[#4c669a] dark:text-[#94a3b8]">
+                                        15 Oct 2023
+                                    </td>
+</tr>
+<!-- Past Rows -->
+<tr>
+<td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-[#0d121b] dark:text-white opacity-70">
+                                        Septiembre 2023
+                                    </td>
+<td class="px-6 py-4 whitespace-nowrap text-sm text-[#0d121b] dark:text-white opacity-70">
+                                        Sueldo Básico
+                                    </td>
+<td class="px-6 py-4 whitespace-nowrap text-sm text-[#0d121b] dark:text-white opacity-70">
+                                        S/. 4,500.00
+                                    </td>
+<td class="px-6 py-4 whitespace-nowrap opacity-70">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-300">
+                                            Pagado
+                                        </span>
+</td>
+<td class="px-6 py-4 whitespace-nowrap text-sm text-[#4c669a] dark:text-[#94a3b8] opacity-70">
+                                        30 Sep 2023
+                                    </td>
+</tr>
+<tr>
+<td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-[#0d121b] dark:text-white opacity-70">
+                                        Agosto 2023
+                                    </td>
+<td class="px-6 py-4 whitespace-nowrap text-sm text-[#0d121b] dark:text-white opacity-70">
+                                        Sueldo Básico
+                                    </td>
+<td class="px-6 py-4 whitespace-nowrap text-sm text-[#0d121b] dark:text-white opacity-70">
+                                        S/. 4,500.00
+                                    </td>
+<td class="px-6 py-4 whitespace-nowrap opacity-70">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-300">
+                                            Pagado
+                                        </span>
+</td>
+<td class="px-6 py-4 whitespace-nowrap text-sm text-[#4c669a] dark:text-[#94a3b8] opacity-70">
+                                        31 Ago 2023
+                                    </td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="px-6 py-4 border-t border-[#e7ebf3] dark:border-[#2a3449] bg-[#f8f9fc] dark:bg-[#131b2b]">
+<p class="text-xs text-[#4c669a] dark:text-[#94a3b8] flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">info</span>
+                            El depósito se realizará junto con el abono de la planilla de fin de mes en su cuenta registrada.
+                        </p>
+</div>
+</div>
+</div>
+<!-- Right Column: Sidebar Balance -->
+<div class="lg:col-span-1 space-y-6">
+<!-- Employee Card -->
+<div class="bg-white dark:bg-[#1a2235] rounded-xl p-5 border border-[#e7ebf3] dark:border-[#2a3449] shadow-sm flex items-center gap-4">
+<div class="size-12 rounded-full bg-cover bg-center" data-alt="User profile picture thumbnail" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCUecZLFJn2ZYCVz6tDRXkndaEuUK51S_4QCJH75k43-Y3IMt8Vol9foh_lhyJ9KCxlThdF72WEj6nXm7Wq2dgaPpZnVoUs4AcrjcOw8kC1SGjPdXJKADReFP2xMi2KhCDxDRHO-4qMz0p0-vrmLqT41SkDM-HZD8Z-JbdQs45KVf5qD6AdryMcQTDYQLbNyKKreafaWD7V40tb4wkRxoDTzZcWbJR2fMc6oSRuf49IiY3s8EUZOMyLRJ0OHhMJuQpK6bjMVY76_UdM");'></div>
+<div>
+<h3 class="text-sm font-bold text-[#0d121b] dark:text-white">Carlos Rodriguez</h3>
+<p class="text-xs text-[#4c669a] dark:text-[#94a3b8]">Analista Senior • ID: NX-8842</p>
+</div>
+</div>
+<!-- Vacation Balance Widget -->
+<div class="bg-white dark:bg-[#1a2235] rounded-xl border border-[#e7ebf3] dark:border-[#2a3449] shadow-sm overflow-hidden">
+<div class="p-5 border-b border-[#e7ebf3] dark:border-[#2a3449]">
+<h3 class="text-base font-bold text-[#0d121b] dark:text-white flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">calendar_clock</span>
+                            Actualización de Saldo
+                        </h3>
+</div>
+<div class="p-5 space-y-4">
+<!-- Before -->
+<div class="flex items-center justify-between p-3 rounded-lg bg-gray-50 dark:bg-gray-800/50">
+<div>
+<p class="text-xs text-[#4c669a] dark:text-[#94a3b8] font-medium uppercase tracking-wide">Saldo Anterior</p>
+<p class="text-xl font-bold text-[#0d121b] dark:text-white mt-1">25 días</p>
+</div>
+<span class="material-symbols-outlined text-gray-400">history</span>
+</div>
+<!-- Transaction -->
+<div class="flex items-center justify-between p-3 rounded-lg bg-red-50 dark:bg-red-900/10 border border-red-100 dark:border-red-900/20">
+<div>
+<p class="text-xs text-red-600 dark:text-red-400 font-medium uppercase tracking-wide">Días Vendidos</p>
+<p class="text-xl font-bold text-red-600 dark:text-red-400 mt-1">- 7 días</p>
+</div>
+<span class="material-symbols-outlined text-red-400">remove_circle</span>
+</div>
+<!-- Divider with arrow -->
+<div class="relative flex items-center justify-center py-2">
+<div class="absolute inset-0 flex items-center">
+<div class="w-full border-t border-dashed border-gray-300 dark:border-gray-600"></div>
+</div>
+<div class="relative bg-white dark:bg-[#1a2235] px-2 text-gray-400">
+<span class="material-symbols-outlined">arrow_downward</span>
+</div>
+</div>
+<!-- After -->
+<div class="flex items-center justify-between p-4 rounded-lg bg-primary text-white shadow-md shadow-primary/20">
+<div>
+<p class="text-xs text-white/80 font-medium uppercase tracking-wide">Nuevo Saldo Disponible</p>
+<p class="text-3xl font-bold mt-1">18 días</p>
+</div>
+<div class="size-10 rounded-full bg-white/20 flex items-center justify-center backdrop-blur-sm">
+<span class="material-symbols-outlined text-white">beach_access</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Support Card -->
+<div class="bg-gradient-to-br from-[#f8f9fc] to-[#e7ebf3] dark:from-[#131b2b] dark:to-[#1a2235] rounded-xl p-5 border border-[#e7ebf3] dark:border-[#2a3449]">
+<h4 class="text-sm font-bold text-[#0d121b] dark:text-white mb-2">¿Necesitas ayuda?</h4>
+<p class="text-xs text-[#4c669a] dark:text-[#94a3b8] mb-4">Si tienes dudas sobre el cálculo o la fecha de depósito, contacta a RRHH.</p>
+<a class="text-xs font-bold text-primary hover:underline flex items-center gap-1" href="#">
+                        Contactar Soporte
+                        <span class="material-symbols-outlined text-sm">arrow_forward</span>
+</a>
+</div>
+</div>
+</div>
+</main>
+<!-- Footer -->
+<footer class="border-t border-[#e7ebf3] dark:border-[#2a3449] py-8 mt-12 bg-white dark:bg-[#1a2235]">
+<div class="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center gap-4">
+<p class="text-xs text-[#4c669a] dark:text-[#94a3b8]">© 2023 NexaCorp Perú. Todos los derechos reservados.</p>
+<div class="flex gap-6">
+<a class="text-xs text-[#4c669a] dark:text-[#94a3b8] hover:text-primary transition-colors" href="#">Política de Privacidad</a>
+<a class="text-xs text-[#4c669a] dark:text-[#94a3b8] hover:text-primary transition-colors" href="#">Términos de Uso</a>
+</div>
+</div>
+</footer>
+</body></html>

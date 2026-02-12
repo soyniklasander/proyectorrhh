@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>NexaCorp: Vista de Enrutamiento Superadmin</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#2c60ce",
+                        "primary-dark": "#1a4bb0",
+                        "primary-light": "#5584e6",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#0f1115", // Slightly darker than theme config for depth
+                        "surface-dark": "#181b21", // Card background
+                        "surface-hover": "#22262e",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: { "DEFAULT": "0.5rem", "lg": "1rem", "xl": "1.5rem", "full": "9999px" },
+                },
+            },
+        }
+    </script>
+<style>
+        /* Custom Scrollbar for dark mode */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #121720; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #2d3748; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #4a5568; 
+        }
+        
+        .glass-panel {
+            background: rgba(24, 27, 33, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-800 dark:text-slate-200 font-display min-h-screen antialiased selection:bg-primary selection:text-white overflow-hidden flex">
+<!-- Sidebar Navigation -->
+<aside class="w-64 h-screen bg-white dark:bg-[#12141a] border-r border-slate-200 dark:border-white/5 flex flex-col z-20 hidden md:flex shrink-0">
+<!-- Logo Area -->
+<div class="h-16 flex items-center px-6 border-b border-slate-200 dark:border-white/5">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-lg bg-primary flex items-center justify-center text-white font-bold text-lg shadow-lg shadow-primary/30">
+                    N
+                </div>
+<span class="font-bold text-lg tracking-tight dark:text-white">NexaCorp</span>
+</div>
+</div>
+<!-- Navigation Menu -->
+<div class="flex-1 overflow-y-auto py-6 px-3 space-y-1">
+<div class="px-3 mb-2 text-xs font-semibold text-slate-400 uppercase tracking-wider">Superadmin</div>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-primary/10 text-primary font-medium transition-colors" href="#">
+<span class="material-icons text-[20px]">dashboard</span>
+                Dashboard
+            </a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-white/5 transition-colors group" href="#">
+<span class="material-icons text-[20px] group-hover:text-primary transition-colors">domain</span>
+                Tenants
+            </a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-white/5 transition-colors group" href="#">
+<span class="material-icons text-[20px] group-hover:text-primary transition-colors">people</span>
+                Usuarios
+            </a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-white/5 transition-colors group" href="#">
+<span class="material-icons text-[20px] group-hover:text-primary transition-colors">payments</span>
+                Facturación
+            </a>
+<div class="px-3 mt-8 mb-2 text-xs font-semibold text-slate-400 uppercase tracking-wider">Sistema</div>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-white/5 transition-colors group" href="#">
+<span class="material-icons text-[20px] group-hover:text-primary transition-colors">dns</span>
+                Servidores
+            </a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-white/5 transition-colors group" href="#">
+<span class="material-icons text-[20px] group-hover:text-primary transition-colors">security</span>
+                Logs de Auditoría
+            </a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-white/5 transition-colors group" href="#">
+<span class="material-icons text-[20px] group-hover:text-primary transition-colors">settings</span>
+                Configuración
+            </a>
+</div>
+<!-- User Profile Stub -->
+<div class="p-4 border-t border-slate-200 dark:border-white/5">
+<div class="flex items-center gap-3 p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-white/5 cursor-pointer transition-colors">
+<img alt="User Profile" class="w-9 h-9 rounded-full border border-slate-200 dark:border-white/10" data-alt="Admin user avatar with initials" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBddi-2s3bIddLAFoFVimaz4Th35e9QqJuPtytRJKYGI00NouXW4BGR0e83S5NpxFDEijLALqrDUcSx-GscdRh9-tESm7t8LIRRLumrQp4y1iwWkF5o-4_a7Z1nbInB8WcYrlyN3Zf84vV-h-C4-nGfq2Y9v8yvRqdcEUEuZmuhzvHaAic4UMjsUBHCFNLh3tDykkB2NSACCt_8q5bWjr0IC_0VTMRh-vwp9Fe5RMJRnnSmBF06Uj0XcKOI3biKTYt4_MT3AHFtb6C3"/>
+<div class="flex-1 min-w-0">
+<p class="text-sm font-medium dark:text-white truncate">Super Admin</p>
+<p class="text-xs text-slate-500 truncate">godmode@nexa.corp</p>
+</div>
+<span class="material-icons text-slate-400 text-sm">expand_more</span>
+</div>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="flex-1 flex flex-col h-screen overflow-hidden bg-background-light dark:bg-background-dark relative">
+<!-- Abstract Background Gradient decoration -->
+<div class="absolute top-0 left-0 w-full h-96 bg-gradient-to-b from-primary/5 to-transparent pointer-events-none"></div>
+<!-- Top Header -->
+<header class="h-16 px-8 flex items-center justify-between z-10 border-b border-transparent">
+<div class="flex items-center gap-4 text-sm text-slate-500">
+<span>Admin</span>
+<span class="material-icons text-[16px]">chevron_right</span>
+<span class="text-slate-800 dark:text-white font-medium">Overview</span>
+</div>
+<div class="flex items-center gap-6">
+<!-- Search Bar -->
+<div class="relative w-64 md:w-96 group">
+<span class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 material-icons text-[20px] group-focus-within:text-primary transition-colors">search</span>
+<input class="w-full bg-white dark:bg-[#181b21] border border-slate-200 dark:border-white/10 rounded-lg pl-10 pr-4 py-2 text-sm focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all shadow-sm" placeholder="Buscar tenant, ID, o usuario..." type="text"/>
+<div class="absolute right-2 top-1/2 -translate-y-1/2 text-[10px] font-bold text-slate-400 border border-slate-300 dark:border-white/10 rounded px-1.5 py-0.5">⌘K</div>
+</div>
+<!-- Quick Actions -->
+<button class="relative p-2 text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-white transition-colors">
+<span class="material-icons">notifications</span>
+<span class="absolute top-1.5 right-1.5 w-2 h-2 bg-red-500 rounded-full ring-2 ring-background-light dark:ring-background-dark"></span>
+</button>
+</div>
+</header>
+<!-- Scrollable Content -->
+<div class="flex-1 overflow-y-auto px-8 pb-8 scroll-smooth">
+<div class="max-w-7xl mx-auto pt-6 space-y-8">
+<!-- Header Section -->
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
+<div>
+<h1 class="text-2xl font-bold text-slate-900 dark:text-white">Vista General</h1>
+<p class="text-slate-500 dark:text-slate-400 mt-1">Monitoreo en tiempo real del ecosistema NexaCorp.</p>
+</div>
+<div class="flex gap-3">
+<button class="flex items-center gap-2 px-4 py-2 bg-white dark:bg-[#181b21] border border-slate-200 dark:border-white/10 rounded-lg text-sm font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-white/5 transition-colors shadow-sm">
+<span class="material-icons text-[18px]">refresh</span>
+                            Limpiar Cache
+                        </button>
+<button class="flex items-center gap-2 px-4 py-2 bg-primary hover:bg-primary-dark text-white rounded-lg text-sm font-medium transition-colors shadow-lg shadow-primary/20">
+<span class="material-icons text-[18px]">add</span>
+                            Nuevo Tenant
+                        </button>
+</div>
+</div>
+<!-- KPI Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+<!-- KPI Card 1 -->
+<div class="p-5 rounded-xl bg-white dark:bg-[#181b21] border border-slate-200 dark:border-white/5 shadow-sm relative overflow-hidden group hover:border-primary/30 transition-colors">
+<div class="flex justify-between items-start mb-4">
+<div>
+<p class="text-xs font-semibold text-slate-500 uppercase tracking-wider">Tenants Activos</p>
+<h3 class="text-3xl font-bold mt-1 text-slate-900 dark:text-white">1,248</h3>
+</div>
+<div class="p-2 rounded-lg bg-primary/10 text-primary">
+<span class="material-icons">apartment</span>
+</div>
+</div>
+<div class="flex items-center gap-2">
+<span class="flex items-center text-xs font-bold text-green-500 bg-green-500/10 px-1.5 py-0.5 rounded">
+<span class="material-icons text-[14px] mr-0.5">trending_up</span>
+                                +5.2%
+                            </span>
+<span class="text-xs text-slate-400">vs mes anterior</span>
+</div>
+</div>
+<!-- KPI Card 2 -->
+<div class="p-5 rounded-xl bg-white dark:bg-[#181b21] border border-slate-200 dark:border-white/5 shadow-sm relative overflow-hidden group hover:border-primary/30 transition-colors">
+<div class="flex justify-between items-start mb-4">
+<div>
+<p class="text-xs font-semibold text-slate-500 uppercase tracking-wider">Ingresos (MRR)</p>
+<h3 class="text-3xl font-bold mt-1 text-slate-900 dark:text-white">$452.8k</h3>
+</div>
+<div class="p-2 rounded-lg bg-emerald-500/10 text-emerald-500">
+<span class="material-icons">attach_money</span>
+</div>
+</div>
+<div class="flex items-center gap-2">
+<span class="flex items-center text-xs font-bold text-green-500 bg-green-500/10 px-1.5 py-0.5 rounded">
+<span class="material-icons text-[14px] mr-0.5">trending_up</span>
+                                +12%
+                            </span>
+<span class="text-xs text-slate-400">vs mes anterior</span>
+</div>
+</div>
+<!-- KPI Card 3 -->
+<div class="p-5 rounded-xl bg-white dark:bg-[#181b21] border border-slate-200 dark:border-white/5 shadow-sm relative overflow-hidden group hover:border-primary/30 transition-colors">
+<div class="flex justify-between items-start mb-4">
+<div>
+<p class="text-xs font-semibold text-slate-500 uppercase tracking-wider">Salud Sistema</p>
+<h3 class="text-3xl font-bold mt-1 text-slate-900 dark:text-white">99.99%</h3>
+</div>
+<div class="p-2 rounded-lg bg-blue-500/10 text-blue-500">
+<span class="material-icons">health_and_safety</span>
+</div>
+</div>
+<div class="flex items-center gap-2">
+<span class="flex items-center text-xs font-bold text-slate-500 bg-slate-500/10 px-1.5 py-0.5 rounded">
+<span class="material-icons text-[14px] mr-0.5">remove</span>
+                                0.0%
+                            </span>
+<span class="text-xs text-slate-400">Estable</span>
+</div>
+</div>
+<!-- KPI Card 4 -->
+<div class="p-5 rounded-xl bg-white dark:bg-[#181b21] border border-slate-200 dark:border-white/5 shadow-sm relative overflow-hidden group hover:border-primary/30 transition-colors">
+<div class="flex justify-between items-start mb-4">
+<div>
+<p class="text-xs font-semibold text-slate-500 uppercase tracking-wider">Usuarios Activos</p>
+<h3 class="text-3xl font-bold mt-1 text-slate-900 dark:text-white">45.2k</h3>
+</div>
+<div class="p-2 rounded-lg bg-indigo-500/10 text-indigo-500">
+<span class="material-icons">group</span>
+</div>
+</div>
+<div class="flex items-center gap-2">
+<span class="flex items-center text-xs font-bold text-green-500 bg-green-500/10 px-1.5 py-0.5 rounded">
+<span class="material-icons text-[14px] mr-0.5">trending_up</span>
+                                +8.4%
+                            </span>
+<span class="text-xs text-slate-400">en las últimas 24h</span>
+</div>
+</div>
+</div>
+<!-- Main Grid Section -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-6 h-full">
+<!-- Tenant List (Takes up 2/3) -->
+<div class="lg:col-span-2 flex flex-col gap-6">
+<!-- Chart Area -->
+<div class="bg-white dark:bg-[#181b21] rounded-xl border border-slate-200 dark:border-white/5 shadow-sm p-6">
+<div class="flex justify-between items-center mb-6">
+<h3 class="font-semibold text-slate-900 dark:text-white">Rendimiento Global</h3>
+<select class="bg-transparent border border-slate-200 dark:border-white/10 rounded-lg text-xs py-1 px-2 focus:outline-none focus:border-primary text-slate-500 dark:text-slate-400">
+<option>Últimas 24 horas</option>
+<option>Últimos 7 días</option>
+<option>Últimos 30 días</option>
+</select>
+</div>
+<!-- Mock Chart Representation -->
+<div class="relative h-64 w-full flex items-end justify-between gap-2 px-2">
+<div class="absolute inset-0 top-0 bottom-8 flex flex-col justify-between pointer-events-none">
+<div class="w-full h-px bg-slate-100 dark:bg-white/5"></div>
+<div class="w-full h-px bg-slate-100 dark:bg-white/5"></div>
+<div class="w-full h-px bg-slate-100 dark:bg-white/5"></div>
+<div class="w-full h-px bg-slate-100 dark:bg-white/5"></div>
+</div>
+<!-- Bars (CSS only visualization) -->
+<div class="w-full bg-primary/20 h-[40%] rounded-t-sm hover:bg-primary/40 transition-all cursor-pointer relative group">
+<div class="absolute bottom-full mb-2 left-1/2 -translate-x-1/2 bg-slate-800 text-white text-[10px] py-1 px-2 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">Latency: 40ms</div>
+</div>
+<div class="w-full bg-primary/20 h-[55%] rounded-t-sm hover:bg-primary/40 transition-all cursor-pointer relative group">
+<div class="absolute bottom-full mb-2 left-1/2 -translate-x-1/2 bg-slate-800 text-white text-[10px] py-1 px-2 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">Latency: 55ms</div>
+</div>
+<div class="w-full bg-primary/30 h-[70%] rounded-t-sm hover:bg-primary/40 transition-all cursor-pointer relative group">
+<div class="absolute bottom-full mb-2 left-1/2 -translate-x-1/2 bg-slate-800 text-white text-[10px] py-1 px-2 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">Latency: 70ms</div>
+</div>
+<div class="w-full bg-primary/40 h-[65%] rounded-t-sm hover:bg-primary/40 transition-all cursor-pointer relative group">
+<div class="absolute bottom-full mb-2 left-1/2 -translate-x-1/2 bg-slate-800 text-white text-[10px] py-1 px-2 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">Latency: 65ms</div>
+</div>
+<div class="w-full bg-primary/50 h-[85%] rounded-t-sm hover:bg-primary/40 transition-all cursor-pointer relative group">
+<div class="absolute bottom-full mb-2 left-1/2 -translate-x-1/2 bg-slate-800 text-white text-[10px] py-1 px-2 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">Latency: 85ms</div>
+</div>
+<div class="w-full bg-primary/60 h-[50%] rounded-t-sm hover:bg-primary/40 transition-all cursor-pointer relative group">
+<div class="absolute bottom-full mb-2 left-1/2 -translate-x-1/2 bg-slate-800 text-white text-[10px] py-1 px-2 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">Latency: 50ms</div>
+</div>
+<div class="w-full bg-primary/50 h-[60%] rounded-t-sm hover:bg-primary/40 transition-all cursor-pointer relative group">
+<div class="absolute bottom-full mb-2 left-1/2 -translate-x-1/2 bg-slate-800 text-white text-[10px] py-1 px-2 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">Latency: 60ms</div>
+</div>
+<div class="w-full bg-primary/40 h-[75%] rounded-t-sm hover:bg-primary/40 transition-all cursor-pointer relative group">
+<div class="absolute bottom-full mb-2 left-1/2 -translate-x-1/2 bg-slate-800 text-white text-[10px] py-1 px-2 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">Latency: 75ms</div>
+</div>
+<div class="w-full bg-primary/20 h-[45%] rounded-t-sm hover:bg-primary/40 transition-all cursor-pointer relative group">
+<div class="absolute bottom-full mb-2 left-1/2 -translate-x-1/2 bg-slate-800 text-white text-[10px] py-1 px-2 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">Latency: 45ms</div>
+</div>
+<div class="w-full bg-primary/10 h-[30%] rounded-t-sm hover:bg-primary/40 transition-all cursor-pointer relative group">
+<div class="absolute bottom-full mb-2 left-1/2 -translate-x-1/2 bg-slate-800 text-white text-[10px] py-1 px-2 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">Latency: 30ms</div>
+</div>
+<div class="w-full bg-primary/30 h-[55%] rounded-t-sm hover:bg-primary/40 transition-all cursor-pointer relative group">
+<div class="absolute bottom-full mb-2 left-1/2 -translate-x-1/2 bg-slate-800 text-white text-[10px] py-1 px-2 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">Latency: 55ms</div>
+</div>
+<div class="w-full bg-primary h-[90%] rounded-t-sm hover:bg-primary/40 transition-all cursor-pointer relative group shadow-[0_0_15px_rgba(44,96,206,0.5)]">
+<div class="absolute bottom-full mb-2 left-1/2 -translate-x-1/2 bg-slate-800 text-white text-[10px] py-1 px-2 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">Latency: 90ms (Peak)</div>
+</div>
+</div>
+<div class="flex justify-between mt-2 text-xs text-slate-400">
+<span>00:00</span>
+<span>06:00</span>
+<span>12:00</span>
+<span>18:00</span>
+<span>24:00</span>
+</div>
+</div>
+<!-- Tenant Table -->
+<div class="bg-white dark:bg-[#181b21] rounded-xl border border-slate-200 dark:border-white/5 shadow-sm overflow-hidden flex-1">
+<div class="p-6 border-b border-slate-200 dark:border-white/5 flex items-center justify-between">
+<h3 class="font-semibold text-slate-900 dark:text-white">Organizaciones Recientes</h3>
+<a class="text-sm text-primary hover:text-primary-light font-medium" href="#">Ver todas</a>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="text-xs font-semibold text-slate-500 bg-slate-50 dark:bg-white/5 border-b border-slate-200 dark:border-white/5">
+<th class="px-6 py-4">Organización</th>
+<th class="px-6 py-4">Plan</th>
+<th class="px-6 py-4">Estado</th>
+<th class="px-6 py-4">Usuarios</th>
+<th class="px-6 py-4 text-right">Acciones</th>
+</tr>
+</thead>
+<tbody class="text-sm divide-y divide-slate-200 dark:divide-white/5">
+<!-- Row 1 -->
+<tr class="hover:bg-slate-50 dark:hover:bg-white/5 transition-colors group">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-orange-500 flex items-center justify-center text-white font-bold text-lg">A</div>
+<div>
+<p class="font-medium text-slate-900 dark:text-white">Acme Corp</p>
+<p class="text-xs text-slate-500">acme.nexa.corp</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="px-2.5 py-1 rounded-full text-xs font-medium bg-purple-500/10 text-purple-500 border border-purple-500/20">Enterprise</span>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2">
+<div class="w-2 h-2 rounded-full bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.4)]"></div>
+<span class="text-slate-700 dark:text-slate-300">Activo</span>
+</div>
+</td>
+<td class="px-6 py-4 text-slate-500">1,420</td>
+<td class="px-6 py-4 text-right">
+<button class="text-slate-400 hover:text-primary transition-colors flex items-center justify-end w-full gap-1 text-xs font-medium group-hover:opacity-100 opacity-70">
+<span class="material-icons text-[16px]">login</span>
+                                                    Impersonate
+                                                </button>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-slate-50 dark:hover:bg-white/5 transition-colors group">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-blue-500 flex items-center justify-center text-white font-bold text-lg">G</div>
+<div>
+<p class="font-medium text-slate-900 dark:text-white">Globex Inc.</p>
+<p class="text-xs text-slate-500">globex.nexa.corp</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="px-2.5 py-1 rounded-full text-xs font-medium bg-blue-500/10 text-blue-500 border border-blue-500/20">Pro</span>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2">
+<div class="w-2 h-2 rounded-full bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.4)]"></div>
+<span class="text-slate-700 dark:text-slate-300">Activo</span>
+</div>
+</td>
+<td class="px-6 py-4 text-slate-500">84</td>
+<td class="px-6 py-4 text-right">
+<button class="text-slate-400 hover:text-primary transition-colors flex items-center justify-end w-full gap-1 text-xs font-medium group-hover:opacity-100 opacity-70">
+<span class="material-icons text-[16px]">login</span>
+                                                    Impersonate
+                                                </button>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-slate-50 dark:hover:bg-white/5 transition-colors group">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-slate-700 flex items-center justify-center text-white font-bold text-lg">S</div>
+<div>
+<p class="font-medium text-slate-900 dark:text-white">Soylent Corp</p>
+<p class="text-xs text-slate-500">soylent.nexa.corp</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="px-2.5 py-1 rounded-full text-xs font-medium bg-slate-500/10 text-slate-500 border border-slate-500/20">Starter</span>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2">
+<div class="w-2 h-2 rounded-full bg-red-500 shadow-[0_0_8px_rgba(239,68,68,0.4)]"></div>
+<span class="text-slate-700 dark:text-slate-300">Suspendido</span>
+</div>
+</td>
+<td class="px-6 py-4 text-slate-500">12</td>
+<td class="px-6 py-4 text-right">
+<button class="text-slate-400 hover:text-primary transition-colors flex items-center justify-end w-full gap-1 text-xs font-medium group-hover:opacity-100 opacity-70">
+<span class="material-icons text-[16px]">login</span>
+                                                    Impersonate
+                                                </button>
+</td>
+</tr>
+<!-- Row 4 -->
+<tr class="hover:bg-slate-50 dark:hover:bg-white/5 transition-colors group">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-indigo-500 flex items-center justify-center text-white font-bold text-lg">M</div>
+<div>
+<p class="font-medium text-slate-900 dark:text-white">Massive Dynamic</p>
+<p class="text-xs text-slate-500">massive.nexa.corp</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="px-2.5 py-1 rounded-full text-xs font-medium bg-purple-500/10 text-purple-500 border border-purple-500/20">Enterprise</span>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2">
+<div class="w-2 h-2 rounded-full bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.4)]"></div>
+<span class="text-slate-700 dark:text-slate-300">Activo</span>
+</div>
+</td>
+<td class="px-6 py-4 text-slate-500">3,205</td>
+<td class="px-6 py-4 text-right">
+<button class="text-slate-400 hover:text-primary transition-colors flex items-center justify-end w-full gap-1 text-xs font-medium group-hover:opacity-100 opacity-70">
+<span class="material-icons text-[16px]">login</span>
+                                                    Impersonate
+                                                </button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<!-- Sidebar Column (Right) -->
+<div class="flex flex-col gap-6">
+<!-- System Alerts Widget -->
+<div class="bg-white dark:bg-[#181b21] rounded-xl border border-slate-200 dark:border-white/5 shadow-sm p-6">
+<div class="flex justify-between items-center mb-4">
+<h3 class="font-semibold text-slate-900 dark:text-white flex items-center gap-2">
+<span class="material-icons text-orange-500 text-[20px]">warning_amber</span>
+                                    Alertas de Sistema
+                                </h3>
+<span class="text-xs px-2 py-1 rounded-full bg-red-500/10 text-red-500 font-bold">2 Critical</span>
+</div>
+<div class="space-y-4">
+<div class="p-3 rounded-lg bg-background-light dark:bg-black/20 border-l-4 border-red-500">
+<p class="text-xs font-bold text-slate-800 dark:text-slate-200 mb-1">High CPU Load - DB Cluster 01</p>
+<p class="text-xs text-slate-500">Hace 15 min • Node us-east-1a</p>
+</div>
+<div class="p-3 rounded-lg bg-background-light dark:bg-black/20 border-l-4 border-orange-500">
+<p class="text-xs font-bold text-slate-800 dark:text-slate-200 mb-1">Payment Gateway Latency</p>
+<p class="text-xs text-slate-500">Hace 42 min • Stripe API</p>
+</div>
+<div class="p-3 rounded-lg bg-background-light dark:bg-black/20 border-l-4 border-blue-500">
+<p class="text-xs font-bold text-slate-800 dark:text-slate-200 mb-1">New Tenant Provisioned</p>
+<p class="text-xs text-slate-500">Hace 1h • Cyberdyne Sys</p>
+</div>
+</div>
+<button class="w-full mt-4 text-xs font-medium text-slate-500 hover:text-primary transition-colors py-2 border border-dashed border-slate-300 dark:border-white/10 rounded-lg hover:border-primary">
+                                Ver todos los logs
+                            </button>
+</div>
+<!-- Quick Geo Map (Visual) -->
+<div class="bg-primary rounded-xl shadow-lg shadow-primary/20 overflow-hidden relative min-h-[200px] flex flex-col justify-between p-6 group">
+<!-- Background Image with Overlay -->
+<div class="absolute inset-0 z-0">
+<img class="w-full h-full object-cover opacity-40 mix-blend-overlay" data-alt="Abstract dark blue world map network connection background" data-location="World" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCejaBzryOo2nlcHY7tu1RUNoC2mXWPS7bah646vuhHks7YKYppJKZlVdCxuzPvxdC7vVtaouJuQRg283k_WYty4D6lrNily8utozQyS-rxW6c9XMoJFKPl4koFtQFJaFacX0SKrgBKWvJaTRnCTtcMNh0RxHswdB_UNGI2xM-PX401gcGXUTJEAHATzKZY5KX7kspYa1u4wHzJftyebuxxV1cf-ATDT75of556x62kWa3mp3PqitzdNSVyZOEHY5ml2bDFpEqXb08o"/>
+<div class="absolute inset-0 bg-gradient-to-t from-primary to-transparent opacity-90"></div>
+</div>
+<div class="relative z-10">
+<h3 class="font-bold text-white text-lg">Tráfico Global</h3>
+<p class="text-primary-100 text-sm">Nodos activos en 14 regiones.</p>
+</div>
+<div class="relative z-10 mt-4 flex items-center justify-between">
+<div>
+<p class="text-xs text-white/70 uppercase tracking-wider">Top Region</p>
+<p class="font-bold text-white text-xl">US-East</p>
+</div>
+<div class="h-10 w-10 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center text-white">
+<span class="material-icons">public</span>
+</div>
+</div>
+</div>
+<!-- Mini Distribution Stat -->
+<div class="bg-white dark:bg-[#181b21] rounded-xl border border-slate-200 dark:border-white/5 shadow-sm p-6">
+<h3 class="font-semibold text-slate-900 dark:text-white text-sm mb-4">Planes Distribución</h3>
+<div class="space-y-3">
+<div>
+<div class="flex justify-between text-xs mb-1">
+<span class="text-slate-500">Enterprise</span>
+<span class="font-bold text-slate-700 dark:text-slate-300">45%</span>
+</div>
+<div class="w-full bg-slate-100 dark:bg-white/5 rounded-full h-1.5">
+<div class="bg-primary h-1.5 rounded-full" style="width: 45%"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between text-xs mb-1">
+<span class="text-slate-500">Pro</span>
+<span class="font-bold text-slate-700 dark:text-slate-300">30%</span>
+</div>
+<div class="w-full bg-slate-100 dark:bg-white/5 rounded-full h-1.5">
+<div class="bg-blue-400 h-1.5 rounded-full" style="width: 30%"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between text-xs mb-1">
+<span class="text-slate-500">Starter</span>
+<span class="font-bold text-slate-700 dark:text-slate-300">25%</span>
+</div>
+<div class="w-full bg-slate-100 dark:bg-white/5 rounded-full h-1.5">
+<div class="bg-slate-400 h-1.5 rounded-full" style="width: 25%"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</body></html>
