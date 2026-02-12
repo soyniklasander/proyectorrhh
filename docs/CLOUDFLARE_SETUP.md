@@ -20,7 +20,7 @@ Ya he actualizado los archivos de configuración con tus datos de Cloudflare:
 
 ### ⚠️ Configurar GitHub Secrets (Requerido para Deploy Automático)
 
-Para habilitar el deploy automático desde GitHub Actions, debes configurar el siguiente secreto:
+Para habilitar el deploy automático desde GitHub Actions, debes configurar los siguientes secretos:
 
 1. Ve a tu repositorio: `https://github.com/soyniklasander/proyectorrhh`
 2. Click en **Settings** (Configuración)
@@ -29,6 +29,9 @@ Para habilitar el deploy automático desde GitHub Actions, debes configurar el s
 5. Agregar el secreto:
    - **Name**: `CLOUDFLARE_API_TOKEN`
    - **Value**: Tu API Token de Cloudflare (ejemplo: `xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx`)
+6. Agregar el Account ID:
+   - **Name**: `CLOUDFLARE_ACCOUNT_ID`
+   - **Value**: Tu Account ID de Cloudflare (lo encuentras en la página principal del Dashboard)
 
 > **⚠️ IMPORTANTE**: NUNCA expongas tu API Token en el código. Siempre usa GitHub Secrets.
 
