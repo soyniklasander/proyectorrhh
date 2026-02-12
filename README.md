@@ -264,4 +264,4 @@ Este proyecto está licenciado bajo la Licencia MIT. Ver el archivo [LICENSE](LI
 
 ---
 
-**RRHHMod** - La solución completa de gestión de personal para empresas peruanas. 🇵🇪
+**RRHHMod** - La solución completa de gestión de personal para empresas peruanas. 🇵🇪"Deployment trigger"  
