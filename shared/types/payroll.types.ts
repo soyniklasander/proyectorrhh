@@ -26,7 +26,7 @@ export interface Payroll extends BaseEntity {
   empleadoId: string
   contratoId: string
   periodo: string
-  
+
   // Ingresos
   salarioBase: number
   horasExtras25: number
@@ -41,7 +41,7 @@ export interface Payroll extends BaseEntity {
   CTS: number
   gratificacion: number
   utilidades: number
-  
+
   // Descuentos
   totalAFP_ONP: number
   totalEssalud: number
@@ -52,17 +52,17 @@ export interface Payroll extends BaseEntity {
   faltasInjustificadas: number
   tardanzas: number
   otrosDescuentos: number
-  
+
   // Detalles AFP
   aporteObligatorio: number
   comisionFlujo: number
   primaSeguro: number
-  
+
   // Totales
   totalIngresos: number
   totalDescuentos: number
   netoPagar: number
-  
+
   // Control
   estado: EstadoPayroll
   fechaProceso: string
@@ -71,7 +71,7 @@ export interface Payroll extends BaseEntity {
   fechaPago?: string
   bancoPago?: string
   numeroReferencia?: string
-  
+
   // Relaciones
   employee?: Employee
   contract?: Contract
@@ -90,13 +90,13 @@ export interface Deduction extends BaseEntity {
   descripcion?: string
   referencia?: string
   estado: string
-  
+
   // Auditoría
   creadoPor?: string
   fechaCreacion: string
   autorizadoPor?: string
   fechaAutorizacion?: string
-  
+
   // Relaciones
   employee?: Employee
   contract?: Contract
@@ -170,24 +170,24 @@ export interface PayrollExportEmployee {
   tipoCuenta: string
   numeroCuenta: string
   numeroCCI: string
-  
+
   // Remuneración
   salarioBase: number
   horasExtras: number
   bonificaciones: number
   asignaciones: number
   totalIngresos: number
-  
+
   // Descuentos
   afpOnp: number
   essalud: number
   prestamos: number
   otrosDescuentos: number
   totalDescuentos: number
-  
+
   // Neto
   netoPagar: number
-  
+
   // Estado
   estado: string
   observaciones?: string
@@ -197,7 +197,7 @@ export interface PayrollExportEmployee {
 export interface PayrollConfig {
   // Asignación familiar (S/. 93.00)
   asignacionFamiliar: number
-  
+
   // Tasas AFP
   tasasAFP: {
     [key: string]: {
@@ -206,24 +206,24 @@ export interface PayrollConfig {
       primaSeguro: number
     }
   }
-  
+
   // Tasa ONP
   tasaONP: number
-  
+
   // Tasa Essalud
   tasaEssalud: number
-  
+
   // Tasas de horas extra
   tasasHorasExtra: {
     hora25: number
     hora35: number
     hora100: number
   }
-  
+
   // Configuración SCTR
   sctrSalud: number
   sctrPension: number
-  
+
   // Quinta categoría
   quintaCategoria: {
     uit: number
@@ -241,7 +241,7 @@ export interface PayrollSummary {
   totalIngresos: number
   totalDescuentos: number
   totalNetoPagar: number
-  
+
   // Desglose por conceptos
   resumenIngresos: {
     salarioBase: number
@@ -250,14 +250,14 @@ export interface PayrollSummary {
     asignacionFamiliar: number
     otrosIngresos: number
   }
-  
+
   resumenDescuentos: {
     afpOnp: number
     essalud: number
     prestamos: number
     otrosDescuentos: number
   }
-  
+
   // Estadísticas
   promedioSalario: number
   maximoSalario: number

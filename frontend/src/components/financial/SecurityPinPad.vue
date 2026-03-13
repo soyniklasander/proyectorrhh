@@ -33,9 +33,9 @@ const addDigit = (digit: string) => {
   } else if (pin.value.length < maxLen) {
     pin.value += digit;
   }
-  
+
   emit('update:modelValue', pin.value);
-  
+
   if (pin.value.length === maxLen) {
     emit('complete');
   }
@@ -68,8 +68,8 @@ const pinArray = computed(() => {
           v-for="(dot, index) in pinArray"
           :key="index"
           class="w-12 h-12 rounded-full border-2 flex items-center justify-center text-xl font-bold transition-all"
-          :class="dot 
-            ? 'bg-amber-500 border-amber-500 text-slate-900' 
+          :class="dot
+            ? 'bg-amber-500 border-amber-500 text-slate-900'
             : 'border-slate-600 bg-slate-800'"
         >
           <span v-if="dot">●</span>
@@ -84,8 +84,8 @@ const pinArray = computed(() => {
             :key="digit"
             @click="addDigit(digit)"
             class="w-14 h-14 rounded-xl text-xl font-bold transition-all active:scale-95"
-            :class="digit === 'CLR' 
-              ? 'bg-red-500/20 text-red-400 hover:bg-red-500/30' 
+            :class="digit === 'CLR'
+              ? 'bg-red-500/20 text-red-400 hover:bg-red-500/30'
               : digit === '←'
               ? 'bg-amber-500/20 text-amber-400 hover:bg-amber-500/30'
               : 'bg-slate-700 text-white hover:bg-slate-600'"

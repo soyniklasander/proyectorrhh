@@ -108,8 +108,8 @@ const getAvatarBg = (status: string) => {
   <div class="p-8 space-y-8">
     <!-- Summary Stats -->
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-      <div 
-        v-for="(stat, index) in stats" 
+      <div
+        v-for="(stat, index) in stats"
         :key="index"
         class="bg-surface-dark border p-6 rounded-xl relative overflow-hidden group transition-colors"
         :class="getCardBorderColor(stat.color)"
@@ -142,21 +142,21 @@ const getAvatarBg = (status: string) => {
     <div class="flex flex-col md:flex-row gap-4 items-center justify-between">
       <div class="relative w-full md:w-96 group">
         <span class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 group-focus-within:text-primary transition-colors material-icons-round">search</span>
-        <input 
+        <input
           v-model="searchQuery"
-          class="w-full bg-surface-dark border border-white/10 rounded-lg py-2.5 pl-10 pr-4 text-white placeholder-gray-500 focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all" 
-          placeholder="Buscar por nombre, cargo o ID..." 
+          class="w-full bg-surface-dark border border-white/10 rounded-lg py-2.5 pl-10 pr-4 text-white placeholder-gray-500 focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all"
+          placeholder="Buscar por nombre, cargo o ID..."
           type="text"
         />
       </div>
       <div class="flex items-center gap-3 w-full md:w-auto overflow-x-auto pb-2 md:pb-0">
-        <select 
+        <select
           v-model="selectedDepartment"
           class="bg-surface-dark border border-white/10 text-gray-300 rounded-lg py-2.5 px-4 text-sm focus:ring-1 focus:ring-primary outline-none cursor-pointer"
         >
           <option v-for="dept in departments" :key="dept" :value="dept">{{ dept }}</option>
         </select>
-        <select 
+        <select
           v-model="selectedStatus"
           class="bg-surface-dark border border-white/10 text-gray-300 rounded-lg py-2.5 px-4 text-sm focus:ring-1 focus:ring-primary outline-none cursor-pointer"
         >
@@ -180,19 +180,19 @@ const getAvatarBg = (status: string) => {
             </tr>
           </thead>
           <tbody class="divide-y divide-white/5 text-sm">
-            <tr 
-              v-for="contract in contracts" 
-              :key="contract.id" 
+            <tr
+              v-for="contract in contracts"
+              :key="contract.id"
               class="hover:bg-white/[0.02] transition-colors group"
             >
               <td class="p-4">
                 <div class="flex items-center gap-3">
-                  <div 
+                  <div
                     class="w-10 h-10 rounded-full flex items-center justify-center text-white font-bold border border-white/10 shadow-sm relative"
                     :class="getAvatarBg(contract.status)"
                   >
                     {{ contract.initials }}
-                    <div 
+                    <div
                       v-if="contract.status === 'expired'"
                       class="absolute bottom-0 right-0 w-3 h-3 bg-red-500 border-2 border-surface-dark rounded-full"
                     ></div>
@@ -205,18 +205,18 @@ const getAvatarBg = (status: string) => {
               </td>
               <td class="p-4 text-gray-300">{{ contract.position }}</td>
               <td class="p-4 text-gray-400">{{ contract.startDate }}</td>
-              <td 
+              <td
                 class="p-4 font-medium"
                 :class="contract.status === 'expired' ? 'text-red-300' : contract.status === 'expiring' ? 'text-amber-300' : 'text-gray-300'"
               >
                 {{ contract.endDate }}
               </td>
               <td class="p-4">
-                <span 
+                <span
                   class="px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider flex items-center gap-1.5 w-fit"
                   :class="[getStatusColor(contract.status).bg, getStatusColor(contract.status).text, getStatusColor(contract.status).border]"
                 >
-                  <span 
+                  <span
                     class="w-1.5 h-1.5 rounded-full"
                     :class="getStatusColor(contract.status).pulse ? 'bg-red-500 animate-pulse' : getStatusColor(contract.status).text.replace('text-', 'bg-')"
                   ></span>
@@ -225,14 +225,14 @@ const getAvatarBg = (status: string) => {
               </td>
               <td class="p-4">
                 <div class="flex items-center justify-center gap-2 opacity-100 md:opacity-0 group-hover:opacity-100 transition-opacity">
-                  <button 
-                    class="p-2 rounded-lg bg-surface-darker text-gray-400 hover:text-white hover:bg-primary/20 border border-transparent transition-colors" 
+                  <button
+                    class="p-2 rounded-lg bg-surface-darker text-gray-400 hover:text-white hover:bg-primary/20 border border-transparent transition-colors"
                     title="Generar PDF"
                   >
                     <span class="material-icons-round text-lg">picture_as_pdf</span>
                   </button>
-                  <button 
-                    class="p-2 rounded-lg bg-surface-darker text-primary-light hover:text-white hover:bg-primary border border-primary/20 transition-colors" 
+                  <button
+                    class="p-2 rounded-lg bg-surface-darker text-primary-light hover:text-white hover:bg-primary border border-primary/20 transition-colors"
                     title="Crear Adenda"
                   >
                     <span class="material-icons-round text-lg">edit_document</span>

@@ -36,44 +36,44 @@ const routes = [
   { path: '/', name: 'Dashboard', component: BrandDashboard, meta: { requiresAuth: true } },
   { path: '/dashboard', name: 'Dashboard Brand', component: BrandDashboard, meta: { requiresAuth: true } },
   { path: '/dashboard/fiscal', name: 'Dashboard Fiscal', component: FiscalDashboard, meta: { requiresAuth: true } },
-  
+
   // Auth Routes
   { path: '/login', name: 'Login', component: Login, meta: { guest: true } },
   { path: '/recuperar-password', name: 'Recuperar Password', component: Recovery, meta: { guest: true } },
   { path: '/reset-password', name: 'Reset Password', component: ResetPassword, meta: { guest: true } },
   { path: '/activar-cuenta', name: 'Activar Cuenta', component: Activation, meta: { guest: true } },
   { path: '/firma-digital', name: 'Firma Digital', component: DigitalSignature, meta: { requiresAuth: true } },
-  
+
   // Financial Routes
   { path: '/financials', name: 'Descuentos', component: Discounts, meta: { requiresAuth: true } },
-  
+
   // Config Routes
   { path: '/config', name: 'Configuracion', component: LogicMatrix, meta: { requiresAuth: true } },
   { path: '/config/regimes', name: 'Regimenes Laborales', component: LaborRegimes, meta: { requiresAuth: true } },
-  
+
   // Payroll Routes
   { path: '/payroll', name: 'Nomina', component: PayrollCalculator, meta: { requiresAuth: true } },
   { path: '/payroll/report', name: 'Boleta Pago', component: PayrollReport, meta: { requiresAuth: true } },
   { path: '/payroll/export', name: 'Export PLAME', component: ExportPLAME, meta: { requiresAuth: true } },
-  
+
   // Vacation Routes
   { path: '/vacations', name: 'Vacaciones', component: VacationManagement, meta: { requiresAuth: true } },
   { path: '/vacations/sold', name: 'Vacaciones Vendidas', component: SoldVacations, meta: { requiresAuth: true } },
-  
+
   // Attendance Routes
   { path: '/attendance', name: 'Asistencia', component: AttendanceManagement, meta: { requiresAuth: true } },
   { path: '/attendance/overtime', name: 'Sobretiempos', component: OvertimeApproval, meta: { requiresAuth: true } },
-  
+
   // Closing Routes
   { path: '/closing', name: 'Cierre', component: PeriodClosing, meta: { requiresAuth: true } },
   { path: '/closing/history', name: 'Historial Cierres', component: ClosingHistory, meta: { requiresAuth: true } },
-  
+
   // Analysis Routes
   { path: '/analysis', name: 'Analisis', component: ComparativeAnalysis, meta: { requiresAuth: true } },
-  
+
   // Documents Routes
   { path: '/documents', name: 'Expedientes', component: EmployeeDocuments, meta: { requiresAuth: true } },
-  
+
   // Employees Routes
   { path: '/employees/register', name: 'Alta Colaborador', component: EmployeeRegistration, meta: { requiresAuth: true } },
   { path: '/employees/contracts', name: 'Control Contratos', component: ContractManagement, meta: { requiresAuth: true } },
@@ -81,7 +81,7 @@ const routes = [
   { path: '/employees/register/intern', name: 'Alta Practicante', component: DynamicRegistrationIntern, meta: { requiresAuth: true } },
   { path: '/employees/termination', name: 'Proceso Cese', component: TerminationProcess, meta: { requiresAuth: true } },
   { path: '/employees/documentation', name: 'Doc Salida', component: TerminationDocumentation, meta: { requiresAuth: true } },
-  
+
   // Superadmin Routes
   { path: '/superadmin', name: 'Superadmin Panel', component: SuperadminPanel, meta: { requiresAuth: true, requiresSuperadmin: true } },
   { path: '/superadmin/audit', name: 'Audit Log', component: AuditLog, meta: { requiresAuth: true, requiresSuperadmin: true } },
@@ -95,7 +95,7 @@ const router = createRouter({
 
 router.beforeEach((to, _from, next) => {
   const auth = useAuthStore()
-  
+
   if (to.meta.requiresAuth && !auth.token) {
     next('/login')
   }

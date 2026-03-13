@@ -47,7 +47,7 @@ const navigateTo = (path: string) => {
           <span class="text-lg font-bold tracking-tight text-slate-900 dark:text-white">NexaCorp</span>
         </div>
       </div>
-      
+
       <!-- Navigation -->
       <nav class="flex-1 overflow-y-auto py-6 px-3 space-y-1">
         <template v-for="item in navItems" :key="item.path || item.label">
@@ -56,8 +56,8 @@ const navigateTo = (path: string) => {
             v-else-if="item.path"
             @click="navigateTo(item.path!)"
             class="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg transition-colors group text-left"
-            :class="isActive(item.path!) 
-              ? 'bg-primary/10 text-primary dark:text-blue-400 font-medium' 
+            :class="isActive(item.path!)
+              ? 'bg-primary/10 text-primary dark:text-blue-400 font-medium'
               : 'text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800/50 hover:text-slate-900 dark:hover:text-slate-200'"
           >
             <span class="material-icons text-xl" :class="!isActive(item.path!) ? 'group-hover:text-primary dark:group-hover:text-blue-400 transition-colors' : ''">{{ item.icon }}</span>
@@ -65,15 +65,15 @@ const navigateTo = (path: string) => {
           </button>
         </template>
       </nav>
-      
+
       <!-- User Profile -->
       <div class="p-4 border-t border-slate-200 dark:border-slate-700/50">
         <div class="flex items-center gap-3 p-2 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-800/50 cursor-pointer transition-colors">
           <div class="w-10 h-10 rounded-full bg-slate-200 dark:bg-slate-700 overflow-hidden relative border-2 border-slate-100 dark:border-slate-600">
-            <img 
-              alt="Admin Profile" 
-              class="w-full h-full object-cover" 
-              src="https://lh3.googleusercontent.com/aida-public/AB6AXuClRIpG0HAtoXr9qaUMrKN5pspUw08e4sOWMfcsVer2_0FhOUdDdcOOtmZRh8CkYtqtpHeFFj9_FVHqTjf4Qm5LqjZvx1kYewQa4fd4tEfi4I7xL2jYWhiIDpNScU-44BWMCFWRNo6f1zdz0Lth5xiVrTcF-Pu38ze2xIcoQ72WX9VJQY4liVL5vcuzs1Ro8SHIzbTi_9HfKG2LA1MSCjkG73gsBx37d6mKJiZMvjVddj8nDyyw6d-Wvn57eg8izt-_7vw95ebpjxn9" 
+            <img
+              alt="Admin Profile"
+              class="w-full h-full object-cover"
+              src="https://lh3.googleusercontent.com/aida-public/AB6AXuClRIpG0HAtoXr9qaUMrKN5pspUw08e4sOWMfcsVer2_0FhOUdDdcOOtmZRh8CkYtqtpHeFFj9_FVHqTjf4Qm5LqjZvx1kYewQa4fd4tEfi4I7xL2jYWhiIDpNScU-44BWMCFWRNo6f1zdz0Lth5xiVrTcF-Pu38ze2xIcoQ72WX9VJQY4liVL5vcuzs1Ro8SHIzbTi_9HfKG2LA1MSCjkG73gsBx37d6mKJiZMvjVddj8nDyyw6d-Wvn57eg8izt-_7vw95ebpjxn9"
             />
           </div>
           <div class="flex-1 min-w-0">
@@ -106,9 +106,9 @@ const navigateTo = (path: string) => {
           <!-- Search -->
           <div class="relative hidden md:block w-64">
             <span class="material-icons absolute left-3 top-2.5 text-slate-400 text-lg">search</span>
-            <input 
-              class="w-full pl-10 pr-4 py-2 rounded-lg bg-slate-100 dark:bg-slate-800 border-none focus:ring-2 focus:ring-primary text-sm text-slate-900 dark:text-white placeholder-slate-500 dark:placeholder-slate-400" 
-              placeholder="Buscar tenant, usuario..." 
+            <input
+              class="w-full pl-10 pr-4 py-2 rounded-lg bg-slate-100 dark:bg-slate-800 border-none focus:ring-2 focus:ring-primary text-sm text-slate-900 dark:text-white placeholder-slate-500 dark:placeholder-slate-400"
+              placeholder="Buscar tenant, usuario..."
               type="text"
             />
           </div>

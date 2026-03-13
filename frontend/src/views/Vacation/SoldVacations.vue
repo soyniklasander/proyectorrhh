@@ -55,8 +55,8 @@ const getStatusBadge = (status: string) => {
         <div>
           <h4 class="font-semibold text-blue-800 dark:text-blue-200">Informacion Importante</h4>
           <p class="text-sm text-blue-700 dark:text-blue-300 mt-1">
-            La venta de dias de vacaciones esta sujeta al Art. 22 del D.L. N 713 y el articulo 56 de la LPCL. 
-            El trabajador puede vender hasta un maximo de 30 dias de sus vacaciones acumuladas por ano. 
+            La venta de dias de vacaciones esta sujeta al Art. 22 del D.L. N 713 y el articulo 56 de la LPCL.
+            El trabajador puede vender hasta un maximo de 30 dias de sus vacaciones acumuladas por ano.
             Requiere aprobacion del area de RRHH y Gerencia.
           </p>
         </div>

@@ -22,7 +22,7 @@ Tu API Key de Cloudflare **NO** debe estar en el código por seguridad. Debes ag
 
 4. **Agregar el secreto**:
    - Click en el botón verde "New repository secret"
-   
+
 5. **Llenar el formulario**:
    - **Name** (Nombre): Escribe exactamente esto: `CLOUDFLARE_API_TOKEN`
    - **Secret** (Valor): Pega tu API key de Cloudflare (obtenla de tu Cloudflare Dashboard)
@@ -33,7 +33,7 @@ Tu API Key de Cloudflare **NO** debe estar en el código por seguridad. Debes ag
 Una vez que hayas agregado el secreto, haz lo siguiente:
 
 1. **Haz cualquier cambio pequeño** (puede ser solo un espacio en el README)
-   
+
 2. **Haz commit y push**:
    ```bash
    git add .
@@ -53,7 +53,7 @@ Cada vez que hagas push a `main`:
 
 1. **Backend** → Se despliega a Cloudflare Workers
    - URL: https://proyectorrhh.rchavezza.workers.dev
-   
+
 2. **Frontend** → Se despliega a Cloudflare Pages
    - URL: Configurada en tu proyecto de Pages
 
@@ -122,7 +122,7 @@ Para más detalles, revisa:
 
 ## ✨ ¡Listo!
 
-Una vez que configures el secreto `CLOUDFLARE_API_TOKEN` en GitHub, tu aplicación se desplegará automáticamente cada vez que hagas push a `main`. 
+Una vez que configures el secreto `CLOUDFLARE_API_TOKEN` en GitHub, tu aplicación se desplegará automáticamente cada vez que hagas push a `main`.
 
 No tienes que hacer nada más manualmente, solo:
 1. Hacer cambios en tu código

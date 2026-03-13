@@ -45,12 +45,12 @@
             <span class="material-icons text-white text-3xl">security</span>
           </div>
         </div>
-        
+
         <div class="text-center lg:text-left">
           <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-2">Bienvenido a NexaCorp</h2>
           <p class="text-gray-600 dark:text-gray-400">Activa tu cuenta corporativa definiendo tu primera contraseña de acceso.</p>
         </div>
-        
+
         <form @submit.prevent="activateAccount" class="mt-8 space-y-6">
           <!-- Read-only Email Field -->
           <div class="space-y-1">
@@ -61,11 +61,11 @@
               <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                 <span class="material-icons text-gray-400 text-lg">mail</span>
               </div>
-              <input 
+              <input
                 v-model="email"
-                class="pl-10 block w-full rounded-lg border-gray-300 dark:border-gray-700 bg-gray-100 dark:bg-surface-dark text-gray-500 dark:text-gray-400 cursor-not-allowed focus:ring-0 focus:border-gray-300 sm:text-sm py-3" 
-                disabled 
-                readonly 
+                class="pl-10 block w-full rounded-lg border-gray-300 dark:border-gray-700 bg-gray-100 dark:bg-surface-dark text-gray-500 dark:text-gray-400 cursor-not-allowed focus:ring-0 focus:border-gray-300 sm:text-sm py-3"
+                disabled
+                readonly
                 type="email"
               />
               <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
@@ -81,18 +81,18 @@
               Nueva Contraseña
             </label>
             <div class="relative">
-              <input 
+              <input
                 v-model="password"
                 @input="checkPasswordStrength"
-                class="block w-full rounded-lg border-gray-300 dark:border-gray-600 bg-white dark:bg-surface-dark text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent sm:text-sm py-3 px-4 transition-all duration-200" 
+                class="block w-full rounded-lg border-gray-300 dark:border-gray-600 bg-white dark:bg-surface-dark text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent sm:text-sm py-3 px-4 transition-all duration-200"
                 id="password"
-                placeholder="••••••••••••" 
-                required 
+                placeholder="••••••••••••"
+                required
                 type="password"
               />
-              <button 
+              <button
                 @click="togglePasswordVisibility('password')"
-                class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 focus:outline-none" 
+                class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 focus:outline-none"
                 type="button"
               >
                 <span class="material-icons text-lg">{{ showPassword ? 'visibility_off' : 'visibility' }}</span>
@@ -145,12 +145,12 @@
               Confirmar Contraseña
             </label>
             <div class="relative">
-              <input 
+              <input
                 v-model="confirmPassword"
-                class="block w-full rounded-lg border-gray-300 dark:border-gray-600 bg-white dark:bg-surface-dark text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent sm:text-sm py-3 px-4 transition-all duration-200" 
+                class="block w-full rounded-lg border-gray-300 dark:border-gray-600 bg-white dark:bg-surface-dark text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent sm:text-sm py-3 px-4 transition-all duration-200"
                 id="confirm-password"
-                placeholder="••••••••••••" 
-                required 
+                placeholder="••••••••••••"
+                required
                 type="password"
               />
             </div>
@@ -158,9 +158,9 @@
           </div>
 
           <!-- Action Button -->
-          <button 
+          <button
             :disabled="!isFormValid || isLoading"
-            class="group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-medium rounded-lg text-white bg-primary hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary focus:ring-offset-gray-900 transition-all duration-200 shadow-lg shadow-primary/25 hover:shadow-primary/40 disabled:opacity-50 disabled:cursor-not-allowed" 
+            class="group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-medium rounded-lg text-white bg-primary hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary focus:ring-offset-gray-900 transition-all duration-200 shadow-lg shadow-primary/25 hover:shadow-primary/40 disabled:opacity-50 disabled:cursor-not-allowed"
             type="submit"
           >
             <span class="absolute left-0 inset-y-0 flex items-center pl-3">
@@ -168,11 +168,11 @@
             </span>
             {{ isLoading ? 'Activando...' : 'Activar Cuenta' }}
           </button>
-          
+
           <p class="mt-4 text-center text-xs text-gray-500">
-            Al activar tu cuenta, aceptas los 
-            <a class="font-medium text-primary hover:text-blue-400 underline decoration-primary/30 underline-offset-2" href="#">Términos de Servicio</a> 
-            y la 
+            Al activar tu cuenta, aceptas los
+            <a class="font-medium text-primary hover:text-blue-400 underline decoration-primary/30 underline-offset-2" href="#">Términos de Servicio</a>
+            y la
             <a class="font-medium text-primary hover:text-blue-400 underline decoration-primary/30 underline-offset-2" href="#">Política de Privacidad</a>.
           </p>
         </form>
@@ -225,10 +225,10 @@ const passwordMismatch = computed(() => {
 
 const isFormValid = computed(() => {
   const req = requirements.value
-  return req.minLength.valid && 
-         req.hasNumber.valid && 
-         req.hasUppercase.valid && 
-         req.hasSymbol.valid && 
+  return req.minLength.valid &&
+         req.hasNumber.valid &&
+         req.hasUppercase.valid &&
+         req.hasSymbol.valid &&
          !passwordMismatch.value &&
          password.value.length > 0
 })
@@ -255,7 +255,7 @@ const strengthColor = computed(() => {
 const strengthBars = computed(() => {
   const colors = ['bg-red-500', 'bg-orange-500', 'bg-yellow-500', 'bg-blue-500', 'bg-green-500']
   const bars = ['', '', 'bg-gray-200 dark:bg-gray-700', 'bg-gray-200 dark:bg-gray-700']
-  
+
   for (let i = 0; i < 4; i++) {
     bars[i] = i < strengthLevel.value ? colors[strengthLevel.value] : 'bg-gray-200 dark:bg-gray-700'
   }
@@ -279,16 +279,16 @@ function togglePasswordVisibility(field: string) {
 
 async function activateAccount() {
   if (!isFormValid.value) return
-  
+
   isLoading.value = true
-  
+
   try {
     // Simulate API call
     await new Promise(resolve => setTimeout(resolve, 2000))
-    
+
     // In production, this would call the backend activation endpoint
     console.log('Account activated for:', email.value)
-    
+
     router.push('/login?activated=true')
   } catch (error) {
     console.error('Activation failed:', error)

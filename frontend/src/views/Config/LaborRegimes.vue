@@ -100,7 +100,7 @@ const getStatusBadge = (status: string) => {
         <div>
           <h4 class="font-semibold text-amber-800 dark:text-amber-200">Informacion Importante</h4>
           <p class="text-sm text-amber-700 dark:text-amber-300 mt-1">
-            Los regimenes laborales configurados aqui seran utilizados en el registro de nuevos colaboradores. 
+            Los regimenes laborales configurados aqui seran utilizados en el registro de nuevos colaboradores.
             Cada regimen tiene beneficios y obligaciones diferentes segun la normativa laboral peruana vigente.
           </p>
         </div>

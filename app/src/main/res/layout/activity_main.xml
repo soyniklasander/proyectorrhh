@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="24dp"
+    android:gravity="center">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="GPS Spoofer"
+        android:textSize="28sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="32dp"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Latitude:"
+        android:textStyle="bold"
+        android:layout_marginBottom="4dp"/>
+
+    <EditText
+        android:id="@+id/latEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="e.g. 37.422"
+        android:inputType="numberDecimal|numberSigned"
+        android:layout_marginBottom="16dp"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Longitude:"
+        android:textStyle="bold"
+        android:layout_marginBottom="4dp"/>
+
+    <EditText
+        android:id="@+id/lngEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="e.g. -122.084"
+        android:inputType="numberDecimal|numberSigned"
+        android:layout_marginBottom="32dp"/>
+
+    <Button
+        android:id="@+id/startMockButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Start Spoofing"
+        android:padding="16dp"
+        android:backgroundTint="#4CAF50"
+        android:textColor="#FFFFFF"
+        android:textSize="18sp"/>
+
+    <Button
+        android:id="@+id/stopMockButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Stop Spoofing"
+        android:padding="16dp"
+        android:backgroundTint="#F44336"
+        android:textColor="#FFFFFF"
+        android:textSize="18sp"
+        android:layout_marginTop="16dp"/>
+
+</LinearLayout>

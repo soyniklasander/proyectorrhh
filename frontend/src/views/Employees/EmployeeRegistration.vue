@@ -124,7 +124,7 @@ const goToStep = (step: number) => {
     <div class="mb-8">
       <div class="hidden md:flex w-full rounded-lg overflow-hidden bg-slate-200 dark:bg-slate-800 border border-slate-300 dark:border-slate-700">
         <template v-for="step in steps" :key="step.number">
-          <button 
+          <button
             @click="goToStep(step.number)"
             class="flex-1 py-3 px-4 flex items-center justify-center gap-2 transition-all"
             :class="[

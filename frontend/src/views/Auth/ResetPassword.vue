@@ -26,19 +26,19 @@ const checkPasswordStrength = () => {
 
 const handleSubmit = async () => {
   error.value = '';
-  
+
   if (password.value !== confirmPassword.value) {
     error.value = 'Las contraseñas no coinciden';
     return;
   }
-  
+
   if (passwordStrength.value < 4) {
     error.value = 'La contraseña no cumple con los requisitos mínimos de seguridad';
     return;
   }
-  
+
   loading.value = true;
-  
+
   // Simulate API call
   setTimeout(() => {
     loading.value = false;
@@ -68,7 +68,7 @@ const handleSubmit = async () => {
           </div>
           <h2 class="text-2xl font-bold text-white">ERPRick</h2>
         </div>
-        
+
         <h1 class="text-2xl font-bold text-white">Renovar contraseña</h1>
         <p class="mt-2 text-sm text-slate-400">
           Por seguridad, debes cambiar tu contraseña periódicamente.
@@ -120,20 +120,20 @@ const handleSubmit = async () => {
                 </svg>
               </div>
             </div>
-            
+
             <!-- Password Strength Indicator -->
             <div class="mt-3 space-y-2">
               <div class="flex gap-1">
-                <div 
-                  v-for="i in 5" 
+                <div
+                  v-for="i in 5"
                   :key="i"
                   class="h-1 flex-1 rounded-full transition-colors duration-300"
                   :class="i <= passwordStrength ? 'bg-green-500' : 'bg-slate-700'"
                 ></div>
               </div>
               <div class="grid grid-cols-2 gap-1 text-xs">
-                <div 
-                  v-for="(rule, idx) in passwordRules" 
+                <div
+                  v-for="(rule, idx) in passwordRules"
                   :key="idx"
                   class="flex items-center gap-1"
                   :class="rule.valid() ? 'text-green-500' : 'text-slate-500'"

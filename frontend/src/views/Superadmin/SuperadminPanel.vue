@@ -157,8 +157,8 @@ const getAlertColor = (type: string) => {
   <div class="flex-1 overflow-y-auto p-6 md:p-8 space-y-8">
     <!-- Global Metrics Grid -->
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-      <div 
-        v-for="(kpi, index) in kpis" 
+      <div
+        v-for="(kpi, index) in kpis"
         :key="index"
         class="bg-white dark:bg-surface-dark p-6 rounded-xl border border-slate-200 dark:border-slate-700/50 shadow-sm relative overflow-hidden group hover:border-primary/50 transition-colors"
       >
@@ -167,7 +167,7 @@ const getAlertColor = (type: string) => {
         </div>
         <p class="text-sm font-medium text-slate-500 dark:text-slate-400 mb-1">{{ kpi.title }}</p>
         <h3 class="text-3xl font-bold text-slate-900 dark:text-white">{{ kpi.value }}</h3>
-        <div 
+        <div
           class="flex items-center mt-4 text-xs font-medium w-fit px-2 py-1 rounded-full"
           :class="kpi.trend === 'up' ? 'text-emerald-500 bg-emerald-500/10' : kpi.trend === 'stable' ? 'text-slate-400' : 'text-blue-400 bg-blue-400/10'"
         >
@@ -193,8 +193,8 @@ const getAlertColor = (type: string) => {
         </div>
         <!-- Simulated Bars Chart -->
         <div class="h-64 w-full bg-gradient-to-b from-primary/10 to-transparent rounded-lg relative overflow-hidden flex items-end justify-between px-4 pb-0 pt-8 gap-2">
-          <div 
-            v-for="(value, index) in chartData" 
+          <div
+            v-for="(value, index) in chartData"
             :key="index"
             class="w-full rounded-t transition-all hover:bg-primary/40"
             :class="index === chartData.length - 1 ? 'bg-primary/60 hover:bg-primary h-[100%] shadow-[0_0_15px_rgba(44,96,206,0.5)]' : 'bg-primary/20 h-[' + value + '%]'"
@@ -210,7 +210,7 @@ const getAlertColor = (type: string) => {
         <h3 class="text-lg font-bold text-slate-900 dark:text-white mb-6">Alertas Recientes</h3>
         <div class="space-y-6">
           <div v-for="(alert, index) in alerts" :key="index" class="flex gap-4">
-            <div 
+            <div
               class="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0"
               :class="getAlertColor(alert.type)"
             >
@@ -262,9 +262,9 @@ const getAlertColor = (type: string) => {
             </tr>
           </thead>
           <tbody class="divide-y divide-slate-200 dark:divide-slate-700/50">
-            <tr 
-              v-for="tenant in tenants" 
-              :key="tenant.id" 
+            <tr
+              v-for="tenant in tenants"
+              :key="tenant.id"
               class="hover:bg-slate-50 dark:hover:bg-slate-800/30 transition-colors group"
             >
               <td class="px-6 py-4">
@@ -280,7 +280,7 @@ const getAlertColor = (type: string) => {
               </td>
               <td class="px-6 py-4">
                 <div class="flex items-center gap-2">
-                  <span 
+                  <span
                     class="px-2.5 py-1 rounded-md text-xs font-semibold border"
                     :class="getPlanColor(tenant.plan)"
                   >
@@ -292,15 +292,15 @@ const getAlertColor = (type: string) => {
                 <span class="font-medium text-slate-900 dark:text-white">{{ tenant.users }}</span>
                 <span class="text-slate-500 text-xs"> / {{ tenant.maxUsers }}</span>
                 <div class="w-full bg-slate-200 dark:bg-slate-700 h-1.5 rounded-full mt-2 overflow-hidden">
-                  <div 
-                    class="h-1.5 rounded-full" 
+                  <div
+                    class="h-1.5 rounded-full"
                     :class="tenant.status === 'active' ? 'bg-primary' : 'bg-blue-400'"
                     :style="{ width: (tenant.users / tenant.maxUsers * 100) + '%' }"
                   ></div>
                 </div>
               </td>
               <td class="px-6 py-4">
-                <span 
+                <span
                   class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium"
                   :class="tenant.status === 'active' ? 'bg-emerald-500/10 text-emerald-500' : 'bg-red-500/10 text-red-500'"
                 >
@@ -310,7 +310,7 @@ const getAlertColor = (type: string) => {
               </td>
               <td class="px-6 py-4">
                 <div class="text-slate-900 dark:text-white font-medium">{{ tenant.billing }}</div>
-                <div 
+                <div
                   class="text-xs"
                   :class="tenant.overdue ? 'text-red-400 font-medium' : 'text-slate-500'"
                 >

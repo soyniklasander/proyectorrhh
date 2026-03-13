@@ -103,8 +103,8 @@ const getTypeIcon = (type: string) => {
           </div>
         </div>
         <div class="flex gap-2">
-          <button 
-            v-for="tab in tabs" 
+          <button
+            v-for="tab in tabs"
             :key="tab.id"
             @click="currentTab = tab.id"
             class="px-4 py-2 rounded-lg text-sm font-medium transition-colors"

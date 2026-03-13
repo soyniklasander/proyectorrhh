@@ -216,8 +216,8 @@ const getRegimeBadge = (regime: string) => {
     <!-- Tabs -->
     <div class="mb-6 border-b border-slate-200 dark:border-slate-700">
       <div class="flex gap-6 overflow-x-auto">
-        <button 
-          v-for="tab in tabs" 
+        <button
+          v-for="tab in tabs"
           :key="tab.id"
           @click="currentTab = tab.id"
           class="px-4 py-3 text-sm font-medium border-b-2 transition-colors whitespace-nowrap"

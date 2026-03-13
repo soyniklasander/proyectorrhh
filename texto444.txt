@@ -573,14 +573,14 @@
             height: 8px;
         }
         ::-webkit-scrollbar-track {
-            background: #101622; 
+            background: #101622;
         }
         ::-webkit-scrollbar-thumb {
-            background: #2d3b55; 
+            background: #2d3b55;
             border-radius: 4px;
         }
         ::-webkit-scrollbar-thumb:hover {
-            background: #3e4f6e; 
+            background: #3e4f6e;
         }
     </style>
 </head>
@@ -1443,14 +1443,14 @@
             height: 8px;
         }
         .custom-scrollbar::-webkit-scrollbar-track {
-            background: #1a2234; 
+            background: #1a2234;
         }
         .custom-scrollbar::-webkit-scrollbar-thumb {
-            background: #374151; 
+            background: #374151;
             border-radius: 4px;
         }
         .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-            background: #4b5563; 
+            background: #4b5563;
         }
     </style>
 </head>
@@ -2506,7 +2506,7 @@
             .dark .print-text-black { color: black !important; }
             .print-hidden { display: none; }
         }
-        
+
         /* Subtle texture for the screen background */
         .bg-grid-pattern {
             background-image: radial-gradient(rgba(37, 175, 244, 0.1) 1px, transparent 1px);
@@ -2816,14 +2816,14 @@
             height: 8px;
         }
         .custom-scrollbar::-webkit-scrollbar-track {
-            background: #1e232e; 
+            background: #1e232e;
         }
         .custom-scrollbar::-webkit-scrollbar-thumb {
-            background: #374151; 
+            background: #374151;
             border-radius: 4px;
         }
         .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-            background: #4b5563; 
+            background: #4b5563;
         }
     </style>
 </head>
@@ -3310,7 +3310,7 @@
 <div>
 <h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-2">Historial de Cierres Inmutables</h1>
 <p class="text-gray-500 dark:text-gray-400 max-w-2xl">
-                        Módulo de Auditoría Histórica Inmutable para NexaCorp Perú (Cumplimiento de Control Interno). 
+                        Módulo de Auditoría Histórica Inmutable para NexaCorp Perú (Cumplimiento de Control Interno).
                         Registro cronológico sellado criptográficamente.
                     </p>
 </div>
@@ -3668,7 +3668,7 @@
                 display: none;
             }
         }
-        
+
         .glass-panel {
             @apply bg-surface-dark border border-white/5 shadow-xl backdrop-blur-sm;
         }
@@ -4038,14 +4038,14 @@
             height: 8px;
         }
         ::-webkit-scrollbar-track {
-            background: #121720; 
+            background: #121720;
         }
         ::-webkit-scrollbar-thumb {
-            background: #2b3545; 
+            background: #2b3545;
             border-radius: 4px;
         }
         ::-webkit-scrollbar-thumb:hover {
-            background: #2c60ce; 
+            background: #2c60ce;
         }
     </style>
 </head>
@@ -4553,16 +4553,16 @@
             height: 8px;
         }
         ::-webkit-scrollbar-track {
-            background: #121720; 
+            background: #121720;
         }
         ::-webkit-scrollbar-thumb {
-            background: #2d3748; 
+            background: #2d3748;
             border-radius: 4px;
         }
         ::-webkit-scrollbar-thumb:hover {
-            background: #4a5568; 
+            background: #4a5568;
         }
-        
+
         .glass-panel {
             background: rgba(24, 27, 33, 0.7);
             backdrop-filter: blur(12px);
@@ -5081,14 +5081,14 @@
             height: 8px;
         }
         ::-webkit-scrollbar-track {
-            background: #101622; 
+            background: #101622;
         }
         ::-webkit-scrollbar-thumb {
-            background: #1f2937; 
+            background: #1f2937;
             border-radius: 4px;
         }
         ::-webkit-scrollbar-thumb:hover {
-            background: #374151; 
+            background: #374151;
         }
     </style>
 </head>
@@ -6032,14 +6032,14 @@
             height: 8px;
         }
         ::-webkit-scrollbar-track {
-            background: #101c22; 
+            background: #101c22;
         }
         ::-webkit-scrollbar-thumb {
-            background: #263339; 
+            background: #263339;
             border-radius: 4px;
         }
         ::-webkit-scrollbar-thumb:hover {
-            background: #25aff4; 
+            background: #25aff4;
         }
     </style>
 </head>
@@ -6541,14 +6541,14 @@
             width: 8px;
         }
         ::-webkit-scrollbar-track {
-            background: #121720; 
+            background: #121720;
         }
         ::-webkit-scrollbar-thumb {
-            background: #2c60ce; 
+            background: #2c60ce;
             border-radius: 4px;
         }
         ::-webkit-scrollbar-thumb:hover {
-            background: #1e4bb8; 
+            background: #1e4bb8;
         }
     </style>
 </head>
@@ -6689,9 +6689,9 @@
                         Activar Cuenta
                     </button>
 <p class="mt-4 text-center text-xs text-gray-500">
-                        Al activar tu cuenta, aceptas los 
-                        <a class="font-medium text-primary hover:text-blue-400 underline decoration-primary/30 underline-offset-2" href="#">Términos de Servicio</a> 
-                        y la 
+                        Al activar tu cuenta, aceptas los
+                        <a class="font-medium text-primary hover:text-blue-400 underline decoration-primary/30 underline-offset-2" href="#">Términos de Servicio</a>
+                        y la
                         <a class="font-medium text-primary hover:text-blue-400 underline decoration-primary/30 underline-offset-2" href="#">Política de Privacidad</a>.
                     </p>
 </form>
@@ -6758,16 +6758,16 @@
             height: 6px;
         }
         .custom-scrollbar::-webkit-scrollbar-track {
-            background: #1e293b; 
+            background: #1e293b;
         }
         .custom-scrollbar::-webkit-scrollbar-thumb {
-            background: #475569; 
+            background: #475569;
             border-radius: 10px;
         }
         .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-            background: #64748b; 
+            background: #64748b;
         }
-        
+
         /* Chart Styles */
         .bar-container {
             display: flex;
@@ -7671,16 +7671,16 @@
             height: 8px;
         }
         ::-webkit-scrollbar-track {
-            background: #121720; 
+            background: #121720;
         }
         ::-webkit-scrollbar-thumb {
-            background: #2c60ce; 
+            background: #2c60ce;
             border-radius: 4px;
         }
         ::-webkit-scrollbar-thumb:hover {
-            background: #1e4bb0; 
+            background: #1e4bb0;
         }
-        
+
         .glass-effect {
             background: rgba(26, 33, 47, 0.7);
             backdrop-filter: blur(10px);
@@ -7977,9 +7977,9 @@
 <div class="flex-1 flex items-center justify-center relative">
 <!-- CSS Conic Gradient Donut -->
 <div class="w-48 h-48 rounded-full relative" style="background: conic-gradient(
-                                #2c60ce 0% 45%, 
-                                #60a5fa 45% 70%, 
-                                #a78bfa 70% 85%, 
+                                #2c60ce 0% 45%,
+                                #60a5fa 45% 70%,
+                                #a78bfa 70% 85%,
                                 #fbbf24 85% 100%
                             );">
 <div class="absolute inset-0 m-auto w-32 h-32 bg-white dark:bg-surface-dark rounded-full flex flex-col items-center justify-center">
@@ -8214,10 +8214,10 @@
             width: 6px;
         }
         .custom-scrollbar::-webkit-scrollbar-track {
-            background: #1a222e; 
+            background: #1a222e;
         }
         .custom-scrollbar::-webkit-scrollbar-thumb {
-            background-color: #2a3441; 
+            background-color: #2a3441;
             border-radius: 20px;
         }
     </style>
@@ -8885,14 +8885,14 @@
             height: 8px;
         }
         .custom-scrollbar::-webkit-scrollbar-track {
-            background: #101c22; 
+            background: #101c22;
         }
         .custom-scrollbar::-webkit-scrollbar-thumb {
-            background: #25aff4; 
+            background: #25aff4;
             border-radius: 4px;
         }
         .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-            background: #1d8ac3; 
+            background: #1d8ac3;
         }
     </style>
 </head>
@@ -9705,14 +9705,14 @@
             height: 8px;
         }
         ::-webkit-scrollbar-track {
-            background: #0f172a; 
+            background: #0f172a;
         }
         ::-webkit-scrollbar-thumb {
-            background: #334155; 
+            background: #334155;
             border-radius: 4px;
         }
         ::-webkit-scrollbar-thumb:hover {
-            background: #475569; 
+            background: #475569;
         }
     </style>
 </head>
@@ -10301,16 +10301,16 @@
             height: 8px;
         }
         ::-webkit-scrollbar-track {
-            background: #101c22; 
+            background: #101c22;
         }
         ::-webkit-scrollbar-thumb {
-            background: #263c47; 
+            background: #263c47;
             border-radius: 4px;
         }
         ::-webkit-scrollbar-thumb:hover {
-            background: #25aff4; 
+            background: #25aff4;
         }
-        
+
         .pdf-shadow {
             box-shadow: 0 10px 40px -10px rgba(0,0,0,0.5);
         }
@@ -10673,21 +10673,21 @@
             white-space: nowrap;
             user-select: none;
         }
-        
+
         /* Custom scrollbar for dark mode tables */
         .custom-scrollbar::-webkit-scrollbar {
             width: 8px;
             height: 8px;
         }
         .custom-scrollbar::-webkit-scrollbar-track {
-            background: #121720; 
+            background: #121720;
         }
         .custom-scrollbar::-webkit-scrollbar-thumb {
-            background: #2c3b55; 
+            background: #2c3b55;
             border-radius: 4px;
         }
         .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-            background: #3b4e70; 
+            background: #3b4e70;
         }
 
         /* Read-only overlay pattern for inputs */
@@ -11069,7 +11069,7 @@
 <div class="flex-1 p-8 overflow-y-auto">
 <div class="mb-6 flex items-center justify-between">
 <h2 class="text-lg font-semibold text-slate-800 dark:text-slate-100 flex items-center gap-2">
-                        Listado de Colaboradores 
+                        Listado de Colaboradores
                         <span class="text-xs font-normal bg-slate-200 dark:bg-slate-800 text-slate-500 px-2 py-0.5 rounded-full">142 Total</span>
 </h2>
 </div>
@@ -12085,14 +12085,14 @@
             height: 8px;
         }
         .custom-scrollbar::-webkit-scrollbar-track {
-            background: #1a2233; 
+            background: #1a2233;
         }
         .custom-scrollbar::-webkit-scrollbar-thumb {
-            background: #334155; 
+            background: #334155;
             border-radius: 4px;
         }
         .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-            background: #475569; 
+            background: #475569;
         }
     </style>
 </head>
@@ -12592,7 +12592,7 @@
           extend: {
             colors: {
               "primary": "#2c60ce",
-              "primary-dark": "#1a4bb0", 
+              "primary-dark": "#1a4bb0",
               "primary-light": "#5c85e6",
               "background-light": "#f6f6f8",
               "background-dark": "#121720",
@@ -12812,14 +12812,14 @@
             height: 8px;
         }
         ::-webkit-scrollbar-track {
-            background: #0a192f; 
+            background: #0a192f;
         }
         ::-webkit-scrollbar-thumb {
-            background: #1e3a6e; 
+            background: #1e3a6e;
             border-radius: 4px;
         }
         ::-webkit-scrollbar-thumb:hover {
-            background: #1152d4; 
+            background: #1152d4;
         }
     </style>
 </head>
@@ -13239,16 +13239,16 @@
             height: 8px;
         }
         ::-webkit-scrollbar-track {
-            background: #121720; 
+            background: #121720;
         }
         ::-webkit-scrollbar-thumb {
-            background: #2d3748; 
+            background: #2d3748;
             border-radius: 4px;
         }
         ::-webkit-scrollbar-thumb:hover {
-            background: #4a5568; 
+            background: #4a5568;
         }
-        
+
         .table-cell-input {
             background: transparent;
             border: 1px solid transparent;
@@ -13888,7 +13888,7 @@
                 colors: {
                     "primary": "#2c60ce",
                     "background-light": "#f6f6f8",
-                    "background-dark": "#0f172a", 
+                    "background-dark": "#0f172a",
                     "surface-dark": "#1e293b",
                     "surface-light": "#ffffff",
                 },
@@ -13907,14 +13907,14 @@
             height: 8px;
         }
         ::-webkit-scrollbar-track {
-            background: #1e293b; 
+            background: #1e293b;
         }
         ::-webkit-scrollbar-thumb {
-            background: #334155; 
+            background: #334155;
             border-radius: 4px;
         }
         ::-webkit-scrollbar-thumb:hover {
-            background: #475569; 
+            background: #475569;
         }
     </style>
 </head>
@@ -14758,13 +14758,13 @@
             backdrop-filter: blur(12px);
             border: 1px solid rgba(37, 175, 244, 0.1);
         }
-        
+
         .digital-stamp {
             border: 2px dashed #25aff4;
             color: #25aff4;
             transform: rotate(-5deg);
         }
-        
+
         /* Subtle grid pattern for background */
         .bg-grid {
             background-size: 40px 40px;
@@ -14983,16 +14983,16 @@
             height: 8px;
         }
         ::-webkit-scrollbar-track {
-            background: #08152b; 
+            background: #08152b;
         }
         ::-webkit-scrollbar-thumb {
-            background: #1e3a66; 
+            background: #1e3a66;
             border-radius: 4px;
         }
         ::-webkit-scrollbar-thumb:hover {
-            background: #2a4d85; 
+            background: #2a4d85;
         }
-        
+
         /* Drag and Drop simulation styles */
         .draggable-source {
             cursor: grab;
@@ -15191,7 +15191,7 @@
 <!-- Shift Block: Day -->
 <div class="bg-primary/90 hover:bg-primary text-white rounded p-2 shadow-sm text-xs cursor-pointer border border-primary-light/30 group/block relative overflow-hidden">
 <div class="font-bold flex justify-between">
-                                    07:00 - 15:00 
+                                    07:00 - 15:00
                                     <span class="material-icons text-[10px] opacity-70">wb_sunny</span>
 </div>
 <div class="mt-1 opacity-90 truncate">Diurno • Cocina A</div>
@@ -16082,7 +16082,7 @@
         ::-webkit-scrollbar-thumb:hover {
             background: #3e505c;
         }
-        
+
         .toggle-checkbox:checked {
             right: 0;
             border-color: #25aff4;
@@ -16515,16 +16515,16 @@
             height: 8px;
         }
         ::-webkit-scrollbar-track {
-            background: #0f172a; 
+            background: #0f172a;
         }
         ::-webkit-scrollbar-thumb {
-            background: #334155; 
+            background: #334155;
             border-radius: 4px;
         }
         ::-webkit-scrollbar-thumb:hover {
-            background: #475569; 
+            background: #475569;
         }
-        
+
         .glass-panel {
             background: rgba(30, 41, 59, 0.7);
             backdrop-filter: blur(10px);
@@ -16867,16 +16867,16 @@
             height: 8px;
         }
         ::-webkit-scrollbar-track {
-            background: #101c22; 
+            background: #101c22;
         }
         ::-webkit-scrollbar-thumb {
-            background: #1e323d; 
+            background: #1e323d;
             border-radius: 4px;
         }
         ::-webkit-scrollbar-thumb:hover {
-            background: #25aff4; 
+            background: #25aff4;
         }
-        
+
         /* Toggle Switch Styles */
         .toggle-checkbox:checked {
             right: 0;
@@ -17481,16 +17481,16 @@
             height: 8px;
         }
         ::-webkit-scrollbar-track {
-            background: #0B1120; 
+            background: #0B1120;
         }
         ::-webkit-scrollbar-thumb {
-            background: #2d3a54; 
+            background: #2d3a54;
             border-radius: 4px;
         }
         ::-webkit-scrollbar-thumb:hover {
-            background: #1152d4; 
+            background: #1152d4;
         }
-        
+
         .step-clip-path {
              clip-path: polygon(0 0, 95% 0, 100% 50%, 95% 100%, 0 100%, 5% 50%);
         }
@@ -17791,14 +17791,14 @@
             height: 8px;
         }
         ::-webkit-scrollbar-track {
-            background: #121720; 
+            background: #121720;
         }
         ::-webkit-scrollbar-thumb {
-            background: #2a3447; 
+            background: #2a3447;
             border-radius: 4px;
         }
         ::-webkit-scrollbar-thumb:hover {
-            background: #3c4b66; 
+            background: #3c4b66;
         }
         .tabular-nums {
             font-feature-settings: "tnum";
@@ -18353,16 +18353,16 @@
             width: 6px;
         }
         .custom-scrollbar::-webkit-scrollbar-track {
-            background: #111827; 
+            background: #111827;
         }
         .custom-scrollbar::-webkit-scrollbar-thumb {
-            background: #374151; 
+            background: #374151;
             border-radius: 4px;
         }
         .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-            background: #4b5563; 
+            background: #4b5563;
         }
-        
+
         /* Map placeholder styling */
         .map-container {
             background-color: #1f2937;
@@ -19052,16 +19052,16 @@
             height: 8px;
         }
         ::-webkit-scrollbar-track {
-            background: #1e293b; 
+            background: #1e293b;
         }
         ::-webkit-scrollbar-thumb {
-            background: #475569; 
+            background: #475569;
             border-radius: 4px;
         }
         ::-webkit-scrollbar-thumb:hover {
-            background: #64748b; 
+            background: #64748b;
         }
-        
+
         .toggle-checkbox:checked {
             right: 0;
             border-color: #256af4;
@@ -19864,14 +19864,14 @@
         }
         /* Custom range slider styling */
         input[type=range] {
-            -webkit-appearance: none; 
-            background: transparent; 
+            -webkit-appearance: none;
+            background: transparent;
         }
         input[type=range]::-webkit-slider-thumb {
             -webkit-appearance: none;
         }
         input[type=range]:focus {
-            outline: none; 
+            outline: none;
         }
     </style>
 </head>
@@ -20599,14 +20599,14 @@
             height: 8px;
         }
         ::-webkit-scrollbar-track {
-            background: #121720; 
+            background: #121720;
         }
         ::-webkit-scrollbar-thumb {
-            background: #2c3b55; 
+            background: #2c3b55;
             border-radius: 4px;
         }
         ::-webkit-scrollbar-thumb:hover {
-            background: #3b4d6b; 
+            background: #3b4d6b;
         }
     </style>
 </head>
@@ -21039,14 +21039,14 @@
             height: 8px;
         }
         ::-webkit-scrollbar-track {
-            background: #1e293b; 
+            background: #1e293b;
         }
         ::-webkit-scrollbar-thumb {
-            background: #334155; 
+            background: #334155;
             border-radius: 4px;
         }
         ::-webkit-scrollbar-thumb:hover {
-            background: #475569; 
+            background: #475569;
         }
     </style>
 </head>
@@ -21839,14 +21839,14 @@
             height: 8px;
         }
         .custom-scrollbar::-webkit-scrollbar-track {
-            background: #121720; 
+            background: #121720;
         }
         .custom-scrollbar::-webkit-scrollbar-thumb {
-            background: #2c60ce; 
+            background: #2c60ce;
             border-radius: 4px;
         }
         .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-            background: #1e4bb5; 
+            background: #1e4bb5;
         }
     </style>
 </head>
@@ -22238,16 +22238,16 @@
             width: 8px;
         }
         ::-webkit-scrollbar-track {
-            background: #0f172a; 
+            background: #0f172a;
         }
         ::-webkit-scrollbar-thumb {
-            background: #334155; 
+            background: #334155;
             border-radius: 4px;
         }
         ::-webkit-scrollbar-thumb:hover {
-            background: #475569; 
+            background: #475569;
         }
-        
+
         .glass-effect {
             background: rgba(30, 41, 59, 0.7);
             backdrop-filter: blur(12px);
@@ -22323,8 +22323,8 @@
 </div>
 </form>
 <!-- STATE 2: SUCCESS MESSAGE (Visual mock of what happens after submission) -->
-<!-- This section simulates the success state described in the prompt. 
-                     In a real app, this would replace the form above dynamically. 
+<!-- This section simulates the success state described in the prompt.
+                     In a real app, this would replace the form above dynamically.
                      I'll render it below as a "demo" of the state, visually separated. -->
 <div class="mt-10 pt-8 border-t border-slate-200 dark:border-slate-700">
 <p class="text-xs text-center text-slate-500 uppercase tracking-widest mb-6 font-semibold">Estado: Confirmación de Envío</p>
@@ -22868,14 +22868,14 @@
             height: 8px;
         }
         .custom-scrollbar::-webkit-scrollbar-track {
-            background: #1e2532; 
+            background: #1e2532;
         }
         .custom-scrollbar::-webkit-scrollbar-thumb {
-            background: #334155; 
+            background: #334155;
             border-radius: 4px;
         }
         .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-            background: #475569; 
+            background: #475569;
         }
     </style>
 </head>
@@ -23266,14 +23266,14 @@
             height: 8px;
         }
         ::-webkit-scrollbar-track {
-            background: #101622; 
+            background: #101622;
         }
         ::-webkit-scrollbar-thumb {
-            background: #2a3447; 
+            background: #2a3447;
             border-radius: 4px;
         }
         ::-webkit-scrollbar-thumb:hover {
-            background: #3b4760; 
+            background: #3b4760;
         }
     </style>
 </head>
@@ -23373,7 +23373,7 @@
 <div>
 <h1 class="text-2xl font-bold text-gray-900 dark:text-white mb-1">Historial de Exportaciones</h1>
 <p class="text-sm text-gray-500 dark:text-gray-400 max-w-2xl">
-                            Consulte y descargue los archivos generados para el Programa de Declaración Telemática (PLAME). 
+                            Consulte y descargue los archivos generados para el Programa de Declaración Telemática (PLAME).
                             Monitoree el estado de presentación ante SUNAT.
                         </p>
 </div>
@@ -23783,7 +23783,7 @@
         ::-webkit-scrollbar-thumb:hover {
             background: #4a5568;
         }
-        
+
         /* Chart bar animation simulation */
         .bar-anim {
             transition: height 1s ease-out;
@@ -24183,7 +24183,7 @@
         ::-webkit-scrollbar-thumb:hover {
             background: #6b94ea;
         }
-        
+
         .glass-effect {
             background: rgba(30, 37, 50, 0.7);
             backdrop-filter: blur(10px);
@@ -25647,14 +25647,14 @@
             height: 8px;
         }
         ::-webkit-scrollbar-track {
-            background: #121720; 
+            background: #121720;
         }
         ::-webkit-scrollbar-thumb {
-            background: #2c60ce; 
+            background: #2c60ce;
             border-radius: 4px;
         }
         ::-webkit-scrollbar-thumb:hover {
-            background: #1e4bb5; 
+            background: #1e4bb5;
         }
         .diff-added {
             background-color: rgba(34, 197, 94, 0.1);
@@ -26069,19 +26069,19 @@
             height: 8px;
         }
         ::-webkit-scrollbar-track {
-            background: #101622; 
+            background: #101622;
         }
         ::-webkit-scrollbar-thumb {
-            background: #2d3b55; 
+            background: #2d3b55;
             border-radius: 4px;
         }
         ::-webkit-scrollbar-thumb:hover {
-            background: #256af4; 
+            background: #256af4;
         }
         .chart-donut {
             background: conic-gradient(
-                #256af4 0% 65%, 
-                #10b981 65% 85%, 
+                #256af4 0% 65%,
+                #10b981 65% 85%,
                 #f59e0b 85% 100%
             );
             border-radius: 50%;
@@ -26741,14 +26741,14 @@
             width: 8px;
         }
         ::-webkit-scrollbar-track {
-            background: #101c22; 
+            background: #101c22;
         }
         ::-webkit-scrollbar-thumb {
-            background: #263c48; 
+            background: #263c48;
             border-radius: 4px;
         }
         ::-webkit-scrollbar-thumb:hover {
-            background: #374f5d; 
+            background: #374f5d;
         }
         .glass-panel {
             background: rgba(26, 38, 46, 0.7);

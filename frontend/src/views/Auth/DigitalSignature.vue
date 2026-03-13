@@ -14,9 +14,9 @@
           <span>Conexión Segura TLS 1.3</span>
         </div>
         <div class="h-8 w-8 rounded-full bg-slate-200 dark:bg-slate-700 overflow-hidden relative">
-          <img 
-            alt="User Avatar" 
-            class="w-full h-full object-cover" 
+          <img
+            alt="User Avatar"
+            class="w-full h-full object-cover"
             :src="userAvatar"
           />
         </div>
@@ -30,7 +30,7 @@
         <div class="absolute top-0 left-0 w-96 h-96 bg-primary/10 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2"></div>
         <div class="absolute bottom-0 right-0 w-[500px] h-[500px] bg-primary/5 rounded-full blur-3xl translate-x-1/3 translate-y-1/3"></div>
       </div>
-      
+
       <div class="w-full max-w-5xl z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
         <!-- Left Column: Context & Progress -->
         <div class="lg:col-span-5 flex flex-col gap-6 pt-4">
@@ -41,7 +41,7 @@
               {{ stepDescription }}
             </p>
           </div>
-          
+
           <!-- Progress Steps -->
           <div class="space-y-0 relative pl-4 border-l-2 border-slate-200 dark:border-slate-700">
             <!-- Step 1 Done -->
@@ -50,14 +50,14 @@
               <h3 class="text-slate-900 dark:text-slate-300 font-medium">Revisión de Boleta</h3>
               <p class="text-xs text-slate-500 mt-1">Completado - {{ formatDate(completedSteps.step1) }}</p>
             </div>
-            
+
             <!-- Step 2 Done -->
             <div class="mb-8 relative">
               <div class="absolute -left-[21px] top-1 h-3 w-3 rounded-full bg-primary ring-4 ring-background-light dark:ring-background-dark"></div>
               <h3 class="text-slate-900 dark:text-slate-300 font-medium">Acuerdo de Conformidad</h3>
               <p class="text-xs text-slate-500 mt-1">Completado - {{ formatDate(completedSteps.step2) }}</p>
             </div>
-            
+
             <!-- Step 3 Active -->
             <div class="mb-8 relative">
               <div :class="currentStep === 3 ? 'animate-pulse' : ''" class="absolute -left-[23px] top-0 h-4 w-4 rounded-full bg-primary ring-4 ring-background-light dark:ring-background-dark"></div>
@@ -67,14 +67,14 @@
               <p v-if="currentStep === 3" class="text-xs text-primary/80 mt-1">En progreso...</p>
               <p v-else class="text-xs text-slate-500 mt-1">Pendiente</p>
             </div>
-            
+
             <!-- Step 4 Pending -->
             <div class="relative opacity-50">
               <div class="absolute -left-[21px] top-1 h-3 w-3 rounded-full bg-slate-300 dark:bg-slate-600 ring-4 ring-background-light dark:ring-background-dark"></div>
               <h3 class="text-slate-900 dark:text-slate-400 font-medium">Confirmación y Recibo</h3>
             </div>
           </div>
-          
+
           <!-- Legal Info Card -->
           <div class="bg-primary/5 border border-primary/20 rounded-xl p-4 mt-4 flex items-start gap-3">
             <span class="material-icons text-primary mt-0.5">verified_user</span>
@@ -86,13 +86,13 @@
             </div>
           </div>
         </div>
-        
+
         <!-- Right Column: Authentication Card -->
         <div class="lg:col-span-7">
           <div class="glass-panel rounded-2xl shadow-2xl p-6 md:p-8 relative overflow-hidden border border-slate-700/50">
             <!-- Auth Method Selector -->
             <div class="flex p-1 bg-surface-dark dark:bg-black/40 rounded-lg mb-8 border border-slate-700/50">
-              <button 
+              <button
                 @click="authMethod = 'otp'"
                 :class="authMethod === 'otp' ? 'bg-primary text-white shadow-sm' : 'text-slate-400 hover:text-white hover:bg-white/5'"
                 class="flex-1 py-2 px-4 rounded text-sm font-medium transition-all duration-200 flex items-center justify-center gap-2"
@@ -100,7 +100,7 @@
                 <span class="material-icons text-base">sms</span>
                 Código OTP (SMS)
               </button>
-              <button 
+              <button
                 @click="authMethod = 'pin'"
                 :class="authMethod === 'pin' ? 'bg-primary text-white shadow-sm' : 'text-slate-400 hover:text-white hover:bg-white/5'"
                 class="flex-1 py-2 px-4 rounded text-sm font-medium transition-all duration-200 flex items-center justify-center gap-2"
@@ -109,7 +109,7 @@
                 PIN Personal
               </button>
             </div>
-            
+
             <div class="text-center mb-8">
               <div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-primary/10 mb-4 text-primary">
                 <span class="material-icons text-3xl">{{ authMethod === 'otp' ? 'phonelink_lock' : 'lock' }}</span>
@@ -122,7 +122,7 @@
                 Ingrese su PIN personal de 4 dígitos para confirmar la operación.
               </p>
             </div>
-            
+
             <!-- OTP Input Display -->
             <div v-if="authMethod === 'otp'" class="flex justify-center gap-2 md:gap-4 mb-8">
               <input
@@ -139,51 +139,51 @@
                 inputmode="numeric"
               />
             </div>
-            
+
             <!-- PIN Input Display -->
             <div v-else class="flex justify-center gap-3 mb-8">
-              <div 
-                v-for="(digit, index) in pinDigits" 
+              <div
+                v-for="(digit, index) in pinDigits"
                 :key="index"
                 class="w-14 h-14 border-2 focus:border-primary bg-background-dark rounded-lg flex items-center justify-center"
               >
                 <span class="text-2xl font-bold text-white">{{ digit !== null ? '•' : '' }}</span>
               </div>
             </div>
-            
+
             <!-- Virtual Keypad & Actions -->
             <div class="bg-surface-dark rounded-xl p-4 md:p-6 border border-slate-700/50">
               <div class="flex flex-col md:flex-row gap-6">
                 <!-- Keypad -->
                 <div class="flex-1 grid grid-cols-3 gap-3 max-w-[280px] mx-auto md:mx-0">
-                  <button 
-                    v-for="num in keypadNumbers" 
+                  <button
+                    v-for="num in keypadNumbers"
                     :key="num"
                     @click="handleKeypadPress(num)"
                     class="h-12 rounded bg-slate-800 hover:bg-slate-700 active:bg-primary active:text-white border border-slate-700 text-white font-semibold text-lg transition-colors"
                   >
                     {{ num }}
                   </button>
-                  <button 
+                  <button
                     @click="clearLastDigit"
                     class="h-12 rounded bg-red-900/30 hover:bg-red-900/50 border border-red-900/50 text-red-400 flex items-center justify-center transition-colors"
                   >
                     <span class="material-icons text-sm">close</span>
                   </button>
-                  <button 
+                  <button
                     @click="handleKeypadPress(0)"
                     class="h-12 rounded bg-slate-800 hover:bg-slate-700 active:bg-primary active:text-white border border-slate-700 text-white font-semibold text-lg transition-colors"
                   >
                     0
                   </button>
-                  <button 
+                  <button
                     @click="confirmSignature"
                     class="h-12 rounded bg-green-700 hover:bg-green-600 border border-green-600 text-white flex items-center justify-center transition-colors"
                   >
                     <span class="material-icons text-sm">check</span>
                   </button>
                 </div>
-                
+
                 <!-- Actions & Info -->
                 <div class="flex-1 flex flex-col justify-between pt-2">
                   <div class="text-sm text-slate-400 mb-6 bg-slate-800/50 p-3 rounded border border-slate-700">
@@ -194,7 +194,7 @@
                     <p class="text-xs leading-5">Los números cambian de posición aleatoriamente para evitar el rastreo de pulsaciones.</p>
                   </div>
                   <div class="space-y-3">
-                    <button 
+                    <button
                       @click="confirmSignature"
                       :disabled="!isAuthComplete"
                       class="w-full py-3 px-4 rounded-lg font-bold text-sm flex justify-center items-center gap-2 transition-all"
@@ -204,7 +204,7 @@
                       {{ authMethod === 'otp' ? 'VERIFICAR CÓDIGO' : 'FIRMAR BOLETA' }}
                     </button>
                     <div class="text-center">
-                      <button 
+                      <button
                         v-if="resendCooldown === 0"
                         @click="resendCode"
                         class="text-primary text-xs font-medium hover:underline hover:text-primary-dark transition-colors"
@@ -220,7 +220,7 @@
               </div>
             </div>
           </div>
-          
+
           <div class="mt-6 flex justify-between text-slate-500 text-xs px-2">
             <button @click="goBack" class="hover:text-slate-300 flex items-center gap-1">
               <span class="material-icons text-sm">arrow_back</span>
@@ -234,7 +234,7 @@
         </div>
       </div>
     </main>
-    
+
     <!-- Footer -->
     <footer class="border-t border-slate-800 bg-background-dark py-6 text-center">
       <p class="text-slate-500 text-xs">© 2023 NexaCorp Perú S.A. Todos los derechos reservados.</p>
@@ -324,11 +324,11 @@ function formatDate(date: Date): string {
 function handleOtpInput(event: Event, index: number) {
   const input = event.target as HTMLInputElement
   const value = input.value
-  
+
   if (value.length === 1 && index < otpDigits.value.length - 1) {
     otpInputs.value[index + 1]?.focus()
   }
-  
+
   // Only allow numbers
   if (!/^\d*$/.test(value)) {
     otpDigits.value[index] = ''
@@ -345,14 +345,14 @@ function handleOtpPaste(event: ClipboardEvent) {
   event.preventDefault()
   const pastedData = event.clipboardData?.getData('text')
   const digits = pastedData?.replace(/\D/g, '').slice(0, 6).split('')
-  
+
   if (digits) {
     digits.forEach((digit, i) => {
       if (i < otpDigits.value.length) {
         otpDigits.value[i] = digit
       }
     })
-    
+
     // Focus on next empty input
     const nextIndex = digits.length < otpDigits.value.length ? digits.length : otpDigits.value.length - 1
     otpInputs.value[nextIndex]?.focus()
@@ -379,12 +379,12 @@ function clearLastDigit() {
 
 function confirmSignature() {
   if (!isAuthComplete.value) return
-  
+
   // In production, this would call the backend to verify OTP/PIN and sign the document
   console.log('Confirming signature with method:', authMethod.value)
   console.log('OTP:', otpDigits.value.join(''))
   console.log('PIN:', pinDigits.value.join(''))
-  
+
   // Move to next step
   if (currentStep.value < totalSteps) {
     currentStep.value++
@@ -394,7 +394,7 @@ function confirmSignature() {
 function resendCode() {
   // Start cooldown
   resendCooldown.value = 30
-  
+
   resendTimer = setInterval(() => {
     resendCooldown.value--
     if (resendCooldown.value <= 0 && resendTimer) {
@@ -402,7 +402,7 @@ function resendCode() {
       resendTimer = null
     }
   }, 1000)
-  
+
   // In production, this would call the backend to resend OTP
   console.log('Resending OTP...')
 }

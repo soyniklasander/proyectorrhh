@@ -5,7 +5,7 @@
 Cloudflare Pages estaba fallando al construir el proyecto con el siguiente error:
 
 ```
-npm error `npm ci` can only install packages when your package.json and 
+npm error `npm ci` can only install packages when your package.json and
 package-lock.json or npm-shrinkwrap.json are in sync.
 
 npm error Missing: @prisma/client@5.22.0 from lock file

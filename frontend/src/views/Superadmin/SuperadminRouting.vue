@@ -163,8 +163,8 @@ const getPlanBadge = (plan: string) => {
 
       <!-- KPI Grid -->
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        <div 
-          v-for="(kpi, index) in kpis" 
+        <div
+          v-for="(kpi, index) in kpis"
           :key="index"
           class="p-5 rounded-xl bg-white dark:bg-[#181b21] border border-slate-200 dark:border-white/5 shadow-sm relative overflow-hidden group hover:border-primary/30 transition-colors"
         >
@@ -173,7 +173,7 @@ const getPlanBadge = (plan: string) => {
               <p class="text-xs font-semibold text-slate-500 uppercase tracking-wider">{{ kpi.title }}</p>
               <h3 class="text-3xl font-bold mt-1 text-slate-900 dark:text-white">{{ kpi.value }}</h3>
             </div>
-            <div 
+            <div
               class="p-2 rounded-lg"
               :class="kpi.color === 'primary' ? 'bg-primary/10 text-primary' : kpi.color === 'emerald' ? 'bg-emerald-500/10 text-emerald-500' : kpi.color === 'blue' ? 'bg-blue-500/10 text-blue-500' : 'bg-indigo-500/10 text-indigo-500'"
             >
@@ -181,7 +181,7 @@ const getPlanBadge = (plan: string) => {
             </div>
           </div>
           <div class="flex items-center gap-2">
-            <span 
+            <span
               class="flex items-center text-xs font-bold px-1.5 py-0.5 rounded"
               :class="kpi.trend === 'up' ? 'text-green-500 bg-green-500/10' : 'text-slate-500 bg-slate-500/10'"
             >
@@ -217,8 +217,8 @@ const getPlanBadge = (plan: string) => {
                 <div class="w-full h-px bg-slate-100 dark:bg-white/5"></div>
               </div>
               <!-- Bars -->
-              <div 
-                v-for="(value, index) in chartData" 
+              <div
+                v-for="(value, index) in chartData"
                 :key="index"
                 class="w-full rounded-t-sm hover:bg-primary/40 transition-all cursor-pointer relative group"
                 :class="index === chartData.length - 1 ? 'bg-primary h-[90%] shadow-[0_0_15px_rgba(44,96,206,0.5)]' : 'bg-primary/20 h-[' + value + '%]'"
@@ -255,14 +255,14 @@ const getPlanBadge = (plan: string) => {
                   </tr>
                 </thead>
                 <tbody class="text-sm divide-y divide-slate-200 dark:divide-white/5">
-                  <tr 
-                    v-for="org in organizations" 
-                    :key="org.id" 
+                  <tr
+                    v-for="org in organizations"
+                    :key="org.id"
                     class="hover:bg-slate-50 dark:hover:bg-white/5 transition-colors group"
                   >
                     <td class="px-6 py-4">
                       <div class="flex items-center gap-3">
-                        <div 
+                        <div
                           class="w-10 h-10 rounded-lg flex items-center justify-center text-white font-bold text-lg"
                           :class="org.color"
                         >
@@ -275,7 +275,7 @@ const getPlanBadge = (plan: string) => {
                       </div>
                     </td>
                     <td class="px-6 py-4">
-                      <span 
+                      <span
                         class="px-2.5 py-1 rounded-full text-xs font-medium border"
                         :class="getPlanBadge(org.plan)"
                       >
@@ -284,7 +284,7 @@ const getPlanBadge = (plan: string) => {
                     </td>
                     <td class="px-6 py-4">
                       <div class="flex items-center gap-2">
-                        <div 
+                        <div
                           class="w-2 h-2 rounded-full shadow-[0_0_8px_rgba(16,185,129,0.4)]"
                           :class="getStatusColor(org.status)"
                         ></div>
@@ -317,8 +317,8 @@ const getPlanBadge = (plan: string) => {
               <span class="text-xs px-2 py-1 rounded-full bg-red-500/10 text-red-500 font-bold">2 Critical</span>
             </div>
             <div class="space-y-4">
-              <div 
-                v-for="(alert, index) in systemAlerts" 
+              <div
+                v-for="(alert, index) in systemAlerts"
                 :key="index"
                 class="p-3 rounded-lg bg-background-light dark:bg-black/20 border-l-4"
                 :class="getAlertColor(alert.severity)"
@@ -336,8 +336,8 @@ const getPlanBadge = (plan: string) => {
           <div class="bg-primary rounded-xl shadow-lg shadow-primary/20 overflow-hidden relative min-h-[200px] flex flex-col justify-between p-6 group">
             <!-- Background Image with Overlay -->
             <div class="absolute inset-0 z-0">
-              <img 
-                class="w-full h-full object-cover opacity-40 mix-blend-overlay" 
+              <img
+                class="w-full h-full object-cover opacity-40 mix-blend-overlay"
                 alt="Abstract dark blue world map network connection background"
                 src="https://lh3.googleusercontent.com/aida-public/AB6AXuCejaBzryOo2nlcHY7tu1RUNoC2mXWPS7bah646vuhHks7YKYppJKZlVdCxuzPvxdC7vVtaouJuQRg283k_WYty4D6lrNily8utozQyS-rxW6c9XMoJFKPl4koFtQFJaFacX0SKrgBKWvJaTRnCTtcMNh0RxHswdB_UNGI2xM-PX401gcGXUTJEAHATzKZY5KX7kspYa1u4wHzJftyebuxxV1cf-ATDT75of556x62kWa3mp3PqitzdNSVyZOEHY5ml2bDFpEqXb08o"
               />
@@ -368,7 +368,7 @@ const getPlanBadge = (plan: string) => {
                   <span class="font-bold text-slate-700 dark:text-slate-300">{{ item.percentage }}%</span>
                 </div>
                 <div class="w-full bg-slate-200 dark:bg-slate-700 h-2 rounded-full overflow-hidden">
-                  <div 
+                  <div
                     class="h-full rounded-full transition-all"
                     :class="index === 0 ? 'bg-purple-500' : index === 1 ? 'bg-blue-500' : 'bg-slate-400'"
                     :style="{ width: item.percentage + '%' }"

@@ -48,10 +48,10 @@ const isStepCompleted = (step: number) => step < currentStep.value
       <div class="relative flex justify-between">
         <div class="absolute top-5 left-0 w-full h-0.5 bg-slate-200 dark:bg-slate-800 -z-0"></div>
         <div class="absolute top-5 left-0 h-0.5 bg-primary -z-0" :style="{ width: ((currentStep - 1) / (totalSteps - 1)) * 100 + '%' }"></div>
-        
+
         <template v-for="step in steps" :key="step.number">
           <div class="relative z-10 flex flex-col items-center group">
-            <div 
+            <div
               class="w-10 h-10 rounded-full flex items-center justify-center font-bold ring-4 ring-background-light dark:ring-background-dark"
               :class="isStepCompleted(step.number) ? 'bg-primary text-white' : isStepActive(step.number) ? 'bg-primary text-white' : 'bg-slate-200 dark:bg-slate-800 text-slate-500'"
             >
@@ -74,7 +74,7 @@ const isStepCompleted = (step: number) => step < currentStep.value
               Informacion del Cese
             </h2>
           </div>
-          
+
           <form class="space-y-6">
             <!-- Collaborator Selector -->
             <div>
@@ -83,16 +83,16 @@ const isStepCompleted = (step: number) => step < currentStep.value
                 <span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
                   <span class="material-icons-round text-lg">search</span>
                 </span>
-                <input 
+                <input
                   v-model="formData.employeeSearch"
-                  class="w-full pl-10 pr-4 py-3 bg-slate-50 dark:bg-slate-800 border-slate-200 dark:border-slate-700 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-all outline-none text-sm" 
-                  placeholder="Buscar por nombre, DNI o ID..." 
+                  class="w-full pl-10 pr-4 py-3 bg-slate-50 dark:bg-slate-800 border-slate-200 dark:border-slate-700 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-all outline-none text-sm"
+                  placeholder="Buscar por nombre, DNI o ID..."
                   type="text"
                 />
               </div>
               <p class="mt-2 text-xs text-slate-400">Ingrese el nombre del colaborador para cargar su ficha actual.</p>
             </div>
-            
+
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
               <!-- Exit Date -->
               <div>
@@ -101,18 +101,18 @@ const isStepCompleted = (step: number) => step < currentStep.value
                   <span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
                     <span class="material-icons-round text-lg">calendar_today</span>
                   </span>
-                  <input 
+                  <input
                     v-model="formData.lastWorkDay"
-                    class="w-full pl-10 pr-4 py-3 bg-slate-50 dark:bg-slate-800 border-slate-200 dark:border-slate-700 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-all outline-none text-sm" 
+                    class="w-full pl-10 pr-4 py-3 bg-slate-50 dark:bg-slate-800 border-slate-200 dark:border-slate-700 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-all outline-none text-sm"
                     type="date"
                   />
                 </div>
               </div>
-              
+
               <!-- Reason Select -->
               <div>
                 <label class="block text-sm font-semibold mb-2">Motivo de Cese</label>
-                <select 
+                <select
                   v-model="formData.terminationReason"
                   class="w-full px-4 py-3 bg-slate-50 dark:bg-slate-800 border-slate-200 dark:border-slate-700 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-all outline-none text-sm appearance-none"
                 >
@@ -122,25 +122,25 @@ const isStepCompleted = (step: number) => step < currentStep.value
                 </select>
               </div>
             </div>
-            
+
             <!-- Notes -->
             <div>
               <label class="block text-sm font-semibold mb-2">Observaciones Adicionales</label>
-              <textarea 
+              <textarea
                 v-model="formData.notes"
-                class="w-full px-4 py-3 bg-slate-50 dark:bg-slate-800 border-slate-200 dark:border-slate-700 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-all outline-none text-sm resize-none" 
-                placeholder="Detalles adicionales sobre el proceso de salida..." 
+                class="w-full px-4 py-3 bg-slate-50 dark:bg-slate-800 border-slate-200 dark:border-slate-700 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-all outline-none text-sm resize-none"
+                placeholder="Detalles adicionales sobre el proceso de salida..."
                 rows="4"
               ></textarea>
             </div>
-            
+
             <!-- Action Buttons -->
             <div class="flex items-center justify-end gap-4 pt-4">
               <button class="px-6 py-2.5 text-sm font-semibold text-slate-500 hover:text-slate-800 dark:hover:text-slate-200 transition-colors" type="button">
                 Cancelar
               </button>
-              <button 
-                class="px-8 py-2.5 bg-primary hover:bg-primary/90 text-white rounded-lg font-bold text-sm shadow-lg shadow-primary/20 transition-all flex items-center gap-2" 
+              <button
+                class="px-8 py-2.5 bg-primary hover:bg-primary/90 text-white rounded-lg font-bold text-sm shadow-lg shadow-primary/20 transition-all flex items-center gap-2"
                 type="submit"
               >
                 Continuar Proceso
@@ -150,7 +150,7 @@ const isStepCompleted = (step: number) => step < currentStep.value
           </form>
         </div>
       </div>
-      
+
       <!-- Side Information Panel -->
       <div class="space-y-6">
         <!-- Legal Alert Box -->
@@ -175,7 +175,7 @@ const isStepCompleted = (step: number) => step < currentStep.value
             </p>
           </div>
         </div>
-        
+
         <!-- Guidance Card -->
         <div class="bg-slate-900 border border-slate-800 rounded-xl p-6 shadow-xl">
           <h3 class="text-sm font-bold uppercase tracking-wider text-slate-500 mb-4 flex items-center gap-2">
@@ -197,12 +197,12 @@ const isStepCompleted = (step: number) => step < currentStep.value
             </li>
           </ul>
         </div>
-        
+
         <!-- Illustration -->
         <div class="rounded-xl overflow-hidden border border-slate-200 dark:border-slate-800 h-48 relative group">
-          <img 
-            alt="Workspace" 
-            class="w-full h-full object-cover opacity-50 group-hover:scale-105 transition-transform duration-700" 
+          <img
+            alt="Workspace"
+            class="w-full h-full object-cover opacity-50 group-hover:scale-105 transition-transform duration-700"
             src="https://lh3.googleusercontent.com/aida-public/AB6AXuAByeXRycSSvhGw9O0Kwz-WE6301b2G866W8T-tisDuarEdqcig_IyZEzTtD3CYZPvQ9a8znP-jAgLzZEyv-cT-fa6yGdgCvhV3DgQGLR15Fpu1p6BHX4CN-s8341yqqqefxrJKjSEApk2q_TOUigiOeMP_iTx6lDqbpI9kWxHvbLs5VDUzviw11BVR0FeXmTahaI186NdbIwJJ9ARZ3u9cn-vONwnoVOiM4139pyaJtirrBrshQyVNPTHMbcl8MdFYFMU4c-vtwKf0"
           />
           <div class="absolute inset-0 bg-gradient-to-t from-background-dark to-transparent"></div>

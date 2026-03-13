@@ -92,11 +92,11 @@ CREATE INDEX IF NOT EXISTS idx_financial_incidents_tenant ON financial_incidents
 CREATE INDEX IF NOT EXISTS idx_financial_incidents_employee ON financial_incidents(employee_id);
 
 -- Seed data inicial (tenant de prueba)
-INSERT INTO tenants (id, name, status, subscription_plan) 
+INSERT INTO tenants (id, name, status, subscription_plan)
 VALUES ('tenant_default', 'Empresa Demo', 'ACTIVE', 'FREE');
 
 -- Usuario demo (password: demo123)
-INSERT INTO users (id, email, password_hash, role, tenant_id) 
+INSERT INTO users (id, email, password_hash, role, tenant_id)
 VALUES (
     'user_demo',
     'demo@rrhhmod.com',
@@ -106,15 +106,15 @@ VALUES (
 );
 
 -- Entidad legal demo
-INSERT INTO legal_entities (id, tenant_id, ruc, business_name, regime) 
+INSERT INTO legal_entities (id, tenant_id, ruc, business_name, regime)
 VALUES ('legal_default', 'tenant_default', '20123456789', 'Empresa Demo S.A.C.', 'GENERAL_728');
 
 -- Venue demo
-INSERT INTO venues (id, tenant_id, name, cost_center_code) 
+INSERT INTO venues (id, tenant_id, name, cost_center_code)
 VALUES ('venue_default', 'tenant_default', 'Sede Principal', 'CC001');
 
 -- Empleado demo
-INSERT INTO employees (id, tenant_id, current_venue_id, full_name, dni, basic_salary, has_children, pension_system) 
+INSERT INTO employees (id, tenant_id, current_venue_id, full_name, dni, basic_salary, has_children, pension_system)
 VALUES (
     'emp_demo',
     'tenant_default',

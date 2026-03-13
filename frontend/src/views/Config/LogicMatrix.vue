@@ -31,7 +31,7 @@ const fetchData = async () => {
       axios.get('/api/v1/venues', { headers: { Authorization: `Bearer ${auth.token}` } }),
       axios.get('/api/v1/legal-entities', { headers: { Authorization: `Bearer ${auth.token}` } }),
     ]);
-    
+
     if (matrixRes.data.success) matrix.value = matrixRes.data.data;
     if (venuesRes.data.success) venues.value = venuesRes.data.data;
     if (entitiesRes.data.success) legalEntities.value = entitiesRes.data.data;
@@ -59,7 +59,7 @@ const handleSave = async () => {
 
 const handleDelete = async (id: string) => {
   if (!confirm('¿Eliminar esta configuración?')) return;
-  
+
   try {
     await axios.delete(`/api/v1/config/matrix/${id}`, {
       headers: { Authorization: `Bearer ${auth.token}` }
@@ -201,7 +201,7 @@ onMounted(() => {
     <Teleport to="body">
       <div v-if="showForm" class="fixed inset-0 z-50 flex items-center justify-center">
         <div class="absolute inset-0 bg-black/50" @click="showForm = false"></div>
-        
+
         <div class="relative bg-white dark:bg-slate-800 rounded-2xl shadow-2xl w-full max-w-lg mx-4 p-6">
           <div class="flex items-center justify-between mb-6">
             <h3 class="text-xl font-bold text-slate-900 dark:text-white">Nueva Regla de Asignación</h3>

@@ -65,30 +65,30 @@ export interface Employee extends BaseEntity {
   profesion?: string
   licenciaConducir?: string
   hijos: number
-  
+
   // Datos bancarios
   banco?: string
   tipoCuenta?: TipoCuenta
   numeroCuenta?: string
   numeroCCI?: string
-  
+
   // Datos familiares
   nombreConyuge?: string
   dniConyuge?: string
   nombrePadre?: string
   nombreMadre?: string
-  
+
   // Fotos y documentos
   foto?: string
   fotoDNI?: string
   fotoRUC?: string
-  
+
   // Control
   estado: EstadoEmpleado
   fechaIngreso: string
   fechaCese?: string
   motivoCese?: string
-  
+
   // Campos calculados (no en BD)
   contracts?: Contract[]
   currentContract?: Contract
@@ -118,14 +118,14 @@ export interface Contract extends BaseEntity {
   tipoMoneda: string
   formaPago: string
   medioPago: string
-  
+
   // Asignaciones
   asignacionFamiliar: number
   bonificacionProductividad?: number
   bonificacionPuesto?: number
   movilidad?: number
   refrigerio?: number
-  
+
   // Beneficios sociales
   seguroSalud?: string
   nombreEPS?: string
@@ -133,22 +133,22 @@ export interface Contract extends BaseEntity {
   nombreAFP?: string
   cuspp?: string
   tipoSeguro?: string
-  
+
   // Contingencias
   tieneCTS: boolean
   tieneVacaciones: boolean
   tieneGratificaciones: boolean
   tieneUtilidades: boolean
-  
+
   // Estado
   estado: string
   motivoSuspension?: string
   archivoContrato?: string
   archivoAddendum?: string
-  
+
   // Auditoría
   createdById?: string
-  
+
   // Relaciones
   employee?: Employee
 }
@@ -177,13 +177,13 @@ export interface EmployeeCreate {
   direccion?: string
   telefono?: string
   email?: string
-  
+
   // Datos bancarios
   banco?: string
   tipoCuenta?: TipoCuenta
   numeroCuenta?: string
   numeroCCI?: string
-  
+
   // Datos laborales
   fechaIngreso: string
   puesto?: string
@@ -211,24 +211,24 @@ export interface EmployeeUpdate {
   profesion?: string
   licenciaConducir?: string
   hijos?: number
-  
+
   // Datos bancarios
   banco?: string
   tipoCuenta?: TipoCuenta
   numeroCuenta?: string
   numeroCCI?: string
-  
+
   // Datos familiares
   nombreConyuge?: string
   dniConyuge?: string
   nombrePadre?: string
   nombreMadre?: string
-  
+
   // Fotos y documentos
   foto?: string
   fotoDNI?: string
   fotoRUC?: string
-  
+
   // Control
   estado?: EstadoEmpleado
   fechaCese?: string

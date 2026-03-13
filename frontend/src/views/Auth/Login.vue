@@ -15,7 +15,7 @@ const showPassword = ref(false);
 const handleLogin = async () => {
   loading.value = true;
   error.value = '';
-  
+
   try {
     const success = await auth.login(email.value, password.value);
     if (success) {
@@ -39,7 +39,7 @@ const togglePassword = () => {
   <div class="min-h-screen flex items-center justify-center p-6 relative overflow-hidden bg-slate-900">
     <!-- Background Grid Pattern -->
     <div class="absolute inset-0 opacity-[0.03] pointer-events-none bg-[linear-gradient(to_right,#1e293b_1px,transparent_1px),linear-gradient(to_bottom,#1e293b_1px,transparent_1px)] bg-[size:40px_40px]"></div>
-    
+
     <!-- Abstract Gradient Blobs -->
     <div class="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-blue-600/20 rounded-full blur-[120px] pointer-events-none"></div>
     <div class="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-indigo-900/30 rounded-full blur-[120px] pointer-events-none"></div>

@@ -42,22 +42,22 @@ const fetchFinancials = async () => {
 // Filtered data
 const filteredData = computed(() => {
   let data = financials.value;
-  
+
   if (activeTab.value === 'discounts') {
     data = data.filter(f => ['LOAN', 'ADVANCE'].includes(f.type));
   } else {
     data = data.filter(f => f.type === 'JUDICIAL');
   }
-  
+
   if (searchQuery.value) {
     const query = searchQuery.value.toLowerCase();
-    data = data.filter(f => 
+    data = data.filter(f =>
       f.employee?.full_name?.toLowerCase().includes(query) ||
       f.employee?.dni?.includes(query) ||
       f.description?.toLowerCase().includes(query)
     );
   }
-  
+
   return data;
 });
 

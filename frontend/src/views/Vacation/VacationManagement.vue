@@ -140,8 +140,8 @@ const getStatusIcon = (status: string) => {
       <div class="p-6 border-b border-slate-200 dark:border-slate-800">
         <div class="flex flex-col md:flex-row gap-4 justify-between">
           <div class="flex gap-2">
-            <button 
-              v-for="tab in tabs" 
+            <button
+              v-for="tab in tabs"
               :key="tab.id"
               @click="currentTab = tab.id"
               class="px-4 py-2 rounded-lg text-sm font-medium flex items-center gap-2 transition-colors"

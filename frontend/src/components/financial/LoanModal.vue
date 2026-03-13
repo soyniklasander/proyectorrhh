@@ -54,7 +54,7 @@ const handlePinComplete = () => {
 
 const handleSubmit = () => {
   if (!pinComplete.value) return;
-  
+
   emit('save', {
     ...form.value,
     security_pin: securityPin.value,
@@ -112,8 +112,8 @@ const handleSubmit = () => {
                 @click="form.type = type.value as any"
                 type="button"
                 class="flex flex-col items-center p-4 rounded-xl border-2 transition-all"
-                :class="form.type === type.value 
-                  ? 'border-amber-500 bg-amber-50 text-amber-700' 
+                :class="form.type === type.value
+                  ? 'border-amber-500 bg-amber-50 text-amber-700'
                   : 'border-slate-200 hover:border-slate-300'"
               >
                 <svg class="w-8 h-8 mb-2" :class="form.type === type.value ? 'text-amber-500' : 'text-slate-400'" fill="none" stroke="currentColor" viewBox="0 0 24 24">

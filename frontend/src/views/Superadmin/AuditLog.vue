@@ -160,9 +160,9 @@ const toggleDetails = (id: string) => {
             <span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
               <span class="material-icons text-slate-400 text-[20px]">search</span>
             </span>
-            <input 
-              class="block w-full pl-10 pr-3 py-2.5 bg-slate-50 dark:bg-background-dark border border-slate-300 dark:border-slate-700 rounded-lg text-sm text-slate-900 dark:text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-shadow" 
-              placeholder="Ej: Juan Pérez o EMP-2023-001" 
+            <input
+              class="block w-full pl-10 pr-3 py-2.5 bg-slate-50 dark:bg-background-dark border border-slate-300 dark:border-slate-700 rounded-lg text-sm text-slate-900 dark:text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-shadow"
+              placeholder="Ej: Juan Pérez o EMP-2023-001"
               type="text"
             />
           </div>
@@ -202,11 +202,11 @@ const toggleDetails = (id: string) => {
         <div class="col-span-2 text-right pr-4">Cambio de Valor</div>
         <div class="col-span-2">Justificación</div>
       </div>
-      
+
       <!-- Table Body - Scrollable -->
       <div class="overflow-y-auto flex-1">
-        <div 
-          v-for="entry in auditEntries" 
+        <div
+          v-for="entry in auditEntries"
           :key="entry.id"
           class="grid grid-cols-12 gap-4 px-6 py-4 border-b border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-surface-hover transition-colors items-center group cursor-pointer"
           @click="toggleDetails(entry.id)"
@@ -220,16 +220,16 @@ const toggleDetails = (id: string) => {
               </div>
             </div>
           </div>
-          
+
           <div class="col-span-2 flex items-center gap-3">
-            <img 
-              class="w-8 h-8 rounded-full" 
-              :alt="`Avatar de ${entry.responsible.name}`" 
-              :src="entry.responsible.avatar" 
+            <img
+              class="w-8 h-8 rounded-full"
+              :alt="`Avatar de ${entry.responsible.name}`"
+              :src="entry.responsible.avatar"
             />
             <div>
               <p class="text-sm font-medium text-slate-900 dark:text-white">{{ entry.responsible.name }}</p>
-              <p 
+              <p
                 class="text-xs"
                 :class="entry.responsible.isSystem ? 'text-orange-400' : 'text-primary dark:text-blue-400'"
               >
@@ -237,29 +237,29 @@ const toggleDetails = (id: string) => {
               </p>
             </div>
           </div>
-          
+
           <div class="col-span-2">
             <p class="text-sm font-medium text-slate-900 dark:text-white">{{ entry.employee.name }}</p>
             <p class="text-xs text-slate-500 dark:text-slate-400">ID: {{ entry.employee.id }}</p>
           </div>
-          
+
           <div class="col-span-2">
-            <span 
+            <span
               class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium border"
               :class="getFieldBadgeColor(entry.fieldType)"
             >
               {{ entry.field }}
             </span>
           </div>
-          
+
           <div class="col-span-2 text-right pr-4 font-mono text-sm">
             <span class="diff-removed mr-2">{{ entry.oldValue }}</span>
             <span class="material-icons text-slate-400 text-[12px] align-middle mx-1">arrow_forward</span>
             <span class="diff-added px-1.5 py-0.5 rounded font-semibold border border-green-500/20">{{ entry.newValue }}</span>
           </div>
-          
+
           <div class="col-span-2 relative">
-            <p 
+            <p
               class="text-sm text-slate-600 dark:text-slate-300 truncate pr-6"
               :title="entry.justification"
             >

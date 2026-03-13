@@ -12,12 +12,12 @@ const resendTimer = ref(59);
 
 const handleSubmit = async () => {
   loading.value = true;
-  
+
   // Simulate API call
   setTimeout(() => {
     loading.value = false;
     submitted.value = true;
-    
+
     // Start resend timer
     const interval = setInterval(() => {
       resendTimer.value--;
@@ -58,7 +58,7 @@ const goToLogin = () => {
           </div>
           <h2 class="text-2xl font-bold text-white">ERPRick</h2>
         </div>
-        
+
         <h1 class="text-2xl font-bold text-white">Recuperar mi contraseña</h1>
         <p class="mt-2 text-sm text-slate-400">
           Ingresa tu correo electrónico y te enviaremos un token de recuperación seguro.
@@ -83,7 +83,7 @@ const goToLogin = () => {
           </p>
           <p class="text-xs text-slate-500">
             ¿No recibiste el correo?
-            <button 
+            <button
               v-if="resendTimer === 0"
               @click="resendToken"
               class="font-medium text-blue-400 hover:text-blue-300"

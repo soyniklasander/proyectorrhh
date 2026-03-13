@@ -35,7 +35,7 @@ const getStatusBadge = (status: string) => {
         <div>
           <h4 class="font-semibold text-blue-800 dark:text-blue-200">Cierres Inmutables</h4>
           <p class="text-sm text-blue-700 dark:text-blue-300 mt-1">
-            Una vez que un periodo de planilla es cerrado, sus datos quedan almacenados de forma inmutable. 
+            Una vez que un periodo de planilla es cerrado, sus datos quedan almacenados de forma inmutable.
             No es posible modificar Boletas de Pago, Planillas niPDT una vez confirmado el cierre.
             Solo es posible generar anexos de regularizacion para periodos posteriores.
           </p>

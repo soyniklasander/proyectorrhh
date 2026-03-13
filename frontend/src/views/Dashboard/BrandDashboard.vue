@@ -128,10 +128,10 @@
             <div class="w-full border-t border-dashed border-gray-200 dark:border-gray-700/50 h-0"></div>
           </div>
           <div v-for="(month, index) in payrollEvolution" :key="index" class="w-full relative group cursor-pointer">
-            <div 
+            <div
               :class="[
-                month.isProjection 
-                  ? 'bg-primary/50 border-2 border-dashed border-primary/30' 
+                month.isProjection
+                  ? 'bg-primary/50 border-2 border-dashed border-primary/30'
                   : 'bg-primary hover:bg-blue-600 shadow-lg shadow-primary/30'
               ]"
               :style="{ height: month.percentage + '%' }"

@@ -126,11 +126,11 @@ app.route('/api/v1', api);
 api.get('/legal-entities', async (c) => {
   const tenantId = c.get('tenantId') as string;
   const db = drizzle(c.env.DB, { schema });
-  
+
   const entities = await db.query.legalEntities.findMany({
     where: eq(schema.legalEntities.tenant_id, tenantId),
   });
-  
+
   return c.json({ success: true, data: entities });
 });
 
@@ -138,7 +138,7 @@ api.post('/legal-entities', async (c) => {
   const tenantId = c.get('tenantId') as string;
   const { ruc, business_name, regime } = await c.req.json();
   const db = drizzle(c.env.DB, { schema });
-  
+
   const [entity] = await db.insert(schema.legalEntities).values({
     id: nanoid(),
     tenant_id: tenantId,
@@ -146,7 +146,7 @@ api.post('/legal-entities', async (c) => {
     business_name,
     regime,
   }).returning();
-  
+
   return c.json({ success: true, data: entity });
 });
 
@@ -156,11 +156,11 @@ api.post('/legal-entities', async (c) => {
 api.get('/venues', async (c) => {
   const tenantId = c.get('tenantId') as string;
   const db = drizzle(c.env.DB, { schema });
-  
+
   const venues = await db.query.venues.findMany({
     where: eq(schema.venues.tenant_id, tenantId),
   });
-  
+
   return c.json({ success: true, data: venues });
 });
 
@@ -168,14 +168,14 @@ api.post('/venues', async (c) => {
   const tenantId = c.get('tenantId') as string;
   const { name, cost_center_code } = await c.req.json();
   const db = drizzle(c.env.DB, { schema });
-  
+
   const [venue] = await db.insert(schema.venues).values({
     id: nanoid(),
     tenant_id: tenantId,
     name,
     cost_center_code,
   }).returning();
-  
+
   return c.json({ success: true, data: venue });
 });
 
@@ -185,14 +185,14 @@ api.post('/venues', async (c) => {
 api.get('/employees', async (c) => {
   const tenantId = c.get('tenantId') as string;
   const db = drizzle(c.env.DB, { schema });
-  
+
   const employees = await db.query.employees.findMany({
     where: eq(schema.employees.tenant_id, tenantId),
     with: {
       venue: true
     }
   });
-  
+
   return c.json({ success: true, data: employees });
 });
 
@@ -200,7 +200,7 @@ api.post('/employees', async (c) => {
   const tenantId = c.get('tenantId') as string;
   const { full_name, dni, current_venue_id, basic_salary, has_children, pension_system } = await c.req.json();
   const db = drizzle(c.env.DB, { schema });
-  
+
   const [employee] = await db.insert(schema.employees).values({
     id: nanoid(),
     tenant_id: tenantId,
@@ -211,7 +211,7 @@ api.post('/employees', async (c) => {
     has_children,
     pension_system,
   }).returning();
-  
+
   return c.json({ success: true, data: employee });
 });
 
@@ -221,7 +221,7 @@ api.post('/employees', async (c) => {
 api.get('/config/matrix', async (c) => {
   const tenantId = c.get('tenantId') as string;
   const db = drizzle(c.env.DB, { schema });
-  
+
   const matrix = await db.query.logicMatrix.findMany({
     where: eq(schema.logicMatrix.tenant_id, tenantId),
     with: {
@@ -229,7 +229,7 @@ api.get('/config/matrix', async (c) => {
       targetLegalEntity: true,
     }
   });
-  
+
   return c.json({ success: true, data: matrix });
 });
 
@@ -237,7 +237,7 @@ api.post('/config/matrix', async (c) => {
   const tenantId = c.get('tenantId') as string;
   const { venue_id, shift, target_legal_entity_id } = await c.req.json();
   const db = drizzle(c.env.DB, { schema });
-  
+
   const [matrixEntry] = await db.insert(schema.logicMatrix).values({
     id: nanoid(),
     tenant_id: tenantId,
@@ -245,7 +245,7 @@ api.post('/config/matrix', async (c) => {
     shift,
     target_legal_entity_id,
   }).returning();
-  
+
   return c.json({ success: true, data: matrixEntry });
 });
 
@@ -253,14 +253,14 @@ api.delete('/config/matrix/:id', async (c) => {
   const tenantId = c.get('tenantId') as string;
   const id = c.req.param('id');
   const db = drizzle(c.env.DB, { schema });
-  
+
   await db.delete(schema.logicMatrix).where(
     and(
       eq(schema.logicMatrix.id, id),
       eq(schema.logicMatrix.tenant_id, tenantId)
     )
   );
-  
+
   return c.json({ success: true });
 });
 
@@ -270,14 +270,14 @@ api.delete('/config/matrix/:id', async (c) => {
 api.get('/financials', async (c) => {
   const tenantId = c.get('tenantId') as string;
   const db = drizzle(c.env.DB, { schema });
-  
+
   const financials = await db.query.financialIncidents.findMany({
     where: eq(schema.financialIncidents.tenant_id, tenantId),
     with: {
       employee: true,
     }
   });
-  
+
   return c.json({ success: true, data: financials });
 });
 
@@ -285,7 +285,7 @@ api.post('/financials', async (c) => {
   const tenantId = c.get('tenantId') as string;
   const { employee_id, type, description, amount, installments_total, start_date } = await c.req.json();
   const db = drizzle(c.env.DB, { schema });
-  
+
   const [incident] = await db.insert(schema.financialIncidents).values({
     id: nanoid(),
     tenant_id: tenantId,
@@ -298,7 +298,7 @@ api.post('/financials', async (c) => {
     status: 'ACTIVE',
     start_date: new Date(start_date),
   }).returning();
-  
+
   return c.json({ success: true, data: incident });
 });
 
