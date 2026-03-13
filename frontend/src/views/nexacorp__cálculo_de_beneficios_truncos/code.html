@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">tailwind.config = {darkMode: "class", theme: {extend: {colors: {primary: "#2c60ce", "background-light": "#f6f6f8", "background-dark": "#121720"}, fontFamily: {display: "Inter"}, borderRadius: {DEFAULT: "0.5rem", lg: "1rem", xl: "1.5rem", full: "9999px"}}}};</script>
+<title>NexaCorp - Liquidación de Beneficios</title>
+</head>
+<body class="font-display bg-background-light dark:bg-background-dark text-slate-800 dark:text-slate-200 min-h-screen">
+<!-- Top Navigation -->
+<nav class="border-b border-slate-200 dark:border-slate-800 bg-white/50 dark:bg-background-dark/50 backdrop-blur-md sticky top-0 z-50">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex justify-between items-center h-16">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 bg-primary rounded flex items-center justify-center">
+<span class="material-icons-round text-white">layers</span>
+</div>
+<span class="text-xl font-bold tracking-tight text-slate-900 dark:text-white">Nexa<span class="text-primary">Corp</span></span>
+</div>
+<div class="flex items-center gap-4">
+<button class="p-2 text-slate-500 hover:text-primary transition-colors">
+<span class="material-icons-round">notifications</span>
+</button>
+<div class="h-8 w-px bg-slate-200 dark:bg-slate-800"></div>
+<div class="flex items-center gap-3">
+<div class="text-right hidden sm:block">
+<p class="text-xs font-semibold text-slate-900 dark:text-white">RRHH Admin</p>
+<p class="text-[10px] text-slate-500">Módulo Offboarding</p>
+</div>
+<img alt="Profile" class="h-8 w-8 rounded-full border border-primary/30" data-alt="Portrait of an HR administrator" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDHIe6fcHlpS3HO5HALNSN0zCJj0Q-jM3ZriuVZY5MuQh9nXGQ6iaZg-BzLbTMJjzkVZXJO2DIjvZDd6An-zVHWm6YH6XwFoVBEE4ieikzdKFc0qNxcPGIKFZiW36p9PsekPbdK0l3T7dlPFBDANDZYaPhvmy9mIFOK4jwGoGslvCYlRv__WO3ElTa4g1-D-_I9xhEroPuvEOyvcUXuWlcHEGQoBdZC2syZWXicwns6oAK_B_6GN1vAeziGezKJ5SCiH_3Dd4QM-Cfo"/>
+</div>
+</div>
+</div>
+</div>
+</nav>
+<main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+<!-- Step Indicator -->
+<div class="mb-8">
+<div class="flex items-center justify-between max-w-2xl mx-auto relative">
+<div class="absolute top-1/2 left-0 w-full h-0.5 bg-slate-200 dark:bg-slate-800 -translate-y-1/2 z-0"></div>
+<div class="relative z-10 flex flex-col items-center">
+<div class="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center text-sm font-bold border-4 border-background-light dark:border-background-dark">1</div>
+<span class="text-[10px] mt-2 font-semibold uppercase tracking-wider text-slate-500">Datos</span>
+</div>
+<div class="relative z-10 flex flex-col items-center">
+<div class="w-10 h-10 rounded-full bg-primary text-white flex items-center justify-center text-sm font-bold ring-4 ring-primary/20 border-4 border-background-light dark:border-background-dark">2</div>
+<span class="text-[10px] mt-2 font-semibold uppercase tracking-wider text-primary">Liquidación</span>
+</div>
+<div class="relative z-10 flex flex-col items-center">
+<div class="w-8 h-8 rounded-full bg-slate-200 dark:bg-slate-800 text-slate-500 flex items-center justify-center text-sm font-bold border-4 border-background-light dark:border-background-dark">3</div>
+<span class="text-[10px] mt-2 font-semibold uppercase tracking-wider text-slate-500">Firma</span>
+</div>
+<div class="relative z-10 flex flex-col items-center">
+<div class="w-8 h-8 rounded-full bg-slate-200 dark:bg-slate-800 text-slate-500 flex items-center justify-center text-sm font-bold border-4 border-background-light dark:border-background-dark">4</div>
+<span class="text-[10px] mt-2 font-semibold uppercase tracking-wider text-slate-500">Cierre</span>
+</div>
+</div>
+</div>
+<!-- Header Section -->
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8">
+<div>
+<h1 class="text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight">Cálculo de Beneficios Truncos</h1>
+<p class="text-slate-500 dark:text-slate-400 mt-1">Hoja de liquidación automática según normativa laboral peruana.</p>
+</div>
+<div class="flex gap-3">
+<button class="flex items-center gap-2 px-4 py-2 rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-sm font-semibold hover:bg-slate-50 dark:hover:bg-slate-800 transition-all">
+<span class="material-icons-round text-sm">picture_as_pdf</span>
+                    Exportar PDF
+                </button>
+<button class="flex items-center gap-2 px-4 py-2 rounded-lg bg-primary text-white text-sm font-semibold hover:bg-primary/90 transition-all shadow-lg shadow-primary/20">
+<span class="material-icons-round text-sm">send</span>
+                    Enviar a Revisión
+                </button>
+</div>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+<!-- Sidebar: Employee Context -->
+<div class="lg:col-span-4 space-y-6">
+<!-- Employee Card -->
+<div class="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 p-6">
+<div class="flex items-start gap-4 mb-6">
+<img alt="Employee" class="w-16 h-16 rounded-xl object-cover" data-alt="Portrait of an adult male employee" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDqp44MWwVWm1nOGTqXCqGpdGzIb5M4O7ksKQdswLC-wX_8Hg1xVXtoITq6PWDyzya2mbTMBoFkisiQkjl1CBIWXYuNweSjav9gAnjIS0r2pEnP_unYUu94vmnCBk-DtxL1nopB6Qj9U9z0m0A5aQMCEyJEgpiHJUR2HFWUcUHL-_38VZ-RcwhWW_4HHQoj6EO2GNXKNqCEBdEPczuqUIfAOKXaZFBD8dRKHB8I-Rn0UbMeWHrZyUHnxJ9YhNeOxzb7ZDpgZED7lXx8"/>
+<div>
+<h3 class="font-bold text-slate-900 dark:text-white">Carlos Andreé Torres</h3>
+<p class="text-xs text-slate-500">ID: NX-90244 | Analista Senior</p>
+<span class="mt-2 inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-primary/10 text-primary border border-primary/20">
+                                Régimen General
+                            </span>
+</div>
+</div>
+<div class="space-y-4">
+<div class="flex justify-between text-sm">
+<span class="text-slate-500">Fecha Ingreso:</span>
+<span class="font-medium text-slate-700 dark:text-slate-300">15/03/2021</span>
+</div>
+<div class="flex justify-between text-sm">
+<span class="text-slate-500">Fecha Cese:</span>
+<span class="font-medium text-slate-700 dark:text-slate-300">10/11/2023</span>
+</div>
+<div class="flex justify-between text-sm">
+<span class="text-slate-500">Sueldo Base:</span>
+<span class="font-medium text-slate-700 dark:text-slate-300">S/ 6,500.00</span>
+</div>
+<div class="pt-4 border-t border-slate-100 dark:border-slate-800">
+<label class="text-[10px] font-bold uppercase text-slate-400 tracking-widest block mb-2">Motivo de Cese</label>
+<div class="flex items-center gap-2 text-rose-500 font-semibold text-sm">
+<span class="material-icons-round text-sm">warning</span>
+                                Despido Arbitrario
+                            </div>
+</div>
+</div>
+</div>
+<!-- Summary Totals -->
+<div class="bg-primary rounded-xl p-6 text-white shadow-xl shadow-primary/20 relative overflow-hidden group">
+<div class="absolute -right-4 -bottom-4 opacity-10 group-hover:scale-110 transition-transform">
+<span class="material-icons-round text-9xl">payments</span>
+</div>
+<p class="text-sm font-medium opacity-80 mb-1">Monto Neto a Pagar</p>
+<h2 class="text-4xl font-extrabold tracking-tight">S/ 24,185.20</h2>
+<div class="mt-6 space-y-2">
+<div class="flex justify-between text-xs">
+<span class="opacity-70">Subtotal Ingresos:</span>
+<span>S/ 26,450.00</span>
+</div>
+<div class="flex justify-between text-xs">
+<span class="opacity-70">Total Descuentos:</span>
+<span class="text-rose-200">(- S/ 2,264.80)</span>
+</div>
+</div>
+</div>
+<!-- Alert/Indemnity Info -->
+<div class="bg-rose-50 dark:bg-rose-500/10 border border-rose-200 dark:border-rose-500/20 rounded-xl p-4">
+<div class="flex gap-3">
+<span class="material-icons-round text-rose-500">info</span>
+<div>
+<h4 class="text-sm font-bold text-rose-700 dark:text-rose-400">Cálculo de Indemnización Activo</h4>
+<p class="text-xs text-rose-600 dark:text-rose-300/80 mt-1 leading-relaxed">
+                                Debido al motivo de cese, se ha calculado automáticamente la indemnización por despido arbitrario (1.5 sueldos por año trabajado).
+                            </p>
+</div>
+</div>
+</div>
+</div>
+<!-- Main Table Section -->
+<div class="lg:col-span-8 space-y-6">
+<!-- Detailed Benefits Table -->
+<div class="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 overflow-hidden">
+<div class="px-6 py-4 border-b border-slate-200 dark:border-slate-800 flex justify-between items-center bg-slate-50/50 dark:bg-slate-800/30">
+<h3 class="font-bold text-slate-900 dark:text-white flex items-center gap-2">
+<span class="material-icons-round text-primary">account_balance_wallet</span>
+                            Desglose de Beneficios Truncos
+                        </h3>
+<button class="text-primary text-xs font-bold hover:underline">Recalcular todo</button>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left">
+<thead class="bg-slate-50 dark:bg-slate-800/50 text-[10px] uppercase tracking-widest text-slate-500 font-bold">
+<tr>
+<th class="px-6 py-4">Concepto</th>
+<th class="px-6 py-4">Sueldo Base</th>
+<th class="px-6 py-4">Periodo/Días</th>
+<th class="px-6 py-4 text-right">Monto (S/)</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-slate-100 dark:divide-slate-800">
+<tr>
+<td class="px-6 py-4">
+<p class="text-sm font-semibold text-slate-900 dark:text-white">CTS Trunca</p>
+<p class="text-[10px] text-slate-500">Periodo: Mayo - Octubre 2023</p>
+</td>
+<td class="px-6 py-4 text-sm text-slate-600 dark:text-slate-400">S/ 6,500.00</td>
+<td class="px-6 py-4 text-sm text-slate-600 dark:text-slate-400">6 meses, 10 días</td>
+<td class="px-6 py-4 text-sm font-bold text-slate-900 dark:text-white text-right">S/ 3,550.00</td>
+</tr>
+<tr>
+<td class="px-6 py-4">
+<p class="text-sm font-semibold text-slate-900 dark:text-white">Gratificación Trunca</p>
+<p class="text-[10px] text-slate-500">Julio - Diciembre (Proporcional)</p>
+</td>
+<td class="px-6 py-4 text-sm text-slate-600 dark:text-slate-400">S/ 6,500.00</td>
+<td class="px-6 py-4 text-sm text-slate-600 dark:text-slate-400">4 meses</td>
+<td class="px-6 py-4 text-sm font-bold text-slate-900 dark:text-white text-right">S/ 4,333.33</td>
+</tr>
+<tr>
+<td class="px-6 py-4">
+<p class="text-sm font-semibold text-slate-900 dark:text-white">Vacaciones Truncas</p>
+<p class="text-[10px] text-slate-500">Días pendientes: 12.5 días</p>
+</td>
+<td class="px-6 py-4 text-sm text-slate-600 dark:text-slate-400">S/ 6,500.00</td>
+<td class="px-6 py-4 text-sm text-slate-600 dark:text-slate-400">12.5 días</td>
+<td class="px-6 py-4 text-sm font-bold text-slate-900 dark:text-white text-right">S/ 2,708.33</td>
+</tr>
+<tr class="bg-primary/5">
+<td class="px-6 py-4">
+<p class="text-sm font-bold text-primary">Indemnización</p>
+<p class="text-[10px] text-primary/80">Cese Arbitrario Art. 38 LPCL</p>
+</td>
+<td class="px-6 py-4 text-sm text-primary/80">S/ 6,500.00</td>
+<td class="px-6 py-4 text-sm text-primary/80">2.6 años (tope 12)</td>
+<td class="px-6 py-4 text-sm font-bold text-primary text-right">S/ 15,858.34</td>
+</tr>
+</tbody>
+<tfoot class="bg-slate-50/50 dark:bg-slate-800/30">
+<tr>
+<td class="px-6 py-4 text-sm font-bold text-slate-900 dark:text-white text-right" colspan="3">Total Bruto</td>
+<td class="px-6 py-4 text-lg font-extrabold text-slate-900 dark:text-white text-right">S/ 26,450.00</td>
+</tr>
+</tfoot>
+</table>
+</div>
+</div>
+<!-- Deductions Section -->
+<div class="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 overflow-hidden">
+<div class="px-6 py-4 border-b border-slate-200 dark:border-slate-800 bg-rose-50/10">
+<h3 class="font-bold text-rose-500 flex items-center gap-2 text-sm uppercase tracking-wider">
+<span class="material-icons-round text-base">remove_circle_outline</span>
+                            Descuentos y Acreencias
+                        </h3>
+</div>
+<div class="p-6 grid grid-cols-1 md:grid-cols-2 gap-6">
+<div class="space-y-4">
+<h4 class="text-xs font-bold text-slate-400 uppercase tracking-widest">Descuentos de Ley</h4>
+<div class="space-y-2">
+<div class="flex justify-between items-center p-3 rounded-lg border border-slate-100 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-800/20">
+<div>
+<p class="text-sm font-medium">AFP Integra (12.8%)</p>
+<p class="text-[10px] text-slate-500">Sobre Gratificación y Vacaciones</p>
+</div>
+<span class="text-sm font-bold text-rose-500">- S/ 901.32</span>
+</div>
+<div class="flex justify-between items-center p-3 rounded-lg border border-slate-100 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-800/20">
+<div>
+<p class="text-sm font-medium">Impuesto 5ta Categoría</p>
+<p class="text-[10px] text-slate-500">Proporcional mes cese</p>
+</div>
+<span class="text-sm font-bold text-rose-500">- S/ 563.48</span>
+</div>
+</div>
+</div>
+<div class="space-y-4">
+<h4 class="text-xs font-bold text-slate-400 uppercase tracking-widest">Pendientes de Empresa</h4>
+<div class="space-y-2">
+<div class="flex justify-between items-center p-3 rounded-lg border border-slate-100 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-800/20">
+<div class="flex items-center gap-2">
+<span class="material-icons-round text-slate-400 text-sm">laptop_mac</span>
+<div>
+<p class="text-sm font-medium">Laptop No Devuelta</p>
+<p class="text-[10px] text-slate-500">MacBook Pro 14" (Depreciación)</p>
+</div>
+</div>
+<span class="text-sm font-bold text-rose-500">- S/ 800.00</span>
+</div>
+<div class="flex items-center justify-center p-3 rounded-lg border border-dashed border-slate-300 dark:border-slate-700 text-slate-400 text-xs font-medium cursor-pointer hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
+<span class="material-icons-round text-sm mr-2">add</span>
+                                    Agregar concepto de descuento
+                                </div>
+</div>
+</div>
+</div>
+<div class="bg-slate-50 dark:bg-slate-800/50 px-6 py-3 flex justify-between items-center border-t border-slate-200 dark:border-slate-800">
+<span class="text-xs font-bold text-slate-500 uppercase">Total Descuentos</span>
+<span class="text-base font-extrabold text-rose-500">- S/ 2,264.80</span>
+</div>
+</div>
+<!-- Legal Footer -->
+<div class="flex items-start gap-3 bg-primary/5 p-4 rounded-xl border border-primary/10">
+<span class="material-icons-round text-primary">gavel</span>
+<p class="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
+<span class="font-bold text-slate-900 dark:text-white">Nota Legal:</span> De acuerdo al D.S. N° 001-97-TR, NexaCorp tiene un plazo máximo de <span class="text-primary font-bold">48 horas</span> contadas a partir del cese para realizar el pago de la liquidación y entrega de certificados. Este cálculo incluye las actualizaciones normativas para el Régimen General vigentes a la fecha.
+                    </p>
+</div>
+</div>
+</div>
+<!-- Sticky Footer Actions -->
+<div class="mt-8 flex justify-between items-center pt-6 border-t border-slate-200 dark:border-slate-800">
+<button class="flex items-center gap-2 px-6 py-3 rounded-lg text-slate-600 dark:text-slate-400 font-bold hover:text-primary transition-colors">
+<span class="material-icons-round">arrow_back</span>
+                Anterior
+            </button>
+<div class="flex gap-4">
+<button class="px-8 py-3 rounded-lg bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300 font-bold hover:bg-slate-300 dark:hover:bg-slate-700 transition-all">
+                    Guardar Borrador
+                </button>
+<button class="px-12 py-3 rounded-lg bg-primary text-white font-bold hover:bg-primary/90 shadow-xl shadow-primary/30 transition-all">
+                    Siguiente: Firma Digital
+                </button>
+</div>
+</div>
+</main>
+<!-- Floating Help Button -->
+<button class="fixed bottom-6 right-6 w-12 h-12 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-full shadow-2xl flex items-center justify-center text-primary hover:scale-110 transition-transform">
+<span class="material-icons-round">help_outline</span>
+</button>
+</body></html>

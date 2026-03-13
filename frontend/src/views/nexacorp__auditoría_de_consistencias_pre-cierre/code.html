@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>NexaCorp: Auditoría de Consistencias Pre-Cierre</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#2c60ce",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#0f172a", // Darker navy for main background
+                        "surface-dark": "#1e293b",     // Slightly lighter for cards
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: { "DEFAULT": "0.5rem", "lg": "1rem", "xl": "1.5rem", "full": "9999px" },
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-800 dark:text-slate-200 font-display antialiased min-h-screen flex flex-col md:flex-row">
+<!-- Sidebar Navigation -->
+<aside class="w-full md:w-64 bg-white dark:bg-surface-dark border-r border-slate-200 dark:border-slate-700 flex-shrink-0 hidden md:flex flex-col">
+<div class="p-6 flex items-center gap-3">
+<div class="w-8 h-8 rounded bg-gradient-to-br from-primary to-blue-400 flex items-center justify-center text-white font-bold text-lg">N</div>
+<span class="font-bold text-lg tracking-tight dark:text-white">NexaCorp</span>
+</div>
+<div class="px-4 py-2">
+<div class="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Flujo de Cierre</div>
+<nav class="space-y-1">
+<a class="flex items-center gap-3 px-3 py-2 bg-primary/10 text-primary dark:text-blue-400 rounded-lg font-medium" href="#">
+<span class="material-icons text-sm">assignment_turned_in</span>
+                    1. Auditoría Pre-Cierre
+                </a>
+<a class="flex items-center gap-3 px-3 py-2 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-700/50 rounded-lg transition-colors" href="#">
+<span class="material-icons text-sm">calculate</span>
+                    2. Cálculo de Planilla
+                </a>
+<a class="flex items-center gap-3 px-3 py-2 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-700/50 rounded-lg transition-colors" href="#">
+<span class="material-icons text-sm">verified_user</span>
+                    3. Aprobación Final
+                </a>
+<a class="flex items-center gap-3 px-3 py-2 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-700/50 rounded-lg transition-colors" href="#">
+<span class="material-icons text-sm">payments</span>
+                    4. Dispersión Bancaria
+                </a>
+</nav>
+</div>
+<div class="mt-auto p-4 border-t border-slate-200 dark:border-slate-700">
+<div class="flex items-center gap-3">
+<img alt="Profile picture of logged in user" class="w-10 h-10 rounded-full border border-slate-600" data-alt="User profile avatar thumbnail" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBtwEsTPYCM2dMC9iuPDfYZxjkPI86IuWqOahiucYobVQ2W9jizja3GuANfd4aDLZH37Xkqk0wQL8CdyOIHNCAsX719iOOe72SaNeWGjATG2ZK4I0VV5tR5L_GwZJGjmsloqtU7mfahdyRt2eWAh37EUNasmD9Z-vVtPDem9ykpjP77R4GH5XJ7Z-q5oOWMqgV-SwtpY4iszO71EQEuSOifWX6UHmQLj4Ivj6g3jmo1DDDdJ2tvrwdoUfT-B0t4KmRk4pjIZBpFgsZ1"/>
+<div class="flex flex-col">
+<span class="text-sm font-medium dark:text-white">Admin RRHH</span>
+<span class="text-xs text-slate-400">admin@nexacorp.pe</span>
+</div>
+</div>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="flex-1 flex flex-col h-screen overflow-hidden">
+<!-- Top Header -->
+<header class="bg-white dark:bg-surface-dark border-b border-slate-200 dark:border-slate-700 p-4 md:p-6 flex flex-col md:flex-row md:items-center justify-between gap-4">
+<div>
+<div class="flex items-center gap-2 mb-1">
+<span class="bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 text-xs px-2 py-0.5 rounded font-medium border border-blue-200 dark:border-blue-800">En Proceso</span>
+<span class="text-slate-500 dark:text-slate-400 text-xs font-medium">Ciclo: Octubre 2023 - Quincena 2</span>
+</div>
+<h1 class="text-2xl font-bold dark:text-white tracking-tight">Auditoría de Consistencias Pre-Cierre</h1>
+</div>
+<div class="flex items-center gap-3">
+<div class="hidden md:flex flex-col text-right mr-2">
+<span class="text-xs text-slate-400">Último escaneo</span>
+<span class="text-sm font-medium dark:text-slate-200">Hoy, 10:42 AM</span>
+</div>
+<button class="flex items-center gap-2 bg-primary hover:bg-blue-600 text-white px-4 py-2 rounded-lg font-medium transition-colors shadow-lg shadow-blue-900/20">
+<span class="material-icons text-sm animate-spin-slow" style="font-size: 18px;">sync</span>
+                    Re-Escanear Planilla
+                </button>
+</div>
+</header>
+<!-- Scrollable Content Area -->
+<div class="flex-1 overflow-y-auto p-4 md:p-8 space-y-8 custom-scrollbar">
+<!-- KPI Stats -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+<!-- Total Employees -->
+<div class="bg-white dark:bg-surface-dark p-5 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm relative overflow-hidden group">
+<div class="absolute right-0 top-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+<span class="material-icons text-6xl text-slate-400">people</span>
+</div>
+<div class="text-slate-500 dark:text-slate-400 text-sm font-medium mb-1">Total Colaboradores</div>
+<div class="text-3xl font-bold dark:text-white">1,248</div>
+<div class="text-xs text-green-500 flex items-center mt-2 font-medium">
+<span class="material-icons text-xs mr-1">check_circle</span> 100% Procesados
+                    </div>
+</div>
+<!-- Critical Alerts -->
+<div class="bg-white dark:bg-surface-dark p-5 rounded-xl border border-red-200 dark:border-red-900/30 shadow-sm relative overflow-hidden group">
+<div class="absolute -right-2 -top-2 w-20 h-20 bg-red-500/10 rounded-full blur-2xl"></div>
+<div class="flex justify-between items-start">
+<div>
+<div class="text-red-600 dark:text-red-400 text-sm font-bold mb-1 uppercase tracking-wide">Alertas Críticas</div>
+<div class="text-3xl font-bold text-red-600 dark:text-red-500">8</div>
+</div>
+<div class="bg-red-100 dark:bg-red-900/30 p-2 rounded-lg text-red-600 dark:text-red-400">
+<span class="material-icons">error_outline</span>
+</div>
+</div>
+<div class="text-xs text-slate-500 dark:text-slate-400 mt-2">Requieren acción inmediata</div>
+</div>
+<!-- Observations -->
+<div class="bg-white dark:bg-surface-dark p-5 rounded-xl border border-amber-200 dark:border-amber-900/30 shadow-sm relative overflow-hidden group">
+<div class="absolute -right-2 -top-2 w-20 h-20 bg-amber-500/10 rounded-full blur-2xl"></div>
+<div class="flex justify-between items-start">
+<div>
+<div class="text-amber-600 dark:text-amber-400 text-sm font-bold mb-1 uppercase tracking-wide">Observaciones</div>
+<div class="text-3xl font-bold text-amber-600 dark:text-amber-500">24</div>
+</div>
+<div class="bg-amber-100 dark:bg-amber-900/30 p-2 rounded-lg text-amber-600 dark:text-amber-400">
+<span class="material-icons">warning_amber</span>
+</div>
+</div>
+<div class="text-xs text-slate-500 dark:text-slate-400 mt-2">Revisión recomendada</div>
+</div>
+<!-- Health Score -->
+<div class="bg-white dark:bg-surface-dark p-5 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm flex flex-col justify-between">
+<div>
+<div class="text-slate-500 dark:text-slate-400 text-sm font-medium mb-1">Salud de Planilla</div>
+<div class="flex items-end gap-2">
+<div class="text-3xl font-bold text-amber-500">85%</div>
+<span class="text-xs text-slate-400 mb-1">Aceptable</span>
+</div>
+</div>
+<div class="w-full bg-slate-200 dark:bg-slate-700 h-1.5 rounded-full mt-3 overflow-hidden">
+<div class="bg-amber-500 h-1.5 rounded-full" style="width: 85%"></div>
+</div>
+</div>
+</div>
+<!-- Detailed Analysis Section -->
+<div class="flex flex-col gap-6">
+<!-- Filters & Tabs -->
+<div class="flex flex-col sm:flex-row justify-between items-center gap-4 border-b border-slate-200 dark:border-slate-700 pb-2">
+<div class="flex gap-6 w-full sm:w-auto overflow-x-auto">
+<button class="pb-3 border-b-2 border-primary text-primary font-medium text-sm flex items-center gap-2 whitespace-nowrap">
+                            Todas las incidencias <span class="bg-primary text-white text-[10px] px-1.5 py-0.5 rounded-full">32</span>
+</button>
+<button class="pb-3 border-b-2 border-transparent hover:border-slate-300 dark:hover:border-slate-600 text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 font-medium text-sm flex items-center gap-2 transition-colors whitespace-nowrap">
+                            Críticas (Rojo) <span class="bg-red-100 dark:bg-red-900 text-red-600 dark:text-red-300 text-[10px] px-1.5 py-0.5 rounded-full">8</span>
+</button>
+<button class="pb-3 border-b-2 border-transparent hover:border-slate-300 dark:hover:border-slate-600 text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 font-medium text-sm flex items-center gap-2 transition-colors whitespace-nowrap">
+                            Observaciones (Ámbar) <span class="bg-amber-100 dark:bg-amber-900 text-amber-600 dark:text-amber-300 text-[10px] px-1.5 py-0.5 rounded-full">24</span>
+</button>
+</div>
+<div class="flex items-center gap-2 w-full sm:w-auto">
+<div class="relative w-full sm:w-64">
+<span class="material-icons absolute left-3 top-2.5 text-slate-400 text-sm">search</span>
+<input class="w-full pl-9 pr-4 py-2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg text-sm text-slate-700 dark:text-slate-200 focus:outline-none focus:ring-2 focus:ring-primary/50 placeholder:text-slate-400" placeholder="Buscar empleado o ID..." type="text"/>
+</div>
+<button class="p-2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg text-slate-500 hover:text-primary transition-colors">
+<span class="material-icons text-sm">filter_list</span>
+</button>
+</div>
+</div>
+<!-- Data Table -->
+<div class="bg-white dark:bg-surface-dark rounded-xl border border-slate-200 dark:border-slate-700 overflow-hidden shadow-sm">
+<div class="overflow-x-auto">
+<table class="w-full text-left text-sm">
+<thead class="bg-slate-50 dark:bg-slate-800/50 text-slate-500 dark:text-slate-400 font-semibold uppercase text-xs border-b border-slate-200 dark:border-slate-700">
+<tr>
+<th class="px-6 py-4">Empleado</th>
+<th class="px-6 py-4">Tipo de Incidencia</th>
+<th class="px-6 py-4">Detalle / Valor</th>
+<th class="px-6 py-4 text-center">Severidad</th>
+<th class="px-6 py-4 text-right">Acciones</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-slate-100 dark:divide-slate-700/50">
+<!-- Row 1: Critical - AFP Missing -->
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/30 transition-colors group">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-slate-200 dark:bg-slate-700 flex items-center justify-center text-xs font-bold text-slate-500 dark:text-slate-300">JP</div>
+<div>
+<div class="font-medium dark:text-white">Juan Pérez</div>
+<div class="text-xs text-slate-400">ID: NX-1024</div>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 text-slate-600 dark:text-slate-300">Afiliación AFP</td>
+<td class="px-6 py-4">
+<div class="text-slate-600 dark:text-slate-300">Sin régimen pensionario activo</div>
+<div class="text-xs text-red-500 mt-0.5">Impide cálculo de aportes</div>
+</td>
+<td class="px-6 py-4 text-center">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800 dark:bg-red-900/40 dark:text-red-300 border border-red-200 dark:border-red-800">
+                                            Crítica
+                                        </span>
+</td>
+<td class="px-6 py-4 text-right">
+<button class="text-primary hover:text-blue-400 font-medium text-sm mr-3">Corregir</button>
+</td>
+</tr>
+<!-- Row 2: Critical - Salary Below Minimum -->
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/30 transition-colors group">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-purple-100 dark:bg-purple-900/30 flex items-center justify-center text-xs font-bold text-purple-600 dark:text-purple-300">MG</div>
+<div>
+<div class="font-medium dark:text-white">Maria Gómez</div>
+<div class="text-xs text-slate-400">ID: NX-2201</div>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 text-slate-600 dark:text-slate-300">Sueldo Mínimo</td>
+<td class="px-6 py-4">
+<div class="text-slate-600 dark:text-slate-300">Base: <span class="font-mono">S/ 950.00</span></div>
+<div class="text-xs text-slate-400 mt-0.5">Mínimo Vital: <span class="font-mono">S/ 1,025.00</span></div>
+</td>
+<td class="px-6 py-4 text-center">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800 dark:bg-red-900/40 dark:text-red-300 border border-red-200 dark:border-red-800">
+                                            Crítica
+                                        </span>
+</td>
+<td class="px-6 py-4 text-right">
+<button class="text-primary hover:text-blue-400 font-medium text-sm mr-3">Ajustar</button>
+</td>
+</tr>
+<!-- Row 3: Observation - Overtime Discrepancy -->
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/30 transition-colors group">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center text-xs font-bold text-blue-600 dark:text-blue-300">CR</div>
+<div>
+<div class="font-medium dark:text-white">Carlos Ruiz</div>
+<div class="text-xs text-slate-400">ID: NX-1105</div>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 text-slate-600 dark:text-slate-300">Discrepancia HE</td>
+<td class="px-6 py-4">
+<div class="text-slate-600 dark:text-slate-300">Reportadas: 4h vs Marcadas: 2h</div>
+<div class="text-xs text-amber-500 mt-0.5">Diferencia de 2h extras</div>
+</td>
+<td class="px-6 py-4 text-center">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-amber-100 text-amber-800 dark:bg-amber-900/40 dark:text-amber-300 border border-amber-200 dark:border-amber-800">
+                                            Observación
+                                        </span>
+</td>
+<td class="px-6 py-4 text-right">
+<button class="text-slate-500 hover:text-slate-700 dark:hover:text-slate-300 font-medium text-sm mr-3">Validar</button>
+<button class="text-primary hover:text-blue-400 font-medium text-sm">Aprobar</button>
+</td>
+</tr>
+<!-- Row 4: Critical - Judicial Discount -->
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/30 transition-colors group">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-emerald-100 dark:bg-emerald-900/30 flex items-center justify-center text-xs font-bold text-emerald-600 dark:text-emerald-300">LT</div>
+<div>
+<div class="font-medium dark:text-white">Luis Torres</div>
+<div class="text-xs text-slate-400">ID: NX-3340</div>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 text-slate-600 dark:text-slate-300">Tope Legal Descuento</td>
+<td class="px-6 py-4">
+<div class="text-slate-600 dark:text-slate-300">Judicial excede 60% del neto</div>
+<div class="text-xs text-red-500 mt-0.5">Riesgo legal alto</div>
+</td>
+<td class="px-6 py-4 text-center">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800 dark:bg-red-900/40 dark:text-red-300 border border-red-200 dark:border-red-800">
+                                            Crítica
+                                        </span>
+</td>
+<td class="px-6 py-4 text-right">
+<button class="text-primary hover:text-blue-400 font-medium text-sm mr-3">Revisar</button>
+</td>
+</tr>
+<!-- Row 5: Observation - Incomplete Data -->
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/30 transition-colors group">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-orange-100 dark:bg-orange-900/30 flex items-center justify-center text-xs font-bold text-orange-600 dark:text-orange-300">AR</div>
+<div>
+<div class="font-medium dark:text-white">Ana Ríos</div>
+<div class="text-xs text-slate-400">ID: NX-1552</div>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 text-slate-600 dark:text-slate-300">Datos Personales</td>
+<td class="px-6 py-4">
+<div class="text-slate-600 dark:text-slate-300">Dirección sin actualizar &gt; 1 año</div>
+<div class="text-xs text-slate-400 mt-0.5">Sugerencia de sistema</div>
+</td>
+<td class="px-6 py-4 text-center">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-amber-100 text-amber-800 dark:bg-amber-900/40 dark:text-amber-300 border border-amber-200 dark:border-amber-800">
+                                            Observación
+                                        </span>
+</td>
+<td class="px-6 py-4 text-right">
+<button class="text-slate-500 hover:text-slate-700 dark:hover:text-slate-300 font-medium text-sm mr-3">Posponer</button>
+<button class="text-primary hover:text-blue-400 font-medium text-sm">Actualizar</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Pagination -->
+<div class="px-6 py-4 border-t border-slate-200 dark:border-slate-700 flex items-center justify-between">
+<span class="text-sm text-slate-500 dark:text-slate-400">Mostrando 5 de 32 registros</span>
+<div class="flex gap-2">
+<button class="p-1 rounded-md text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 disabled:opacity-50">
+<span class="material-icons">chevron_left</span>
+</button>
+<button class="p-1 rounded-md text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800">
+<span class="material-icons">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Footer Actions -->
+<div class="flex justify-end gap-4 pt-4 pb-8">
+<button class="px-6 py-2.5 rounded-lg border border-slate-300 dark:border-slate-600 text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 font-medium transition-colors">
+                    Descargar Reporte PDF
+                </button>
+<button class="px-6 py-2.5 rounded-lg bg-slate-800 dark:bg-slate-700 text-slate-400 cursor-not-allowed font-medium border border-transparent" disabled="">
+                    Continuar al Cálculo (Bloqueado)
+                </button>
+</div>
+</div>
+</main>
+<!-- Overlay Gradient for aesthetic -->
+<div class="fixed top-0 left-0 w-full h-full pointer-events-none bg-gradient-to-tr from-primary/5 to-transparent z-[-1]"></div>
+</body></html>

@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>NexaCorp - Centro de Firmas</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">tailwind.config = {darkMode: "class", theme: {extend: {colors: {primary: "#2c60ce", "background-light": "#f6f6f8", "background-dark": "#121720"}, fontFamily: {display: "Inter"}, borderRadius: {DEFAULT: "0.5rem", lg: "1rem", xl: "1.5rem", full: "9999px"}}}};</script>
+<style>
+        /* Custom scrollbar for dark mode */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #101c22;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #253440;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #25aff4;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-800 dark:text-slate-200 font-display min-h-screen flex overflow-hidden">
+<!-- Sidebar -->
+<aside class="w-64 flex-shrink-0 border-r border-slate-200 dark:border-slate-800 bg-white dark:bg-[#15232b] flex flex-col transition-all duration-300">
+<!-- Logo Area -->
+<div class="h-20 flex items-center px-6 border-b border-slate-200 dark:border-slate-800">
+<div class="flex items-center gap-2 text-primary font-bold text-2xl tracking-tight">
+<span class="material-icons text-3xl">hexagon</span>
+                NexaCorp
+            </div>
+</div>
+<!-- Navigation -->
+<nav class="flex-1 overflow-y-auto py-6 px-3 space-y-1">
+<a class="flex items-center gap-3 px-4 py-3 text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors group" href="#">
+<span class="material-icons group-hover:text-primary transition-colors">dashboard</span>
+<span class="font-medium">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 bg-primary/10 text-primary rounded-lg transition-colors" href="#">
+<span class="material-icons">description</span>
+<span class="font-medium">Documentos</span>
+<span class="ml-auto bg-primary text-white text-xs font-bold px-2 py-0.5 rounded-full">1</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors group" href="#">
+<span class="material-icons group-hover:text-primary transition-colors">payments</span>
+<span class="font-medium">Mis Boletas</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors group" href="#">
+<span class="material-icons group-hover:text-primary transition-colors">badge</span>
+<span class="font-medium">Certificados</span>
+</a>
+<div class="pt-6 pb-2">
+<p class="px-4 text-xs font-semibold text-slate-400 uppercase tracking-wider">Mi Cuenta</p>
+</div>
+<a class="flex items-center gap-3 px-4 py-3 text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors group" href="#">
+<span class="material-icons group-hover:text-primary transition-colors">person</span>
+<span class="font-medium">Perfil</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors group" href="#">
+<span class="material-icons group-hover:text-primary transition-colors">settings</span>
+<span class="font-medium">Configuración</span>
+</a>
+</nav>
+<!-- User Profile Stub -->
+<div class="p-4 border-t border-slate-200 dark:border-slate-800">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-slate-200 dark:bg-slate-700 overflow-hidden relative">
+<img alt="Profile Picture" class="w-full h-full object-cover" data-alt="Professional headshot of a smiling man" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBlnQynPt8b2ayxYfSMinQP7QJgqgy7dywxUlObOaUAQRM9gwUENcNZQuSWTx-AdPNAcHJ4kpv3KEzWPaWm_koK0T_RkHKAUVYmTx6BBd90SVvgXkiR0T-tdsc40RxpZMWt9TAKz1NysVp6yRtTy-qqv7SJetWDH-MJ4EoirRoGgVAN8p4GkZkeD2v7-vggbip5m5Zc7_gH6qqEbD11F89OxhA9vqWPsf3msYHU0sCyVIx2dQMfoKXx_298yrXiKlzulJOyMyYabwlR"/>
+</div>
+<div class="flex-1 min-w-0">
+<p class="text-sm font-semibold text-slate-900 dark:text-white truncate">Carlos Rodriguez</p>
+<p class="text-xs text-slate-500 truncate">Desarrollador Senior</p>
+</div>
+<button class="text-slate-400 hover:text-white transition-colors">
+<span class="material-icons text-xl">logout</span>
+</button>
+</div>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="flex-1 flex flex-col h-screen overflow-hidden relative">
+<!-- Header -->
+<header class="h-20 bg-white dark:bg-[#15232b]/80 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 flex items-center justify-between px-8 sticky top-0 z-20">
+<h1 class="text-xl font-bold text-slate-800 dark:text-white">Centro de Documentos</h1>
+<div class="flex items-center gap-4">
+<div class="relative hidden md:block">
+<span class="material-icons absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">search</span>
+<input class="pl-10 pr-4 py-2 rounded-lg bg-slate-100 dark:bg-background-dark border-none focus:ring-2 focus:ring-primary text-sm w-64 text-slate-800 dark:text-white placeholder-slate-500" placeholder="Buscar documento..." type="text"/>
+</div>
+<button class="relative p-2 text-slate-500 hover:text-primary transition-colors">
+<span class="material-icons">notifications</span>
+<span class="absolute top-2 right-2 w-2 h-2 bg-red-500 rounded-full"></span>
+</button>
+<button class="p-2 text-slate-500 hover:text-primary transition-colors">
+<span class="material-icons">help_outline</span>
+</button>
+</div>
+</header>
+<!-- Scrollable Content Area -->
+<div class="flex-1 overflow-y-auto p-8">
+<div class="max-w-5xl mx-auto space-y-8">
+<!-- Welcome/Context -->
+<div>
+<h2 class="text-3xl font-bold text-white mb-2">Hola, Carlos 👋</h2>
+<p class="text-slate-400">Aquí puedes gestionar tus documentos laborales y firmas pendientes.</p>
+</div>
+<!-- ALERT BANNER HERO -->
+<div class="relative overflow-hidden rounded-2xl bg-gradient-to-r from-primary/20 to-primary/5 border border-primary/30 p-6 md:p-8 flex flex-col md:flex-row items-start md:items-center gap-6 shadow-lg shadow-primary/5">
+<!-- Background decoration -->
+<div class="absolute -right-10 -top-10 w-64 h-64 bg-primary/10 rounded-full blur-3xl pointer-events-none"></div>
+<div class="flex-shrink-0 w-12 h-12 md:w-16 md:h-16 rounded-full bg-primary/20 flex items-center justify-center text-primary border border-primary/30 shadow-[0_0_15px_rgba(37,175,244,0.3)]">
+<span class="material-icons text-3xl md:text-4xl animate-pulse">edit_document</span>
+</div>
+<div class="flex-1 z-10">
+<h3 class="text-xl font-bold text-white mb-1">Tienes 1 boleta pendiente de firma</h3>
+<p class="text-slate-300 text-sm md:text-base leading-relaxed">
+                            Se ha generado tu boleta de pago correspondiente al periodo <span class="text-primary font-semibold">Octubre 2023</span>. Por favor, revisa y firma digitalmente el documento para confirmar su recepción.
+                        </p>
+</div>
+<div class="flex-shrink-0 z-10 w-full md:w-auto">
+<button class="w-full md:w-auto bg-primary hover:bg-sky-400 text-white font-bold py-3 px-6 rounded-xl shadow-lg shadow-primary/20 transition-all transform hover:scale-105 active:scale-95 flex items-center justify-center gap-2">
+<span>Ir a Firmar</span>
+<span class="material-icons text-sm">arrow_forward</span>
+</button>
+</div>
+</div>
+<!-- MAIN TABLE SECTION -->
+<div class="bg-white dark:bg-[#15232b] rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden">
+<!-- Tab Header -->
+<div class="border-b border-slate-200 dark:border-slate-800 px-6 py-4 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+<div class="flex items-center gap-6">
+<button class="text-primary font-bold border-b-2 border-primary pb-4 -mb-4.5 px-1">
+                                Pendientes (1)
+                            </button>
+<button class="text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 font-medium pb-4 -mb-4 px-1 transition-colors">
+                                Historial
+                            </button>
+<button class="text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 font-medium pb-4 -mb-4 px-1 transition-colors">
+                                Archivados
+                            </button>
+</div>
+<div class="flex items-center gap-2">
+<button class="flex items-center gap-2 text-xs font-medium text-slate-500 dark:text-slate-400 bg-slate-100 dark:bg-background-dark px-3 py-1.5 rounded-lg hover:bg-slate-200 dark:hover:bg-slate-800 transition-colors">
+<span class="material-icons text-sm">filter_list</span>
+                                Filtrar
+                            </button>
+<button class="flex items-center gap-2 text-xs font-medium text-slate-500 dark:text-slate-400 bg-slate-100 dark:bg-background-dark px-3 py-1.5 rounded-lg hover:bg-slate-200 dark:hover:bg-slate-800 transition-colors">
+<span class="material-icons text-sm">sort</span>
+                                Ordenar
+                            </button>
+</div>
+</div>
+<!-- Table List -->
+<div class="overflow-x-auto">
+<table class="w-full text-left text-sm">
+<thead class="bg-slate-50 dark:bg-background-dark/50 text-slate-500 dark:text-slate-400 uppercase tracking-wider font-semibold text-xs border-b border-slate-200 dark:border-slate-800">
+<tr>
+<th class="px-6 py-4 rounded-tl-lg">Tipo de Documento</th>
+<th class="px-6 py-4">Periodo</th>
+<th class="px-6 py-4">Fecha de Emisión</th>
+<th class="px-6 py-4">Estado</th>
+<th class="px-6 py-4 text-right rounded-tr-lg">Acciones</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-slate-200 dark:divide-slate-800">
+<!-- Row 1: The Pending Item -->
+<tr class="group hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
+<td class="px-6 py-4">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-lg bg-red-500/10 text-red-500 flex items-center justify-center flex-shrink-0">
+<span class="material-icons">picture_as_pdf</span>
+</div>
+<div>
+<p class="font-bold text-slate-800 dark:text-white">Boleta de Pago</p>
+<p class="text-xs text-slate-500">Nómina General</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="text-slate-700 dark:text-slate-300 font-medium">Octubre 2023</span>
+</td>
+<td class="px-6 py-4 text-slate-500 dark:text-slate-400">
+                                        28 Oct, 2023
+                                    </td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-amber-500/10 text-amber-500 border border-amber-500/20">
+<span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span>
+                                            Pendiente de Firma
+                                        </span>
+</td>
+<td class="px-6 py-4 text-right">
+<button class="bg-primary hover:bg-sky-400 text-white text-xs font-bold py-2 px-4 rounded-lg shadow-md shadow-primary/10 transition-colors">
+                                            Revisar y Firmar
+                                        </button>
+</td>
+</tr>
+<!-- Row 2: Example of another type (Maybe partially done or older pending) -->
+<tr class="group hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
+<td class="px-6 py-4">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-lg bg-emerald-500/10 text-emerald-500 flex items-center justify-center flex-shrink-0">
+<span class="material-icons">verified</span>
+</div>
+<div>
+<p class="font-bold text-slate-800 dark:text-white">Subvención Escolaridad</p>
+<p class="text-xs text-slate-500">Beneficios Adicionales</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="text-slate-700 dark:text-slate-300 font-medium">Marzo 2023</span>
+</td>
+<td class="px-6 py-4 text-slate-500 dark:text-slate-400">
+                                        15 Mar, 2023
+                                    </td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-emerald-500/10 text-emerald-500 border border-emerald-500/20">
+<span class="material-icons text-[10px]">check</span>
+                                            Firmado
+                                        </span>
+</td>
+<td class="px-6 py-4 text-right">
+<button class="text-slate-400 hover:text-primary transition-colors">
+<span class="material-icons">visibility</span>
+</button>
+<button class="text-slate-400 hover:text-primary transition-colors ml-2">
+<span class="material-icons">download</span>
+</button>
+</td>
+</tr>
+<!-- Row 3: Example of older -->
+<tr class="group hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors opacity-60">
+<td class="px-6 py-4">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-lg bg-red-500/10 text-red-500 flex items-center justify-center flex-shrink-0">
+<span class="material-icons">picture_as_pdf</span>
+</div>
+<div>
+<p class="font-bold text-slate-800 dark:text-white">Boleta de Pago</p>
+<p class="text-xs text-slate-500">Nómina General</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="text-slate-700 dark:text-slate-300 font-medium">Septiembre 2023</span>
+</td>
+<td class="px-6 py-4 text-slate-500 dark:text-slate-400">
+                                        28 Sep, 2023
+                                    </td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-emerald-500/10 text-emerald-500 border border-emerald-500/20">
+<span class="material-icons text-[10px]">check</span>
+                                            Firmado
+                                        </span>
+</td>
+<td class="px-6 py-4 text-right">
+<button class="text-slate-400 hover:text-primary transition-colors">
+<span class="material-icons">visibility</span>
+</button>
+<button class="text-slate-400 hover:text-primary transition-colors ml-2">
+<span class="material-icons">download</span>
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Pagination -->
+<div class="border-t border-slate-200 dark:border-slate-800 px-6 py-4 flex items-center justify-between">
+<p class="text-xs text-slate-500 dark:text-slate-400">
+                            Mostrando <span class="font-bold text-slate-700 dark:text-slate-200">1-3</span> de <span class="font-bold text-slate-700 dark:text-slate-200">24</span> documentos
+                        </p>
+<div class="flex items-center gap-2">
+<button class="p-1 rounded-md text-slate-400 hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800 disabled:opacity-50">
+<span class="material-icons">chevron_left</span>
+</button>
+<button class="p-1 rounded-md text-slate-400 hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800">
+<span class="material-icons">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Footer Quick Links (Optional Context) -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
+<div class="p-4 rounded-xl bg-[#15232b] border border-slate-800 hover:border-primary/30 transition-colors group cursor-pointer">
+<div class="flex items-start justify-between">
+<div class="p-2 bg-primary/10 rounded-lg text-primary group-hover:bg-primary group-hover:text-white transition-colors">
+<span class="material-icons">help</span>
+</div>
+<span class="material-icons text-slate-600">arrow_outward</span>
+</div>
+<h4 class="mt-3 font-bold text-white">¿Cómo firmar digitalmente?</h4>
+<p class="text-xs text-slate-400 mt-1">Guía paso a paso para firmar tus documentos.</p>
+</div>
+<div class="p-4 rounded-xl bg-[#15232b] border border-slate-800 hover:border-primary/30 transition-colors group cursor-pointer">
+<div class="flex items-start justify-between">
+<div class="p-2 bg-primary/10 rounded-lg text-primary group-hover:bg-primary group-hover:text-white transition-colors">
+<span class="material-icons">shield</span>
+</div>
+<span class="material-icons text-slate-600">arrow_outward</span>
+</div>
+<h4 class="mt-3 font-bold text-white">Seguridad y Privacidad</h4>
+<p class="text-xs text-slate-400 mt-1">Información sobre la validez legal de tu firma.</p>
+</div>
+<div class="p-4 rounded-xl bg-[#15232b] border border-slate-800 hover:border-primary/30 transition-colors group cursor-pointer">
+<div class="flex items-start justify-between">
+<div class="p-2 bg-primary/10 rounded-lg text-primary group-hover:bg-primary group-hover:text-white transition-colors">
+<span class="material-icons">contact_support</span>
+</div>
+<span class="material-icons text-slate-600">arrow_outward</span>
+</div>
+<h4 class="mt-3 font-bold text-white">Soporte RRHH</h4>
+<p class="text-xs text-slate-400 mt-1">Contacta con recursos humanos si tienes dudas.</p>
+</div>
+</div>
+</div>
+</div>
+</main>
+</body></html>

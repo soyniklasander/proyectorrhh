@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>NexaCorp: Detalle de Pagos por Entidad</title>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">tailwind.config = {darkMode: "class", theme: {extend: {colors: {primary: "#2c60ce", "background-light": "#f6f6f8", "background-dark": "#121720"}, fontFamily: {display: "Inter"}, borderRadius: {DEFAULT: "0.5rem", lg: "1rem", xl: "1.5rem", full: "9999px"}}}};</script>
+<style>
+        /* Custom scrollbar for table container */
+        .custom-scrollbar::-webkit-scrollbar {
+            height: 8px;
+            width: 8px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #182b34;
+            border-radius: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #315668;
+            border-radius: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #4a6f82;
+        }
+    </style>
+</head>
+<body class="font-display bg-background-light dark:bg-background-dark text-slate-900 dark:text-white antialiased overflow-hidden">
+<div class="relative flex h-screen w-full flex-row overflow-hidden">
+<!-- Sidebar -->
+<div class="hidden md:flex flex-col w-64 shrink-0 border-r border-[#315668] bg-[#101d23]">
+<div class="flex flex-col h-full p-4 justify-between">
+<div class="flex flex-col gap-6">
+<!-- Brand -->
+<div class="flex gap-3 items-center px-2">
+<div class="bg-center bg-no-repeat bg-cover rounded-full h-10 w-10 bg-[#25aff4] flex items-center justify-center text-white font-bold text-xl" data-alt="NexaCorp Logo Abstract">
+                            N
+                        </div>
+<div class="flex flex-col">
+<h1 class="text-white text-base font-bold leading-normal">NexaCorp</h1>
+<p class="text-[#90b7cb] text-xs font-normal leading-normal">Módulo Finanzas</p>
+</div>
+</div>
+<!-- Navigation -->
+<div class="flex flex-col gap-1">
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-[#90b7cb] hover:bg-[#182b34] hover:text-white transition-colors group" href="#">
+<span class="material-symbols-outlined text-[#90b7cb] group-hover:text-white">dashboard</span>
+<span class="text-sm font-medium">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg bg-[#25aff4]/10 text-[#25aff4]" href="#">
+<span class="material-symbols-outlined text-[#25aff4] fill-1">account_balance</span>
+<span class="text-sm font-bold">Tesorería</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-[#90b7cb] hover:bg-[#182b34] hover:text-white transition-colors group" href="#">
+<span class="material-symbols-outlined text-[#90b7cb] group-hover:text-white">receipt_long</span>
+<span class="text-sm font-medium">Impuestos</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-[#90b7cb] hover:bg-[#182b34] hover:text-white transition-colors group" href="#">
+<span class="material-symbols-outlined text-[#90b7cb] group-hover:text-white">groups</span>
+<span class="text-sm font-medium">Planillas</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-[#90b7cb] hover:bg-[#182b34] hover:text-white transition-colors group" href="#">
+<span class="material-symbols-outlined text-[#90b7cb] group-hover:text-white">bar_chart</span>
+<span class="text-sm font-medium">Reportes</span>
+</a>
+</div>
+</div>
+<!-- User Profile -->
+<div class="flex items-center gap-3 px-3 py-3 border-t border-[#315668] mt-auto">
+<div class="h-8 w-8 rounded-full bg-slate-600 bg-cover bg-center" data-alt="User Avatar Profile" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuC4k1JlKPayX8j-0RoMwHiCPVPNobp9-PSh4Mp7UVsbfCwsjgT3IZdaJ--YBy14i6RfI3_z_vtTr9YW2m4MH2WvHivcSsAH4tGWI2PY_DJgnGLJN2taCGsrwwVKDnrzye39GfgBv384tfERh_N7Bb0fA4zhP3-P8b94mxUOiPrAy5fRWuSOpsOoESdLsiP2aRjETFmSh_HEZT1DTmgxY8zwPyO5hmuVwKHcQDWRyLXSxikVIhalMqmNXoHc3wpQ_8Z24n5UM55407fS');"></div>
+<div class="flex flex-col">
+<p class="text-white text-sm font-medium">Carlos M.</p>
+<p class="text-[#90b7cb] text-xs">Admin. Tesorería</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Main Content -->
+<div class="flex-1 flex flex-col h-full overflow-hidden bg-background-light dark:bg-background-dark relative">
+<!-- Top Header Area -->
+<div class="w-full flex flex-col gap-4 p-6 pb-0 md:p-8 md:pb-0 z-10">
+<!-- Breadcrumbs & Actions -->
+<div class="flex flex-wrap items-center justify-between gap-4">
+<div class="flex flex-col gap-1">
+<div class="flex items-center gap-2 text-[#90b7cb] text-sm">
+<span>Tesorería</span>
+<span class="material-symbols-outlined text-[16px]">chevron_right</span>
+<span class="text-white">Obligaciones</span>
+</div>
+<h1 class="text-white text-2xl md:text-3xl font-bold leading-tight tracking-tight">Detalle de Obligaciones por Institución</h1>
+<p class="text-[#90b7cb] text-sm md:text-base font-normal">Periodo Fiscal: Octubre 2023 • RUC: 20551234568 (Terminación: 8)</p>
+</div>
+<div class="flex items-center gap-3">
+<button class="flex items-center gap-2 px-4 py-2.5 rounded-lg border border-[#315668] text-white hover:bg-[#182b34] transition-colors text-sm font-medium">
+<span class="material-symbols-outlined text-[20px]">download</span>
+<span class="hidden sm:inline">Exportar Excel</span>
+</button>
+<button class="flex items-center gap-2 px-4 py-2.5 rounded-lg bg-primary text-white hover:bg-sky-500 transition-colors text-sm font-bold shadow-lg shadow-primary/20">
+<span class="material-symbols-outlined text-[20px]">payments</span>
+<span>Pagar Lote</span>
+</button>
+</div>
+</div>
+<!-- Alert Banner -->
+<div class="flex items-start sm:items-center gap-3 p-4 rounded-lg bg-amber-500/10 border border-amber-500/20 text-amber-200">
+<span class="material-symbols-outlined text-amber-400 shrink-0">warning</span>
+<div class="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-4 text-sm">
+<span class="font-bold text-amber-400">Próximo Vencimiento:</span>
+<span>Las obligaciones de SUNAT vencen el 18 de Octubre (2 días restantes). Evite multas por retraso.</span>
+</div>
+</div>
+<!-- KPI Cards -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-2">
+<!-- Card 1 -->
+<div class="flex flex-col gap-1 p-5 rounded-xl border border-[#315668] bg-[#101d23] relative overflow-hidden group">
+<div class="absolute right-0 top-0 p-3 opacity-10 group-hover:opacity-20 transition-opacity">
+<span class="material-symbols-outlined text-6xl text-white">account_balance</span>
+</div>
+<p class="text-[#90b7cb] text-sm font-medium">Total SUNAT</p>
+<div class="flex items-end gap-2">
+<p class="text-white text-2xl font-bold tracking-tight">S/ 14,500.00</p>
+<span class="text-emerald-400 text-xs font-medium mb-1 flex items-center bg-emerald-400/10 px-1.5 py-0.5 rounded">
+<span class="material-symbols-outlined text-[14px]">trending_flat</span>
+                                0.0% vs mes ant.
+                            </span>
+</div>
+<div class="w-full bg-[#182b34] h-1 rounded-full mt-3 overflow-hidden">
+<div class="bg-primary h-full rounded-full" style="width: 35%"></div>
+</div>
+<p class="text-xs text-[#6e8e9e] mt-2">3 Obligaciones pendientes</p>
+</div>
+<!-- Card 2 -->
+<div class="flex flex-col gap-1 p-5 rounded-xl border border-[#315668] bg-[#101d23] relative overflow-hidden group">
+<div class="absolute right-0 top-0 p-3 opacity-10 group-hover:opacity-20 transition-opacity">
+<span class="material-symbols-outlined text-6xl text-white">supervisor_account</span>
+</div>
+<p class="text-[#90b7cb] text-sm font-medium">Total AFPNET</p>
+<div class="flex items-end gap-2">
+<p class="text-white text-2xl font-bold tracking-tight">S/ 8,240.00</p>
+<span class="text-emerald-400 text-xs font-medium mb-1 flex items-center bg-emerald-400/10 px-1.5 py-0.5 rounded">
+<span class="material-symbols-outlined text-[14px]">trending_up</span>
+                                +2.1% vs mes ant.
+                            </span>
+</div>
+<div class="w-full bg-[#182b34] h-1 rounded-full mt-3 overflow-hidden">
+<div class="bg-amber-500 h-full rounded-full" style="width: 65%"></div>
+</div>
+<p class="text-xs text-[#6e8e9e] mt-2">5 Planillas declaradas</p>
+</div>
+<!-- Card 3 -->
+<div class="flex flex-col gap-1 p-5 rounded-xl border border-[#315668] bg-[#101d23] relative overflow-hidden group">
+<div class="absolute right-0 top-0 p-3 opacity-10 group-hover:opacity-20 transition-opacity">
+<span class="material-symbols-outlined text-6xl text-white">savings</span>
+</div>
+<p class="text-[#90b7cb] text-sm font-medium">CTS / Entidades Financieras</p>
+<div class="flex items-end gap-2">
+<p class="text-white text-2xl font-bold tracking-tight">S/ 0.00</p>
+<span class="text-[#90b7cb] text-xs font-medium mb-1 flex items-center bg-slate-700/30 px-1.5 py-0.5 rounded">
+                                Inactivo
+                            </span>
+</div>
+<div class="w-full bg-[#182b34] h-1 rounded-full mt-3 overflow-hidden">
+<div class="bg-slate-600 h-full rounded-full" style="width: 0%"></div>
+</div>
+<p class="text-xs text-[#6e8e9e] mt-2">Próximo depósito: Noviembre</p>
+</div>
+</div>
+<!-- Tabs Navigation -->
+<div class="flex overflow-x-auto border-b border-[#315668] gap-6 mt-2 no-scrollbar">
+<button class="relative flex flex-col items-center justify-center pb-3 pt-2 text-white group min-w-fit">
+<span class="text-sm font-bold tracking-wide">SUNAT (Impuestos y Aportes)</span>
+<div class="absolute bottom-0 w-full h-[3px] bg-primary rounded-t-full"></div>
+</button>
+<button class="relative flex flex-col items-center justify-center pb-3 pt-2 text-[#90b7cb] hover:text-white transition-colors group min-w-fit">
+<span class="text-sm font-bold tracking-wide">AFPNET (Fondos de Pensiones)</span>
+<div class="absolute bottom-0 w-0 h-[3px] bg-primary rounded-t-full transition-all group-hover:w-full opacity-50"></div>
+</button>
+<button class="relative flex flex-col items-center justify-center pb-3 pt-2 text-[#90b7cb] hover:text-white transition-colors group min-w-fit">
+<span class="text-sm font-bold tracking-wide">Entidades Financieras (CTS)</span>
+<div class="absolute bottom-0 w-0 h-[3px] bg-primary rounded-t-full transition-all group-hover:w-full opacity-50"></div>
+</button>
+</div>
+</div>
+<!-- Scrollable Content Area -->
+<div class="flex-1 overflow-y-auto p-6 md:p-8 custom-scrollbar">
+<!-- Table Container -->
+<div class="w-full rounded-xl border border-[#315668] bg-[#101d23] overflow-hidden shadow-xl shadow-black/20">
+<!-- Table Header Controls -->
+<div class="flex flex-wrap items-center justify-between gap-4 p-4 border-b border-[#315668]">
+<div class="relative w-full max-w-sm">
+<span class="absolute left-3 top-1/2 -translate-y-1/2 text-[#90b7cb]">
+<span class="material-symbols-outlined text-[20px]">search</span>
+</span>
+<input class="w-full bg-[#182b34] text-white text-sm rounded-lg pl-10 pr-4 py-2 border border-transparent focus:border-primary focus:ring-1 focus:ring-primary placeholder-[#6e8e9e] outline-none transition-all" placeholder="Buscar concepto o entidad..." type="text"/>
+</div>
+<div class="flex items-center gap-2">
+<button class="p-2 text-[#90b7cb] hover:text-white hover:bg-[#182b34] rounded-lg transition-colors" title="Filtrar">
+<span class="material-symbols-outlined text-[20px]">filter_list</span>
+</button>
+<button class="p-2 text-[#90b7cb] hover:text-white hover:bg-[#182b34] rounded-lg transition-colors" title="Configurar Columnas">
+<span class="material-symbols-outlined text-[20px]">view_column</span>
+</button>
+</div>
+</div>
+<!-- Responsive Table -->
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-[#182b34] border-b border-[#315668]">
+<th class="px-6 py-4 text-xs font-bold text-[#90b7cb] uppercase tracking-wider w-[20%]">Concepto</th>
+<th class="px-6 py-4 text-xs font-bold text-[#90b7cb] uppercase tracking-wider w-[20%]">Detalle</th>
+<th class="px-6 py-4 text-xs font-bold text-[#90b7cb] uppercase tracking-wider text-right w-[15%]">Base Imponible</th>
+<th class="px-6 py-4 text-xs font-bold text-[#90b7cb] uppercase tracking-wider text-right w-[15%]">Importe Total</th>
+<th class="px-6 py-4 text-xs font-bold text-[#90b7cb] uppercase tracking-wider w-[15%]">Vencimiento</th>
+<th class="px-6 py-4 text-xs font-bold text-[#90b7cb] uppercase tracking-wider w-[10%]">Estado</th>
+<th class="px-6 py-4 text-xs font-bold text-[#90b7cb] uppercase tracking-wider text-center w-[5%]">Acciones</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-[#315668]">
+<!-- Row 1 -->
+<tr class="hover:bg-[#182b34]/50 transition-colors group">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="h-8 w-8 rounded bg-blue-500/20 flex items-center justify-center text-blue-400">
+<span class="material-symbols-outlined text-[18px]">medical_services</span>
+</div>
+<div>
+<p class="text-white text-sm font-medium">EsSalud (9%)</p>
+<p class="text-[#6e8e9e] text-xs">Contribución</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 text-[#90b7cb] text-sm">Aporte Regular - Oct 2023</td>
+<td class="px-6 py-4 text-white text-sm font-medium text-right font-mono">S/ 50,000.00</td>
+<td class="px-6 py-4 text-white text-sm font-bold text-right font-mono">S/ 4,500.00</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2 text-amber-400">
+<span class="material-symbols-outlined text-[16px] fill-1">event</span>
+<span class="text-sm font-medium">18 Oct</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-amber-500/10 text-amber-400 border border-amber-500/20">
+<span class="w-1.5 h-1.5 rounded-full bg-amber-400"></span>
+                                            Pendiente
+                                        </span>
+</td>
+<td class="px-6 py-4 text-center">
+<button class="text-primary hover:text-white hover:bg-primary p-1.5 rounded-lg transition-all" title="Pagar">
+<span class="material-symbols-outlined text-[20px]">payments</span>
+</button>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-[#182b34]/50 transition-colors group">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="h-8 w-8 rounded bg-purple-500/20 flex items-center justify-center text-purple-400">
+<span class="material-symbols-outlined text-[18px]">elderly</span>
+</div>
+<div>
+<p class="text-white text-sm font-medium">ONP (13%)</p>
+<p class="text-[#6e8e9e] text-xs">Sistema Nacional</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 text-[#90b7cb] text-sm">Retención SNP - Oct 2023</td>
+<td class="px-6 py-4 text-white text-sm font-medium text-right font-mono">S/ 16,153.85</td>
+<td class="px-6 py-4 text-white text-sm font-bold text-right font-mono">S/ 2,100.00</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2 text-[#90b7cb]">
+<span class="material-symbols-outlined text-[16px]">event</span>
+<span class="text-sm font-medium">18 Oct</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+                                            Pagado
+                                        </span>
+</td>
+<td class="px-6 py-4 text-center">
+<button class="text-[#90b7cb] hover:text-white hover:bg-[#315668] p-1.5 rounded-lg transition-all" title="Ver Detalle">
+<span class="material-symbols-outlined text-[20px]">visibility</span>
+</button>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-[#182b34]/50 transition-colors group">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="h-8 w-8 rounded bg-cyan-500/20 flex items-center justify-center text-cyan-400">
+<span class="material-symbols-outlined text-[18px]">description</span>
+</div>
+<div>
+<p class="text-white text-sm font-medium">Renta 5ta Categ.</p>
+<p class="text-[#6e8e9e] text-xs">Impuesto a la Renta</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 text-[#90b7cb] text-sm">Retenciones - Oct 2023</td>
+<td class="px-6 py-4 text-white text-sm font-medium text-right font-mono">S/ 98,750.00</td>
+<td class="px-6 py-4 text-white text-sm font-bold text-right font-mono">S/ 7,900.00</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2 text-amber-400">
+<span class="material-symbols-outlined text-[16px] fill-1">event</span>
+<span class="text-sm font-medium">18 Oct</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-amber-500/10 text-amber-400 border border-amber-500/20">
+<span class="w-1.5 h-1.5 rounded-full bg-amber-400"></span>
+                                            Pendiente
+                                        </span>
+</td>
+<td class="px-6 py-4 text-center">
+<button class="text-primary hover:text-white hover:bg-primary p-1.5 rounded-lg transition-all" title="Pagar">
+<span class="material-symbols-outlined text-[20px]">payments</span>
+</button>
+</td>
+</tr>
+<!-- Row 4 -->
+<tr class="hover:bg-[#182b34]/50 transition-colors group bg-red-500/5">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="h-8 w-8 rounded bg-red-500/20 flex items-center justify-center text-red-400">
+<span class="material-symbols-outlined text-[18px]">engineering</span>
+</div>
+<div>
+<p class="text-white text-sm font-medium">Senati (0.75%)</p>
+<p class="text-red-400 text-xs">Contribución Industrial</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 text-[#90b7cb] text-sm">Autoliquidación</td>
+<td class="px-6 py-4 text-white text-sm font-medium text-right font-mono">S/ 45,000.00</td>
+<td class="px-6 py-4 text-white text-sm font-bold text-right font-mono">S/ 337.50</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2 text-red-400">
+<span class="material-symbols-outlined text-[16px] fill-1">warning</span>
+<span class="text-sm font-bold">15 Oct</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-red-500/10 text-red-400 border border-red-500/20">
+<span class="w-1.5 h-1.5 rounded-full bg-red-400"></span>
+                                            Vencido
+                                        </span>
+</td>
+<td class="px-6 py-4 text-center">
+<button class="text-primary hover:text-white hover:bg-primary p-1.5 rounded-lg transition-all" title="Pagar">
+<span class="material-symbols-outlined text-[20px]">payments</span>
+</button>
+</td>
+</tr>
+<!-- Example of grouped row styling for visual variety -->
+<tr class="bg-[#182b34]/30">
+<td class="px-6 py-2 text-xs font-bold text-[#90b7cb] uppercase tracking-wider border-t border-b border-[#315668]" colspan="7">
+                                        Otros Aportes
+                                    </td>
+</tr>
+<!-- Row 5 -->
+<tr class="hover:bg-[#182b34]/50 transition-colors group">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="h-8 w-8 rounded bg-slate-500/20 flex items-center justify-center text-slate-400">
+<span class="material-symbols-outlined text-[18px]">family_restroom</span>
+</div>
+<div>
+<p class="text-white text-sm font-medium">SCTR Salud</p>
+<p class="text-[#6e8e9e] text-xs">Seguro Compl. Riesgo</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 text-[#90b7cb] text-sm">Prima Técnica</td>
+<td class="px-6 py-4 text-white text-sm font-medium text-right font-mono">S/ 45,000.00</td>
+<td class="px-6 py-4 text-white text-sm font-bold text-right font-mono">S/ 585.00</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2 text-[#90b7cb]">
+<span class="material-symbols-outlined text-[16px]">event</span>
+<span class="text-sm font-medium">18 Oct</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-slate-500/10 text-slate-400 border border-slate-500/20">
+<span class="w-1.5 h-1.5 rounded-full bg-slate-400"></span>
+                                            En Proceso
+                                        </span>
+</td>
+<td class="px-6 py-4 text-center">
+<button class="text-[#90b7cb] hover:text-white hover:bg-[#315668] p-1.5 rounded-lg transition-all" title="Ver Detalle">
+<span class="material-symbols-outlined text-[20px]">more_vert</span>
+</button>
+</td>
+</tr>
+</tbody>
+<tfoot class="bg-[#182b34] border-t border-[#315668]">
+<tr>
+<td class="px-6 py-4 text-right text-sm font-medium text-[#90b7cb]" colspan="3">Total a Pagar (SUNAT)</td>
+<td class="px-6 py-4 text-right text-lg font-bold text-white font-mono">S/ 14,500.00</td>
+<td colspan="3"></td>
+</tr>
+</tfoot>
+</table>
+</div>
+<!-- Pagination -->
+<div class="flex items-center justify-between px-6 py-4 border-t border-[#315668] bg-[#101d23]">
+<p class="text-xs text-[#90b7cb]">Mostrando <span class="text-white font-medium">1-5</span> de <span class="text-white font-medium">5</span> registros</p>
+<div class="flex gap-2">
+<button class="px-3 py-1 text-xs font-medium text-[#90b7cb] bg-[#182b34] rounded border border-[#315668] opacity-50 cursor-not-allowed">Anterior</button>
+<button class="px-3 py-1 text-xs font-medium text-white bg-[#182b34] rounded border border-[#315668] hover:bg-[#223c49]">Siguiente</button>
+</div>
+</div>
+</div>
+<div class="h-8"></div> <!-- Spacer -->
+</div>
+</div>
+</div>
+</body></html>

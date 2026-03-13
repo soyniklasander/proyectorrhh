@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>NexaCorp | Control de Saldos Vacacionales</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">tailwind.config = {darkMode: "class", theme: {extend: {colors: {primary: "#2c60ce", "background-light": "#f6f6f8", "background-dark": "#121720"}, fontFamily: {display: "Inter"}, borderRadius: {DEFAULT: "0.5rem", lg: "1rem", xl: "1.5rem", full: "9999px"}}}};</script>
+<style>
+        body {
+            font-family: 'Manrope', sans-serif;
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #1a2a32;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #25aff444;
+            border-radius: 10px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #25aff4;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-800 dark:text-slate-100 min-h-screen flex">
+<!-- Sidebar Navigation -->
+<aside class="w-64 border-r border-primary/10 bg-background-light dark:bg-background-dark/50 hidden lg:flex flex-col">
+<div class="p-6">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 bg-primary rounded-lg flex items-center justify-center">
+<span class="material-icons text-white">corporate_fare</span>
+</div>
+<h1 class="font-extrabold text-xl tracking-tight text-slate-900 dark:text-white">NexaCorp</h1>
+</div>
+</div>
+<nav class="flex-1 px-4 space-y-1">
+<a class="flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-lg bg-primary/10 text-primary" href="#">
+<span class="material-icons text-xl">dashboard</span>
+                Control Vacacional
+            </a>
+<a class="flex items-center gap-3 px-4 py-3 text-sm font-medium text-slate-500 dark:text-slate-400 hover:bg-primary/5 hover:text-primary transition-colors rounded-lg" href="#">
+<span class="material-icons text-xl">people</span>
+                Colaboradores
+            </a>
+<a class="flex items-center gap-3 px-4 py-3 text-sm font-medium text-slate-500 dark:text-slate-400 hover:bg-primary/5 hover:text-primary transition-colors rounded-lg" href="#">
+<span class="material-icons text-xl">event_available</span>
+                Solicitudes
+            </a>
+<a class="flex items-center gap-3 px-4 py-3 text-sm font-medium text-slate-500 dark:text-slate-400 hover:bg-primary/5 hover:text-primary transition-colors rounded-lg" href="#">
+<span class="material-icons text-xl">assessment</span>
+                Reportes Legales
+            </a>
+</nav>
+<div class="p-4 mt-auto">
+<div class="bg-primary/5 rounded-xl p-4 border border-primary/20">
+<p class="text-xs font-semibold text-primary uppercase tracking-wider mb-2">Soporte Nexa</p>
+<p class="text-sm text-slate-400 mb-3">¿Dudas sobre el régimen laboral peruano?</p>
+<button class="w-full py-2 bg-primary text-white text-xs font-bold rounded-lg hover:bg-primary/90 transition-all">Consultar Guía</button>
+</div>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="flex-1 flex flex-col min-w-0 overflow-hidden">
+<!-- Header -->
+<header class="h-20 border-b border-primary/10 flex items-center justify-between px-8 bg-background-light/50 dark:bg-background-dark/50 backdrop-blur-md sticky top-0 z-10">
+<div>
+<h2 class="text-2xl font-bold text-slate-900 dark:text-white">Gestión de Saldos Vacacionales</h2>
+<p class="text-xs text-slate-500 font-medium">Lógica diferenciada: NexaCorp Perú</p>
+</div>
+<div class="flex items-center gap-4">
+<div class="relative">
+<span class="material-icons absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-lg">search</span>
+<input class="pl-10 pr-4 py-2 bg-slate-100 dark:bg-slate-800/50 border-none rounded-lg text-sm focus:ring-2 focus:ring-primary w-64 transition-all" placeholder="Buscar colaborador..." type="text"/>
+</div>
+<button class="p-2 text-slate-400 hover:text-primary transition-colors">
+<span class="material-icons">notifications</span>
+</button>
+<div class="w-10 h-10 rounded-full border-2 border-primary overflow-hidden">
+<img alt="Profile" class="w-full h-full object-cover" data-alt="HR Manager profile picture" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBPpgkslHh0Ee8I3FK-WfWqR9Su5-6ZLJED5lUwCrLJD3bDRjrEqtdgf5jfvlud5Q9NH5LARqeUDbYlsNGNoMQFh3Ew54yiUiJZtzJqHQ89VKL-FY4LviOuLYsEc4Udb8RTNY7SlmmYNmMGxWW94KNAb3ShCXEUc3ml8xQlYOJLQVFFb4V1yun42lpVZaP6EjP2DTAN4OdKzp3nOqQ26DcUInS0MI5mWvQ2-UApJAGDP_fbaDA1lckkfQyZVVBMjsBGrQpOFqLZSqWj"/>
+</div>
+</div>
+</header>
+<!-- Dashboard Body -->
+<div class="flex-1 overflow-y-auto p-8 custom-scrollbar">
+<!-- Summary Stats -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+<div class="bg-white dark:bg-slate-800/40 p-5 rounded-xl border border-primary/10 shadow-sm">
+<div class="flex justify-between items-start mb-4">
+<div class="p-2 bg-primary/20 rounded-lg">
+<span class="material-icons text-primary">calendar_today</span>
+</div>
+<span class="text-[10px] font-bold text-emerald-500 bg-emerald-500/10 px-2 py-0.5 rounded-full">+12% vs mes ant.</span>
+</div>
+<p class="text-slate-500 dark:text-slate-400 text-sm font-medium">Total Días Pendientes</p>
+<h3 class="text-2xl font-bold text-slate-900 dark:text-white">1,452</h3>
+</div>
+<div class="bg-white dark:bg-slate-800/40 p-5 rounded-xl border border-primary/10 shadow-sm">
+<div class="flex justify-between items-start mb-4">
+<div class="p-2 bg-amber-500/20 rounded-lg">
+<span class="material-icons text-amber-500">warning</span>
+</div>
+<span class="text-[10px] font-bold text-amber-500 bg-amber-500/10 px-2 py-0.5 rounded-full">Crítico</span>
+</div>
+<p class="text-slate-500 dark:text-slate-400 text-sm font-medium">Riesgo de Acumulación</p>
+<h3 class="text-2xl font-bold text-slate-900 dark:text-white">28 <span class="text-sm font-normal text-slate-500 italic">colabs.</span></h3>
+</div>
+<div class="bg-white dark:bg-slate-800/40 p-5 rounded-xl border border-primary/10 shadow-sm">
+<div class="flex justify-between items-start mb-4">
+<div class="p-2 bg-indigo-500/20 rounded-lg">
+<span class="material-icons text-indigo-500">flight_takeoff</span>
+</div>
+</div>
+<p class="text-slate-500 dark:text-slate-400 text-sm font-medium">En Vacaciones (Hoy)</p>
+<h3 class="text-2xl font-bold text-slate-900 dark:text-white">14</h3>
+</div>
+<div class="bg-white dark:bg-slate-800/40 p-5 rounded-xl border border-primary/10 shadow-sm">
+<div class="flex justify-between items-start mb-4">
+<div class="p-2 bg-primary/20 rounded-lg">
+<span class="material-icons text-primary">analytics</span>
+</div>
+<span class="text-[10px] font-bold text-primary bg-primary/10 px-2 py-0.5 rounded-full">Nexa Compliance</span>
+</div>
+<p class="text-slate-500 dark:text-slate-400 text-sm font-medium">Índice de Goce</p>
+<h3 class="text-2xl font-bold text-slate-900 dark:text-white">74.2%</h3>
+</div>
+</div>
+<!-- Controls & Filters -->
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
+<div class="flex items-center gap-2 p-1 bg-slate-100 dark:bg-slate-800/80 rounded-xl w-fit">
+<button class="px-4 py-2 text-xs font-bold rounded-lg bg-primary text-white shadow-lg shadow-primary/20">Todos</button>
+<button class="px-4 py-2 text-xs font-bold rounded-lg text-slate-500 hover:text-slate-700 dark:hover:text-slate-200 transition-colors">General (30d)</button>
+<button class="px-4 py-2 text-xs font-bold rounded-lg text-slate-500 hover:text-slate-700 dark:hover:text-slate-200 transition-colors">Pequeña (15d)</button>
+<button class="px-4 py-2 text-xs font-bold rounded-lg text-slate-500 hover:text-slate-700 dark:hover:text-slate-200 transition-colors">Micro (15d)</button>
+</div>
+<div class="flex items-center gap-3">
+<button class="flex items-center gap-2 px-4 py-2 border border-primary/20 rounded-lg text-sm font-semibold text-primary hover:bg-primary/5 transition-all">
+<span class="material-icons text-sm">download</span>
+                        Exportar Auditoría
+                    </button>
+<button class="flex items-center gap-2 px-4 py-2 bg-primary rounded-lg text-sm font-bold text-white hover:bg-primary/90 transition-all shadow-lg shadow-primary/20">
+<span class="material-icons text-sm">add</span>
+                        Nueva Solicitud
+                    </button>
+</div>
+</div>
+<!-- Main Table Card -->
+<div class="bg-white dark:bg-slate-800/30 rounded-2xl border border-primary/10 overflow-hidden shadow-sm">
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-slate-50 dark:bg-slate-800/50 border-b border-primary/10">
+<th class="px-6 py-4 text-xs font-bold uppercase tracking-wider text-slate-400">Colaborador</th>
+<th class="px-6 py-4 text-xs font-bold uppercase tracking-wider text-slate-400">Régimen</th>
+<th class="px-6 py-4 text-xs font-bold uppercase tracking-wider text-slate-400">Días Ganados</th>
+<th class="px-6 py-4 text-xs font-bold uppercase tracking-wider text-slate-400">Gozados</th>
+<th class="px-6 py-4 text-xs font-bold uppercase tracking-wider text-slate-400">Pendientes</th>
+<th class="px-6 py-4 text-xs font-bold uppercase tracking-wider text-slate-400 w-64">Estado de Balance</th>
+<th class="px-6 py-4 text-xs font-bold uppercase tracking-wider text-slate-400"></th>
+</tr>
+</thead>
+<tbody class="divide-y divide-primary/5">
+<!-- Row 1 -->
+<tr class="hover:bg-primary/5 transition-colors group">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-9 h-9 rounded-lg bg-slate-200 dark:bg-slate-700 flex-shrink-0 overflow-hidden">
+<img alt="Avatar" class="w-full h-full object-cover" data-alt="Employee profile picture male" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAmNKq8QX6EYp_pxXXkcvRfpJrsmmafHBNsK_z-lyAqo81rhdS6rDXzlOMSlW9oZxjXWF95q9--0QlRZDq577Ay4WOmgWzDbnkXAHx5GvcNxb_zf1Lpjg0dwwuR-4WZQ8IGaQWA2H6ZagXs0JQOsn56mVsu2QVDzAYCmdyjH1Bs1jCsaguRxIUDrtnB6bV8yX-xJ8x75iBWmlte7N-nimiLwux7EjICy5b2HHC24fEsmf_EWzB1KyIsEr_qGD2q5miKNpuGmevk7xQs"/>
+</div>
+<div>
+<p class="text-sm font-bold text-slate-900 dark:text-white">Alejandro Benavides</p>
+<p class="text-[10px] text-slate-500 font-medium">DevOps Engineer</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="px-2 py-1 text-[10px] font-bold bg-primary/10 text-primary rounded border border-primary/20">GENERAL (30d)</span>
+</td>
+<td class="px-6 py-4 font-semibold text-sm text-slate-700 dark:text-slate-300">45.0</td>
+<td class="px-6 py-4 font-semibold text-sm text-slate-700 dark:text-slate-300">15.0</td>
+<td class="px-6 py-4">
+<span class="text-sm font-bold text-amber-500">30.0</span>
+</td>
+<td class="px-6 py-4">
+<div class="space-y-1.5">
+<div class="flex justify-between text-[10px] font-bold">
+<span class="text-slate-400">Uso: 33%</span>
+<span class="text-primary">Saldo: 67%</span>
+</div>
+<div class="w-full h-2.5 bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden flex">
+<div class="bg-slate-400 dark:bg-slate-500 h-full" style="width: 33.3%"></div>
+<div class="bg-primary h-full" style="width: 66.7%"></div>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 text-right">
+<button class="p-2 rounded-lg text-slate-400 hover:text-primary hover:bg-primary/10 opacity-0 group-hover:opacity-100 transition-all">
+<span class="material-icons text-lg">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-primary/5 transition-colors group">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-9 h-9 rounded-lg bg-slate-200 dark:bg-slate-700 flex-shrink-0 overflow-hidden">
+<img alt="Avatar" class="w-full h-full object-cover" data-alt="Employee profile picture female" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDVn1hIFTHV2BOJKMnmXIabDe2Y901QM5xyYYnwQuwlgixiqNp0HH2nDZsTHem4EIqNEfWucf2PMvCsN_rUd6QwJIrvql-X59hIdKAotemVTlBgc0jKsVvFbWfmCD7zjrrdNDGP8-PSYr3Q4M_gJ1CyW_qOZOgpOcu9ul3AjyTHkJR6LiFwnJQ-dj573mg8txhrzzxR3VASdWxDt8Q3NXC1CDNpWq9RWE4zeL3lHGuPdUyYQ8_xSVWJQycHj8Wk6SyfRO9S5Wvj9Ydd"/>
+</div>
+<div>
+<p class="text-sm font-bold text-slate-900 dark:text-white">Lucía Villanueva</p>
+<p class="text-[10px] text-slate-500 font-medium">UX Designer</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="px-2 py-1 text-[10px] font-bold bg-indigo-500/10 text-indigo-500 rounded border border-indigo-500/20 uppercase">Micro (15d)</span>
+</td>
+<td class="px-6 py-4 font-semibold text-sm text-slate-700 dark:text-slate-300">22.5</td>
+<td class="px-6 py-4 font-semibold text-sm text-slate-700 dark:text-slate-300">20.0</td>
+<td class="px-6 py-4">
+<span class="text-sm font-bold text-emerald-500">2.5</span>
+</td>
+<td class="px-6 py-4">
+<div class="space-y-1.5">
+<div class="flex justify-between text-[10px] font-bold">
+<span class="text-slate-400">Uso: 88%</span>
+<span class="text-primary">Saldo: 12%</span>
+</div>
+<div class="w-full h-2.5 bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden flex">
+<div class="bg-slate-400 dark:bg-slate-500 h-full" style="width: 88.8%"></div>
+<div class="bg-primary h-full" style="width: 11.2%"></div>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 text-right">
+<button class="p-2 rounded-lg text-slate-400 hover:text-primary hover:bg-primary/10 opacity-0 group-hover:opacity-100 transition-all">
+<span class="material-icons text-lg">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-primary/5 transition-colors group">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-9 h-9 rounded-lg bg-slate-200 dark:bg-slate-700 flex-shrink-0 overflow-hidden">
+<img alt="Avatar" class="w-full h-full object-cover" data-alt="Employee profile picture male beard" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAQffE9LEsMaAXwyze8pTLKf7hGWZ1t_X44pNBTGp6-yEXwdA8Fh9-NZnHMYi4I0GeLBYcfPucJs5u00Jjbl3yXi_vX0fW202rqKCTDoBAR5y558m213KsbTbf-UUWQBjrbqQmAqlDhbwFTQaaqwEzJnsF6o6SmKrHknKoh5BVBuXik1jbi7lCWqkOjhzNcDjgBRXeDQr4OqkmXK_fBQeYbBQM8zccbCRXcl5xGSP2XhjskuqG9OayCA8pAagCuLhLhgxvgJKyzJ_L_"/>
+</div>
+<div>
+<p class="text-sm font-bold text-slate-900 dark:text-white">Mateo Quispe</p>
+<p class="text-[10px] text-slate-500 font-medium">Analista Senior</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="px-2 py-1 text-[10px] font-bold bg-amber-500/10 text-amber-500 rounded border border-amber-500/20 uppercase">Pequeña (15d)</span>
+</td>
+<td class="px-6 py-4 font-semibold text-sm text-slate-700 dark:text-slate-300">18.0</td>
+<td class="px-6 py-4 font-semibold text-sm text-slate-700 dark:text-slate-300">0.0</td>
+<td class="px-6 py-4">
+<span class="text-sm font-bold text-slate-900 dark:text-white">18.0</span>
+</td>
+<td class="px-6 py-4">
+<div class="space-y-1.5">
+<div class="flex justify-between text-[10px] font-bold">
+<span class="text-slate-400">Uso: 0%</span>
+<span class="text-primary">Saldo: 100%</span>
+</div>
+<div class="w-full h-2.5 bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden flex">
+<div class="bg-primary h-full" style="width: 100%"></div>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 text-right">
+<button class="p-2 rounded-lg text-slate-400 hover:text-primary hover:bg-primary/10 opacity-0 group-hover:opacity-100 transition-all">
+<span class="material-icons text-lg">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Row 4 -->
+<tr class="hover:bg-primary/5 transition-colors group">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-9 h-9 rounded-lg bg-slate-200 dark:bg-slate-700 flex-shrink-0 overflow-hidden">
+<img alt="Avatar" class="w-full h-full object-cover" data-alt="Employee profile picture professional female" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA0wjaybigRldNFyy1N9E2DKJ5Ldl-KOCIpT8MxK2saUQpceeES1J9awdjm8ITuJnMxmiFG35M6Oq6yQ3nV6yLY4gZzj44YDpWFS6wRkUuPsBer2YwPOXoYmRBqetSitB1E-Msl6LVrdit4i-dNIfKgT3RN-f1INbGxq-cXxRLIR4Oibq5xT6jODGoXrEi2xjaAXPa1D413wpnf31naisHpEov64xSYSH5vNwQt-MuMLkyTmJuhfJTLj6ptoujORuMAOqz8pa-xz7wX"/>
+</div>
+<div>
+<p class="text-sm font-bold text-slate-900 dark:text-white">Elena Rojas</p>
+<p class="text-[10px] text-slate-500 font-medium">Product Owner</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="px-2 py-1 text-[10px] font-bold bg-primary/10 text-primary rounded border border-primary/20">GENERAL (30d)</span>
+</td>
+<td class="px-6 py-4 font-semibold text-sm text-slate-700 dark:text-slate-300">60.0</td>
+<td class="px-6 py-4 font-semibold text-sm text-slate-700 dark:text-slate-300">10.0</td>
+<td class="px-6 py-4">
+<span class="text-sm font-bold text-red-500 animate-pulse">50.0</span>
+</td>
+<td class="px-6 py-4">
+<div class="space-y-1.5">
+<div class="flex justify-between text-[10px] font-bold">
+<span class="text-slate-400">Uso: 16%</span>
+<span class="text-red-500">Saldo: 84% (Alerta)</span>
+</div>
+<div class="w-full h-2.5 bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden flex">
+<div class="bg-slate-400 dark:bg-slate-500 h-full" style="width: 16.6%"></div>
+<div class="bg-red-500 h-full" style="width: 83.4%"></div>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 text-right">
+<button class="p-2 rounded-lg text-slate-400 hover:text-primary hover:bg-primary/10 opacity-0 group-hover:opacity-100 transition-all">
+<span class="material-icons text-lg">more_vert</span>
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="px-6 py-4 bg-slate-50/50 dark:bg-slate-800/50 border-t border-primary/10 flex items-center justify-between">
+<p class="text-xs text-slate-500 font-medium">Mostrando 1-10 de 156 colaboradores registrados</p>
+<div class="flex items-center gap-2">
+<button class="p-1 rounded bg-slate-200 dark:bg-slate-700 text-slate-500 hover:bg-primary/20 transition-all">
+<span class="material-icons text-sm">chevron_left</span>
+</button>
+<span class="text-xs font-bold px-2 py-1 bg-primary text-white rounded">1</span>
+<button class="p-1 rounded hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-500 transition-all">
+<span class="material-icons text-sm">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Footer Notes -->
+<div class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6">
+<div class="p-4 bg-background-dark/30 rounded-xl border border-primary/10">
+<h4 class="text-xs font-bold text-primary uppercase mb-2 flex items-center gap-2">
+<span class="material-icons text-sm">info</span>
+                        Lógica de Cálculo (DL 728 / Ley 30056)
+                    </h4>
+<ul class="text-[11px] space-y-2 text-slate-400">
+<li class="flex items-start gap-2"><span class="w-1 h-1 bg-primary rounded-full mt-1.5"></span> Régimen General: 30 días calendario por año completo de servicios.</li>
+<li class="flex items-start gap-2"><span class="w-1 h-1 bg-primary rounded-full mt-1.5"></span> Micro y Pequeña Empresa: 15 días calendario por año completo de servicios.</li>
+<li class="flex items-start gap-2"><span class="w-1 h-1 bg-primary rounded-full mt-1.5"></span> La reducción vacacional a 15 días requiere acuerdo previo por escrito.</li>
+</ul>
+</div>
+<div class="flex flex-col justify-center">
+<div class="flex items-center gap-4 justify-end">
+<div class="text-right">
+<p class="text-[10px] text-slate-500 font-medium uppercase tracking-widest">Sincronizado con SUNAT</p>
+<p class="text-xs font-bold text-emerald-500">Hoy, 09:42 AM</p>
+</div>
+<div class="w-10 h-10 bg-emerald-500/10 text-emerald-500 rounded-full flex items-center justify-center">
+<span class="material-icons">sync</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</body></html>

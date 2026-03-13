@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+
+<html class="light dark" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>NexaCorp - Solicitud de Venta de Vacaciones</title>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Config -->
+<script id="tailwind-config">tailwind.config = {darkMode: "class", theme: {extend: {colors: {primary: "#2c60ce", "background-light": "#f6f6f8", "background-dark": "#121720", "card-light": "#ffffff", "card-dark": "#1a2332", "text-main": "#0d121b", "text-secondary": "#4c669a"}, fontFamily: {display: "Inter"}, borderRadius: {DEFAULT: "0.5rem", lg: "1rem", xl: "1.5rem", full: "9999px"}}}};</script>
+</head>
+<body class="font-display bg-background-light dark:bg-background-dark text-text-main dark:text-white transition-colors duration-200 min-h-screen flex flex-col">
+<!-- Header / Navbar -->
+<div class="w-full bg-card-light dark:bg-card-dark border-b border-[#e7ebf3] dark:border-[#2a3447]">
+<div class="max-w-[1200px] mx-auto px-6 h-16 flex items-center justify-between">
+<!-- Brand -->
+<div class="flex items-center gap-3">
+<div class="size-8 rounded bg-primary flex items-center justify-center text-white">
+<span class="material-symbols-outlined text-xl">work</span>
+</div>
+<h1 class="text-xl font-bold tracking-tight text-text-main dark:text-white">NexaCorp <span class="font-normal opacity-70">MyWork</span></h1>
+</div>
+<!-- Navigation Links -->
+<nav class="hidden md:flex items-center gap-8">
+<a class="text-sm font-medium text-text-secondary hover:text-primary dark:text-gray-400 dark:hover:text-primary transition-colors" href="#">Inicio</a>
+<a class="text-sm font-medium text-primary dark:text-primary" href="#">Mis Vacaciones</a>
+<a class="text-sm font-medium text-text-secondary hover:text-primary dark:text-gray-400 dark:hover:text-primary transition-colors" href="#">Mi Perfil</a>
+<a class="text-sm font-medium text-text-secondary hover:text-primary dark:text-gray-400 dark:hover:text-primary transition-colors" href="#">Ayuda</a>
+</nav>
+<!-- User Actions -->
+<div class="flex items-center gap-4">
+<button class="flex items-center gap-2 text-text-main dark:text-white hover:opacity-80 transition-opacity">
+<div class="bg-center bg-no-repeat bg-cover rounded-full size-9 border-2 border-primary/20" data-alt="Professional woman portrait" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuB98KRdxkMAJNiqloy-DGuJJ03kTiGNaQku3q_SBTnZxxXZn4SE5qYqP1o5D0Ry5t38GJgC_Y6OaRn8Ml0WSyeGpM1RPZXqMVlW07mf0k3I4ylOOhvEAh47qVrcsXJgsY2DLO7gGOYfSHAp-z8JFHIwykc2L1Mm4gWpRCUoNKIZHQXs_g34k6BmMC_V85ISYUWTLOofr3i_ykkcGxkfuC3UgRm4rdb4gYYZ4CX9BmYdxN5LjEAlgQ0bgneIMsyA8NLM87XNe00m0a6Q");'></div>
+<span class="hidden lg:block text-sm font-semibold">Ana García</span>
+<span class="material-symbols-outlined text-lg">expand_more</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Main Content -->
+<main class="flex-1 w-full max-w-[1200px] mx-auto px-6 py-8">
+<!-- Breadcrumbs -->
+<div class="flex items-center gap-2 mb-8 text-sm">
+<a class="text-text-secondary dark:text-gray-400 hover:underline" href="#">Inicio</a>
+<span class="material-symbols-outlined text-xs text-text-secondary dark:text-gray-500">chevron_right</span>
+<a class="text-text-secondary dark:text-gray-400 hover:underline" href="#">Mis Vacaciones</a>
+<span class="material-symbols-outlined text-xs text-text-secondary dark:text-gray-500">chevron_right</span>
+<span class="text-primary font-medium">Venta de Días</span>
+</div>
+<!-- Header Section -->
+<div class="flex flex-col md:flex-row justify-between items-start md:items-end gap-6 mb-8">
+<div class="max-w-2xl">
+<h2 class="text-3xl md:text-4xl font-black tracking-tight text-text-main dark:text-white mb-2">Solicitud de Venta de Vacaciones</h2>
+<p class="text-text-secondary dark:text-gray-400 text-lg">Gestiona la monetización de tu saldo vacacional disponible de acuerdo a la legislación laboral peruana.</p>
+</div>
+<div class="hidden md:block">
+<button class="text-primary font-bold text-sm flex items-center gap-1 hover:underline">
+<span class="material-symbols-outlined text-lg">info</span>
+                    Política de Vacaciones
+                 </button>
+</div>
+</div>
+<!-- Info Grid -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+<!-- Card 1 -->
+<div class="bg-card-light dark:bg-card-dark rounded-xl p-6 border border-gray-200 dark:border-gray-800 shadow-sm flex flex-col justify-between h-32 relative overflow-hidden group">
+<div class="absolute right-0 top-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+<span class="material-symbols-outlined text-6xl text-primary">calendar_month</span>
+</div>
+<p class="text-text-secondary dark:text-gray-400 text-sm font-medium">Saldo Total Disponible</p>
+<div>
+<span class="text-3xl font-bold text-text-main dark:text-white">30</span>
+<span class="text-sm font-medium text-text-secondary dark:text-gray-500 ml-1">días</span>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="bg-card-light dark:bg-card-dark rounded-xl p-6 border border-gray-200 dark:border-gray-800 shadow-sm flex flex-col justify-between h-32 relative overflow-hidden group">
+<div class="absolute right-0 top-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+<span class="material-symbols-outlined text-6xl text-green-600">payments</span>
+</div>
+<p class="text-text-secondary dark:text-gray-400 text-sm font-medium">Tope Legal Vendible</p>
+<div>
+<span class="text-3xl font-bold text-text-main dark:text-white">15</span>
+<span class="text-sm font-medium text-text-secondary dark:text-gray-500 ml-1">días</span>
+</div>
+</div>
+<!-- Card 3 -->
+<div class="bg-card-light dark:bg-card-dark rounded-xl p-6 border border-gray-200 dark:border-gray-800 shadow-sm flex flex-col justify-between h-32 relative overflow-hidden group">
+<div class="absolute right-0 top-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+<span class="material-symbols-outlined text-6xl text-orange-500">history</span>
+</div>
+<p class="text-text-secondary dark:text-gray-400 text-sm font-medium">Días ya Vendidos (Año actual)</p>
+<div>
+<span class="text-3xl font-bold text-text-main dark:text-white">0</span>
+<span class="text-sm font-medium text-text-secondary dark:text-gray-500 ml-1">días</span>
+</div>
+</div>
+</div>
+<!-- Calculator & Action Area -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+<!-- Left: Interaction Panel -->
+<div class="lg:col-span-2 bg-card-light dark:bg-card-dark rounded-xl border border-gray-200 dark:border-gray-800 shadow-sm overflow-hidden">
+<div class="p-6 border-b border-gray-100 dark:border-gray-800">
+<h3 class="text-xl font-bold text-text-main dark:text-white flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">calculate</span>
+                        Calculadora de Monetización
+                    </h3>
+</div>
+<div class="p-8">
+<div class="mb-10">
+<label class="block text-sm font-medium text-text-main dark:text-white mb-4">¿Cuántos días deseas vender?</label>
+<div class="flex items-center gap-4">
+<span class="text-sm font-medium text-gray-400 w-8 text-center">1</span>
+<input class="w-full h-2 bg-gray-200 dark:bg-gray-700 rounded-lg appearance-none cursor-pointer accent-primary" max="15" min="1" type="range" value="7"/>
+<span class="text-sm font-medium text-gray-400 w-8 text-center">15</span>
+</div>
+<div class="mt-4 text-center">
+<span class="inline-block px-4 py-2 bg-primary/10 text-primary font-bold rounded-lg text-lg border border-primary/20">
+                                7 días seleccionados
+                            </span>
+</div>
+</div>
+<div class="p-4 bg-orange-50 dark:bg-orange-900/10 border border-orange-100 dark:border-orange-800/30 rounded-lg flex gap-3">
+<span class="material-symbols-outlined text-orange-600 dark:text-orange-400 flex-shrink-0">gavel</span>
+<div>
+<h4 class="text-sm font-bold text-orange-800 dark:text-orange-300 mb-1">Nota Legal</h4>
+<p class="text-sm text-orange-700 dark:text-orange-400/80 leading-relaxed">
+                                Según la legislación laboral peruana (Decreto Legislativo N° 713), solo es posible vender hasta un máximo de 15 días de vacaciones por periodo anual. Este monto está sujeto a los descuentos de ley (AFP/ONP, Renta de 5ta categoría).
+                            </p>
+</div>
+</div>
+</div>
+</div>
+<!-- Right: Summary Panel -->
+<div class="lg:col-span-1">
+<div class="bg-primary text-white rounded-xl shadow-lg overflow-hidden sticky top-6">
+<div class="p-6 border-b border-white/10">
+<h3 class="text-lg font-bold flex items-center justify-between">
+                            Resumen Estimado
+                            <span class="material-symbols-outlined text-white/60">receipt_long</span>
+</h3>
+</div>
+<div class="p-6 space-y-6">
+<div class="flex justify-between items-center text-white/80 text-sm">
+<span>Sueldo Base Mensual</span>
+<span class="font-medium text-white">S/ 5,000.00</span>
+</div>
+<div class="flex justify-between items-center text-white/80 text-sm">
+<span>Valor Día Calculado</span>
+<span class="font-medium text-white">S/ 166.67</span>
+</div>
+<div class="h-px w-full bg-white/20 my-4"></div>
+<div class="space-y-1">
+<p class="text-sm font-medium text-white/70 uppercase tracking-wider">Monto Bruto a Recibir</p>
+<p class="text-4xl font-bold tracking-tight">S/ 1,166.69</p>
+<p class="text-xs text-white/50 mt-1">* Cálculo estimado antes de impuestos</p>
+</div>
+</div>
+<div class="p-6 bg-black/10 backdrop-blur-sm space-y-3">
+<button class="w-full bg-white text-primary hover:bg-gray-50 font-bold py-3.5 px-4 rounded-lg shadow-sm transition-all transform hover:scale-[1.02] flex items-center justify-center gap-2">
+<span>Solicitar Monetización</span>
+<span class="material-symbols-outlined text-sm">arrow_forward</span>
+</button>
+<button class="w-full bg-transparent text-white/80 hover:text-white hover:bg-white/10 font-medium py-2.5 px-4 rounded-lg transition-colors text-sm">
+                            Cancelar
+                        </button>
+</div>
+</div>
+</div>
+</div>
+<div class="mt-12 mb-8 border-t border-gray-200 dark:border-gray-800 pt-8">
+<p class="text-center text-xs text-text-secondary dark:text-gray-500">
+                © 2024 NexaCorp Perú S.A. Todos los derechos reservados. Portal MyWork v3.5.0
+            </p>
+</div>
+</main>
+</body></html>

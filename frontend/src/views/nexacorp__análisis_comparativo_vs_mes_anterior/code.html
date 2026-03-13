@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>NexaCorp: Análisis Comparativo vs Mes Anterior</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#2c60ce",
+                        "primary-dark": "#1a4bb0",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#121720",
+                        "surface-dark": "#1e2430",
+                        "surface-highlight": "#252d3d",
+                        "success": "#10b981",
+                        "warning": "#f59e0b",
+                        "danger": "#ef4444",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.5rem", "lg": "1rem", "xl": "1.5rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        /* Custom scrollbar for table container */
+        .custom-scrollbar::-webkit-scrollbar {
+            height: 8px;
+            width: 8px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #1e2430;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #374151;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-gray-900 dark:text-gray-100 min-h-screen flex flex-col font-display selection:bg-primary selection:text-white">
+<!-- Top Navigation / Header -->
+<header class="border-b border-gray-200 dark:border-gray-800 bg-white dark:bg-surface-dark sticky top-0 z-30">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex justify-between items-center h-16">
+<div class="flex items-center gap-4">
+<div class="flex items-center justify-center w-10 h-10 rounded-lg bg-primary/10 text-primary">
+<span class="material-icons-round">analytics</span>
+</div>
+<div>
+<h1 class="text-xl font-bold text-gray-900 dark:text-white">NexaCorp <span class="text-gray-400 font-normal">| Portal de Nómina</span></h1>
+<p class="text-xs text-gray-500 dark:text-gray-400">Auditoría de Cierre de Planilla - Octubre 2023</p>
+</div>
+</div>
+<!-- Stepper (Visual Only) -->
+<div class="hidden md:flex items-center space-x-4 text-sm">
+<div class="flex items-center text-gray-400">
+<span class="w-6 h-6 flex items-center justify-center border border-gray-600 rounded-full mr-2 text-xs">1</span>
+                        Resumen General
+                    </div>
+<div class="w-8 h-px bg-gray-700"></div>
+<div class="flex items-center text-primary font-medium">
+<span class="w-6 h-6 flex items-center justify-center bg-primary text-white rounded-full mr-2 text-xs">2</span>
+                        Variación Mensual
+                    </div>
+<div class="w-8 h-px bg-gray-700"></div>
+<div class="flex items-center text-gray-400">
+<span class="w-6 h-6 flex items-center justify-center border border-gray-600 rounded-full mr-2 text-xs">3</span>
+                        Aprobación Final
+                    </div>
+</div>
+<div class="flex items-center gap-3">
+<div class="flex items-center gap-2 px-3 py-1.5 rounded-full bg-surface-highlight border border-gray-700">
+<img alt="User Profile" class="w-6 h-6 rounded-full" data-alt="User avatar placeholder" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCiXYNtz-4fBtunj5GDNNjiGDxpMYYhPTfO9XZ0qQGzBrAX7K_DZltifVRmqX8cS60vxBr6YaUiHhMQKSBeWdnV-Rk-zCq9zduoz8yypz4zD24nbYuBkiIIeV1Y-I5ERQL7_sEhynHmsAJ9Z0b23DAY3hvhWBQ1GLvUYifXez5AkD1kvuI3jz-nzPl3X-qsBny42DBffvl2bwUy_bREZpT7M94ZzaWW9mZoubIpGQgpYABDche9whduUWhirjZpMRcqOTeBYEGSTBFr"/>
+<span class="text-sm font-medium hidden sm:block">Carlos M.</span>
+</div>
+</div>
+</div>
+</div>
+</header>
+<!-- Main Content -->
+<main class="flex-grow p-4 sm:p-6 lg:p-8 max-w-7xl mx-auto w-full space-y-8">
+<!-- Page Header & Filters -->
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+<div>
+<h2 class="text-2xl font-bold text-white">Análisis Comparativo vs Mes Anterior</h2>
+<p class="text-gray-400 mt-1">Comparando <span class="text-primary font-medium">Octubre 2023</span> vs <span class="text-gray-300">Septiembre 2023</span></p>
+</div>
+<div class="flex gap-3">
+<div class="relative group">
+<div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+<span class="material-icons-round text-gray-400 text-sm">filter_alt</span>
+</div>
+<select class="pl-9 pr-8 py-2 bg-surface-dark border border-gray-700 rounded-lg text-sm text-gray-200 focus:ring-2 focus:ring-primary focus:border-primary appearance-none cursor-pointer hover:bg-surface-highlight transition-colors">
+<option>Todos los Departamentos</option>
+<option>Finanzas</option>
+<option>Recursos Humanos</option>
+<option>Operaciones</option>
+<option>TI</option>
+</select>
+</div>
+<button class="flex items-center gap-2 px-4 py-2 bg-surface-dark border border-gray-700 rounded-lg text-sm font-medium text-gray-200 hover:bg-surface-highlight transition-colors">
+<span class="material-icons-round text-sm">download</span>
+<span>Exportar Reporte</span>
+</button>
+</div>
+</div>
+<!-- KPI Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+<!-- Card 1: Headcount (Focus State) -->
+<div class="bg-surface-highlight border-2 border-primary rounded-xl p-5 shadow-lg relative overflow-hidden group cursor-pointer transition-all hover:-translate-y-1">
+<div class="absolute top-0 right-0 p-3 opacity-10">
+<span class="material-icons-round text-6xl text-primary">groups</span>
+</div>
+<div class="flex justify-between items-start mb-4 relative z-10">
+<div>
+<p class="text-sm font-medium text-gray-400">Headcount Total</p>
+<h3 class="text-3xl font-bold text-white mt-1">1,245</h3>
+</div>
+<div class="flex items-center gap-1 bg-primary/20 text-primary px-2 py-1 rounded text-xs font-semibold">
+<span class="material-icons-round text-sm">trending_up</span>
+<span>+1.2%</span>
+</div>
+</div>
+<div class="text-sm text-gray-400 border-t border-gray-700 pt-3 mt-2 flex justify-between items-center relative z-10">
+<span>Prev: 1,230</span>
+<span class="text-primary text-xs font-bold uppercase tracking-wider">Activo</span>
+</div>
+</div>
+<!-- Card 2: Horas Extras (Warning) -->
+<div class="bg-surface-dark border border-gray-800 hover:border-gray-600 rounded-xl p-5 shadow-lg relative overflow-hidden group cursor-pointer transition-all hover:-translate-y-1">
+<div class="absolute top-0 right-0 p-3 opacity-10 group-hover:opacity-20 transition-opacity">
+<span class="material-icons-round text-6xl text-gray-500">schedule</span>
+</div>
+<div class="flex justify-between items-start mb-4 relative z-10">
+<div>
+<p class="text-sm font-medium text-gray-400">Costo Horas Extras</p>
+<h3 class="text-3xl font-bold text-white mt-1">S/ 45,230</h3>
+</div>
+<div class="flex items-center gap-1 bg-danger/20 text-danger px-2 py-1 rounded text-xs font-semibold">
+<span class="material-icons-round text-sm">trending_up</span>
+<span>+15.4%</span>
+</div>
+</div>
+<div class="text-sm text-gray-400 border-t border-gray-700 pt-3 mt-2 flex justify-between items-center relative z-10">
+<span>Prev: S/ 39,190</span>
+<span class="text-danger font-medium">+ S/ 6,040</span>
+</div>
+</div>
+<!-- Card 3: Bonos (Good) -->
+<div class="bg-surface-dark border border-gray-800 hover:border-gray-600 rounded-xl p-5 shadow-lg relative overflow-hidden group cursor-pointer transition-all hover:-translate-y-1">
+<div class="absolute top-0 right-0 p-3 opacity-10 group-hover:opacity-20 transition-opacity">
+<span class="material-icons-round text-6xl text-gray-500">emoji_events</span>
+</div>
+<div class="flex justify-between items-start mb-4 relative z-10">
+<div>
+<p class="text-sm font-medium text-gray-400">Bonos Extra.</p>
+<h3 class="text-3xl font-bold text-white mt-1">S/ 12,500</h3>
+</div>
+<div class="flex items-center gap-1 bg-success/20 text-success px-2 py-1 rounded text-xs font-semibold">
+<span class="material-icons-round text-sm">trending_down</span>
+<span>-5.0%</span>
+</div>
+</div>
+<div class="text-sm text-gray-400 border-t border-gray-700 pt-3 mt-2 flex justify-between items-center relative z-10">
+<span>Prev: S/ 13,150</span>
+<span class="text-success font-medium">- S/ 650</span>
+</div>
+</div>
+<!-- Card 4: Liquidaciones (Neutral) -->
+<div class="bg-surface-dark border border-gray-800 hover:border-gray-600 rounded-xl p-5 shadow-lg relative overflow-hidden group cursor-pointer transition-all hover:-translate-y-1">
+<div class="absolute top-0 right-0 p-3 opacity-10 group-hover:opacity-20 transition-opacity">
+<span class="material-icons-round text-6xl text-gray-500">request_quote</span>
+</div>
+<div class="flex justify-between items-start mb-4 relative z-10">
+<div>
+<p class="text-sm font-medium text-gray-400">Liquidaciones</p>
+<h3 class="text-3xl font-bold text-white mt-1">S/ 0</h3>
+</div>
+<div class="flex items-center gap-1 bg-gray-700 text-gray-300 px-2 py-1 rounded text-xs font-semibold">
+<span class="material-icons-round text-sm">remove</span>
+<span>0.0%</span>
+</div>
+</div>
+<div class="text-sm text-gray-400 border-t border-gray-700 pt-3 mt-2 flex justify-between items-center relative z-10">
+<span>Prev: S/ 0</span>
+<span class="text-gray-500">Sin cambios</span>
+</div>
+</div>
+</div>
+<!-- Drill Down Section: Main Table -->
+<div class="bg-surface-dark rounded-xl border border-gray-800 shadow-xl overflow-hidden flex flex-col">
+<div class="p-6 border-b border-gray-800 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+<div>
+<h3 class="text-lg font-semibold text-white flex items-center gap-2">
+<span class="material-icons-round text-primary">zoom_in</span>
+                        Detalle de Variación: Headcount
+                    </h3>
+<p class="text-sm text-gray-400 mt-1">Listado de nuevos ingresos y bajas en el periodo actual.</p>
+</div>
+<div class="flex items-center bg-background-dark rounded-lg p-1 border border-gray-700">
+<button class="px-3 py-1 text-xs font-medium rounded-md bg-primary text-white shadow-sm">Ingresos (+15)</button>
+<button class="px-3 py-1 text-xs font-medium rounded-md text-gray-400 hover:text-white hover:bg-white/5 transition-colors">Bajas (-3)</button>
+</div>
+</div>
+<div class="overflow-x-auto custom-scrollbar">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-highlight/50 text-gray-400 text-xs uppercase tracking-wider font-semibold border-b border-gray-800">
+<th class="px-6 py-4">Empleado</th>
+<th class="px-6 py-4">Departamento</th>
+<th class="px-6 py-4">Cargo</th>
+<th class="px-6 py-4">Fecha Efectiva</th>
+<th class="px-6 py-4">Tipo de Movimiento</th>
+<th class="px-6 py-4 text-right">Impacto Mensual</th>
+<th class="px-6 py-4 text-center">Acciones</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-gray-800 text-sm">
+<!-- Row 1 -->
+<tr class="group hover:bg-surface-highlight transition-colors">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center text-white font-bold text-xs" data-alt="Avatar gradient">JM</div>
+<div>
+<p class="font-medium text-white">Juan Mendoza</p>
+<p class="text-xs text-gray-500">ID: NX-8821</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 text-gray-300">Operaciones Mina</td>
+<td class="px-6 py-4 text-gray-300">Supervisor Junior</td>
+<td class="px-6 py-4 text-gray-300">02 Oct, 2023</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-success/10 text-success border border-success/20">
+                                    Nuevo Ingreso
+                                </span>
+</td>
+<td class="px-6 py-4 text-right font-medium text-white">
+                                + S/ 4,500.00
+                            </td>
+<td class="px-6 py-4 text-center">
+<button class="text-primary hover:text-primary-dark transition-colors p-1 rounded hover:bg-primary/10">
+<span class="material-icons-round text-lg">visibility</span>
+</button>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="group hover:bg-surface-highlight transition-colors">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-gradient-to-br from-purple-500 to-pink-600 flex items-center justify-center text-white font-bold text-xs" data-alt="Avatar gradient">AS</div>
+<div>
+<p class="font-medium text-white">Ana Salazar</p>
+<p class="text-xs text-gray-500">ID: NX-9012</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 text-gray-300">Recursos Humanos</td>
+<td class="px-6 py-4 text-gray-300">Analista de Selección</td>
+<td class="px-6 py-4 text-gray-300">05 Oct, 2023</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-success/10 text-success border border-success/20">
+                                    Nuevo Ingreso
+                                </span>
+</td>
+<td class="px-6 py-4 text-right font-medium text-white">
+                                + S/ 3,800.00
+                            </td>
+<td class="px-6 py-4 text-center">
+<button class="text-primary hover:text-primary-dark transition-colors p-1 rounded hover:bg-primary/10">
+<span class="material-icons-round text-lg">visibility</span>
+</button>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="group hover:bg-surface-highlight transition-colors">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-gradient-to-br from-orange-500 to-red-600 flex items-center justify-center text-white font-bold text-xs" data-alt="Avatar gradient">LR</div>
+<div>
+<p class="font-medium text-white">Luis Ramirez</p>
+<p class="text-xs text-gray-500">ID: NX-4510</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 text-gray-300">Mantenimiento</td>
+<td class="px-6 py-4 text-gray-300">Técnico Mecánico II</td>
+<td class="px-6 py-4 text-gray-300">12 Oct, 2023</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-primary/10 text-primary border border-primary/20">
+                                    Reingreso
+                                </span>
+</td>
+<td class="px-6 py-4 text-right font-medium text-white">
+                                + S/ 3,200.00
+                            </td>
+<td class="px-6 py-4 text-center">
+<button class="text-primary hover:text-primary-dark transition-colors p-1 rounded hover:bg-primary/10">
+<span class="material-icons-round text-lg">visibility</span>
+</button>
+</td>
+</tr>
+<!-- Row 4 -->
+<tr class="group hover:bg-surface-highlight transition-colors">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center text-white font-bold text-xs" data-alt="Avatar gradient">MT</div>
+<div>
+<p class="font-medium text-white">Maria Torres</p>
+<p class="text-xs text-gray-500">ID: NX-7721</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 text-gray-300">Logística</td>
+<td class="px-6 py-4 text-gray-300">Asistente de Almacén</td>
+<td class="px-6 py-4 text-gray-300">15 Oct, 2023</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-success/10 text-success border border-success/20">
+                                    Nuevo Ingreso
+                                </span>
+</td>
+<td class="px-6 py-4 text-right font-medium text-white">
+                                + S/ 2,800.00
+                            </td>
+<td class="px-6 py-4 text-center">
+<button class="text-primary hover:text-primary-dark transition-colors p-1 rounded hover:bg-primary/10">
+<span class="material-icons-round text-lg">visibility</span>
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Pagination / Table Footer -->
+<div class="bg-surface-dark border-t border-gray-800 p-4 flex items-center justify-between text-sm text-gray-400">
+<span>Mostrando 4 de 15 registros</span>
+<div class="flex gap-2">
+<button class="px-3 py-1 rounded bg-surface-highlight border border-gray-700 hover:text-white disabled:opacity-50" disabled="">Anterior</button>
+<button class="px-3 py-1 rounded bg-surface-highlight border border-gray-700 hover:text-white hover:border-primary">Siguiente</button>
+</div>
+</div>
+</div>
+</main>
+<!-- Bottom Action Bar (Sticky Footer) -->
+<div class="sticky bottom-0 z-40 bg-surface-dark border-t border-gray-800 p-4 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.3)]">
+<div class="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-4">
+<div class="flex items-center gap-2 text-sm text-gray-400 order-2 sm:order-1">
+<span class="material-icons-round text-warning text-base">info</span>
+<span>Existen variaciones superiores al 10% en Horas Extras. Se requiere comentario obligatorio si aprueba.</span>
+</div>
+<div class="flex gap-4 w-full sm:w-auto order-1 sm:order-2">
+<button class="flex-1 sm:flex-none px-6 py-2.5 border border-gray-600 text-gray-300 font-medium rounded-lg hover:bg-white/5 transition-colors focus:ring-2 focus:ring-gray-500">
+                    Atrás
+                </button>
+<button class="flex-1 sm:flex-none px-6 py-2.5 border border-danger text-danger font-medium rounded-lg hover:bg-danger/10 transition-colors focus:ring-2 focus:ring-danger">
+                    Observar Diferencias
+                </button>
+<button class="flex-1 sm:flex-none px-6 py-2.5 bg-primary hover:bg-primary-dark text-white font-medium rounded-lg shadow-lg hover:shadow-primary/25 transition-all focus:ring-2 focus:ring-offset-2 focus:ring-offset-surface-dark focus:ring-primary flex items-center justify-center gap-2">
+<span>Aprobar y Continuar</span>
+<span class="material-icons-round text-sm">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+</body></html>

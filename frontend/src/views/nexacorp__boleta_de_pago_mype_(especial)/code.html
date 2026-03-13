@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>NexaCorp: Boleta de Pago MYPE</title>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<!-- Icons -->
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Theme Config -->
+<script id="tailwind-config">tailwind.config = {darkMode: "class", theme: {extend: {colors: {primary: "#2c60ce", "primary-dark": "#1a8cc7", "background-light": "#f6f6f8", "background-dark": "#121720", "surface-dark": "#1a2630", "surface-darker": "#152028"}, fontFamily: {display: "Inter"}, borderRadius: {DEFAULT: "0.5rem", lg: "1rem", xl: "1.5rem", full: "9999px"}}}};</script>
+<style>
+        body {
+            font-family: 'Manrope', sans-serif;
+        }
+        /* Custom scrollbar for table if needed */
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #152028;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #25aff4;
+            border-radius: 3px;
+        }
+        .watermark {
+            background-image: repeating-linear-gradient(45deg, transparent, transparent 20px, rgba(37, 175, 244, 0.03) 20px, rgba(37, 175, 244, 0.03) 40px);
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-800 dark:text-slate-200 min-h-screen flex flex-col font-display">
+<!-- Top Navigation Bar -->
+<nav class="sticky top-0 z-50 bg-white dark:bg-surface-dark border-b border-slate-200 dark:border-slate-800 h-16 flex items-center justify-between px-6">
+<div class="flex items-center gap-4">
+<div class="w-8 h-8 rounded bg-primary flex items-center justify-center text-white font-bold text-xl">N</div>
+<span class="text-lg font-bold tracking-tight text-slate-900 dark:text-white">NexaCorp <span class="text-primary font-light">Payroll</span></span>
+<div class="h-6 w-px bg-slate-300 dark:bg-slate-700 mx-2"></div>
+<div class="flex items-center gap-2 text-sm text-slate-500 dark:text-slate-400">
+<a class="hover:text-primary transition-colors" href="#">Planillas</a>
+<span class="material-icons text-xs">chevron_right</span>
+<a class="hover:text-primary transition-colors" href="#">Octubre 2023</a>
+<span class="material-icons text-xs">chevron_right</span>
+<span class="text-slate-900 dark:text-white font-medium">Detalle Boleta</span>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<button class="p-2 rounded-full hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-500 dark:text-slate-400 relative">
+<span class="material-icons-outlined">notifications</span>
+<span class="absolute top-1 right-1 w-2 h-2 rounded-full bg-primary border-2 border-white dark:border-surface-dark"></span>
+</button>
+<div class="flex items-center gap-3 pl-4 border-l border-slate-200 dark:border-slate-700">
+<div class="text-right hidden sm:block">
+<p class="text-sm font-medium text-slate-900 dark:text-white">Admin RRHH</p>
+<p class="text-xs text-slate-500 dark:text-slate-400">admin@nexacorp.pe</p>
+</div>
+<img alt="User Avatar" class="w-9 h-9 rounded-full ring-2 ring-primary/20" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDk7P4ZO7a5vx7-PzVaHnsr_9Lr3-7FEY_85WfH22fWFdn1Jbv7Ej3IYj15kFPpFdotVQicakiQoOJ4jP7ddMjD2s4Mmduk_ZpN66ghbPfrh3whsj6kOWVLEgqDYVVoZc4KuvmBBK88nOf0D3GlTL6pkTBB7VBmBKguiOUNpPi8BKtYZ6daueokm-B96DR53imGin94BOloNwuUgw1LyqmrmUHtWHkP-pcbcJehQ2K49TtP49f_LPL78WTfMeb9HhOTmidzOKf-te3C"/>
+</div>
+</div>
+</nav>
+<!-- Main Content Area -->
+<main class="flex-1 flex overflow-hidden">
+<!-- Sidebar: Employee List (Left Panel) -->
+<aside class="w-80 bg-white dark:bg-surface-darker border-r border-slate-200 dark:border-slate-800 flex flex-col hidden lg:flex">
+<div class="p-4 border-b border-slate-200 dark:border-slate-800">
+<h3 class="text-sm font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-3">Colaboradores</h3>
+<div class="relative">
+<span class="material-icons-outlined absolute left-3 top-2.5 text-slate-400">search</span>
+<input class="w-full bg-slate-100 dark:bg-background-dark border-none rounded-lg pl-10 py-2 text-sm text-slate-900 dark:text-white focus:ring-1 focus:ring-primary placeholder-slate-400 dark:placeholder-slate-600" placeholder="Buscar empleado..." type="text"/>
+</div>
+</div>
+<div class="flex-1 overflow-y-auto custom-scrollbar p-2 space-y-1">
+<!-- Active Item -->
+<div class="group flex items-center gap-3 p-3 rounded-lg bg-primary/10 border-l-4 border-primary cursor-pointer transition-all">
+<img class="w-10 h-10 rounded-full object-cover" data-alt="Portrait of Juan Perez" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCbko192kmqR6og9atori20lkRlE61vwKeeKiJaJIsaLxdHELmiMWfvYguEHF22zJ7zvOXMtj1ZG2yd-Qu110JFLXpiPqjnDNjyDvXGewegghp3CD9Nigy5rgLeoJ2IYD8aoFuJ6TTVMjwGfZzA4fvhHr8ug40-Dp7J8hFABBKpyCA00rePSmnVdYXF6IJHXO5IW8LyeFXn1yHM4JjHCj0v1nE7VJ3BfrUQ6A89QmIw07-Cnb-684VfdvIthgKbHbCa3AJkO8Yrm99H"/>
+<div class="flex-1 min-w-0">
+<p class="text-sm font-semibold text-slate-900 dark:text-white truncate">Juan Pérez</p>
+<p class="text-xs text-primary font-medium truncate">MYPE - Microempresa</p>
+</div>
+<span class="material-icons-outlined text-primary text-sm">visibility</span>
+</div>
+<!-- Inactive Items -->
+<div class="group flex items-center gap-3 p-3 rounded-lg hover:bg-slate-50 dark:hover:bg-surface-dark border-l-4 border-transparent hover:border-slate-300 dark:hover:border-slate-600 cursor-pointer transition-all">
+<img class="w-10 h-10 rounded-full object-cover grayscale opacity-70 group-hover:grayscale-0 group-hover:opacity-100 transition-all" data-alt="Portrait of Maria Garcia" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDGZNLyWOoyW9pCVSzWx-JDOdAJrqqrxjB4tW6jgRLw0LQzTlAC3Mc3T2VSMFXiaARi6yfVodXYYB0INCYdcwu-TCfwOVOshDqd9s_-_E0MyngXWY8OTi4-VOfyr2gQp8Owlx2ffCLxtZmqMTcbLb7rKvAyyRaEbt7SQ3UUIXj_WIvfy_T35X5v4u2_52cTK2htX0NJYUUgorkp189kq3dPVVoJ-4ti_2O_HRojIDOJbZIIimtXO9OXdGifs3bF1FWM7dmhw5yw5Qb4"/>
+<div class="flex-1 min-w-0">
+<p class="text-sm font-medium text-slate-600 dark:text-slate-300 truncate group-hover:text-slate-900 dark:group-hover:text-white">María García</p>
+<p class="text-xs text-slate-400 dark:text-slate-500 truncate">Régimen General</p>
+</div>
+</div>
+<div class="group flex items-center gap-3 p-3 rounded-lg hover:bg-slate-50 dark:hover:bg-surface-dark border-l-4 border-transparent hover:border-slate-300 dark:hover:border-slate-600 cursor-pointer transition-all">
+<div class="w-10 h-10 rounded-full bg-slate-200 dark:bg-slate-700 flex items-center justify-center text-slate-500 dark:text-slate-400 text-sm font-bold">CR</div>
+<div class="flex-1 min-w-0">
+<p class="text-sm font-medium text-slate-600 dark:text-slate-300 truncate group-hover:text-slate-900 dark:group-hover:text-white">Carlos Rodriguez</p>
+<p class="text-xs text-slate-400 dark:text-slate-500 truncate">MYPE - Pequeña</p>
+</div>
+</div>
+</div>
+<div class="p-4 border-t border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-surface-darker">
+<div class="flex justify-between items-center text-xs text-slate-500">
+<span>Total Procesados: 12</span>
+<span class="text-green-500 flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-green-500"></span> Al día</span>
+</div>
+</div>
+</aside>
+<!-- Document Viewer (Right Panel) -->
+<section class="flex-1 flex flex-col h-full bg-background-light dark:bg-background-dark overflow-hidden relative">
+<!-- Toolbar -->
+<header class="h-16 border-b border-slate-200 dark:border-slate-800 bg-white/80 dark:bg-surface-dark/80 backdrop-blur-sm flex items-center justify-between px-6 shrink-0 z-10">
+<div class="flex items-center gap-2">
+<span class="px-2 py-1 bg-amber-500/10 text-amber-500 border border-amber-500/20 rounded text-xs font-bold uppercase tracking-wide flex items-center gap-1">
+<span class="material-icons text-sm">warning</span> Régimen Especial: MYPE
+                    </span>
+<span class="text-slate-400 text-sm hidden sm:inline">|</span>
+<span class="text-slate-500 dark:text-slate-400 text-sm hidden sm:inline">Periodo: Octubre 2023</span>
+</div>
+<div class="flex items-center gap-3">
+<button class="flex items-center gap-2 px-4 py-2 bg-white dark:bg-surface-darker hover:bg-slate-50 dark:hover:bg-slate-700 border border-slate-200 dark:border-slate-600 rounded-lg text-sm font-medium text-slate-700 dark:text-slate-300 transition-all shadow-sm">
+<span class="material-icons-outlined text-lg">print</span>
+<span class="hidden sm:inline">Imprimir</span>
+</button>
+<button class="flex items-center gap-2 px-4 py-2 bg-white dark:bg-surface-darker hover:bg-slate-50 dark:hover:bg-slate-700 border border-slate-200 dark:border-slate-600 rounded-lg text-sm font-medium text-slate-700 dark:text-slate-300 transition-all shadow-sm">
+<span class="material-icons-outlined text-lg">mail</span>
+<span class="hidden sm:inline">Enviar</span>
+</button>
+<button class="flex items-center gap-2 px-4 py-2 bg-primary hover:bg-primary-dark text-white rounded-lg text-sm font-medium shadow-lg shadow-primary/20 transition-all">
+<span class="material-icons-outlined text-lg">download</span>
+<span>Descargar PDF</span>
+</button>
+</div>
+</header>
+<!-- Scrollable Document Container -->
+<div class="flex-1 overflow-y-auto custom-scrollbar p-4 md:p-8 flex justify-center bg-slate-100 dark:bg-[#0b1216]">
+<!-- The Boleta (Paper) -->
+<div class="w-full max-w-4xl bg-white dark:bg-[#152028] shadow-2xl rounded-sm min-h-[800px] flex flex-col relative watermark">
+<!-- Paper Top Decoration -->
+<div class="h-2 w-full bg-gradient-to-r from-primary/80 to-primary"></div>
+<div class="p-8 md:p-12 flex-1 flex flex-col">
+<!-- Header -->
+<div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 pb-6 border-b border-slate-200 dark:border-slate-700">
+<div class="mb-4 md:mb-0">
+<h1 class="text-2xl font-bold text-slate-900 dark:text-white tracking-tight flex items-center gap-2">
+<span class="text-primary material-icons">receipt_long</span> Boleta de Pago
+                                </h1>
+<p class="text-slate-500 dark:text-slate-400 text-sm mt-1">D.L. 728 - Régimen Laboral de la Microempresa</p>
+</div>
+<div class="text-right">
+<h2 class="text-lg font-bold text-slate-800 dark:text-slate-200">NEXACORP PERU S.A.C.</h2>
+<p class="text-sm text-slate-500 dark:text-slate-400">RUC: 20601234567</p>
+<p class="text-xs text-slate-400 dark:text-slate-500">Av. Javier Prado Este 1234, San Isidro, Lima</p>
+</div>
+</div>
+<!-- Info Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-6 mb-8 bg-slate-50 dark:bg-slate-800/30 p-6 rounded-lg border border-slate-100 dark:border-slate-700/50">
+<!-- Employee Data -->
+<div class="space-y-3">
+<h3 class="text-xs font-bold text-primary uppercase tracking-wider mb-2">Datos del Trabajador</h3>
+<div class="grid grid-cols-3 gap-2 text-sm">
+<span class="text-slate-500 dark:text-slate-400">Nombres:</span>
+<span class="col-span-2 font-medium text-slate-800 dark:text-slate-200">Juan Carlos Pérez López</span>
+<span class="text-slate-500 dark:text-slate-400">DNI:</span>
+<span class="col-span-2 font-medium text-slate-800 dark:text-slate-200">45678912</span>
+<span class="text-slate-500 dark:text-slate-400">Cargo:</span>
+<span class="col-span-2 font-medium text-slate-800 dark:text-slate-200">Asistente Administrativo</span>
+<span class="text-slate-500 dark:text-slate-400">Fecha Ingreso:</span>
+<span class="col-span-2 font-medium text-slate-800 dark:text-slate-200">01/02/2023</span>
+</div>
+</div>
+<!-- Payroll Data -->
+<div class="space-y-3">
+<h3 class="text-xs font-bold text-primary uppercase tracking-wider mb-2">Datos de Planilla</h3>
+<div class="grid grid-cols-3 gap-2 text-sm">
+<span class="text-slate-500 dark:text-slate-400">Periodo:</span>
+<span class="col-span-2 font-medium text-slate-800 dark:text-slate-200">Octubre 2023</span>
+<span class="text-slate-500 dark:text-slate-400">Régimen:</span>
+<span class="col-span-2 inline-flex items-center">
+<span class="bg-blue-100 text-blue-800 text-xs font-medium px-2 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300 border border-blue-200 dark:border-blue-800">Microempresa</span>
+</span>
+<span class="text-slate-500 dark:text-slate-400">Afiliación:</span>
+<span class="col-span-2 font-medium text-slate-800 dark:text-slate-200">AFP Integra (Flujo)</span>
+<span class="text-slate-500 dark:text-slate-400">CUSPP:</span>
+<span class="col-span-2 font-medium text-slate-800 dark:text-slate-200">542361JCPZL9</span>
+</div>
+</div>
+</div>
+<!-- Detail Tables -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+<!-- Ingresos -->
+<div>
+<div class="flex justify-between items-center mb-3 pb-2 border-b border-slate-200 dark:border-slate-700">
+<h3 class="font-bold text-slate-800 dark:text-slate-200">Ingresos</h3>
+<span class="text-xs text-green-600 dark:text-green-400 font-medium bg-green-50 dark:bg-green-900/20 px-2 py-1 rounded">Haberes</span>
+</div>
+<table class="w-full text-sm">
+<thead>
+<tr class="text-slate-500 dark:text-slate-400 text-xs uppercase text-left">
+<th class="py-2 font-semibold">Concepto</th>
+<th class="py-2 font-semibold text-right">Monto (S/)</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-slate-100 dark:divide-slate-800">
+<tr>
+<td class="py-3 text-slate-700 dark:text-slate-300">Sueldo Básico</td>
+<td class="py-3 text-right font-medium text-slate-900 dark:text-white">1,500.00</td>
+</tr>
+<tr>
+<td class="py-3 text-slate-700 dark:text-slate-300">Asignación Familiar</td>
+<td class="py-3 text-right font-medium text-slate-400 dark:text-slate-600 italic">0.00 <span class="text-[10px] ml-1 opacity-70">(N/A Mype)</span></td>
+</tr>
+<tr>
+<td class="py-3 text-slate-700 dark:text-slate-300">Horas Extras 25%</td>
+<td class="py-3 text-right font-medium text-slate-900 dark:text-white">125.00</td>
+</tr>
+<!-- Hidden Rows for MYPE Compliance -->
+<!-- CTS and Gratificaciones are intentionally omitted to avoid confusion -->
+</tbody>
+<tfoot>
+<tr class="border-t-2 border-slate-200 dark:border-slate-700">
+<td class="py-3 font-bold text-slate-800 dark:text-slate-200">Total Ingresos</td>
+<td class="py-3 text-right font-bold text-slate-900 dark:text-white">1,625.00</td>
+</tr>
+</tfoot>
+</table>
+</div>
+<!-- Descuentos y Aportes -->
+<div>
+<div class="flex justify-between items-center mb-3 pb-2 border-b border-slate-200 dark:border-slate-700">
+<h3 class="font-bold text-slate-800 dark:text-slate-200">Descuentos</h3>
+<span class="text-xs text-rose-600 dark:text-rose-400 font-medium bg-rose-50 dark:bg-rose-900/20 px-2 py-1 rounded">Retenciones</span>
+</div>
+<table class="w-full text-sm">
+<thead>
+<tr class="text-slate-500 dark:text-slate-400 text-xs uppercase text-left">
+<th class="py-2 font-semibold">Concepto</th>
+<th class="py-2 font-semibold text-right">Monto (S/)</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-slate-100 dark:divide-slate-800">
+<tr>
+<td class="py-3 text-slate-700 dark:text-slate-300">Aporte Obligatorio AFP (10%)</td>
+<td class="py-3 text-right font-medium text-slate-900 dark:text-white">162.50</td>
+</tr>
+<tr>
+<td class="py-3 text-slate-700 dark:text-slate-300">Comisión AFP (1.55%)</td>
+<td class="py-3 text-right font-medium text-slate-900 dark:text-white">25.19</td>
+</tr>
+<tr>
+<td class="py-3 text-slate-700 dark:text-slate-300">Prima Seguro AFP (1.70%)</td>
+<td class="py-3 text-right font-medium text-slate-900 dark:text-white">27.63</td>
+</tr>
+<tr>
+<td class="py-3 text-slate-700 dark:text-slate-300">Renta 5ta Categoría</td>
+<td class="py-3 text-right font-medium text-slate-400 dark:text-slate-600">0.00</td>
+</tr>
+</tbody>
+<tfoot>
+<tr class="border-t-2 border-slate-200 dark:border-slate-700">
+<td class="py-3 font-bold text-slate-800 dark:text-slate-200">Total Descuentos</td>
+<td class="py-3 text-right font-bold text-rose-600 dark:text-rose-400">215.32</td>
+</tr>
+</tfoot>
+</table>
+</div>
+</div>
+<!-- Aportes del Empleador (Info Only) -->
+<div class="mb-8 p-4 bg-slate-50 dark:bg-slate-800/30 rounded border border-slate-200 dark:border-slate-700">
+<div class="flex justify-between items-center text-xs">
+<span class="font-semibold text-slate-600 dark:text-slate-400 uppercase">Aportes del Empleador (No descuenta al trabajador)</span>
+</div>
+<div class="flex justify-between items-center mt-2 text-sm">
+<span class="text-slate-700 dark:text-slate-300">SIS / Essalud (Microempresa)</span>
+<span class="font-medium text-slate-900 dark:text-white">S/ 15.00</span>
+</div>
+</div>
+<!-- Total Net Pay -->
+<div class="mt-auto">
+<div class="bg-slate-900 dark:bg-slate-950 text-white p-6 rounded-lg flex flex-col md:flex-row justify-between items-center shadow-lg relative overflow-hidden group">
+<div class="absolute inset-0 bg-primary/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+<div class="relative z-10 text-center md:text-left mb-4 md:mb-0">
+<p class="text-sm text-slate-400 uppercase font-semibold tracking-wider">Neto a Pagar</p>
+<p class="text-xs text-slate-500 mt-1">Transferencia a cuenta BCP ****1234</p>
+</div>
+<div class="relative z-10">
+<span class="text-4xl font-bold tracking-tight">S/ 1,409.68</span>
+</div>
+</div>
+<!-- Footer Legal -->
+<div class="mt-8 pt-6 border-t border-dashed border-slate-300 dark:border-slate-600 text-center md:text-left flex flex-col md:flex-row justify-between items-end gap-4">
+<div class="max-w-lg">
+<p class="text-[10px] text-slate-400 dark:text-slate-500 leading-relaxed text-justify">
+<strong>Base Legal:</strong> El presente trabajador se encuentra sujeto al <strong>Régimen Laboral Especial de la Microempresa (D.S. N° 013-2013-PRODUCE)</strong>. De acuerdo a ley, este régimen no contempla el pago de Gratificaciones (Julio/Diciembre) ni Compensación por Tiempo de Servicios (CTS). El trabajador tiene derecho a 15 días de vacaciones anuales.
+                                        <br/>Generado electrónicamente por NexaCorp Payroll System.
+                                    </p>
+</div>
+<div class="flex flex-col items-center gap-2">
+<!-- Placeholder for signature -->
+<div class="h-16 w-32 border-b border-slate-400 dark:border-slate-500 mb-1"></div>
+<p class="text-[10px] text-slate-500 uppercase font-bold">Firma del Empleador</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Bottom Pattern -->
+<div class="h-2 w-full bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] bg-primary/10"></div>
+</div>
+<!-- Spacer -->
+<div class="h-12"></div>
+</div>
+</section>
+</main>
+<!-- Success Toast (Visual Mockup) -->
+<div class="fixed bottom-6 right-6 bg-surface-dark text-white px-4 py-3 rounded-lg shadow-lg border border-slate-700 flex items-center gap-3 z-50 animate-bounce" style="animation-iteration-count: 1; animation-duration: 2s;">
+<span class="material-icons text-green-400">check_circle</span>
+<div>
+<p class="text-sm font-semibold">Cálculo validado</p>
+<p class="text-xs text-slate-400">Cumple normativa MYPE vigente.</p>
+</div>
+<button class="text-slate-400 hover:text-white"><span class="material-icons text-sm">close</span></button>
+</div>
+</body></html>

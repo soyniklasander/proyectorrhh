@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>NexaCorp: Estado de Cuenta Individual</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#2c60ce",
+                        "primary-dark": "#1a4bb0",
+                        "primary-light": "#5887e8",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#121720",
+                        "surface-dark": "#1a202c", // Derived neutral for dark mode cards
+                        "surface-darker": "#161b25", // Slightly darker surface
+                        "neutral-800": "#1f2937",
+                        "neutral-700": "#374151",
+                        "neutral-400": "#9ca3af",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.5rem",
+                        "lg": "1rem",
+                        "xl": "1.5rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        /* Custom scrollbar for timeline if needed */
+        .scrollbar-hide::-webkit-scrollbar {
+            display: none;
+        }
+        .glass-panel {
+            background: rgba(26, 32, 44, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(44, 96, 206, 0.1);
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-800 dark:text-slate-200 font-display min-h-screen flex flex-col">
+<!-- Navbar -->
+<nav class="sticky top-0 z-50 w-full border-b border-slate-200 dark:border-slate-800 bg-white/90 dark:bg-surface-darker/90 backdrop-blur-md">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex items-center justify-between h-16">
+<div class="flex items-center gap-3">
+<div class="bg-primary/20 p-2 rounded-lg">
+<span class="material-icons text-primary">account_balance_wallet</span>
+</div>
+<div>
+<h1 class="text-xl font-bold tracking-tight text-slate-900 dark:text-white">NexaCorp</h1>
+<p class="text-xs text-primary font-medium">Portal Financiero</p>
+</div>
+</div>
+<div class="hidden md:flex items-center gap-6">
+<a class="text-sm font-medium text-slate-500 hover:text-primary dark:text-slate-400 dark:hover:text-primary transition-colors" href="#">Dashboard</a>
+<a class="text-sm font-medium text-primary dark:text-primary transition-colors" href="#">Reportes</a>
+<a class="text-sm font-medium text-slate-500 hover:text-primary dark:text-slate-400 dark:hover:text-primary transition-colors" href="#">Empleados</a>
+<div class="h-8 w-px bg-slate-200 dark:bg-slate-700"></div>
+<button class="flex items-center gap-2">
+<img alt="User Profile" class="h-8 w-8 rounded-full ring-2 ring-primary/20" data-alt="Admin user avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB66mR7GLgvaD_PNBSTnTyPS7ltm60RI1_916ymHho774WBBOX-vuX9yaEzl9zaslbVIGVmzczKsgsBlH5Uz0grNlqGLQkD8dlhj1ulEyRLYqboqsIkaHCRmtKA1zZr2VCOYRbph-wg67Gc8ol7wTQbXrWsJXWLUXztlP9qwoH2AHxKiu_s-5jpyxjdW3TkXcCydxa2eFiWK5bSZt9o1CIsTPfbF-8zGbJQbljRNDig473dctaycMfYGub2pAo1pQbhwzM2U8oJfZ_4"/>
+</button>
+</div>
+</div>
+</div>
+</nav>
+<!-- Breadcrumb & Header -->
+<header class="pt-8 pb-6">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<nav aria-label="Breadcrumb" class="flex mb-4">
+<ol class="flex items-center space-x-2 text-sm text-slate-500 dark:text-slate-400">
+<li><a class="hover:text-primary transition-colors" href="#">Finanzas</a></li>
+<li><span class="material-icons text-xs mx-1">chevron_right</span></li>
+<li><a class="hover:text-primary transition-colors" href="#">Reporte General</a></li>
+<li><span class="material-icons text-xs mx-1">chevron_right</span></li>
+<li class="font-semibold text-slate-900 dark:text-white">Estado de Cuenta Individual</li>
+</ol>
+</nav>
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
+<div>
+<h2 class="text-3xl font-bold text-slate-900 dark:text-white tracking-tight">Estado de Cuenta Detallado</h2>
+<p class="mt-1 text-slate-500 dark:text-slate-400">Visualización de préstamos, pagos y proyecciones.</p>
+</div>
+<div class="flex gap-3">
+<button class="flex items-center gap-2 px-4 py-2 text-sm font-medium text-slate-700 dark:text-slate-200 bg-white dark:bg-surface-dark border border-slate-200 dark:border-slate-700 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors shadow-sm">
+<span class="material-icons text-sm">print</span>
+                        Imprimir
+                    </button>
+<button class="flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-primary rounded-lg hover:bg-primary-dark transition-colors shadow-lg shadow-primary/20">
+<span class="material-icons text-sm">file_download</span>
+                        Exportar PDF
+                    </button>
+</div>
+</div>
+</div>
+</header>
+<main class="flex-grow pb-12">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+<!-- Left Sidebar: Employee Profile & Quick Actions -->
+<aside class="lg:col-span-4 space-y-6">
+<!-- Profile Card -->
+<div class="glass-panel rounded-xl p-6 shadow-xl relative overflow-hidden group">
+<div class="absolute top-0 right-0 w-32 h-32 bg-primary/10 rounded-full blur-3xl -mr-10 -mt-10 pointer-events-none"></div>
+<div class="flex flex-col items-center text-center">
+<div class="relative mb-4">
+<div class="absolute inset-0 rounded-full bg-primary/20 blur animate-pulse"></div>
+<img alt="Juan Carlos Pérez" class="relative w-24 h-24 rounded-full border-4 border-surface-darker object-cover" data-alt="Professional portrait of male employee" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAJbCQyhmeADVJX3KxHrXDYXwIYGGq3-ea__7NWhbmdXOeJRf7Mtr-C2mp8vyeY9zzLWHTr6NhU6k9HedtolaPJIg3-1bjZ5rIRk_7cgi_-vp361i7PvxLllA7VROLe4elInmGg4oDOlmo2RBV51IsiDcjlcwn1ZFVAWJ6D1gIKzD_80uOb2teFV72XHpLM8mmV-BK0l73dozzMXd8PPu8Htvtn6tlcDJYk5GXO1TXagGSjXbuS1MeQCVWF6Ue3orPF6C5hIknNhSHg"/>
+<span class="absolute bottom-1 right-1 h-5 w-5 bg-green-500 border-2 border-surface-darker rounded-full" title="Activo"></span>
+</div>
+<h3 class="text-xl font-bold text-white">Juan Carlos Pérez</h3>
+<p class="text-sm text-primary font-medium">ID: EMP-8832</p>
+<div class="mt-4 flex flex-wrap justify-center gap-2">
+<span class="px-3 py-1 text-xs font-medium rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300">Operaciones</span>
+<span class="px-3 py-1 text-xs font-medium rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300">Senior Analyst</span>
+</div>
+</div>
+<div class="mt-8 pt-6 border-t border-slate-200 dark:border-slate-700 space-y-4">
+<div class="flex justify-between text-sm">
+<span class="text-slate-500 dark:text-slate-400">Fecha Ingreso:</span>
+<span class="font-medium text-slate-700 dark:text-slate-200">12 Mar 2019</span>
+</div>
+<div class="flex justify-between text-sm">
+<span class="text-slate-500 dark:text-slate-400">Cta. Sueldo:</span>
+<span class="font-medium text-slate-700 dark:text-slate-200">***-4582-99</span>
+</div>
+<div class="flex justify-between text-sm">
+<span class="text-slate-500 dark:text-slate-400">Email:</span>
+<span class="font-medium text-slate-700 dark:text-slate-200">j.perez@nexacorp.pe</span>
+</div>
+</div>
+</div>
+<!-- Summary Cards Stacked -->
+<div class="grid grid-cols-1 gap-4">
+<!-- Saldo Pendiente (Highlighted) -->
+<div class="bg-gradient-to-br from-primary to-primary-dark rounded-xl p-6 shadow-lg text-white relative overflow-hidden">
+<div class="absolute right-0 top-0 opacity-10 transform translate-x-4 -translate-y-4">
+<span class="material-icons text-9xl">account_balance</span>
+</div>
+<p class="text-primary-100 text-sm font-medium mb-1">Saldo Pendiente Total</p>
+<h2 class="text-4xl font-bold tracking-tight">S/ 4,500.00</h2>
+<div class="mt-4 flex items-center text-xs text-primary-100 bg-white/10 rounded-lg p-2 backdrop-blur-sm w-fit">
+<span class="material-icons text-sm mr-1">info</span>
+                                Actualizado al 24/10/2023
+                            </div>
+</div>
+<div class="grid grid-cols-2 gap-4">
+<!-- Total Prestado -->
+<div class="bg-white dark:bg-surface-dark rounded-xl p-4 shadow border border-slate-100 dark:border-slate-800">
+<div class="flex items-center gap-2 mb-2">
+<div class="p-1.5 rounded-md bg-blue-100 dark:bg-blue-900/30 text-primary">
+<span class="material-icons text-sm">arrow_downward</span>
+</div>
+<span class="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase">Prestado</span>
+</div>
+<p class="text-xl font-bold text-slate-900 dark:text-white">S/ 12,000</p>
+</div>
+<!-- Total Pagado -->
+<div class="bg-white dark:bg-surface-dark rounded-xl p-4 shadow border border-slate-100 dark:border-slate-800">
+<div class="flex items-center gap-2 mb-2">
+<div class="p-1.5 rounded-md bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400">
+<span class="material-icons text-sm">arrow_upward</span>
+</div>
+<span class="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase">Pagado</span>
+</div>
+<p class="text-xl font-bold text-slate-900 dark:text-white">S/ 7,500</p>
+</div>
+</div>
+</div>
+</aside>
+<!-- Right Content: Timeline & Forecast -->
+<div class="lg:col-span-8 space-y-8">
+<!-- Timeline Section -->
+<div class="bg-white dark:bg-surface-dark rounded-xl shadow-sm border border-slate-200 dark:border-slate-800 overflow-hidden">
+<div class="px-6 py-5 border-b border-slate-200 dark:border-slate-800 flex justify-between items-center bg-slate-50/50 dark:bg-white/5">
+<h3 class="text-lg font-semibold text-slate-900 dark:text-white flex items-center gap-2">
+<span class="material-icons text-primary text-xl">history</span>
+                                Historial de Movimientos
+                            </h3>
+<div class="flex gap-2">
+<button class="p-1.5 hover:bg-slate-200 dark:hover:bg-slate-700 rounded-lg transition text-slate-500 dark:text-slate-400" title="Filter">
+<span class="material-icons text-sm">filter_list</span>
+</button>
+<button class="p-1.5 hover:bg-slate-200 dark:hover:bg-slate-700 rounded-lg transition text-slate-500 dark:text-slate-400" title="Sort">
+<span class="material-icons text-sm">sort</span>
+</button>
+</div>
+</div>
+<div class="p-6 relative">
+<!-- Vertical Line -->
+<div class="absolute left-[2.2rem] sm:left-12 top-6 bottom-6 w-0.5 bg-slate-200 dark:bg-slate-700"></div>
+<!-- Timeline Item: Payment (Latest) -->
+<div class="relative pl-10 sm:pl-16 py-4 group">
+<div class="absolute left-[0.95rem] sm:left-[2.15rem] top-5 h-10 w-10 sm:h-12 sm:w-12 bg-green-100 dark:bg-green-900/20 border-4 border-white dark:border-surface-dark rounded-full flex items-center justify-center z-10">
+<span class="material-icons text-green-600 dark:text-green-400 text-sm sm:text-base">check_circle</span>
+</div>
+<div class="flex flex-col sm:flex-row sm:items-center justify-between bg-slate-50 dark:bg-surface-darker hover:bg-white dark:hover:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg p-4 transition-all">
+<div>
+<span class="text-xs font-bold text-green-600 dark:text-green-400 uppercase tracking-wide">Descuento Planilla</span>
+<h4 class="text-base font-semibold text-slate-900 dark:text-white mt-0.5">Pago Cuota #12</h4>
+<p class="text-xs text-slate-500 dark:text-slate-400 mt-1">24 Oct 2023 • Ref: PL-OCT-23</p>
+</div>
+<div class="mt-2 sm:mt-0 text-right">
+<span class="block text-lg font-bold text-green-600 dark:text-green-400">- S/ 500.00</span>
+<span class="text-xs text-slate-400">Saldo restante: S/ 4,500.00</span>
+</div>
+</div>
+</div>
+<!-- Timeline Item: Payment -->
+<div class="relative pl-10 sm:pl-16 py-4 group">
+<div class="absolute left-[0.95rem] sm:left-[2.15rem] top-5 h-10 w-10 sm:h-12 sm:w-12 bg-green-100 dark:bg-green-900/20 border-4 border-white dark:border-surface-dark rounded-full flex items-center justify-center z-10">
+<span class="material-icons text-green-600 dark:text-green-400 text-sm sm:text-base">check_circle</span>
+</div>
+<div class="flex flex-col sm:flex-row sm:items-center justify-between bg-slate-50 dark:bg-surface-darker hover:bg-white dark:hover:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg p-4 transition-all">
+<div>
+<span class="text-xs font-bold text-green-600 dark:text-green-400 uppercase tracking-wide">Descuento Planilla</span>
+<h4 class="text-base font-semibold text-slate-900 dark:text-white mt-0.5">Pago Cuota #11</h4>
+<p class="text-xs text-slate-500 dark:text-slate-400 mt-1">24 Sep 2023 • Ref: PL-SEP-23</p>
+</div>
+<div class="mt-2 sm:mt-0 text-right">
+<span class="block text-lg font-bold text-green-600 dark:text-green-400">- S/ 500.00</span>
+<span class="text-xs text-slate-400">Saldo restante: S/ 5,000.00</span>
+</div>
+</div>
+</div>
+<!-- Timeline Item: Loan (Older) -->
+<div class="relative pl-10 sm:pl-16 py-4 group">
+<div class="absolute left-[0.95rem] sm:left-[2.15rem] top-5 h-10 w-10 sm:h-12 sm:w-12 bg-primary/20 border-4 border-white dark:border-surface-dark rounded-full flex items-center justify-center z-10">
+<span class="material-icons text-primary text-sm sm:text-base">add_card</span>
+</div>
+<div class="flex flex-col sm:flex-row sm:items-center justify-between bg-slate-50 dark:bg-surface-darker hover:bg-white dark:hover:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg p-4 transition-all">
+<div>
+<span class="text-xs font-bold text-primary uppercase tracking-wide">Adelanto Aprobado</span>
+<h4 class="text-base font-semibold text-slate-900 dark:text-white mt-0.5">Solicitud Escolaridad</h4>
+<p class="text-xs text-slate-500 dark:text-slate-400 mt-1">15 Ago 2023 • Autorizado por RRHH</p>
+</div>
+<div class="mt-2 sm:mt-0 text-right">
+<span class="block text-lg font-bold text-slate-900 dark:text-white">+ S/ 2,000.00</span>
+<span class="text-xs text-slate-400">Saldo ajustado: S/ 5,500.00</span>
+</div>
+</div>
+</div>
+<!-- Timeline Item: Initial Loan -->
+<div class="relative pl-10 sm:pl-16 py-4 group">
+<div class="absolute left-[0.95rem] sm:left-[2.15rem] top-5 h-10 w-10 sm:h-12 sm:w-12 bg-slate-200 dark:bg-slate-700 border-4 border-white dark:border-surface-dark rounded-full flex items-center justify-center z-10">
+<span class="material-icons text-slate-500 text-sm sm:text-base">flag</span>
+</div>
+<div class="flex flex-col sm:flex-row sm:items-center justify-between bg-white dark:bg-transparent p-4 opacity-75">
+<div>
+<span class="text-xs font-bold text-slate-500 uppercase tracking-wide">Inicio Préstamo</span>
+<h4 class="text-base font-semibold text-slate-700 dark:text-slate-300 mt-0.5">Préstamo Vehicular</h4>
+<p class="text-xs text-slate-500 dark:text-slate-400 mt-1">10 Ene 2023</p>
+</div>
+<div class="mt-2 sm:mt-0 text-right">
+<span class="block text-lg font-bold text-slate-600 dark:text-slate-400">+ S/ 10,000.00</span>
+</div>
+</div>
+</div>
+</div>
+<div class="bg-slate-50 dark:bg-white/5 px-6 py-4 border-t border-slate-200 dark:border-slate-800 text-center">
+<button class="text-sm font-medium text-primary hover:text-primary-light transition-colors">Ver historial completo</button>
+</div>
+</div>
+<!-- Scheduled Deductions Table -->
+<div class="bg-white dark:bg-surface-dark rounded-xl shadow-sm border border-slate-200 dark:border-slate-800">
+<div class="px-6 py-5 border-b border-slate-200 dark:border-slate-800">
+<h3 class="text-lg font-semibold text-slate-900 dark:text-white flex items-center gap-2">
+<span class="material-icons text-primary text-xl">event_upcoming</span>
+                                Próximos Descuentos Programados
+                            </h3>
+<p class="text-sm text-slate-500 dark:text-slate-400 mt-1">Proyección para el Q4 2023</p>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="text-xs font-semibold tracking-wide text-slate-500 uppercase border-b border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-white/5">
+<th class="px-6 py-4">Mes</th>
+<th class="px-6 py-4">Concepto</th>
+<th class="px-6 py-4">Estado</th>
+<th class="px-6 py-4 text-right">Monto</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-slate-200 dark:divide-slate-700">
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
+<td class="px-6 py-4">
+<div class="flex items-center">
+<div class="h-8 w-8 rounded bg-primary/10 text-primary flex items-center justify-center text-xs font-bold mr-3">NOV</div>
+<span class="text-sm font-medium text-slate-900 dark:text-slate-200">Noviembre 2023</span>
+</div>
+</td>
+<td class="px-6 py-4 text-sm text-slate-500 dark:text-slate-400">Cuota regular préstamo</td>
+<td class="px-6 py-4">
+<span class="px-2.5 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-300">
+                                                Programado
+                                            </span>
+</td>
+<td class="px-6 py-4 text-sm font-bold text-slate-900 dark:text-slate-200 text-right">S/ 500.00</td>
+</tr>
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
+<td class="px-6 py-4">
+<div class="flex items-center">
+<div class="h-8 w-8 rounded bg-primary/10 text-primary flex items-center justify-center text-xs font-bold mr-3">DIC</div>
+<span class="text-sm font-medium text-slate-900 dark:text-slate-200">Diciembre 2023</span>
+</div>
+</td>
+<td class="px-6 py-4 text-sm text-slate-500 dark:text-slate-400">Cuota regular + Gratificación</td>
+<td class="px-6 py-4">
+<span class="px-2.5 py-1 rounded-full text-xs font-medium bg-slate-100 text-slate-800 dark:bg-slate-700 dark:text-slate-300">
+                                                Pendiente
+                                            </span>
+</td>
+<td class="px-6 py-4 text-sm font-bold text-slate-900 dark:text-slate-200 text-right">S/ 500.00</td>
+</tr>
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
+<td class="px-6 py-4">
+<div class="flex items-center">
+<div class="h-8 w-8 rounded bg-primary/10 text-primary flex items-center justify-center text-xs font-bold mr-3">ENE</div>
+<span class="text-sm font-medium text-slate-900 dark:text-slate-200">Enero 2024</span>
+</div>
+</td>
+<td class="px-6 py-4 text-sm text-slate-500 dark:text-slate-400">Cuota regular préstamo</td>
+<td class="px-6 py-4">
+<span class="px-2.5 py-1 rounded-full text-xs font-medium bg-slate-100 text-slate-800 dark:bg-slate-700 dark:text-slate-300">
+                                                Pendiente
+                                            </span>
+</td>
+<td class="px-6 py-4 text-sm font-bold text-slate-900 dark:text-slate-200 text-right">S/ 500.00</td>
+</tr>
+</tbody>
+<tfoot>
+<tr class="bg-slate-50/50 dark:bg-white/5">
+<td class="px-6 py-4 text-right text-sm font-medium text-slate-500 dark:text-slate-400" colspan="3">Total Proyectado (3 meses):</td>
+<td class="px-6 py-4 text-right text-base font-bold text-primary dark:text-primary-light">S/ 1,500.00</td>
+</tr>
+</tfoot>
+</table>
+</div>
+</div>
+<!-- Action Area -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<div class="bg-gradient-to-r from-slate-800 to-slate-900 rounded-xl p-6 relative overflow-hidden flex items-center justify-between border border-slate-700 shadow-lg">
+<div class="relative z-10">
+<h4 class="text-white font-bold text-lg">¿Necesitas refinanciar?</h4>
+<p class="text-slate-300 text-sm mt-1 mb-4 max-w-xs">Solicita una extensión de plazos o reprograma tus cuotas pendientes.</p>
+<button class="px-4 py-2 bg-white/10 hover:bg-white/20 text-white text-sm font-medium rounded-lg border border-white/20 transition-colors">Solicitar Evaluación</button>
+</div>
+<div class="absolute right-0 bottom-0 opacity-20">
+<span class="material-icons text-9xl -mb-4 -mr-4 text-white">trending_up</span>
+</div>
+</div>
+<div class="bg-white dark:bg-surface-dark rounded-xl p-6 border border-slate-200 dark:border-slate-800 shadow-sm flex flex-col justify-center">
+<div class="flex items-center gap-3 mb-3">
+<div class="p-2 bg-yellow-100 dark:bg-yellow-900/20 rounded-lg text-yellow-600 dark:text-yellow-400">
+<span class="material-icons">contact_support</span>
+</div>
+<h4 class="font-bold text-slate-900 dark:text-white">Soporte Financiero</h4>
+</div>
+<p class="text-sm text-slate-500 dark:text-slate-400 mb-4">Si encuentras discrepancias en tu estado de cuenta, contacta al área de nóminas.</p>
+<a class="text-sm font-medium text-primary hover:underline" href="#">Contactar a Nóminas →</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<footer class="bg-white dark:bg-surface-darker border-t border-slate-200 dark:border-slate-800 mt-auto py-8">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center gap-4">
+<p class="text-sm text-slate-500 dark:text-slate-400">© 2023 NexaCorp Perú S.A. Todos los derechos reservados.</p>
+<div class="flex gap-6">
+<a class="text-sm text-slate-500 hover:text-primary dark:text-slate-400 transition-colors" href="#">Privacidad</a>
+<a class="text-sm text-slate-500 hover:text-primary dark:text-slate-400 transition-colors" href="#">Términos</a>
+<a class="text-sm text-slate-500 hover:text-primary dark:text-slate-400 transition-colors" href="#">Ayuda</a>
+</div>
+</div>
+</footer>
+</body></html>

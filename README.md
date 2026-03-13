@@ -1,44 +1,267 @@
-# MockApp - GPS Spoofer
+# RRHHMod - ERP de Gestión de Personal para Perú
 
-MockApp is an Android application that allows you to easily simulate your device's GPS location. This allows you to spoof your location when using other apps, like sharing your location in real-time.
+Sistema completo de gestión de recursos humanos diseñado específicamente para empresas en Perú, con todas las funcionalidades necesarias para administrar personal, contratos, nómina y cumplimiento normativo.
 
-## Features
+## 🚀 Características Principales
 
-* **Foreground Service:** Spoofs your location consistently even when the app is closed or running in the background.
-* **Easy Interface:** Set a target latitude and longitude and start/stop mocking with a tap.
+### 📋 Gestión de Personal
+- **Datos completos del empleado**: Información personal, familiar, educativa y profesional
+- **Validación de DNI peruano**: Formato y verificación automática
+- **Gestión de documentos**: Fotos, DNI, RUC y otros documentos
+- **Estados y control**: Activo, Inactivo, Suspendido, Cesado
 
-## Installation
+### 📄 Gestión de Contratos
+- **Tipos de contrato**: Indeterminado, Plazo Fijo, CAS, Locación de Servicios, Prácticas
+- **Régimenes laborales**: General, Microempresa, Pequeña Empresa, Agrario, Pesquero
+- **Configuración completa**: Salarios, beneficios, AFP/ONP, CUSPP
+- **Control de vencimientos**: Alertas automáticas de contratos por expirar
 
-1. Download the pre-built APK file located at: `app/build/outputs/apk/debug/app-debug.apk`
-2. Transfer the APK to your Android device.
-3. Tap on the APK file to install it. You may need to enable "Install unknown apps" from your device's settings if you haven't done so already.
+### 💰 Nómina y Planilla
+- **Cálculo automático**: Salarios, horas extras, bonificaciones, asignaciones
+- **Descuentos peruanos**: AFP/ONP, Essalud, SCTR, 5ta categoría
+- **Beneficios sociales**: CTS, vacaciones, gratificaciones, utilidades
+- **Exportación Excel**: Formato listo para contabilidad y bancos
 
-## Configuration & Usage
+### ⏰ Horas Extras
+- **Registro y aprobación**: Flujo completo de solicitud y autorización
+- **Tipos de horas**: 25%, 35%, 100%, feriados
+- **Cálculo automático**: Según normativa peruana
+- **Control y auditoría**: Historial completo y reportes
 
-For the GPS spoofer to work, you must set MockApp as your device's "Mock location app".
+### 💳 Préstamos a Personal
+- **Gestión completa**: Solicitud, aprobación, desembolso y amortización
+- **Tipos de préstamo**: Liquidación, quitas, adicionales, emergencia
+- **Plan de pagos**: Cuotas automáticas con intereses y moras
+- **Control de saldos**: Seguimiento en tiempo real
 
-### 1. Enable Developer Options
+### 🏖️ Vacaciones y Permisos
+- **Tipos de permisos**: Programadas, truncas, enfermedad, maternidad, paternidad
+- **Control de días**: Disponibles, utilizados, acumulados
+- **Aprobación workflow**: Flujo de autorización automático
+- **Integración con nómina**: Descuentos automáticos
 
-If you haven't already enabled Developer Options on your device:
-1. Go to your device's **Settings**.
-2. Scroll down and tap on **About phone**.
-3. Tap on **Software information**.
-4. Tap the **Build number** 7 times rapidly until you see a message saying "You are now a developer!".
+### 📊 Control de Asistencia
+- **Registro de asistencia**: Entradas, salidas, faltas, tardanzas
+- **Justificaciones**: Documentos médicos y permisos
+- **Reportes detallados**: Estadísticas y análisis de asistencia
+- **Integración con nómina**: Descuentos por faltas y tardanzas
 
-### 2. Set Mock Location App
+## 🛠️ Stack Tecnológico
 
-1. Go back to your device's main **Settings** menu.
-2. Scroll down to the bottom and tap on **Developer options**.
-3. Scroll down to the **Location** section (or use the search bar to find "mock").
-4. Tap on **Select mock location app**.
-5. Select **MockApp** from the list.
+### Backend
+- **Framework**: NestJS (TypeScript)
+- **Base de Datos**: Cloudflare D1 (SQLite distribuido)
+- **ORM**: Prisma
+- **Autenticación**: JWT
+- **Exportación**: ExcelJS
+- **Deploy**: Cloudflare Workers
 
-### 3. Start Spoofing
+### Frontend
+- **Framework**: Vue 3 + Composition API
+- **Build Tool**: Vite
+- **UI Library**: Naive UI
+- **State Management**: Pinia
+- **Routing**: Vue Router 4
+- **HTTP Client**: Axios
 
-1. Open **MockApp**.
-2. Grant any location and notification permissions requested.
-3. Enter your desired **Latitude** and **Longitude** (e.g., `37.422` and `-122.084` for Googleplex).
-4. Tap **Start Spoofing**.
-5. You can now close the app, and your location will remain spoofed. A persistent notification will indicate that the GPS is being mocked.
-6. Open your favorite Maps or messaging app and see your new simulated location!
-7. To stop spoofing, either tap **Stop Spoofing** in the app or tap the notification to return to the app and stop it.
+### Infraestructura
+- **Hosting**: Cloudflare Workers + Pages
+- **Base de Datos**: Cloudflare D1
+- **CDN**: Cloudflare
+- **Dominio**: Configurable
+
+## 📦 Instalación y Configuración
+
+### Prerrequisitos
+- Node.js 18+
+- npm o yarn
+- Cuenta de Cloudflare
+
+### Backend
+```bash
+cd backend
+npm install
+cp .env.example .env
+# Configurar variables de entorno
+npm run prisma:generate
+npm run prisma:deploy
+npm run dev
+```
+
+### Frontend
+```bash
+cd frontend
+npm install
+cp .env.example .env
+# Configurar API URL
+npm run dev
+```
+
+### Variables de Entorno
+```env
+# Backend
+DATABASE_URL="file:./dev.db"
+JWT_SECRET="your-secret-key"
+D1_DATABASE_ID="your-d1-id"
+
+# Frontend
+VITE_API_URL="https://your-worker.your-subdomain.workers.dev"
+```
+
+## 🌐 Deploy en Cloudflare
+
+### Deploy Automático (Recomendado) ⚡
+
+El proyecto está configurado para deploy automático usando GitHub Actions.
+
+**Configuración rápida:**
+1. Ve a **Settings** → **Secrets and variables** → **Actions** en GitHub
+2. Agrega el secreto `CLOUDFLARE_API_TOKEN` con tu API Token de Cloudflare
+3. Haz push a la rama `main` y el deploy se ejecutará automáticamente
+
+**📖 Documentación completa**: Ver [docs/CLOUDFLARE_SETUP.md](./docs/CLOUDFLARE_SETUP.md)
+
+### Deploy Manual
+
+#### 1. Crear Base de Datos D1
+```bash
+wrangler d1 create rrhhmod-db
+# Copiar el ID y configurar en wrangler.toml
+```
+
+#### 2. Deploy Backend
+```bash
+cd backend
+npm run deploy
+```
+
+#### 3. Deploy Frontend
+```bash
+cd frontend
+npm run build
+npx wrangler pages deploy dist --project-name proyectorrhh --branch main
+```
+
+### Gestión de Workers
+
+```bash
+# Desarrollo local con hot reload
+cd backend && npm run dev
+
+# Ver logs en tiempo real
+npx wrangler tail
+
+# Ver versiones desplegadas
+npx wrangler versions list
+
+# Rollback a versión anterior
+npx wrangler rollback [version-id]
+```
+
+## 📋 Migración de Datos
+
+### Importar desde Excel
+1. Preparar archivo Excel con columnas requeridas
+2. Usar herramienta de importación
+3. Validar y mapear campos
+4. Procesar y confirmar
+
+### Migración desde otro sistema
+1. Exportar datos del sistema actual
+2. Formatear según esquema RRHHMod
+3. Importar usando API o herramienta
+4. Validar integridad de datos
+
+## 🔐 Seguridad
+
+### Autenticación
+- JWT con refresh tokens
+- Tiempo de expiración configurable
+- Almacenamiento seguro en localStorage
+
+### Permisos
+- Roles: Admin, HR, Manager, Viewer
+- Permisos granulares por módulo
+- Control de acceso a datos sensibles
+
+### Datos Sensibles
+- Encriptación de información personal
+- Máscara de datos financieros
+- Auditoría de cambios
+
+## 📊 Reportes y Exportación
+
+### Reportes Disponibles
+- **Planilla mensual**: Detalle completo para contabilidad
+- **Resumen de nómina**: Totales por conceptos
+- **Contratos por vencer**: Alertas y seguimiento
+- **Control de asistencia**: Estadísticas y tendencias
+- **Préstamos activos**: Saldos y pagos pendientes
+
+### Exportación Excel
+- Formato estándar para bancos peruanos
+- Datos bancarios completos
+- Cálculos validados
+- Listo para SUNAT y contabilidad
+
+## 🇵🇪 Cumplimiento Normativo Perú
+
+### Aspectos Legales Cubiertos
+- **Ley de Productividad**: Horas extras y bonificaciones
+- **CTS**: Cálculo y depósito automático
+- **Gratificaciones**: Julio y diciembre
+- **Vacaciones**: 30 días por año trabajado
+- **AFP/ONP**: Aportes obligatorios
+- **Essalud**: 9% del salario
+- **5ta Categoría**: Retenciones por renta
+
+### Documentación
+- Contratos según ley peruana
+- Boletas de pago
+- Certificados de trabajo
+- Constancias de AFP/ONP
+
+## 🤝 Contribución
+
+### Desarrollo Local
+```bash
+# Clonar repositorio
+git clone https://github.com/soyniklasander/proyectorrhh.git
+cd proyectorrhh
+
+# Instalar dependencias
+npm run install:all
+
+# Iniciar desarrollo
+npm run dev
+```
+
+### Estructura del Proyecto
+```
+RRHHMOD/
+├── backend/          # NestJS + Prisma
+├── frontend/         # Vue 3 + Naive UI
+├── shared/           # Tipos compartidos
+├── docs/             # Documentación
+└── README.md
+```
+
+## 📞 Soporte
+
+### Documentación
+- [API Documentation](./docs/API.md)
+- [Deployment Guide](./docs/DEPLOYMENT.md)
+- [User Manual](./docs/USER_GUIDE.md)
+
+### Contacto
+- Email: soporte@rrhhmod.com
+- Issues: [GitHub Issues](https://github.com/soyniklasander/proyectorrhh/issues)
+- Wiki: [GitHub Wiki](https://github.com/soyniklasander/proyectorrhh/wiki)
+
+## 📄 Licencia
+
+Este proyecto está licenciado bajo la Licencia MIT. Ver el archivo [LICENSE](LICENSE) para más detalles.
+
+---
+
+**RRHHMod** - La solución completa de gestión de personal para empresas peruanas. 🇵🇪"Deployment trigger"
