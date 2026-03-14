@@ -3,66 +3,59 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="24dp"
+    android:padding="16dp"
     android:gravity="center">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="GPS Spoofer"
-        android:textSize="28sp"
+        android:text="Mock Location App"
+        android:textSize="24sp"
         android:textStyle="bold"
-        android:layout_marginBottom="32dp"/>
+        android:layout_marginBottom="24dp" />
 
-    <TextView
+    <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Latitude:"
-        android:textStyle="bold"
-        android:layout_marginBottom="4dp"/>
+        android:layout_marginBottom="16dp"
+        android:hint="Latitude">
 
-    <EditText
-        android:id="@+id/latEditText"
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/latInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="numberDecimal|numberSigned"
+            android:text="40.7128" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="e.g. 37.422"
-        android:inputType="numberDecimal|numberSigned"
-        android:layout_marginBottom="16dp"/>
+        android:layout_marginBottom="24dp"
+        android:hint="Longitude">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Longitude:"
-        android:textStyle="bold"
-        android:layout_marginBottom="4dp"/>
-
-    <EditText
-        android:id="@+id/lngEditText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="e.g. -122.084"
-        android:inputType="numberDecimal|numberSigned"
-        android:layout_marginBottom="32dp"/>
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/lngInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="numberDecimal|numberSigned"
+            android:text="-74.0060" />
+    </com.google.android.material.textfield.TextInputLayout>
 
     <Button
-        android:id="@+id/startMockButton"
+        android:id="@+id/toggleButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Start Spoofing"
-        android:padding="16dp"
-        android:backgroundTint="#4CAF50"
-        android:textColor="#FFFFFF"
-        android:textSize="18sp"/>
+        android:text="Start Mocking"
+        android:padding="16dp" />
 
-    <Button
-        android:id="@+id/stopMockButton"
+    <TextView
+        android:id="@+id/statusText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Stop Spoofing"
-        android:padding="16dp"
-        android:backgroundTint="#F44336"
-        android:textColor="#FFFFFF"
-        android:textSize="18sp"
-        android:layout_marginTop="16dp"/>
+        android:text="Status: Stopped"
+        android:textAlignment="center"
+        android:layout_marginTop="16dp"
+        android:textSize="16sp" />
 
 </LinearLayout>
