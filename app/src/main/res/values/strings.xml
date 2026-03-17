@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">Simulador de Ubicación</string>
+    <string name="instructions">Ingresa las coordenadas (Latitud y Longitud) a las que deseas simular tu ubicación.\n\nRecuerda habilitar esta app en "Opciones de Desarrollador" -> "Seleccionar aplicación de ubicación de prueba".</string>
+    <string name="latitude_hint">Latitud (Ej: 40.4168)</string>
+    <string name="longitude_hint">Longitud (Ej: -3.7038)</string>
+    <string name="start_mock">Iniciar Simulación</string>
+    <string name="stop_mock">Detener Simulación</string>
+    <string name="status_running">Estado: SIMULANDO</string>
+    <string name="status_stopped">Estado: DETENIDO</string>
+    <string name="error_invalid_coordinates">Por favor, ingresa coordenadas válidas.</string>
+    <string name="error_permissions">Se requieren permisos de ubicación y notificaciones.</string>
+    <string name="error_mock_app_not_set">Por favor selecciona esta app como "Aplicación de ubicación de prueba" en las opciones de desarrollador de tu dispositivo.</string>
+    <string name="notification_channel_name">Servicio de Ubicación Simulada</string>
+    <string name="notification_title">Ubicación Simulada Activa</string>
+    <string name="notification_text">Simulando ubicación en: %1$s, %2$s</string>
+    <string name="please_enable_developer_options">Debes habilitar las opciones de desarrollador para usar esta app.</string>
+</resources>
