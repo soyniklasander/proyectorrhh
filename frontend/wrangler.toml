@@ -1,7 +1,0 @@
-name = "rrhhmod-frontend"
-pages_build_output_dir = "dist"
-compatibility_date = "2025-02-11"
-
-[vars]
-VITE_API_URL = "https://rrhhmod-backend.rchavezza.workers.dev"
-VITE_APP_NAME = "ERPRick"
