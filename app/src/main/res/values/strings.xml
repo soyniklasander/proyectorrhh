@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Simulador GPS</string>
+    <string name="latitude_hint">Latitud (ej. 40.4167)</string>
+    <string name="longitude_hint">Longitud (ej. -3.7032)</string>
+    <string name="start_mocking">Iniciar Simulación</string>
+    <string name="stop_mocking">Detener Simulación</string>
+    <string name="developer_settings">Abrir Opciones de Desarrollador</string>
+</resources>
