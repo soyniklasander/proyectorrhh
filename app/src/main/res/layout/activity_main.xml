@@ -7,62 +7,49 @@
     android:gravity="center">
 
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="GPS Spoofer"
-        android:textSize="28sp"
-        android:textStyle="bold"
-        android:layout_marginBottom="32dp"/>
-
-    <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Latitude:"
+        android:text="Ubicación a Simular"
+        android:textSize="24sp"
         android:textStyle="bold"
-        android:layout_marginBottom="4dp"/>
+        android:gravity="center"
+        android:layout_marginBottom="24dp" />
 
     <EditText
-        android:id="@+id/latEditText"
+        android:id="@+id/etLatitude"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="e.g. 37.422"
+        android:hint="@string/latitude_hint"
         android:inputType="numberDecimal|numberSigned"
-        android:layout_marginBottom="16dp"/>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Longitude:"
-        android:textStyle="bold"
-        android:layout_marginBottom="4dp"/>
+        android:layout_marginBottom="16dp" />
 
     <EditText
-        android:id="@+id/lngEditText"
+        android:id="@+id/etLongitude"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="e.g. -122.084"
+        android:hint="@string/longitude_hint"
         android:inputType="numberDecimal|numberSigned"
-        android:layout_marginBottom="32dp"/>
+        android:layout_marginBottom="32dp" />
 
     <Button
-        android:id="@+id/startMockButton"
+        android:id="@+id/btnStart"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Start Spoofing"
-        android:padding="16dp"
-        android:backgroundTint="#4CAF50"
-        android:textColor="#FFFFFF"
-        android:textSize="18sp"/>
+        android:text="@string/start_mocking"
+        android:layout_marginBottom="16dp" />
 
     <Button
-        android:id="@+id/stopMockButton"
+        android:id="@+id/btnStop"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Stop Spoofing"
-        android:padding="16dp"
-        android:backgroundTint="#F44336"
-        android:textColor="#FFFFFF"
-        android:textSize="18sp"
-        android:layout_marginTop="16dp"/>
+        android:text="@string/stop_mocking"
+        android:layout_marginBottom="16dp" />
+
+    <Button
+        android:id="@+id/btnSettings"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/developer_settings"
+        style="?android:attr/borderlessButtonStyle" />
 
 </LinearLayout>
