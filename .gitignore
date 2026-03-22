@@ -12,3 +12,13 @@ tsconfig.tsbuildinfo
 
 backend/.wrangler/
 backend/local.db
+app/build/
+build/
+.gradle/
+local.properties
+*.apk
+app/build/
+build/
+.gradle/
+local.properties
+*.apk
