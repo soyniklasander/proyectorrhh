@@ -92,7 +92,7 @@ public class MainActivity extends AppCompatActivity {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 // Permissions granted
             } else {
-                Toast.makeText(this, "Permissions required for spoofing to work", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "Se requieren permisos para que la simulación funcione", Toast.LENGTH_LONG).show();
             }
         }
     }
@@ -102,7 +102,7 @@ public class MainActivity extends AppCompatActivity {
         String lngStr = lngEditText.getText().toString();
 
         if (latStr.isEmpty() || lngStr.isEmpty()) {
-            Toast.makeText(this, "Please enter latitude and longitude", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Por favor, ingresa latitud y longitud", Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -121,18 +121,18 @@ public class MainActivity extends AppCompatActivity {
                 startService(serviceIntent);
             }
 
-            Toast.makeText(this, "Started Mock Location Service", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Servicio de ubicación simulada iniciado", Toast.LENGTH_SHORT).show();
 
         } catch (NumberFormatException e) {
-            Toast.makeText(this, "Invalid coordinates", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Coordenadas inválidas", Toast.LENGTH_SHORT).show();
         } catch (SecurityException e) {
-            Toast.makeText(this, "Please enable this app in Developer Options -> Select mock location app", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Por favor, habilita esta app en Opciones de desarrollador -> Elegir aplicación para simular ubicación", Toast.LENGTH_LONG).show();
         }
     }
 
     private void stopMocking() {
         Intent serviceIntent = new Intent(this, MockLocationService.class);
         stopService(serviceIntent);
-        Toast.makeText(this, "Stopped Mock Location Service", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Servicio de ubicación simulada detenido", Toast.LENGTH_SHORT).show();
     }
 }
