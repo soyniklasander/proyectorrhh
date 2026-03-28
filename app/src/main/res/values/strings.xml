@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Ubicación Simulada</string>
+    <string name="latitude">Latitud</string>
+    <string name="longitude">Longitud</string>
+    <string name="start_mocking">Iniciar Simulación</string>
+    <string name="stop_mocking">Detener Simulación</string>
+    <string name="permission_required">Se requieren permisos de ubicación y notificaciones.</string>
+    <string name="mock_location_not_enabled">Por favor, selecciona esta aplicación como \"Aplicación de ubicación de prueba\" en las Opciones de Desarrollador.</string>
+    <string name="invalid_coordinates">Por favor, introduce coordenadas válidas.</string>
+    <string name="service_running">Simulando ubicación en segundo plano</string>
+</resources>
