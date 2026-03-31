@@ -1,14 +1,17 @@
-node_modules/
-dist/
-.env
-.dev.vars
-*.log
-.DS_Store
-.nyc_output
-coverage/
-.tmp/
-.cache/
-tsconfig.tsbuildinfo
+# Gradle
+.gradle/
+build/
+app/build/
+local.properties
 
-backend/.wrangler/
-backend/local.db
+# Android Studio
+.idea/
+*.iml
+*.iws
+
+# Keystore files
+*.jks
+*.keystore
+
+# macOS
+.DS_Store

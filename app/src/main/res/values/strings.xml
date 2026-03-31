@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">Simulador GPS</string>
+    <string name="status_stopped">Estado: Detenido</string>
+    <string name="status_running">Estado: Simulando...</string>
+    <string name="btn_start">Iniciar Simulación</string>
+    <string name="btn_stop">Detener Simulación</string>
+    <string name="no_location_selected">Toca el mapa para seleccionar una ubicación</string>
+    <string name="location_selected_format">Seleccionado: %1$.5f, %2$.5f</string>
+    <string name="notification_title">Simulación Activa</string>
+    <string name="notification_text">Simulando ubicación en %1$.5f, %2$.5f</string>
+    <string name="notification_channel_name">Servicio de Simulación GPS</string>
+    <string name="error_mock_location_disabled">Habilita esta app en las Opciones de Desarrollador</string>
+    <string name="error_permissions_required">Permisos requeridos para funcionar</string>
+    <string name="error_no_location">Por favor selecciona una ubicación en el mapa</string>
+    <string name="dev_options_prompt">Por favor, ve a las Opciones de Desarrollador, busca "Elegir aplicación para simular ubicación" (o similar) y selecciona "Simulador GPS".</string>
+    <string name="btn_open_settings">Abrir Opciones de Desarrollador</string>
+</resources>
