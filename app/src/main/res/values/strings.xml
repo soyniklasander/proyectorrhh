@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Simulador GPS</string>
+    <string name="start_mocking">Iniciar Simulación</string>
+    <string name="stop_mocking">Detener Simulación</string>
+    <string name="marker_desc">Marcador central</string>
+    <string name="permissions_needed">Se necesitan permisos de ubicación y notificaciones para funcionar.</string>
+    <string name="mock_app_needed">Por favor, establece esta aplicación como la \'Aplicación de ubicación simulada\' en las Opciones de Desarrollador.</string>
+</resources>
