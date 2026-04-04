@@ -1,0 +1,8 @@
+{
+  "name": "mockapp-cloudflare-dummy",
+  "version": "1.0.0",
+  "description": "Dummy project to pass Cloudflare CI for Android repository",
+  "scripts": {
+    "build": "mkdir -p public && echo '<h1>MockApp Android Repository</h1>' > public/index.html"
+  }
+}
