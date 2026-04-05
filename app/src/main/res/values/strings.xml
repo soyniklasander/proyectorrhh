@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">MockApp (Simulador de Ubicación)</string>
+    <string name="btn_start_mocking">Iniciar Simulación</string>
+    <string name="btn_stop_mocking">Detener Simulación</string>
+    <string name="notification_channel_id">mock_location_channel</string>
+    <string name="notification_channel_name">Simulación de Ubicación</string>
+    <string name="notification_title">Simulando Ubicación</string>
+    <string name="notification_text">El servicio de ubicación falsa está en ejecución</string>
+    <string name="permissions_required">Permisos requeridos para la simulación</string>
+    <string name="enable_mock_location_settings">Por favor habilita la app en las opciones de desarrollador: "Elegir aplicación para simular ubicación"</string>
+    <string name="location_selected">Ubicación seleccionada: %1$s, %2$s</string>
+    <string name="mock_started">Simulación iniciada</string>
+    <string name="mock_stopped">Simulación detenida</string>
+</resources>
