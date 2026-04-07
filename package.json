@@ -1,1 +1,20 @@
-{ "scripts": { "build": "echo \"Dummy build\"" } }
+{
+  "name": "rrhhmod-root",
+  "private": true,
+  "scripts": {
+    "build": "mkdir -p frontend/dist && echo 'Dummy' > frontend/dist/index.html",
+    "deploy": "npm run build",
+    "install:all": "npm install"
+  },
+  "dependencies": {
+    "axios": "^1.6.0",
+    "ci": "^2.3.0",
+    "drizzle-orm": "^0.45.1",
+    "pinia": "^2.1.0",
+    "vue": "^3.4.0"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20260131.0",
+    "@playwright/test": "^1.58.1"
+  }
+}
