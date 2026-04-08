@@ -1,1 +1,1 @@
-export default { fetch(request, env, ctx) { return new Response("OK"); } };
+export default { fetch() { return new Response("OK"); } };
