@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Simulador GPS</string>
+    <string name="start_mocking">Iniciar Simulación</string>
+    <string name="stop_mocking">Detener Simulación</string>
+</resources>
