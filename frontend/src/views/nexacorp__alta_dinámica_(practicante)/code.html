@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>NexaCorp: Alta de Colaborador (Practicante)</title>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#256af4",
+                        "background-light": "#f5f6f8",
+                        "background-dark": "#101622",
+                        "card-dark": "#1a2332",
+                        "input-dark": "#222f49",
+                        "border-dark": "#2d3b55",
+                    },
+                    fontFamily: {
+                        "display": ["Manrope", "sans-serif"]
+                    },
+                    borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" },
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-white font-display overflow-x-hidden">
+<div class="relative flex min-h-screen w-full flex-col">
+<!-- Top Navigation Bar -->
+<header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-slate-200 dark:border-[#222f49] bg-white dark:bg-[#101623] px-10 py-3 sticky top-0 z-50">
+<div class="flex items-center gap-8">
+<div class="flex items-center gap-4 text-slate-900 dark:text-white">
+<div class="size-8 text-primary">
+<svg class="w-full h-full" fill="none" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path d="M13.8261 17.4264C16.7203 18.1174 20.2244 18.5217 24 18.5217C27.7756 18.5217 31.2797 18.1174 34.1739 17.4264C36.9144 16.7722 39.9967 15.2331 41.3563 14.1648L24.8486 40.6391C24.4571 41.267 23.5429 41.267 23.1514 40.6391L6.64374 14.1648C8.00331 15.2331 11.0856 16.7722 13.8261 17.4264Z" fill="currentColor"></path>
+<path clip-rule="evenodd" d="M39.998 12.236C39.9944 12.2537 39.9875 12.2845 39.9748 12.3294C39.9436 12.4399 39.8949 12.5741 39.8346 12.7175C39.8168 12.7597 39.7989 12.8007 39.7813 12.8398C38.5103 13.7113 35.9788 14.9393 33.7095 15.4811C30.9875 16.131 27.6413 16.5217 24 16.5217C20.3587 16.5217 17.0125 16.131 14.2905 15.4811C12.0012 14.9346 9.44505 13.6897 8.18538 12.8168C8.17384 12.7925 8.16216 12.767 8.15052 12.7408C8.09919 12.6249 8.05721 12.5114 8.02977 12.411C8.00356 12.3152 8.00039 12.2667 8.00004 12.2612C8.00004 12.261 8 12.2607 8.00004 12.2612C8.00004 12.2359 8.0104 11.9233 8.68485 11.3686C9.34546 10.8254 10.4222 10.2469 11.9291 9.72276C14.9242 8.68098 19.1919 8 24 8C28.8081 8 33.0758 8.68098 36.0709 9.72276C37.5778 10.2469 38.6545 10.8254 39.3151 11.3686C39.9006 11.8501 39.9857 12.1489 39.998 12.236ZM4.95178 15.2312L21.4543 41.6973C22.6288 43.5809 25.3712 43.5809 26.5457 41.6973L43.0534 15.223C43.0709 15.1948 43.0878 15.1662 43.104 15.1371L41.3563 14.1648C43.104 15.1371 43.1038 15.1374 43.104 15.1371L43.1051 15.135L43.1065 15.1325L43.1101 15.1261L43.1199 15.1082C43.1276 15.094 43.1377 15.0754 43.1497 15.0527C43.1738 15.0075 43.2062 14.9455 43.244 14.8701C43.319 14.7208 43.4196 14.511 43.5217 14.2683C43.6901 13.8679 44 13.0689 44 12.2609C44 10.5573 43.003 9.22254 41.8558 8.2791C40.6947 7.32427 39.1354 6.55361 37.385 5.94477C33.8654 4.72057 29.133 4 24 4C18.867 4 14.1346 4.72057 10.615 5.94478C8.86463 6.55361 7.30529 7.32428 6.14419 8.27911C4.99695 9.22255 3.99999 10.5573 3.99999 12.2609C3.99999 13.1275 4.29264 13.9078 4.49321 14.3607C4.60375 14.6102 4.71348 14.8196 4.79687 14.9689C4.83898 15.0444 4.87547 15.1065 4.9035 15.1529C4.91754 15.1762 4.92954 15.1957 4.93916 15.2111L4.94662 15.223L4.95178 15.2312ZM35.9868 18.996L24 38.22L12.0131 18.996C12.4661 19.1391 12.9179 19.2658 13.3617 19.3718C16.4281 20.1039 20.0901 20.5217 24 20.5217C27.9099 20.5217 31.5719 20.1039 34.6383 19.3718C35.082 19.2658 35.5339 19.1391 35.9868 18.996Z" fill="currentColor" fill-rule="evenodd"></path>
+</svg>
+</div>
+<h2 class="text-lg font-bold leading-tight tracking-[-0.015em]">NexaCorp HR</h2>
+</div>
+<nav class="hidden md:flex items-center gap-9">
+<a class="text-slate-600 dark:text-white text-sm font-medium leading-normal hover:text-primary transition-colors" href="#">Dashboard</a>
+<a class="text-slate-600 dark:text-white text-sm font-medium leading-normal hover:text-primary transition-colors" href="#">Colaboradores</a>
+<a class="text-slate-600 dark:text-white text-sm font-medium leading-normal hover:text-primary transition-colors" href="#">Reclutamiento</a>
+<a class="text-slate-600 dark:text-white text-sm font-medium leading-normal hover:text-primary transition-colors" href="#">Reportes</a>
+</nav>
+</div>
+<div class="flex flex-1 justify-end gap-8 items-center">
+<div class="hidden lg:flex flex-col min-w-40 !h-10 max-w-64">
+<div class="flex w-full flex-1 items-stretch rounded-lg h-full bg-slate-100 dark:bg-[#222f49]">
+<div class="text-slate-400 dark:text-[#90a4cb] flex border-none items-center justify-center pl-4 rounded-l-lg">
+<span class="material-symbols-outlined text-[20px]">search</span>
+</div>
+<input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-slate-900 dark:text-white focus:outline-0 focus:ring-0 border-none bg-transparent focus:border-none h-full placeholder:text-slate-400 dark:placeholder:text-[#90a4cb] px-4 rounded-l-none border-l-0 pl-2 text-sm font-normal leading-normal" placeholder="Buscar..." value=""/>
+</div>
+</div>
+<div class="flex items-center gap-3 cursor-pointer">
+<div class="text-right hidden sm:block">
+<p class="text-sm font-semibold text-slate-900 dark:text-white">Admin HR</p>
+<p class="text-xs text-slate-500 dark:text-[#90a4cb]">Sede Lima</p>
+</div>
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10 ring-2 ring-slate-200 dark:ring-[#2d3b55]" data-alt="User profile picture" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDxRMxYM36W08Wy7TUpNKiEERJZV0DAfp7SgzD-bYtrYG55PVp5L-vQtInteS3yhpBtP2CQJcRz7ORkUVRU7WGY-Iy92aj-FBVWdHSyUsLNzSLLIxgeWoMzvYL5EBoKTda9xcMFGaKMzNCKRqwoU_b7UARa-qRQCxZ6w0IA6Nj4XQYT6e08qzqU0-GIGl58BCg04kF4IZbShiY7G1Xi1aOmT7o2ymKTj5cYbxvOgd_cVozT_xy73-AY5km57A90IHRk1_cXxzQMuTj_");'></div>
+</div>
+</div>
+</header>
+<!-- Main Content -->
+<main class="flex-1 px-4 py-8 md:px-10 lg:px-40 flex justify-center">
+<div class="w-full max-w-[1200px] flex flex-col gap-8">
+<!-- Breadcrumb -->
+<div class="flex flex-wrap gap-2 items-center">
+<a class="text-slate-500 dark:text-[#90a4cb] text-sm hover:text-primary transition-colors" href="#">Inicio</a>
+<span class="material-symbols-outlined text-slate-500 dark:text-[#90a4cb] text-[16px]">chevron_right</span>
+<a class="text-slate-500 dark:text-[#90a4cb] text-sm hover:text-primary transition-colors" href="#">Colaboradores</a>
+<span class="material-symbols-outlined text-slate-500 dark:text-[#90a4cb] text-[16px]">chevron_right</span>
+<span class="text-slate-900 dark:text-white text-sm font-medium">Alta de Colaborador</span>
+</div>
+<!-- Page Header -->
+<div class="flex flex-col md:flex-row justify-between items-start md:items-end gap-4">
+<div class="flex flex-col gap-2">
+<h1 class="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white tracking-tight">Alta de Colaborador</h1>
+<p class="text-slate-500 dark:text-[#90a4cb]">Gestiona el ingreso de nuevos talentos a NexaCorp.</p>
+</div>
+<!-- Progress Indicator -->
+<div class="w-full md:w-auto min-w-[300px] flex flex-col gap-2 bg-white dark:bg-[#1a2332] p-4 rounded-xl shadow-sm border border-slate-200 dark:border-[#2d3b55]">
+<div class="flex justify-between items-center mb-1">
+<span class="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-[#90a4cb]">Progreso</span>
+<span class="text-sm font-bold text-primary">Paso 2 de 4</span>
+</div>
+<div class="h-2 w-full bg-slate-100 dark:bg-[#2d3b55] rounded-full overflow-hidden">
+<div class="h-full bg-primary w-1/2 rounded-full"></div>
+</div>
+<div class="flex justify-between text-xs text-slate-500 dark:text-[#90a4cb] mt-1">
+<span>Datos Personales</span>
+<span class="text-white font-medium">Contrato</span>
+<span>Beneficios</span>
+<span>Documentos</span>
+</div>
+</div>
+</div>
+<!-- Main Form Area -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+<!-- Left Column: Form -->
+<div class="lg:col-span-2 flex flex-col gap-6">
+<!-- Notification Banner -->
+<div class="bg-blue-50 dark:bg-primary/10 border-l-4 border-primary p-4 rounded-r-lg flex gap-3 items-start animate-fade-in">
+<span class="material-symbols-outlined text-primary mt-0.5">info</span>
+<div>
+<h3 class="font-bold text-slate-900 dark:text-white text-sm">Modo Practicante Activado</h3>
+<p class="text-sm text-slate-600 dark:text-[#90a4cb] mt-1">
+                                    Se han aplicado las reglas de la Ley N° 28518 sobre Modalidades Formativas Laborales. Los campos de AFP han sido ocultados y se ha habilitado la subvención económica.
+                                </p>
+</div>
+</div>
+<div class="bg-white dark:bg-[#1a2332] rounded-xl p-6 md:p-8 shadow-sm border border-slate-200 dark:border-[#2d3b55]">
+<h2 class="text-xl font-bold text-slate-900 dark:text-white mb-6 border-b border-slate-100 dark:border-[#2d3b55] pb-4">
+                                Datos Contractuales
+                            </h2>
+<form class="flex flex-col gap-6">
+<!-- Row 1: Contract Type & Duration -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<div class="flex flex-col gap-2">
+<label class="text-sm font-medium text-slate-700 dark:text-slate-300">Tipo de Contrato / Convenio</label>
+<div class="relative">
+<select class="w-full bg-slate-50 dark:bg-[#222f49] border border-slate-300 dark:border-[#2d3b55] rounded-lg px-4 py-2.5 text-slate-900 dark:text-white focus:ring-2 focus:ring-primary focus:border-primary appearance-none cursor-pointer">
+<option>Indeterminado</option>
+<option>Plazo Fijo</option>
+<option selected="">Practicante Pre-Profesional</option>
+<option>Practicante Profesional</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none">expand_more</span>
+</div>
+</div>
+<div class="flex flex-col gap-2">
+<label class="text-sm font-medium text-slate-700 dark:text-slate-300">Duración del Convenio</label>
+<div class="flex gap-2">
+<div class="relative flex-1">
+<input class="w-full bg-slate-50 dark:bg-[#222f49] border border-slate-300 dark:border-[#2d3b55] rounded-lg px-4 py-2.5 text-slate-900 dark:text-white focus:ring-2 focus:ring-primary focus:border-primary placeholder-slate-400" type="date" value="2023-10-25"/>
+</div>
+<span class="self-center text-slate-400 dark:text-[#90a4cb]">-</span>
+<div class="relative flex-1">
+<input class="w-full bg-slate-50 dark:bg-[#222f49] border border-slate-300 dark:border-[#2d3b55] rounded-lg px-4 py-2.5 text-slate-900 dark:text-white focus:ring-2 focus:ring-primary focus:border-primary placeholder-slate-400" type="date"/>
+</div>
+</div>
+</div>
+</div>
+<!-- Row 2: Institution & Hours -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<div class="flex flex-col gap-2">
+<label class="text-sm font-medium text-slate-700 dark:text-slate-300">Centro de Estudios</label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">school</span>
+<input class="w-full bg-slate-50 dark:bg-[#222f49] border border-slate-300 dark:border-[#2d3b55] rounded-lg pl-10 pr-4 py-2.5 text-slate-900 dark:text-white focus:ring-2 focus:ring-primary focus:border-primary placeholder-slate-400" placeholder="Ej. Universidad de Lima" type="text"/>
+</div>
+<p class="text-xs text-slate-500 dark:text-[#90a4cb]">Requerido para el convenio de prácticas.</p>
+</div>
+<div class="flex flex-col gap-2">
+<label class="text-sm font-medium text-slate-700 dark:text-slate-300">Jornada Formativa</label>
+<div class="relative">
+<select class="w-full bg-slate-50 dark:bg-[#222f49] border border-slate-300 dark:border-[#2d3b55] rounded-lg px-4 py-2.5 text-slate-900 dark:text-white focus:ring-2 focus:ring-primary focus:border-primary appearance-none cursor-pointer">
+<option selected="">30 Horas Semanales (Máximo Legal)</option>
+<option>Part-time (20 Horas)</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none">expand_more</span>
+</div>
+</div>
+</div>
+<!-- Row 3: Economic Subsidy (Dynamic) -->
+<div class="p-4 bg-slate-50 dark:bg-[#222f49]/50 rounded-lg border border-slate-200 dark:border-[#2d3b55] mt-2">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<div class="flex flex-col gap-2">
+<label class="text-sm font-bold text-primary flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">payments</span>
+                                                Subvención Económica Mensual
+                                            </label>
+<div class="relative">
+<span class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 dark:text-slate-400 font-semibold">S/</span>
+<input class="w-full bg-white dark:bg-[#1a2332] border border-slate-300 dark:border-[#2d3b55] rounded-lg pl-10 pr-4 py-2.5 text-slate-900 dark:text-white font-bold focus:ring-2 focus:ring-primary focus:border-primary" type="number" value="1025.00"/>
+</div>
+<p class="text-xs text-slate-500 dark:text-[#90a4cb]">Mínimo vital (RMV): S/ 1,025.00</p>
+</div>
+<div class="flex flex-col gap-2">
+<label class="text-sm font-medium text-slate-700 dark:text-slate-300 flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px] text-slate-400">medical_services</span>
+                                                Seguro Médico (FOLA)
+                                            </label>
+<div class="relative">
+<select class="w-full bg-white dark:bg-[#1a2332] border border-slate-300 dark:border-[#2d3b55] rounded-lg px-4 py-2.5 text-slate-900 dark:text-white focus:ring-2 focus:ring-primary focus:border-primary appearance-none cursor-pointer">
+<option selected="">Seguro FOLA (Obligatorio)</option>
+<option>Seguro Privado</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none">expand_more</span>
+</div>
+<p class="text-xs text-green-600 dark:text-green-400 flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">check_circle</span>
+                                                Cobertura al 100% requerida
+                                            </p>
+</div>
+</div>
+</div>
+<!-- Additional Dynamic Fields -->
+<div class="flex flex-col gap-2 opacity-50 pointer-events-none select-none filter grayscale">
+<div class="flex justify-between items-center">
+<label class="text-sm font-medium text-slate-700 dark:text-slate-300">Sistema de Pensiones (AFP/ONP)</label>
+<span class="text-xs text-slate-500 dark:text-[#90a4cb] bg-slate-200 dark:bg-[#2d3b55] px-2 py-0.5 rounded">No Aplica para Practicantes</span>
+</div>
+<div class="relative">
+<select class="w-full bg-slate-100 dark:bg-[#222f49] border border-slate-300 dark:border-[#2d3b55] rounded-lg px-4 py-2.5 text-slate-500 dark:text-slate-400 appearance-none" disabled="">
+<option>Seleccionar...</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-slate-400">lock</span>
+</div>
+</div>
+</form>
+</div>
+<!-- Navigation Buttons -->
+<div class="flex flex-col-reverse md:flex-row justify-between items-center gap-4 mt-2">
+<button class="w-full md:w-auto px-6 py-3 rounded-lg border border-slate-300 dark:border-[#2d3b55] text-slate-700 dark:text-white font-semibold hover:bg-slate-50 dark:hover:bg-[#222f49] transition-colors flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-[20px]">arrow_back</span>
+                                Atrás
+                            </button>
+<div class="flex gap-4 w-full md:w-auto">
+<button class="w-full md:w-auto px-6 py-3 rounded-lg border border-slate-300 dark:border-[#2d3b55] text-slate-700 dark:text-[#90a4cb] font-semibold hover:bg-slate-50 dark:hover:bg-[#222f49] transition-colors">
+                                    Guardar Borrador
+                                </button>
+<button class="w-full md:w-auto px-8 py-3 rounded-lg bg-primary text-white font-bold hover:bg-blue-600 shadow-lg shadow-blue-500/20 transition-all flex items-center justify-center gap-2">
+                                    Siguiente: Beneficios
+                                    <span class="material-symbols-outlined text-[20px]">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Right Column: Summary/Helper -->
+<div class="lg:col-span-1 flex flex-col gap-6">
+<!-- Profile Card Preview -->
+<div class="bg-white dark:bg-[#1a2332] rounded-xl p-6 shadow-sm border border-slate-200 dark:border-[#2d3b55] sticky top-24">
+<div class="flex items-center gap-4 mb-6">
+<div class="size-14 rounded-full bg-slate-200 dark:bg-[#2d3b55] flex items-center justify-center text-xl font-bold text-slate-500 dark:text-slate-400">
+                                    JP
+                                </div>
+<div>
+<h3 class="font-bold text-slate-900 dark:text-white">Juan Pérez</h3>
+<span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-300">
+                                        Pre-Profesional
+                                    </span>
+</div>
+</div>
+<h4 class="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-[#90a4cb] mb-4">Resumen del Convenio</h4>
+<div class="flex flex-col gap-4">
+<div class="flex justify-between items-center border-b border-dashed border-slate-200 dark:border-[#2d3b55] pb-2">
+<span class="text-sm text-slate-600 dark:text-[#90a4cb]">Modalidad</span>
+<span class="text-sm font-medium text-slate-900 dark:text-white">Presencial</span>
+</div>
+<div class="flex justify-between items-center border-b border-dashed border-slate-200 dark:border-[#2d3b55] pb-2">
+<span class="text-sm text-slate-600 dark:text-[#90a4cb]">Horas Semanales</span>
+<span class="text-sm font-medium text-slate-900 dark:text-white">30 Hrs</span>
+</div>
+<div class="flex justify-between items-center border-b border-dashed border-slate-200 dark:border-[#2d3b55] pb-2">
+<span class="text-sm text-slate-600 dark:text-[#90a4cb]">Seguro</span>
+<span class="text-sm font-medium text-primary">FOLA</span>
+</div>
+<div class="flex justify-between items-center pt-1">
+<span class="text-sm font-bold text-slate-900 dark:text-white">Subvención Total</span>
+<span class="text-lg font-bold text-slate-900 dark:text-white">S/ 1,025.00</span>
+</div>
+</div>
+<div class="mt-6 pt-4 border-t border-slate-100 dark:border-[#2d3b55]">
+<h4 class="text-xs font-semibold text-slate-500 dark:text-[#90a4cb] mb-2 flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px]">verified_user</span>
+                                    Validación Legal
+                                </h4>
+<ul class="text-xs text-slate-600 dark:text-slate-400 flex flex-col gap-1.5">
+<li class="flex items-start gap-2">
+<span class="material-symbols-outlined text-[14px] text-green-500 mt-0.5">check</span>
+                                        Subvención cumple con RMV
+                                    </li>
+<li class="flex items-start gap-2">
+<span class="material-symbols-outlined text-[14px] text-green-500 mt-0.5">check</span>
+                                        Horario dentro del límite legal
+                                    </li>
+<li class="flex items-start gap-2">
+<span class="material-symbols-outlined text-[14px] text-orange-400 mt-0.5">warning</span>
+                                        Pendiente: Carta de Presentación
+                                    </li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>

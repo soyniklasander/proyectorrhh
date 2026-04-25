@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>NexaCorp: Validación de Consistencia PLAME</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#256af4",
+                        "primary-dark": "#1e54c7",
+                        "background-light": "#f5f6f8",
+                        "background-dark": "#101622",
+                        "surface-dark": "#1a2234",
+                        "surface-darker": "#151c2b",
+                    },
+                    fontFamily: {
+                        "display": ["Manrope", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "2xl": "1rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Manrope', sans-serif;
+        }
+        .scrollbar-hide::-webkit-scrollbar {
+            display: none;
+        }
+        .glass-panel {
+            background: rgba(26, 34, 52, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .progress-circle {
+            background: conic-gradient(#256af4 78%, #2d3748 0);
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-800 dark:text-slate-200 min-h-screen flex flex-col antialiased">
+<!-- Top Navigation -->
+<header class="h-16 border-b border-slate-200 dark:border-slate-800 bg-white dark:bg-surface-darker flex items-center justify-between px-6 sticky top-0 z-50">
+<div class="flex items-center gap-4">
+<div class="flex items-center gap-2">
+<div class="w-8 h-8 rounded bg-primary flex items-center justify-center text-white font-bold text-lg">N</div>
+<span class="font-bold text-xl tracking-tight text-slate-900 dark:text-white">NexaCorp</span>
+</div>
+<div class="h-6 w-px bg-slate-300 dark:bg-slate-700 mx-2"></div>
+<nav class="flex items-center gap-1 text-sm font-medium text-slate-500 dark:text-slate-400">
+<a class="hover:text-primary transition-colors" href="#">Planillas</a>
+<span class="material-symbols-rounded text-base">chevron_right</span>
+<span class="text-slate-800 dark:text-white">Validación PLAME</span>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<div class="flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-100 dark:bg-surface-dark border border-slate-200 dark:border-slate-700">
+<span class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
+<span class="text-xs font-medium text-slate-600 dark:text-slate-300">Periodo: Octubre 2023</span>
+</div>
+<button class="w-8 h-8 rounded-full bg-slate-100 dark:bg-surface-dark flex items-center justify-center hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors relative">
+<span class="material-symbols-rounded text-slate-600 dark:text-slate-400 text-xl">notifications</span>
+<span class="absolute top-1.5 right-1.5 w-2 h-2 bg-red-500 rounded-full border-2 border-white dark:border-surface-dark"></span>
+</button>
+<div class="w-8 h-8 rounded-full overflow-hidden border border-slate-200 dark:border-slate-700">
+<img alt="User Profile" class="w-full h-full object-cover" data-alt="Avatar de usuario administrador" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAldNrHDdF5MXjHF08uOsA2MrEiOVJh8nJ4M3a49rpvuTy2GtK4wEMIvEErgqGSP0BSkdZT5A5E0nTlv50kTDY3pg5a04DM7TV06HjFzdFigsSyFeCEiHx5RWM_CNaHlfoSbgI0ethTzlO1bf_Bulbt6azIgRoYVfxBplpCFt3MI-MkJYRfDckWbi7Xy7k5XHun8sjhdge-qWWbjJJrjPAv1zenCQBK_1waxmoSbf6wsT3HrXlRURBZk_hM9QpXGdUC1zVydFMVD4xa"/>
+</div>
+</div>
+</header>
+<!-- Main Content -->
+<main class="flex-1 p-6 lg:p-8 max-w-[1600px] mx-auto w-full grid grid-cols-12 gap-6">
+<!-- Dashboard Header & Actions -->
+<div class="col-span-12 flex flex-col md:flex-row md:items-center justify-between gap-4 mb-2">
+<div>
+<h1 class="text-2xl font-bold text-slate-900 dark:text-white mb-1">Diagnóstico de Consistencia PLAME</h1>
+<p class="text-slate-500 dark:text-slate-400 text-sm">Revisa y corrige las observaciones antes de generar los archivos para SUNAT.</p>
+</div>
+<div class="flex items-center gap-3">
+<button class="flex items-center gap-2 px-4 py-2.5 rounded-lg border border-slate-300 dark:border-slate-600 hover:bg-slate-100 dark:hover:bg-surface-dark transition text-sm font-medium">
+<span class="material-symbols-rounded text-primary">sync</span>
+                    Re-validar Datos
+                </button>
+<button class="flex items-center gap-2 px-6 py-2.5 rounded-lg bg-slate-300 dark:bg-slate-800 text-slate-500 dark:text-slate-500 cursor-not-allowed font-medium text-sm transition group relative" disabled="">
+<span class="material-symbols-rounded">upload_file</span>
+                    Exportar Archivos PLAME
+                    <div class="absolute bottom-full mb-2 left-1/2 -translate-x-1/2 bg-black text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition whitespace-nowrap pointer-events-none">
+                        Resuelve las 18 observaciones críticas primero
+                    </div>
+</button>
+</div>
+</div>
+<!-- Stats Overview Cards -->
+<div class="col-span-12 lg:col-span-8 grid grid-cols-1 md:grid-cols-3 gap-4">
+<!-- Total Records -->
+<div class="bg-white dark:bg-surface-dark rounded-xl p-5 border border-slate-200 dark:border-slate-800 shadow-sm flex items-center justify-between">
+<div>
+<p class="text-xs font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-1">Total Trabajadores</p>
+<p class="text-3xl font-bold text-slate-900 dark:text-white">1,245</p>
+</div>
+<div class="w-12 h-12 rounded-lg bg-blue-50 dark:bg-primary/10 flex items-center justify-center">
+<span class="material-symbols-rounded text-primary text-2xl">groups</span>
+</div>
+</div>
+<!-- Clean Records -->
+<div class="bg-white dark:bg-surface-dark rounded-xl p-5 border border-slate-200 dark:border-slate-800 shadow-sm flex items-center justify-between">
+<div>
+<p class="text-xs font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-1">Registros Aptos</p>
+<p class="text-3xl font-bold text-green-500">1,227</p>
+</div>
+<div class="w-12 h-12 rounded-lg bg-green-50 dark:bg-green-500/10 flex items-center justify-center">
+<span class="material-symbols-rounded text-green-500 text-2xl">check_circle</span>
+</div>
+</div>
+<!-- Issues Found -->
+<div class="bg-white dark:bg-surface-dark rounded-xl p-5 border border-red-200 dark:border-red-900/30 shadow-sm flex items-center justify-between relative overflow-hidden">
+<div class="absolute inset-0 bg-red-500/5 dark:bg-red-500/5"></div>
+<div class="relative z-10">
+<p class="text-xs font-medium text-red-600 dark:text-red-400 uppercase tracking-wider mb-1">Observaciones Críticas</p>
+<p class="text-3xl font-bold text-red-600 dark:text-red-500">18</p>
+</div>
+<div class="relative z-10 w-12 h-12 rounded-lg bg-red-100 dark:bg-red-500/20 flex items-center justify-center">
+<span class="material-symbols-rounded text-red-600 dark:text-red-400 text-2xl">warning</span>
+</div>
+</div>
+</div>
+<!-- Readiness Score (Side Panel) -->
+<div class="col-span-12 lg:col-span-4 bg-white dark:bg-surface-dark rounded-xl p-6 border border-slate-200 dark:border-slate-800 shadow-sm flex items-center gap-6">
+<div class="relative w-24 h-24 rounded-full progress-circle flex items-center justify-center shrink-0">
+<div class="w-20 h-20 bg-white dark:bg-surface-dark rounded-full flex items-center justify-center">
+<span class="text-2xl font-bold text-slate-900 dark:text-white">98%</span>
+</div>
+</div>
+<div>
+<h3 class="text-lg font-bold text-slate-900 dark:text-white mb-1">Estado de la Carga</h3>
+<p class="text-sm text-slate-500 dark:text-slate-400 leading-snug">
+                    La data tiene una consistencia alta, pero <span class="text-red-500 font-medium">18 registros</span> impedirán la importación exitosa en el PDT PLAME.
+                </p>
+</div>
+</div>
+<!-- Main Issues List Area -->
+<div class="col-span-12 lg:col-span-8 space-y-4">
+<!-- Filter/Search Bar -->
+<div class="flex items-center gap-3 mb-2">
+<div class="relative flex-1">
+<span class="material-symbols-rounded absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">search</span>
+<input class="w-full pl-10 pr-4 py-2.5 rounded-lg bg-white dark:bg-surface-dark border border-slate-200 dark:border-slate-700 text-sm focus:ring-2 focus:ring-primary focus:border-transparent placeholder-slate-400 dark:placeholder-slate-500 text-slate-900 dark:text-white" placeholder="Buscar por empleado o DNI..." type="text"/>
+</div>
+<div class="flex gap-2">
+<button class="px-3 py-2.5 rounded-lg bg-white dark:bg-surface-dark border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-surface-darker transition flex items-center gap-2 text-sm font-medium">
+<span class="material-symbols-rounded text-lg">filter_list</span>
+                        Filtros
+                    </button>
+<button class="px-3 py-2.5 rounded-lg bg-white dark:bg-surface-dark border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-surface-darker transition flex items-center gap-2 text-sm font-medium">
+<span class="material-symbols-rounded text-lg">sort</span>
+</button>
+</div>
+</div>
+<!-- Error Category: DNI (Critical) -->
+<div class="bg-white dark:bg-surface-dark rounded-xl border border-slate-200 dark:border-slate-800 overflow-hidden shadow-sm">
+<div class="px-6 py-4 border-b border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-surface-darker flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-red-100 dark:bg-red-500/20 flex items-center justify-center text-red-600 dark:text-red-400">
+<span class="material-symbols-rounded text-lg">badge</span>
+</div>
+<h3 class="font-semibold text-slate-900 dark:text-white">Identificación Inválida</h3>
+<span class="bg-red-100 dark:bg-red-900/40 text-red-700 dark:text-red-300 text-xs font-bold px-2 py-0.5 rounded-full">3 casos</span>
+</div>
+<button class="text-sm text-primary hover:text-primary-dark font-medium flex items-center gap-1">
+                        Ver todos <span class="material-symbols-rounded text-base">arrow_forward</span>
+</button>
+</div>
+<div class="divide-y divide-slate-100 dark:divide-slate-800">
+<!-- Item 1 -->
+<div class="p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-4 hover:bg-slate-50 dark:hover:bg-surface-darker transition group">
+<div class="flex items-start gap-4">
+<div class="w-10 h-10 rounded-full bg-slate-200 dark:bg-slate-700 overflow-hidden shrink-0">
+<img alt="Empleado Juan Perez" class="w-full h-full object-cover" data-alt="Avatar empleado" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAnzGmfeCB1yeytJEQhwhfPsVX9E2Kt64wC7eehRE1Z3PTG0jYfdUZq6YQxtt5P-803agebJfvAYOgHYgiA-1DqQxCYyTxvn1gL6v8FyBQpjp1YVFI4QRh9llid6oA_KP-cPguOj9e3JgHw-uutpJKUweMrboRImgBYd4zQJTnqjVq0CC1cHHUhmmLpjoD7ATFxLPQZxiutfs9H2vjuBn1X91GRrTa7blZufF82fpVuzWv19EWi-ybHHjDKMmg9_FHdf717RhbRGCcg"/>
+</div>
+<div>
+<h4 class="text-sm font-bold text-slate-900 dark:text-white group-hover:text-primary transition-colors">Juan Carlos Pérez Gómez</h4>
+<div class="flex items-center gap-2 text-xs text-slate-500 dark:text-slate-400 mt-0.5">
+<span class="font-mono bg-slate-100 dark:bg-slate-800 px-1.5 py-0.5 rounded text-slate-700 dark:text-slate-300">DNI: 4589012A</span>
+<span>•</span>
+<span>Área: Logística</span>
+</div>
+<p class="text-sm text-red-500 mt-1 flex items-center gap-1">
+<span class="material-symbols-rounded text-base">error</span>
+                                    El DNI contiene caracteres no numéricos.
+                                </p>
+</div>
+</div>
+<button class="px-4 py-2 bg-primary/10 hover:bg-primary text-primary hover:text-white rounded-lg text-sm font-semibold transition-colors flex items-center justify-center gap-2 shrink-0">
+                            Corregir ahora
+                        </button>
+</div>
+<!-- Item 2 -->
+<div class="p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-4 hover:bg-slate-50 dark:hover:bg-surface-darker transition group">
+<div class="flex items-start gap-4">
+<div class="w-10 h-10 rounded-full bg-slate-200 dark:bg-slate-700 overflow-hidden shrink-0">
+<img alt="Empleado Maria Lopez" class="w-full h-full object-cover" data-alt="Avatar empleado" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBkpAwio4bMUb6vofDuLa9IpLiByYNXQw5cE8X1dT4eUnIFBv71KIERRyCISyhmxO9D3H_-YvQ9TmzasfDNwaiVjTkdMxfVitRlBfMUrlWIg9L9f9bxrL3EBAutui4kKqezxuTJ3wzmrONXVFHgUC1-cBIhD8g-OiVUkQAgDUe842m_VCDUnUR6yLYwvtldTf3gqphDNGyCxDWi5s-LBm827IEADm2-kR1w4sTMJNegugohp44nMjJIEum1W7l5rnRMxystug4ybcjg"/>
+</div>
+<div>
+<h4 class="text-sm font-bold text-slate-900 dark:text-white group-hover:text-primary transition-colors">María Fernanda López</h4>
+<div class="flex items-center gap-2 text-xs text-slate-500 dark:text-slate-400 mt-0.5">
+<span class="font-mono bg-slate-100 dark:bg-slate-800 px-1.5 py-0.5 rounded text-slate-700 dark:text-slate-300">DNI: 089912</span>
+<span>•</span>
+<span>Área: Ventas</span>
+</div>
+<p class="text-sm text-red-500 mt-1 flex items-center gap-1">
+<span class="material-symbols-rounded text-base">error</span>
+                                    Longitud de DNI incorrecta (debe ser 8 dígitos).
+                                </p>
+</div>
+</div>
+<button class="px-4 py-2 bg-primary/10 hover:bg-primary text-primary hover:text-white rounded-lg text-sm font-semibold transition-colors flex items-center justify-center gap-2 shrink-0">
+                            Corregir ahora
+                        </button>
+</div>
+</div>
+</div>
+<!-- Error Category: Pension System (Warning) -->
+<div class="bg-white dark:bg-surface-dark rounded-xl border border-slate-200 dark:border-slate-800 overflow-hidden shadow-sm">
+<div class="px-6 py-4 border-b border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-surface-darker flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-amber-100 dark:bg-amber-500/20 flex items-center justify-center text-amber-600 dark:text-amber-400">
+<span class="material-symbols-rounded text-lg">account_balance_wallet</span>
+</div>
+<h3 class="font-semibold text-slate-900 dark:text-white">Falta Código CUSSP</h3>
+<span class="bg-amber-100 dark:bg-amber-900/40 text-amber-700 dark:text-amber-300 text-xs font-bold px-2 py-0.5 rounded-full">12 casos</span>
+</div>
+<button class="text-sm text-primary hover:text-primary-dark font-medium flex items-center gap-1">
+                        Ver todos <span class="material-symbols-rounded text-base">arrow_forward</span>
+</button>
+</div>
+<div class="divide-y divide-slate-100 dark:divide-slate-800">
+<!-- Item 1 -->
+<div class="p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-4 hover:bg-slate-50 dark:hover:bg-surface-darker transition group">
+<div class="flex items-start gap-4">
+<div class="w-10 h-10 rounded-full bg-slate-200 dark:bg-slate-700 overflow-hidden shrink-0">
+<img alt="Empleado Carlos Ruiz" class="w-full h-full object-cover" data-alt="Avatar empleado" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC9MecE74VAlBzDVmFNGJoY8BGauFKOmqxFIe-uCTw8JOKnfpv9S_IR4SOF6YfvpECYSBltfRrEadRT6VHDU3y9Md4ElcJ_HzMfJQDXW0-vn8kYG1ejDolAQV8xjjGvFs3BasRC1ZmmF1BaTX-HjGl6qqY55amqvQeWTO05vAk30Brgv_B_5aqoj1X3_42x95DofIe_V4C5Ys5I8a3QnWRDTZ0yBTskHYWmsvHhxYywmRFIVgZ1qs7fQu8JWEvz06z1QRK2G7KF16tj"/>
+</div>
+<div>
+<h4 class="text-sm font-bold text-slate-900 dark:text-white group-hover:text-primary transition-colors">Carlos Ruiz Mendoza</h4>
+<div class="flex items-center gap-2 text-xs text-slate-500 dark:text-slate-400 mt-0.5">
+<span class="font-mono bg-slate-100 dark:bg-slate-800 px-1.5 py-0.5 rounded text-slate-700 dark:text-slate-300">AFP: Integra</span>
+<span>•</span>
+<span>Ingreso: 15/10/2023</span>
+</div>
+<p class="text-sm text-amber-600 dark:text-amber-500 mt-1 flex items-center gap-1">
+<span class="material-symbols-rounded text-base">warning</span>
+                                    Afiliado a AFP sin código CUSSP registrado.
+                                </p>
+</div>
+</div>
+<button class="px-4 py-2 bg-primary/10 hover:bg-primary text-primary hover:text-white rounded-lg text-sm font-semibold transition-colors flex items-center justify-center gap-2 shrink-0">
+                            Corregir ahora
+                        </button>
+</div>
+</div>
+</div>
+<!-- Error Category: Work Hours (Critical) -->
+<div class="bg-white dark:bg-surface-dark rounded-xl border border-slate-200 dark:border-slate-800 overflow-hidden shadow-sm">
+<div class="px-6 py-4 border-b border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-surface-darker flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-red-100 dark:bg-red-500/20 flex items-center justify-center text-red-600 dark:text-red-400">
+<span class="material-symbols-rounded text-lg">schedule</span>
+</div>
+<h3 class="font-semibold text-slate-900 dark:text-white">Jornada Laboral Incompleta</h3>
+<span class="bg-red-100 dark:bg-red-900/40 text-red-700 dark:text-red-300 text-xs font-bold px-2 py-0.5 rounded-full">3 casos</span>
+</div>
+<button class="text-sm text-primary hover:text-primary-dark font-medium flex items-center gap-1">
+                        Ver todos <span class="material-symbols-rounded text-base">arrow_forward</span>
+</button>
+</div>
+<div class="divide-y divide-slate-100 dark:divide-slate-800">
+<!-- Item 1 -->
+<div class="p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-4 hover:bg-slate-50 dark:hover:bg-surface-darker transition group">
+<div class="flex items-start gap-4">
+<div class="w-10 h-10 rounded-full bg-slate-200 dark:bg-slate-700 overflow-hidden shrink-0">
+<img alt="Empleado Sofia Vergara" class="w-full h-full object-cover" data-alt="Avatar empleado" src="https://lh3.googleusercontent.com/aida-public/AB6AXuChpW7lKeU6yVXBBD-IeQHIFCOc1hDpajW2ffvFOtb76S3zaYHN_C7EIFjX_XVAt_xTjgy5-9Tyi2cE_b-1SjGOp4IdCGaWCVI4lrQQpHkhtWgK3XsF87CaVyfX8WdeTbwJiqWX_Zr_GP4lUsJEtJ0QTiwHvl1YgD9ZmONO-f59ftzhRcqpta7eKGGXdOK4uUSmH_X_3L-ij2kNKAdQwTuihUrZnoa_6d-sDCEqagrt--qiWQCa6j0DXG0CmlHt4lvEDmg2zvSthU46"/>
+</div>
+<div>
+<h4 class="text-sm font-bold text-slate-900 dark:text-white group-hover:text-primary transition-colors">Sofia Vergara Castillo</h4>
+<div class="flex items-center gap-2 text-xs text-slate-500 dark:text-slate-400 mt-0.5">
+<span class="font-mono bg-slate-100 dark:bg-slate-800 px-1.5 py-0.5 rounded text-slate-700 dark:text-slate-300">Regimen: General</span>
+<span>•</span>
+<span>Área: Operaciones</span>
+</div>
+<p class="text-sm text-red-500 mt-1 flex items-center gap-1">
+<span class="material-symbols-rounded text-base">error</span>
+                                    0 horas laboradas reportadas en el periodo.
+                                </p>
+</div>
+</div>
+<button class="px-4 py-2 bg-primary/10 hover:bg-primary text-primary hover:text-white rounded-lg text-sm font-semibold transition-colors flex items-center justify-center gap-2 shrink-0">
+                            Corregir ahora
+                        </button>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Sidebar: Quick Help & Guidelines -->
+<div class="hidden lg:block lg:col-span-4 space-y-6">
+<!-- Context Card -->
+<div class="bg-gradient-to-br from-primary/20 to-surface-dark bg-surface-dark rounded-xl p-6 border border-primary/20 relative overflow-hidden">
+<div class="absolute top-0 right-0 p-4 opacity-10">
+<span class="material-symbols-rounded text-8xl text-primary">description</span>
+</div>
+<h3 class="font-bold text-white text-lg mb-2 relative z-10">Cronograma SUNAT</h3>
+<p class="text-sm text-slate-300 mb-4 relative z-10">El vencimiento para el RUC terminado en <strong class="text-white">6</strong> es el próximo martes.</p>
+<div class="flex items-center gap-2 text-xs text-slate-400 font-mono relative z-10 bg-black/20 p-2 rounded border border-white/5">
+<span class="material-symbols-rounded text-base">calendar_month</span>
+                    Vencimiento: 14 Nov 2023
+                </div>
+</div>
+<!-- Validation Rules Guide -->
+<div class="bg-white dark:bg-surface-dark rounded-xl p-5 border border-slate-200 dark:border-slate-800 shadow-sm">
+<h3 class="font-bold text-slate-900 dark:text-white text-base mb-4 flex items-center gap-2">
+<span class="material-symbols-rounded text-primary">verified</span>
+                    Reglas de Validación Activas
+                </h3>
+<ul class="space-y-4">
+<li class="flex gap-3">
+<div class="mt-0.5 w-1.5 h-1.5 rounded-full bg-green-500 shrink-0"></div>
+<div>
+<p class="text-sm font-medium text-slate-800 dark:text-slate-200">Estructura de archivos .REM</p>
+<p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Validación de 42 columnas obligatorias.</p>
+</div>
+</li>
+<li class="flex gap-3">
+<div class="mt-0.5 w-1.5 h-1.5 rounded-full bg-green-500 shrink-0"></div>
+<div>
+<p class="text-sm font-medium text-slate-800 dark:text-slate-200">Consistencia RENIEC</p>
+<p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Verificación de longitud y tipo de documento.</p>
+</div>
+</li>
+<li class="flex gap-3">
+<div class="mt-0.5 w-1.5 h-1.5 rounded-full bg-green-500 shrink-0"></div>
+<div>
+<p class="text-sm font-medium text-slate-800 dark:text-slate-200">Aportes AFP/ONP</p>
+<p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Cálculo de tasas máximas y códigos de sistema.</p>
+</div>
+</li>
+</ul>
+<button class="mt-5 w-full py-2 text-sm text-primary font-medium hover:bg-slate-50 dark:hover:bg-slate-800 rounded transition">
+                    Ver todas las reglas
+                </button>
+</div>
+<!-- Bulk Actions -->
+<div class="bg-white dark:bg-surface-dark rounded-xl p-5 border border-slate-200 dark:border-slate-800 shadow-sm">
+<h3 class="font-bold text-slate-900 dark:text-white text-base mb-3">Acciones Masivas</h3>
+<p class="text-xs text-slate-500 dark:text-slate-400 mb-4">Aplica correcciones automáticas para errores comunes que no requieren intervención manual.</p>
+<button class="w-full py-2.5 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 rounded-lg text-sm font-medium transition flex items-center justify-center gap-2">
+<span class="material-symbols-rounded text-lg">magic_button</span>
+                    Auto-corregir formatos
+                </button>
+</div>
+</div>
+</main>
+</body></html>

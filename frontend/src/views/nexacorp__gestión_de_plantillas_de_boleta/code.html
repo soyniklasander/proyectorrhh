@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>NexaCorp: Gestión de Plantillas de Boleta</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script>tailwind.config = {darkMode: "class", theme: {extend: {colors: {primary: "#2c60ce", "background-light": "#f6f6f8", "background-dark": "#121720", "card-dark": "#182730", "card-dark-hover": "#20323d", "border-dark": "#2a3e4b"}, fontFamily: {display: "Inter"}, borderRadius: {DEFAULT: "0.5rem", lg: "1rem", xl: "1.5rem", full: "9999px"}}}};</script>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-800 dark:text-slate-200 font-display min-h-screen flex flex-col">
+<!-- Top Navigation -->
+<nav class="border-b border-gray-200 dark:border-border-dark bg-white dark:bg-background-dark sticky top-0 z-30">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex justify-between h-16">
+<div class="flex items-center gap-4">
+<!-- Logo Placeholder -->
+<div class="flex-shrink-0 flex items-center gap-2">
+<div class="w-8 h-8 rounded bg-primary flex items-center justify-center text-white font-bold text-lg">N</div>
+<span class="font-bold text-xl tracking-tight text-gray-900 dark:text-white">NexaCorp</span>
+</div>
+<!-- Breadcrumbs -->
+<div class="hidden md:flex items-center text-sm text-gray-500 dark:text-slate-400 ml-6 pl-6 border-l border-gray-200 dark:border-border-dark">
+<a class="hover:text-primary transition-colors" href="#">Inicio</a>
+<span class="mx-2">/</span>
+<a class="hover:text-primary transition-colors" href="#">Emisión</a>
+<span class="mx-2">/</span>
+<span class="text-gray-900 dark:text-white font-medium">Plantillas</span>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<button class="p-2 rounded-lg text-gray-500 dark:text-slate-400 hover:bg-gray-100 dark:hover:bg-card-dark transition-colors relative">
+<span class="material-icons text-[20px]">notifications</span>
+<span class="absolute top-2 right-2 w-2 h-2 bg-primary rounded-full"></span>
+</button>
+<div class="flex items-center gap-3 pl-4 border-l border-gray-200 dark:border-border-dark">
+<div class="text-right hidden sm:block">
+<p class="text-sm font-medium text-gray-900 dark:text-white">Admin RRHH</p>
+<p class="text-xs text-gray-500 dark:text-slate-400">Lima, PE</p>
+</div>
+<div class="h-9 w-9 rounded-full bg-gradient-to-tr from-primary to-blue-400 p-0.5 cursor-pointer">
+<img alt="User Profile" class="rounded-full bg-background-dark h-full w-full object-cover" data-alt="User profile avatar image" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD2OI61ef9JXGIuAsP8bxU8-_H4iTvBX3cBGNvYGlGCD4KwyQ0V4VsBuHZNB9a8gheNuapbRKIAiDNcwMpbkGJth99eI5yuymC8pEq_dsqArk_0XATfQ0B0bl9Xlz6VxhngnyjUIm2vnhOLi0fJEbE6AOPvj6mx4qFQuIRg3jfMEhUJCe4JyQlDyr2OdVA_ZWzZRNV14ldYjfbw7PBJNjgn-bI8EumOTG-Fw6kDABPxhmmzd1FStfkl4_leGNThDBlyy4622abelWM1"/>
+</div>
+</div>
+</div>
+</div>
+</div>
+</nav>
+<!-- Main Content -->
+<main class="flex-grow py-8 px-4 sm:px-6 lg:px-8">
+<div class="max-w-7xl mx-auto space-y-8">
+<!-- Header Section -->
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+<div>
+<h1 class="text-2xl font-bold text-gray-900 dark:text-white">Gestión de Plantillas de Boleta</h1>
+<p class="mt-1 text-sm text-gray-500 dark:text-slate-400">Configure los formatos de emisión según normativa SUNAFIL.</p>
+</div>
+<div class="flex items-center gap-3">
+<button class="inline-flex items-center px-4 py-2 border border-gray-300 dark:border-border-dark rounded-lg shadow-sm text-sm font-medium text-gray-700 dark:text-slate-300 bg-white dark:bg-card-dark hover:bg-gray-50 dark:hover:bg-card-dark-hover focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary transition-all">
+<span class="material-icons text-sm mr-2">download</span>
+                        Exportar Reglas
+                    </button>
+<button class="inline-flex items-center px-4 py-2 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-primary hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary transition-all shadow-lg shadow-primary/20">
+<span class="material-icons text-sm mr-2">save</span>
+                        Guardar Cambios
+                    </button>
+</div>
+</div>
+<!-- Regime Detection Banner -->
+<div class="rounded-xl bg-blue-900/20 border border-blue-800/50 p-4 flex items-start sm:items-center gap-4">
+<div class="p-2 bg-primary/20 rounded-lg shrink-0">
+<span class="material-icons text-primary">auto_awesome</span>
+</div>
+<div class="flex-grow">
+<h3 class="text-sm font-semibold text-primary">Detección Automática de Régimen Activa</h3>
+<p class="text-sm text-blue-200/70 mt-0.5">El sistema seleccionará la plantilla adecuada (General, MYPE o Practicante) basándose en la ficha del colaborador al momento de generar la boleta.</p>
+</div>
+<div class="hidden sm:block">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-900/50 text-green-400 border border-green-800">
+                        Sistema Operativo
+                    </span>
+</div>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+<!-- Left Column: Branding Configuration -->
+<div class="lg:col-span-1 space-y-6">
+<div class="bg-white dark:bg-card-dark rounded-xl border border-gray-200 dark:border-border-dark p-6 shadow-sm">
+<h2 class="text-lg font-semibold text-gray-900 dark:text-white flex items-center gap-2 mb-6">
+<span class="material-icons text-gray-400">branding_watermark</span>
+                            Identidad Corporativa
+                        </h2>
+<!-- Logo Upload -->
+<div class="mb-6">
+<label class="block text-sm font-medium text-gray-700 dark:text-slate-300 mb-2">Logo de Empresa</label>
+<div class="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 dark:border-border-dark border-dashed rounded-lg hover:border-primary/50 transition-colors group cursor-pointer bg-gray-50 dark:bg-background-dark/50">
+<div class="space-y-1 text-center">
+<span class="material-icons mx-auto h-12 w-12 text-gray-400 group-hover:text-primary transition-colors">add_photo_alternate</span>
+<div class="flex text-sm text-gray-600 dark:text-slate-400 justify-center">
+<label class="relative cursor-pointer bg-transparent rounded-md font-medium text-primary hover:text-blue-400 focus-within:outline-none" for="file-upload">
+<span>Subir archivo</span>
+<input class="sr-only" id="file-upload" name="file-upload" type="file"/>
+</label>
+<p class="pl-1">o arrastrar</p>
+</div>
+<p class="text-xs text-gray-500">PNG, JPG hasta 2MB</p>
+</div>
+</div>
+</div>
+<!-- Signature Upload -->
+<div>
+<label class="block text-sm font-medium text-gray-700 dark:text-slate-300 mb-2">Firma Digital (Rep. Legal)</label>
+<div class="mt-1 flex items-center gap-4 p-3 bg-gray-50 dark:bg-background-dark/50 rounded-lg border border-gray-200 dark:border-border-dark">
+<div class="h-10 w-10 rounded bg-gray-200 dark:bg-card-dark-hover flex items-center justify-center text-gray-400">
+<span class="material-icons text-lg">fingerprint</span>
+</div>
+<div class="flex-grow min-w-0">
+<p class="text-sm font-medium text-gray-900 dark:text-white truncate">firma_rep_legal_2024.png</p>
+<p class="text-xs text-green-500 flex items-center gap-1">
+<span class="material-icons text-[10px]">verified</span> Verificado
+                                    </p>
+</div>
+<button class="text-gray-400 hover:text-red-400 transition-colors">
+<span class="material-icons text-lg">delete</span>
+</button>
+</div>
+<button class="mt-3 w-full py-2 px-4 border border-gray-300 dark:border-border-dark rounded-lg text-sm font-medium text-gray-700 dark:text-slate-300 hover:bg-gray-50 dark:hover:bg-card-dark-hover transition-colors flex items-center justify-center gap-2">
+<span class="material-icons text-sm">upload</span> Actualizar Firma
+                            </button>
+</div>
+</div>
+<!-- Compliance Status Small Card -->
+<div class="bg-gradient-to-br from-card-dark to-card-dark-hover rounded-xl border border-border-dark p-6 relative overflow-hidden group">
+<div class="absolute top-0 right-0 -mt-2 -mr-2 w-20 h-20 bg-primary/10 rounded-full blur-2xl group-hover:bg-primary/20 transition-all"></div>
+<h3 class="text-sm font-semibold text-white mb-2 relative z-10">Estado de Cumplimiento</h3>
+<div class="flex items-center gap-2 mb-3 relative z-10">
+<span class="material-icons text-green-500 text-xl">check_circle</span>
+<span class="text-2xl font-bold text-white">100%</span>
+</div>
+<p class="text-xs text-slate-400 relative z-10">Las plantillas cumplen con los requisitos vigentes de SUNAFIL para el año fiscal 2024.</p>
+</div>
+</div>
+<!-- Right Column: Template Grid -->
+<div class="lg:col-span-2">
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+<!-- Card 1: Standard Slip -->
+<div class="group relative bg-white dark:bg-card-dark rounded-xl border-2 border-primary shadow-lg shadow-primary/10 transition-all duration-300 hover:shadow-xl hover:shadow-primary/20 overflow-hidden flex flex-col h-full">
+<div class="absolute top-3 right-3 z-10">
+<span class="inline-flex items-center px-2 py-1 rounded text-xs font-bold bg-primary text-white shadow-sm">
+                                    Régimen General
+                                </span>
+</div>
+<!-- Thumbnail with Overlay -->
+<div class="aspect-[3/4] bg-gray-100 dark:bg-background-dark relative overflow-hidden border-b border-gray-200 dark:border-border-dark group-hover:opacity-100">
+<div class="absolute inset-0 p-4 opacity-50 dark:opacity-40 grayscale group-hover:grayscale-0 transition-all duration-500" style="background-image: linear-gradient(#2a3e4b 1px, transparent 1px), linear-gradient(90deg, #2a3e4b 1px, transparent 1px); background-size: 20px 20px;">
+<!-- Abstract document representation -->
+<div class="w-full h-full bg-white dark:bg-card-dark shadow-sm p-3 flex flex-col gap-2 scale-90 origin-top">
+<div class="h-2 w-1/3 bg-gray-300 dark:bg-gray-600 rounded"></div>
+<div class="h-px w-full bg-gray-200 dark:bg-border-dark my-1"></div>
+<div class="space-y-1.5">
+<div class="h-1.5 w-full bg-gray-200 dark:bg-gray-700 rounded"></div>
+<div class="h-1.5 w-5/6 bg-gray-200 dark:bg-gray-700 rounded"></div>
+<div class="h-1.5 w-full bg-gray-200 dark:bg-gray-700 rounded"></div>
+<div class="h-1.5 w-4/6 bg-gray-200 dark:bg-gray-700 rounded"></div>
+</div>
+</div>
+</div>
+<div class="absolute inset-0 bg-gradient-to-t from-card-dark/90 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-center pb-6">
+<button class="bg-white text-primary font-semibold py-2 px-4 rounded-lg shadow-lg hover:scale-105 transition-transform flex items-center gap-2">
+<span class="material-icons text-sm">visibility</span> Previsualizar
+                                    </button>
+</div>
+<img class="absolute inset-0 w-full h-full object-cover opacity-0" data-alt="Abstract payroll document preview showing header and line items" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC9S16JNzgpPw7OVgzDhLX6vfcILr5-j_qYh9r-giFG7mkdMw8rvG7U7ynh9Ck-l7SXJdNjG8v3qntSK6nNQ0QI81AaqyUI0TRhefx3_8lOVM7iPtCkE6h94SOuNyVwxlNuWwLyhI8l1C0HhSDcoojOuk6Hxpsy79rrmgndi9jF7ZKdVS-iB8Hn7Q5dKUcJ-0iZ74AIWPTL5CxcaglCavPtogJFpxF-4He5jtBsE1VYOIQJxRWxvyYl3JlsD0r01bxPDgdFS0m97SH6"/>
+</div>
+<div class="p-5 flex flex-col flex-grow">
+<h3 class="text-lg font-bold text-gray-900 dark:text-white mb-1">Boleta Estándar</h3>
+<p class="text-xs text-gray-500 dark:text-slate-400 mb-4 font-mono">DL 728 • Actividad Privada</p>
+<p class="text-sm text-gray-600 dark:text-slate-300 mb-4 flex-grow">
+                                    Incluye desglose completo: CTS, Gratificaciones, Asig. Familiar y descuentos de ley.
+                                </p>
+<div class="flex items-center gap-2 text-xs text-green-500 font-medium pt-4 border-t border-gray-100 dark:border-border-dark">
+<span class="material-icons text-sm">verified_user</span>
+                                    Validado SUNAFIL
+                                </div>
+</div>
+</div>
+<!-- Card 2: MYPE Slip -->
+<div class="group relative bg-white dark:bg-card-dark rounded-xl border border-gray-200 dark:border-border-dark hover:border-primary/50 transition-all duration-300 hover:shadow-lg overflow-hidden flex flex-col h-full">
+<div class="absolute top-3 right-3 z-10">
+<span class="inline-flex items-center px-2 py-1 rounded text-xs font-bold bg-purple-600/20 text-purple-400 border border-purple-500/30">
+                                    MYPE
+                                </span>
+</div>
+<!-- Thumbnail -->
+<div class="aspect-[3/4] bg-gray-100 dark:bg-background-dark relative overflow-hidden border-b border-gray-200 dark:border-border-dark">
+<div class="absolute inset-0 p-4 opacity-40 grayscale group-hover:grayscale-0 transition-all duration-500" style="background-image: radial-gradient(#2a3e4b 1px, transparent 1px); background-size: 15px 15px;">
+<div class="w-full h-full bg-white dark:bg-card-dark shadow-sm p-3 flex flex-col gap-2 scale-90 origin-top opacity-80">
+<div class="h-2 w-1/4 bg-gray-300 dark:bg-gray-600 rounded"></div>
+<div class="h-px w-full bg-gray-200 dark:bg-border-dark my-1"></div>
+<div class="space-y-2">
+<div class="h-1.5 w-full bg-gray-200 dark:bg-gray-700 rounded"></div>
+<div class="h-1.5 w-full bg-gray-200 dark:bg-gray-700 rounded"></div>
+</div>
+</div>
+</div>
+<div class="absolute inset-0 bg-gradient-to-t from-card-dark/90 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-center pb-6">
+<button class="bg-white text-gray-900 font-semibold py-2 px-4 rounded-lg shadow-lg hover:scale-105 transition-transform flex items-center gap-2">
+<span class="material-icons text-sm">visibility</span> Previsualizar
+                                    </button>
+</div>
+<img class="absolute inset-0 w-full h-full object-cover opacity-0" data-alt="Simplified MYPE payroll document preview" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBy6Fv2Wx-Apz_EufLAZ24HIQgt0bNF03AbCDLOFfBwAlU8ZXOOmXVRvl45Jo2swj87mm8tgiiiMSvu-iXawIcG6TVcT7gRXs6o8QegmcXI59tMLTK6xqPsbnP4yxC8CB7xE34LMgmPFr8cvbDPwjWeO6HVgA2Axu5aIebmvDjf83W0yZAgtXSV4C34OLjzBPufz0Wjf0_J32P8p4Xnd1rjN2jAZxxrZindaZlqtK_SuK_9j_YNSZJ5LiFFU1DJNo_RdkIRgCQrULfO"/>
+</div>
+<div class="p-5 flex flex-col flex-grow">
+<h3 class="text-lg font-bold text-gray-900 dark:text-white mb-1">Boleta MYPE</h3>
+<p class="text-xs text-gray-500 dark:text-slate-400 mb-4 font-mono">Régimen Especial</p>
+<p class="text-sm text-gray-600 dark:text-slate-300 mb-4 flex-grow">
+                                    Formato simplificado. Excluye conceptos no obligatorios para micro y pequeñas empresas.
+                                </p>
+<div class="flex items-center gap-2 text-xs text-gray-500 font-medium pt-4 border-t border-gray-100 dark:border-border-dark">
+<span class="material-icons text-sm">tune</span>
+                                    Configurable
+                                </div>
+</div>
+</div>
+<!-- Card 3: Internship Slip -->
+<div class="group relative bg-white dark:bg-card-dark rounded-xl border border-gray-200 dark:border-border-dark hover:border-primary/50 transition-all duration-300 hover:shadow-lg overflow-hidden flex flex-col h-full">
+<div class="absolute top-3 right-3 z-10">
+<span class="inline-flex items-center px-2 py-1 rounded text-xs font-bold bg-amber-600/20 text-amber-400 border border-amber-500/30">
+                                    Subvención
+                                </span>
+</div>
+<!-- Thumbnail -->
+<div class="aspect-[3/4] bg-gray-100 dark:bg-background-dark relative overflow-hidden border-b border-gray-200 dark:border-border-dark">
+<div class="absolute inset-0 p-4 opacity-40 grayscale group-hover:grayscale-0 transition-all duration-500" style="background-image: repeating-linear-gradient(45deg, #182730 25%, transparent 25%, transparent 75%, #182730 75%, #182730), repeating-linear-gradient(45deg, #182730 25%, #101c22 25%, #101c22 75%, #182730 75%, #182730); background-position: 0 0, 10px 10px; background-size: 20px 20px;">
+<div class="w-full h-full bg-white dark:bg-card-dark shadow-sm p-3 flex flex-col gap-2 scale-90 origin-top opacity-80">
+<div class="h-2 w-1/2 bg-gray-300 dark:bg-gray-600 rounded mb-2"></div>
+<div class="h-10 w-full bg-gray-100 dark:bg-gray-800 rounded border border-dashed border-gray-300 dark:border-gray-600 flex items-center justify-center">
+<span class="text-[8px] text-gray-400">Convenio</span>
+</div>
+</div>
+</div>
+<div class="absolute inset-0 bg-gradient-to-t from-card-dark/90 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-center pb-6">
+<button class="bg-white text-gray-900 font-semibold py-2 px-4 rounded-lg shadow-lg hover:scale-105 transition-transform flex items-center gap-2">
+<span class="material-icons text-sm">visibility</span> Previsualizar
+                                    </button>
+</div>
+<img class="absolute inset-0 w-full h-full object-cover opacity-0" data-alt="Internship economic subsidy document preview" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCe_Qk7F1OPSug2kN646wFHQcRGfybE0rtf0kryLLEManlIZJb4fabHfq1r4iztYb_RzKZIxqMNcxGeMvTjjpl8ByElKY6vO4ujcbMJ7cPAWIvHai0iRocYPQQloIuDcIyk-BYcBdDmiI7S6Rg6lSmh5MbnPAe18xKQYm-KVOChQjvI6ptmcb2dUe8aybytjnBYsvHUYFRP0xeNCA2GtHDLHrlLcXRD68XSaURWpbFs_sF_9FAQMgVcdWHrVrdQOMIw_faubxT2S6Qu"/>
+</div>
+<div class="p-5 flex flex-col flex-grow">
+<h3 class="text-lg font-bold text-gray-900 dark:text-white mb-1">Boleta Practicante</h3>
+<p class="text-xs text-gray-500 dark:text-slate-400 mb-4 font-mono">Formación Laboral Juvenil</p>
+<p class="text-sm text-gray-600 dark:text-slate-300 mb-4 flex-grow">
+                                    Específica para convenios de prácticas. No genera vínculo laboral, solo subvención.
+                                </p>
+<div class="flex items-center gap-2 text-xs text-gray-500 font-medium pt-4 border-t border-gray-100 dark:border-border-dark">
+<span class="material-icons text-sm">school</span>
+                                    Modalidad Formativa
+                                </div>
+</div>
+</div>
+</div>
+<!-- Bottom Action: Test Generation -->
+<div class="mt-8 bg-card-dark rounded-xl border border-dashed border-border-dark p-6 flex flex-col md:flex-row items-center justify-between gap-4">
+<div class="flex items-center gap-4">
+<div class="h-12 w-12 rounded-full bg-background-dark flex items-center justify-center text-primary border border-border-dark">
+<span class="material-icons">science</span>
+</div>
+<div>
+<h4 class="text-base font-semibold text-white">Prueba de Generación</h4>
+<p class="text-sm text-slate-400">Genere un PDF de muestra con datos ficticios para validar el diseño.</p>
+</div>
+</div>
+<button class="whitespace-nowrap px-4 py-2 bg-background-dark hover:bg-card-dark-hover border border-border-dark text-slate-300 rounded-lg text-sm font-medium transition-colors">
+                            Generar PDF de Prueba
+                        </button>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Footer (Simple) -->
+<footer class="border-t border-gray-200 dark:border-border-dark bg-white dark:bg-background-dark py-6 mt-8">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center gap-4">
+<p class="text-sm text-gray-500 dark:text-slate-500">© 2024 NexaCorp. Todos los derechos reservados.</p>
+<div class="flex items-center gap-6 text-sm text-gray-500 dark:text-slate-500">
+<a class="hover:text-primary transition-colors" href="#">Soporte</a>
+<a class="hover:text-primary transition-colors" href="#">Documentación SUNAFIL</a>
+<a class="hover:text-primary transition-colors" href="#">Política de Privacidad</a>
+</div>
+</div>
+</footer>
+</body></html>

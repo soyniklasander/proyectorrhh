@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>NexaCorp: Tu Espacio Personal</title>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<!-- Material Icons -->
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Theme Configuration -->
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#2c60ce",
+                        "primary-dark": "#1e4db7",
+                        "primary-light": "#5887e5",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#121720",
+                        "surface-dark": "#1a202c",
+                        "surface-darker": "#161b25",
+                        "neutral-800": "#1f2937",
+                        "neutral-700": "#374151",
+                        "neutral-600": "#4b5563",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.5rem", "lg": "1rem", "xl": "1.5rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        /* Custom scrollbar for a cleaner look in dark mode */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #121720;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #2d3748;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #4a5568;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-800 dark:text-slate-100 antialiased min-h-screen flex flex-col font-display">
+<!-- Navbar / Header -->
+<header class="w-full bg-white dark:bg-surface-dark border-b border-gray-200 dark:border-gray-800 sticky top-0 z-50">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex justify-between h-16 items-center">
+<!-- Logo & Page Title -->
+<div class="flex items-center gap-4">
+<div class="flex-shrink-0 flex items-center gap-2">
+<div class="w-8 h-8 rounded-lg bg-primary flex items-center justify-center text-white font-bold text-lg">
+                            N
+                        </div>
+<span class="font-bold text-xl tracking-tight text-gray-900 dark:text-white">NexaCorp</span>
+</div>
+<div class="h-6 w-px bg-gray-200 dark:bg-gray-700 hidden sm:block"></div>
+<h1 class="text-sm font-medium text-gray-500 dark:text-gray-400 hidden sm:block">Tu Espacio Personal</h1>
+</div>
+<!-- User Profile Dropdown Area -->
+<div class="flex items-center gap-4">
+<button class="p-2 rounded-full text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors relative">
+<span class="material-icons-outlined">notifications</span>
+<span class="absolute top-2 right-2 block h-2 w-2 rounded-full bg-red-500 ring-2 ring-white dark:ring-surface-dark"></span>
+</button>
+<div class="flex items-center gap-3 pl-4 border-l border-gray-200 dark:border-gray-700">
+<div class="text-right hidden md:block">
+<p class="text-sm font-semibold text-gray-900 dark:text-white">Alejandro Ruiz</p>
+<p class="text-xs text-gray-500 dark:text-gray-400">Desarrollador Senior</p>
+</div>
+<div class="relative group">
+<button class="flex items-center gap-2 focus:outline-none">
+<img alt="Profile picture of employee" class="h-9 w-9 rounded-full object-cover border-2 border-transparent group-hover:border-primary transition-all" data-alt="Close up portrait of a man smiling" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBLQd1nqRa2zHksJk7ijD2k-7YnZysC8pmCBu5CFl0uxj0ue5DKVeqtOAmjHsesDtW_Fju7Ql4Y9p7ymUB9zMn0E9CGF1-16zcrz_cexf93015qUPLkXMEzYIKg7Td1srbmitix65ymT_VnPqK2nO59V7_6PiFgVqSeeY9gU7wEiSWEduqib54G0XGmHzuavzqylf1ajefcu4gZY-0BAzOr3KmoPfIhWXkkPyWeuEf3xdaPpm1I9NmG7RUuqqRTAYr78pV4JhSDDa9s"/>
+</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</header>
+<!-- Main Content -->
+<main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full">
+<!-- Welcome Hero Section -->
+<section class="mb-8">
+<div class="relative overflow-hidden rounded-xl bg-gradient-to-r from-surface-dark to-surface-darker border border-gray-800 shadow-xl">
+<!-- Decorative primary glow -->
+<div class="absolute top-0 right-0 -mr-20 -mt-20 w-80 h-80 rounded-full bg-primary/20 blur-3xl"></div>
+<div class="relative z-10 p-8 sm:p-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+<div>
+<h2 class="text-3xl font-bold text-white mb-2">Hola, Alejandro 👋</h2>
+<p class="text-gray-400 max-w-xl text-lg">
+                            Bienvenido a tu portal de autoservicio. Aquí tienes un resumen rápido de tu actividad y documentos importantes.
+                        </p>
+</div>
+<div class="flex gap-3">
+<button class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-lg shadow-sm text-white bg-primary hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary focus:ring-offset-surface-dark transition-all">
+<span class="material-icons-outlined mr-2 text-base">add_circle</span>
+                            Nueva Solicitud
+                        </button>
+<button class="inline-flex items-center px-4 py-2 border border-gray-600 text-sm font-medium rounded-lg text-gray-300 bg-transparent hover:bg-gray-800 hover:text-white focus:outline-none transition-all">
+<span class="material-icons-outlined mr-2 text-base">help_outline</span>
+                            Ayuda
+                        </button>
+</div>
+</div>
+</div>
+</section>
+<!-- Quick Action Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+<!-- Card 1: Última Boleta (Payslip) -->
+<div class="bg-white dark:bg-surface-dark rounded-xl shadow-lg border border-gray-200 dark:border-gray-800 p-6 flex flex-col justify-between hover:border-primary/50 transition-colors group">
+<div>
+<div class="flex items-center justify-between mb-4">
+<div class="p-3 rounded-lg bg-blue-100 dark:bg-primary/20 text-primary">
+<span class="material-icons-outlined text-2xl">receipt_long</span>
+</div>
+<span class="text-xs font-semibold uppercase tracking-wider text-green-600 dark:text-green-400 bg-green-100 dark:bg-green-900/30 px-2 py-1 rounded-md">Disponible</span>
+</div>
+<h3 class="text-lg font-bold text-gray-900 dark:text-white mb-1">Última Boleta de Pago</h3>
+<p class="text-sm text-gray-500 dark:text-gray-400 mb-4">Correspondiente al periodo <span class="text-gray-700 dark:text-gray-300 font-medium">Octubre 2023</span></p>
+</div>
+<div class="mt-4 pt-4 border-t border-gray-100 dark:border-gray-700 flex items-center justify-between">
+<div class="flex flex-col">
+<span class="text-xs text-gray-500">Monto Neto</span>
+<span class="text-sm font-bold text-gray-900 dark:text-white">*******</span>
+</div>
+<button class="text-primary hover:text-primary-light font-medium text-sm flex items-center group-hover:translate-x-1 transition-transform">
+                        Descargar PDF
+                        <span class="material-icons-outlined text-base ml-1">download</span>
+</button>
+</div>
+</div>
+<!-- Card 2: Vacaciones (Time Off) -->
+<div class="bg-white dark:bg-surface-dark rounded-xl shadow-lg border border-gray-200 dark:border-gray-800 p-6 flex flex-col hover:border-primary/50 transition-colors">
+<div class="flex items-center justify-between mb-6">
+<div class="p-3 rounded-lg bg-orange-100 dark:bg-orange-500/20 text-orange-600 dark:text-orange-400">
+<span class="material-icons-outlined text-2xl">beach_access</span>
+</div>
+<button class="text-xs font-medium text-gray-500 hover:text-primary dark:text-gray-400 dark:hover:text-white transition-colors">Ver Historial</button>
+</div>
+<h3 class="text-lg font-bold text-gray-900 dark:text-white mb-4">Balance de Vacaciones</h3>
+<div class="relative pt-1 mb-2">
+<div class="flex mb-2 items-center justify-between">
+<div>
+<span class="text-xs font-semibold inline-block py-1 px-2 uppercase rounded-full text-primary bg-primary/20">
+                                Disponibles
+                            </span>
+</div>
+<div class="text-right">
+<span class="text-xs font-semibold inline-block text-primary">
+                                12 de 15 días
+                            </span>
+</div>
+</div>
+<div class="overflow-hidden h-2 mb-4 text-xs flex rounded bg-primary/20">
+<div class="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-primary" style="width:80%"></div>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-4 mt-auto">
+<div class="bg-gray-50 dark:bg-surface-darker p-3 rounded-lg border border-gray-100 dark:border-gray-700">
+<span class="block text-2xl font-bold text-gray-900 dark:text-white">12</span>
+<span class="text-xs text-gray-500 dark:text-gray-400">Días Libres</span>
+</div>
+<div class="bg-gray-50 dark:bg-surface-darker p-3 rounded-lg border border-gray-100 dark:border-gray-700">
+<span class="block text-2xl font-bold text-gray-900 dark:text-white">3</span>
+<span class="text-xs text-gray-500 dark:text-gray-400">Días Usados</span>
+</div>
+</div>
+</div>
+<!-- Card 3: Solicitudes (Requests) -->
+<div class="bg-white dark:bg-surface-dark rounded-xl shadow-lg border border-gray-200 dark:border-gray-800 p-6 flex flex-col hover:border-primary/50 transition-colors">
+<div class="flex items-center justify-between mb-4">
+<div class="p-3 rounded-lg bg-purple-100 dark:bg-purple-500/20 text-purple-600 dark:text-purple-400">
+<span class="material-icons-outlined text-2xl">assignment</span>
+</div>
+<span class="bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 text-xs font-medium px-2.5 py-0.5 rounded-full">2 Activas</span>
+</div>
+<h3 class="text-lg font-bold text-gray-900 dark:text-white mb-4">Mis Solicitudes</h3>
+<div class="flex flex-col gap-3 mt-auto">
+<!-- Request Item 1 -->
+<div class="flex items-center justify-between p-3 rounded-lg bg-gray-50 dark:bg-surface-darker border border-gray-100 dark:border-gray-700 group cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+<div class="flex items-center gap-3">
+<div class="h-2 w-2 rounded-full bg-yellow-500"></div>
+<div>
+<p class="text-sm font-medium text-gray-900 dark:text-white">Vacaciones Dic.</p>
+<p class="text-xs text-gray-500 dark:text-gray-400">Enviado: 24 Oct</p>
+</div>
+</div>
+<span class="text-xs text-yellow-600 dark:text-yellow-500 font-medium bg-yellow-100 dark:bg-yellow-900/20 px-2 py-1 rounded">Pendiente</span>
+</div>
+<!-- Request Item 2 -->
+<div class="flex items-center justify-between p-3 rounded-lg bg-gray-50 dark:bg-surface-darker border border-gray-100 dark:border-gray-700 group cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+<div class="flex items-center gap-3">
+<div class="h-2 w-2 rounded-full bg-green-500"></div>
+<div>
+<p class="text-sm font-medium text-gray-900 dark:text-white">Reembolso Taxis</p>
+<p class="text-xs text-gray-500 dark:text-gray-400">Enviado: 20 Oct</p>
+</div>
+</div>
+<span class="text-xs text-green-600 dark:text-green-500 font-medium bg-green-100 dark:bg-green-900/20 px-2 py-1 rounded">Aprobado</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Secondary Section: Quick Links & News -->
+<div class="grid grid-cols-1 lg:grid-cols-4 gap-6">
+<!-- Quick Links -->
+<div class="lg:col-span-1 bg-white dark:bg-surface-dark rounded-xl shadow-lg border border-gray-200 dark:border-gray-800 p-6">
+<h4 class="text-sm font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-4">Accesos Rápidos</h4>
+<nav class="flex flex-col space-y-2">
+<a class="flex items-center gap-3 p-2 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors" href="#">
+<span class="material-icons-outlined text-gray-400">person_outline</span>
+<span class="text-sm font-medium">Mi Perfil</span>
+</a>
+<a class="flex items-center gap-3 p-2 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors" href="#">
+<span class="material-icons-outlined text-gray-400">badge</span>
+<span class="text-sm font-medium">Certificados</span>
+</a>
+<a class="flex items-center gap-3 p-2 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors" href="#">
+<span class="material-icons-outlined text-gray-400">event_available</span>
+<span class="text-sm font-medium">Calendario</span>
+</a>
+<a class="flex items-center gap-3 p-2 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors" href="#">
+<span class="material-icons-outlined text-gray-400">security</span>
+<span class="text-sm font-medium">Cambiar Clave</span>
+</a>
+</nav>
+</div>
+<!-- Internal News / Updates -->
+<div class="lg:col-span-3 bg-white dark:bg-surface-dark rounded-xl shadow-lg border border-gray-200 dark:border-gray-800 p-6">
+<div class="flex items-center justify-between mb-4">
+<h4 class="text-lg font-bold text-gray-900 dark:text-white">Novedades NexaCorp</h4>
+<a class="text-sm text-primary hover:text-primary-light font-medium" href="#">Ver todo</a>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<!-- News Item 1 -->
+<div class="flex gap-4 p-3 rounded-lg hover:bg-gray-50 dark:hover:bg-surface-darker transition-colors cursor-pointer border border-transparent hover:border-gray-100 dark:hover:border-gray-700">
+<div class="h-24 w-24 flex-shrink-0 rounded-lg overflow-hidden bg-gray-200">
+<img alt="People collaborating in a modern office" class="h-full w-full object-cover" data-alt="Group of office workers collaborating" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBKcfH_kbSMDr3uKxDegFeMcTYLtVTL8p-Bdx3ltC5jmdK7MS4RAhKf5smk5paxmqv52bKUenZTHhl0Uw_mroFpPG9kZpehqjgn1AVaV33L4ngzQR1Ujte4mti3kAIMZUOvrl4Xa3Fma-Jlwj1DKqPbU1mITzY0bGct99vuzN6Qv166aawvcwEH3B1EO4nQ_Vh6V1zOqEk5d57foigGutOzYqB4VLOccaOF4jrnMB-8UXl1EI028T1kbsvvAAAI2r4q2vRmds_6kpwu"/>
+</div>
+<div class="flex flex-col justify-center">
+<span class="text-xs text-primary font-semibold mb-1">Cultura</span>
+<h5 class="text-sm font-bold text-gray-900 dark:text-white mb-1 line-clamp-2">Nueva política de trabajo híbrido para 2024</h5>
+<p class="text-xs text-gray-500 dark:text-gray-400 line-clamp-2">Conoce los detalles sobre los días presenciales y remotos a partir del próximo año.</p>
+<span class="text-xs text-gray-400 mt-2">Hace 2 días</span>
+</div>
+</div>
+<!-- News Item 2 -->
+<div class="flex gap-4 p-3 rounded-lg hover:bg-gray-50 dark:hover:bg-surface-darker transition-colors cursor-pointer border border-transparent hover:border-gray-100 dark:hover:border-gray-700">
+<div class="h-24 w-24 flex-shrink-0 rounded-lg overflow-hidden bg-gray-200">
+<img alt="Handshake in a meeting room" class="h-full w-full object-cover" data-alt="Business handshake close up meeting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAOizOF-_aoYuumr0mW4xOc8oBHXyDTSdrI18SzcWnpdJSksXXP3P1gWc8M-9lbfdGMCWiOTEtHHVPyrOahtziff75HnT6mh7dXlp9qdrrIpC2HGuhLh6nG1i7FkCIK5BSXIz2SKG9mR7K-3qKytOf0zHhz5MAV_r1UdzDXQ0v25v45baNo4W_kKEnAl_clu3TfUyJuAAGzVFfTu6wJHNY449CU-4frMpxzQDgz18A3TISEC40rnxaACKo3nLILniePQ7BS1mV44bFg"/>
+</div>
+<div class="flex flex-col justify-center">
+<span class="text-xs text-primary font-semibold mb-1">Beneficios</span>
+<h5 class="text-sm font-bold text-gray-900 dark:text-white mb-1 line-clamp-2">Convenio exclusivo con Gimnasios FitLife</h5>
+<p class="text-xs text-gray-500 dark:text-gray-400 line-clamp-2">Aprovecha hasta un 40% de descuento en tu membresía anual presentando tu credencial.</p>
+<span class="text-xs text-gray-400 mt-2">Hace 5 días</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Simple Footer -->
+<footer class="mt-auto border-t border-gray-200 dark:border-gray-800 bg-white dark:bg-surface-dark py-6">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center gap-4">
+<p class="text-sm text-gray-500 dark:text-gray-400 text-center md:text-left">
+                © 2023 NexaCorp Inc. Todos los derechos reservados.
+            </p>
+<div class="flex items-center gap-6">
+<a class="text-sm text-gray-500 hover:text-primary dark:text-gray-400 dark:hover:text-white transition-colors" href="#">Privacidad</a>
+<a class="text-sm text-gray-500 hover:text-primary dark:text-gray-400 dark:hover:text-white transition-colors" href="#">Términos</a>
+<a class="text-sm text-gray-500 hover:text-primary dark:text-gray-400 dark:hover:text-white transition-colors" href="#">Soporte TI</a>
+</div>
+</div>
+</footer>
+</body></html>

@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>NexaCorp: Otros Descuentos y Retenciones Judiciales</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#2c60ce",
+                        "primary-dark": "#1e4db7",
+                        "primary-light": "#5c8ae6",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#121720",
+                        "surface-dark": "#1e2430",
+                        "surface-lighter": "#2a3241",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: { "DEFAULT": "0.5rem", "lg": "1rem", "xl": "1.5rem", "full": "9999px" },
+                },
+            },
+        }
+    </script>
+<style>
+        /* Custom scrollbar for high-density tables */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #121720;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #2a3241;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #3b4657;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-800 dark:text-slate-200 font-display min-h-screen flex flex-col antialiased selection:bg-primary selection:text-white">
+<!-- Top Navigation -->
+<header class="bg-white dark:bg-surface-dark border-b border-slate-200 dark:border-slate-800 sticky top-0 z-30 h-16">
+<div class="max-w-[1920px] mx-auto px-4 sm:px-6 lg:px-8 h-full flex items-center justify-between">
+<div class="flex items-center gap-4">
+<div class="flex items-center gap-2">
+<div class="h-8 w-8 rounded bg-primary flex items-center justify-center">
+<span class="text-white font-bold text-lg">N</span>
+</div>
+<span class="font-semibold text-lg tracking-tight dark:text-white">NexaCorp</span>
+</div>
+<div class="h-6 w-px bg-slate-200 dark:bg-slate-700 mx-2"></div>
+<nav class="hidden md:flex text-sm font-medium text-slate-500 dark:text-slate-400 gap-2 items-center">
+<a class="hover:text-primary transition-colors" href="#">Financiamiento</a>
+<span class="material-icons text-base">chevron_right</span>
+<a class="hover:text-primary transition-colors" href="#">Cuentas Corrientes</a>
+<span class="material-icons text-base">chevron_right</span>
+<span class="text-slate-800 dark:text-white">Descuentos y Retenciones</span>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<div class="hidden md:flex items-center px-3 py-1 bg-primary/10 rounded-full border border-primary/20">
+<span class="w-2 h-2 rounded-full bg-emerald-500 mr-2 animate-pulse"></span>
+<span class="text-xs font-medium text-primary dark:text-blue-300">Periodo: Octubre 2023</span>
+</div>
+<button class="relative p-2 text-slate-500 hover:text-primary transition-colors">
+<span class="material-icons">notifications</span>
+<span class="absolute top-2 right-2 w-2 h-2 bg-red-500 rounded-full"></span>
+</button>
+<div class="h-8 w-8 rounded-full bg-slate-200 dark:bg-slate-700 overflow-hidden border border-slate-300 dark:border-slate-600">
+<img alt="Profile" class="h-full w-full object-cover" data-alt="User avatar placeholder" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBcw18LjF2Z-6ZpJxftqafaYOzDjL1oOtXHk_5r870fIlbtwuf2HVBu46L2aW2KrcUbZHKKbUfB5ulyMRmH-EIcVHDCJnbWvRpiUDMDW7y1aEVdxjhgmcCEP_SD96PN_7ASFQDrJdAblNX-e0lF1HbRymOpqfEiMT5F3mIAWM3aOu-B7jfZ_ygX-6XwF7TpusAYqyFeIjbQQv-0cA3UBrSXI7ztUgbb3FUKY0h3JcQ74So6kSbsqSAwlqvjG2AFbbRJmrxKi8U3tGdk"/>
+</div>
+</div>
+</div>
+</header>
+<!-- Main Content -->
+<main class="flex-1 flex overflow-hidden">
+<!-- Sidebar Navigation (Compact) -->
+<aside class="w-16 lg:w-64 hidden md:flex flex-col bg-white dark:bg-surface-dark border-r border-slate-200 dark:border-slate-800">
+<div class="flex-1 py-6 space-y-1">
+<a class="flex items-center px-4 py-3 text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors group" href="#">
+<span class="material-icons group-hover:text-primary">dashboard</span>
+<span class="ml-3 font-medium hidden lg:block group-hover:text-primary">Dashboard</span>
+</a>
+<a class="flex items-center px-4 py-3 bg-primary/10 text-primary border-r-2 border-primary" href="#">
+<span class="material-icons">account_balance_wallet</span>
+<span class="ml-3 font-medium hidden lg:block">Descuentos y Ret.</span>
+</a>
+<a class="flex items-center px-4 py-3 text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors group" href="#">
+<span class="material-icons group-hover:text-primary">description</span>
+<span class="ml-3 font-medium hidden lg:block group-hover:text-primary">Planillas</span>
+</a>
+<a class="flex items-center px-4 py-3 text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors group" href="#">
+<span class="material-icons group-hover:text-primary">groups</span>
+<span class="ml-3 font-medium hidden lg:block group-hover:text-primary">Colaboradores</span>
+</a>
+</div>
+<div class="p-4 border-t border-slate-200 dark:border-slate-800">
+<div class="flex items-center gap-3">
+<span class="material-icons text-slate-400">help_outline</span>
+<span class="text-sm text-slate-400 hidden lg:block">Ayuda y Soporte</span>
+</div>
+</div>
+</aside>
+<!-- Main Workspace -->
+<div class="flex-1 overflow-y-auto bg-background-light dark:bg-background-dark p-4 sm:p-6 lg:p-8">
+<!-- Page Header -->
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
+<div>
+<h1 class="text-2xl font-bold text-slate-900 dark:text-white">Otros Descuentos y Retenciones</h1>
+<p class="text-sm text-slate-500 dark:text-slate-400 mt-1">Gestión de descuentos variables (4.3) y configuración de retenciones judiciales.</p>
+</div>
+<div class="flex items-center gap-3">
+<button class="flex items-center gap-2 px-4 py-2 bg-white dark:bg-surface-lighter border border-slate-300 dark:border-slate-600 rounded-lg text-sm font-medium hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors shadow-sm">
+<span class="material-icons text-base">upload_file</span>
+                        Importar Masivo
+                    </button>
+<button class="flex items-center gap-2 px-4 py-2 bg-primary text-white rounded-lg text-sm font-medium hover:bg-primary-dark transition-colors shadow-lg shadow-primary/20">
+<span class="material-icons text-base">add</span>
+                        Nuevo Registro
+                    </button>
+</div>
+</div>
+<!-- Tab Navigation -->
+<div class="mb-6">
+<div class="border-b border-slate-200 dark:border-slate-700">
+<nav aria-label="Tabs" class="-mb-px flex space-x-8">
+<a class="border-primary text-primary whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm flex items-center gap-2" href="#">
+<span class="material-icons text-base">receipt_long</span>
+                            Descuentos Variables
+                            <span class="ml-2 bg-primary/10 text-primary py-0.5 px-2 rounded-full text-xs">124</span>
+</a>
+<a class="border-transparent text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-300 hover:border-slate-300 whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm flex items-center gap-2" href="#">
+<span class="material-icons text-base">gavel</span>
+                            Retenciones Judiciales
+                            <span class="ml-2 bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 py-0.5 px-2 rounded-full text-xs">15</span>
+</a>
+<a class="border-transparent text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-300 hover:border-slate-300 whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm" href="#">
+                            Historial y Auditoría
+                        </a>
+</nav>
+</div>
+</div>
+<!-- Dashboard Grid -->
+<div class="grid grid-cols-1 xl:grid-cols-3 gap-6">
+<!-- Main Data Section (Takes 2/3 width on large screens) -->
+<div class="xl:col-span-2 space-y-6">
+<!-- KPI Cards Row -->
+<div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+<div class="bg-white dark:bg-surface-dark p-4 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm relative overflow-hidden group">
+<div class="absolute right-0 top-0 h-full w-1 bg-primary"></div>
+<p class="text-xs font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wider">Total Variable (Mes)</p>
+<div class="mt-2 flex items-baseline gap-2">
+<span class="text-2xl font-bold text-slate-900 dark:text-white">S/ 45,280.00</span>
+</div>
+<div class="mt-2 text-xs text-emerald-500 flex items-center gap-1">
+<span class="material-icons text-xs">trending_up</span>
+<span>+2.4% vs mes anterior</span>
+</div>
+</div>
+<div class="bg-white dark:bg-surface-dark p-4 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm relative overflow-hidden">
+<div class="absolute right-0 top-0 h-full w-1 bg-orange-500"></div>
+<p class="text-xs font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wider">Judiciales Activos</p>
+<div class="mt-2 flex items-baseline gap-2">
+<span class="text-2xl font-bold text-slate-900 dark:text-white">15</span>
+<span class="text-sm text-slate-500">Expedientes</span>
+</div>
+<div class="mt-2 text-xs text-slate-500 dark:text-slate-400">
+                                2 nuevos este mes
+                            </div>
+</div>
+<div class="bg-white dark:bg-surface-dark p-4 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm relative overflow-hidden">
+<div class="absolute right-0 top-0 h-full w-1 bg-emerald-500"></div>
+<p class="text-xs font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wider">Procesados</p>
+<div class="mt-2 flex items-baseline gap-2">
+<span class="text-2xl font-bold text-slate-900 dark:text-white">98%</span>
+</div>
+<div class="mt-2 text-xs text-slate-500 dark:text-slate-400">
+                                Cierre de planilla: 25 Oct
+                            </div>
+</div>
+</div>
+<!-- Variable Discounts Table -->
+<div class="bg-white dark:bg-surface-dark rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm overflow-hidden">
+<div class="px-6 py-4 border-b border-slate-200 dark:border-slate-700 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+<h2 class="text-lg font-semibold text-slate-900 dark:text-white flex items-center gap-2">
+<span class="material-icons text-slate-400">list_alt</span>
+                                Carga de Conceptos
+                            </h2>
+<div class="flex items-center gap-2 w-full sm:w-auto">
+<div class="relative w-full sm:w-64">
+<span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+<span class="material-icons text-slate-400 text-sm">search</span>
+</span>
+<input class="block w-full pl-10 pr-3 py-1.5 border border-slate-300 dark:border-slate-600 rounded-lg leading-5 bg-slate-50 dark:bg-surface-lighter text-slate-900 dark:text-slate-100 placeholder-slate-400 focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary sm:text-sm" placeholder="Buscar por DNI o Apellido" type="text"/>
+</div>
+<button class="p-1.5 text-slate-500 hover:text-primary border border-slate-300 dark:border-slate-600 rounded-lg bg-white dark:bg-surface-lighter">
+<span class="material-icons text-sm">filter_list</span>
+</button>
+</div>
+</div>
+<!-- High Density Table -->
+<div class="overflow-x-auto">
+<table class="min-w-full divide-y divide-slate-200 dark:divide-slate-700">
+<thead class="bg-slate-50 dark:bg-surface-lighter">
+<tr>
+<th class="px-6 py-3 text-left text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider" scope="col">
+                                            Colaborador
+                                        </th>
+<th class="px-6 py-3 text-left text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider" scope="col">
+                                            Concepto
+                                        </th>
+<th class="px-6 py-3 text-left text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider" scope="col">
+                                            Ref. / Fecha
+                                        </th>
+<th class="px-6 py-3 text-right text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider" scope="col">
+                                            Monto (S/)
+                                        </th>
+<th class="px-6 py-3 text-center text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider" scope="col">
+                                            Estado
+                                        </th>
+<th class="relative px-6 py-3" scope="col">
+<span class="sr-only">Editar</span>
+</th>
+</tr>
+</thead>
+<tbody class="bg-white dark:bg-surface-dark divide-y divide-slate-200 dark:divide-slate-700">
+<!-- Row 1 -->
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
+<td class="px-6 py-3 whitespace-nowrap">
+<div class="flex items-center">
+<div class="flex-shrink-0 h-8 w-8 rounded-full bg-indigo-500 flex items-center justify-center text-white text-xs font-bold">
+                                                    JP
+                                                </div>
+<div class="ml-3">
+<div class="text-sm font-medium text-slate-900 dark:text-white">Juan Perez</div>
+<div class="text-xs text-slate-500">ID: 849201</div>
+</div>
+</div>
+</td>
+<td class="px-6 py-3 whitespace-nowrap">
+<div class="flex items-center">
+<span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-300">
+                                                    Comedor
+                                                </span>
+</div>
+</td>
+<td class="px-6 py-3 whitespace-nowrap text-sm text-slate-500 dark:text-slate-400">
+                                            CMD-23-001 <br/> <span class="text-xs">15/10/2023</span>
+</td>
+<td class="px-6 py-3 whitespace-nowrap text-sm text-slate-900 dark:text-white text-right font-mono">
+                                            150.00
+                                        </td>
+<td class="px-6 py-3 whitespace-nowrap text-center">
+<span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300">
+                                                Aprobado
+                                            </span>
+</td>
+<td class="px-6 py-3 whitespace-nowrap text-right text-sm font-medium">
+<a class="text-primary hover:text-primary-light" href="#">
+<span class="material-icons text-sm">edit</span>
+</a>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
+<td class="px-6 py-3 whitespace-nowrap">
+<div class="flex items-center">
+<div class="flex-shrink-0 h-8 w-8 rounded-full bg-pink-500 flex items-center justify-center text-white text-xs font-bold">
+                                                    MR
+                                                </div>
+<div class="ml-3">
+<div class="text-sm font-medium text-slate-900 dark:text-white">Maria Rodriguez</div>
+<div class="text-xs text-slate-500">ID: 849332</div>
+</div>
+</div>
+</td>
+<td class="px-6 py-3 whitespace-nowrap">
+<span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-orange-100 text-orange-800 dark:bg-orange-900/30 dark:text-orange-300">
+                                                Uniforme
+                                            </span>
+</td>
+<td class="px-6 py-3 whitespace-nowrap text-sm text-slate-500 dark:text-slate-400">
+                                            ENT-UNI-05 <br/> <span class="text-xs">12/10/2023</span>
+</td>
+<td class="px-6 py-3 whitespace-nowrap text-sm text-slate-900 dark:text-white text-right font-mono">
+                                            85.50
+                                        </td>
+<td class="px-6 py-3 whitespace-nowrap text-center">
+<span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-300">
+                                                Pendiente
+                                            </span>
+</td>
+<td class="px-6 py-3 whitespace-nowrap text-right text-sm font-medium">
+<a class="text-primary hover:text-primary-light" href="#">
+<span class="material-icons text-sm">edit</span>
+</a>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
+<td class="px-6 py-3 whitespace-nowrap">
+<div class="flex items-center">
+<div class="flex-shrink-0 h-8 w-8 rounded-full bg-emerald-500 flex items-center justify-center text-white text-xs font-bold">
+                                                    CL
+                                                </div>
+<div class="ml-3">
+<div class="text-sm font-medium text-slate-900 dark:text-white">Carlos Lopez</div>
+<div class="text-xs text-slate-500">ID: 841109</div>
+</div>
+</div>
+</td>
+<td class="px-6 py-3 whitespace-nowrap">
+<span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-300">
+                                                Multa
+                                            </span>
+</td>
+<td class="px-6 py-3 whitespace-nowrap text-sm text-slate-500 dark:text-slate-400">
+                                            INC-SEG-01 <br/> <span class="text-xs">10/10/2023</span>
+</td>
+<td class="px-6 py-3 whitespace-nowrap text-sm text-slate-900 dark:text-white text-right font-mono">
+                                            50.00
+                                        </td>
+<td class="px-6 py-3 whitespace-nowrap text-center">
+<span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300">
+                                                Aprobado
+                                            </span>
+</td>
+<td class="px-6 py-3 whitespace-nowrap text-right text-sm font-medium">
+<a class="text-primary hover:text-primary-light" href="#">
+<span class="material-icons text-sm">edit</span>
+</a>
+</td>
+</tr>
+<!-- Row 4 -->
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
+<td class="px-6 py-3 whitespace-nowrap">
+<div class="flex items-center">
+<div class="flex-shrink-0 h-8 w-8 rounded-full bg-slate-500 flex items-center justify-center text-white text-xs font-bold">
+                                                    AL
+                                                </div>
+<div class="ml-3">
+<div class="text-sm font-medium text-slate-900 dark:text-white">Ana Lima</div>
+<div class="text-xs text-slate-500">ID: 845521</div>
+</div>
+</div>
+</td>
+<td class="px-6 py-3 whitespace-nowrap">
+<span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-300">
+                                                Comedor
+                                            </span>
+</td>
+<td class="px-6 py-3 whitespace-nowrap text-sm text-slate-500 dark:text-slate-400">
+                                            CMD-23-002 <br/> <span class="text-xs">15/10/2023</span>
+</td>
+<td class="px-6 py-3 whitespace-nowrap text-sm text-slate-900 dark:text-white text-right font-mono">
+                                            120.00
+                                        </td>
+<td class="px-6 py-3 whitespace-nowrap text-center">
+<span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300">
+                                                Aprobado
+                                            </span>
+</td>
+<td class="px-6 py-3 whitespace-nowrap text-right text-sm font-medium">
+<a class="text-primary hover:text-primary-light" href="#">
+<span class="material-icons text-sm">edit</span>
+</a>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="bg-slate-50 dark:bg-surface-lighter px-6 py-3 border-t border-slate-200 dark:border-slate-700 flex items-center justify-between">
+<div class="text-xs text-slate-500 dark:text-slate-400">
+                                Mostrando 1-4 de 124 resultados
+                            </div>
+<div class="flex gap-2">
+<button class="px-2 py-1 border border-slate-300 dark:border-slate-600 rounded text-xs text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-700 disabled:opacity-50">Prev</button>
+<button class="px-2 py-1 border border-slate-300 dark:border-slate-600 rounded text-xs text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-700">Next</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Panel (Judicial Focus & Upload) -->
+<div class="space-y-6">
+<!-- Quick Judicial Action Card -->
+<div class="bg-gradient-to-br from-surface-dark to-slate-900 dark:from-surface-dark dark:to-background-dark rounded-xl border border-primary/30 shadow-lg relative overflow-hidden">
+<!-- Background Pattern -->
+<div class="absolute inset-0 opacity-10 pointer-events-none" style="background-image: radial-gradient(#2c60ce 1px, transparent 1px); background-size: 20px 20px;"></div>
+<div class="p-6 relative z-10">
+<div class="flex items-center justify-between mb-4">
+<h3 class="text-white font-semibold flex items-center gap-2">
+<span class="material-icons text-primary-light">balance</span>
+                                    Nuevo Mandato Judicial
+                                </h3>
+<span class="bg-primary/20 text-primary-light text-xs px-2 py-0.5 rounded border border-primary/20">Legal</span>
+</div>
+<form class="space-y-4">
+<div>
+<label class="block text-xs font-medium text-slate-400 mb-1">Buscar Legajo</label>
+<div class="relative">
+<input class="block w-full bg-slate-800/50 border border-slate-600 rounded-lg text-sm text-white px-3 py-2 focus:ring-1 focus:ring-primary focus:border-primary" placeholder="Ej: 849..." type="text"/>
+<span class="absolute right-3 top-2 material-icons text-slate-500 text-sm">search</span>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-3">
+<div>
+<label class="block text-xs font-medium text-slate-400 mb-1">N° Expediente</label>
+<input class="block w-full bg-slate-800/50 border border-slate-600 rounded-lg text-sm text-white px-3 py-2" placeholder="XP-2023-..." type="text"/>
+</div>
+<div>
+<label class="block text-xs font-medium text-slate-400 mb-1">Beneficiario</label>
+<input class="block w-full bg-slate-800/50 border border-slate-600 rounded-lg text-sm text-white px-3 py-2" placeholder="Nombre" type="text"/>
+</div>
+</div>
+<div class="space-y-2">
+<label class="block text-xs font-medium text-slate-400">Tipo de Retención</label>
+<div class="grid grid-cols-2 gap-3">
+<label class="flex items-center justify-center gap-2 p-2 rounded-lg border border-primary/50 bg-primary/10 cursor-pointer hover:bg-primary/20 transition-colors">
+<input checked="" class="text-primary focus:ring-primary bg-slate-800 border-slate-600" name="retention_type" type="radio"/>
+<span class="text-sm text-white font-medium">% Neto</span>
+</label>
+<label class="flex items-center justify-center gap-2 p-2 rounded-lg border border-slate-600 bg-slate-800/30 cursor-pointer hover:bg-slate-700/50 transition-colors">
+<input class="text-primary focus:ring-primary bg-slate-800 border-slate-600" name="retention_type" type="radio"/>
+<span class="text-sm text-slate-300 font-medium">Monto Fijo</span>
+</label>
+</div>
+</div>
+<div>
+<label class="block text-xs font-medium text-slate-400 mb-1">Valor a Retener</label>
+<div class="relative">
+<input class="block w-full bg-slate-800/50 border border-slate-600 rounded-lg text-sm text-white pl-3 pr-8 py-2 font-mono text-right" placeholder="0.00" type="text"/>
+<span class="absolute right-3 top-2 text-slate-500 text-sm">%</span>
+</div>
+</div>
+<button class="w-full bg-primary hover:bg-primary-dark text-white font-medium py-2 px-4 rounded-lg shadow-lg shadow-primary/30 transition-all transform active:scale-95 flex justify-center items-center gap-2" type="button">
+<span class="material-icons text-sm">save_alt</span>
+                                    Vincular a Legajo
+                                </button>
+</form>
+</div>
+</div>
+<!-- Bulk Upload Dropzone -->
+<div class="bg-white dark:bg-surface-dark rounded-xl border border-dashed border-slate-300 dark:border-slate-600 p-6 flex flex-col items-center justify-center text-center hover:bg-slate-50 dark:hover:bg-surface-lighter transition-colors cursor-pointer group">
+<div class="h-12 w-12 bg-primary/10 text-primary rounded-full flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
+<span class="material-icons">cloud_upload</span>
+</div>
+<h4 class="text-sm font-medium text-slate-900 dark:text-white">Carga Masiva de Variables</h4>
+<p class="text-xs text-slate-500 dark:text-slate-400 mt-1 mb-4">Arrastra tu archivo Excel o CSV aquí</p>
+<button class="text-xs text-primary font-medium hover:underline">Descargar plantilla</button>
+</div>
+<!-- Recent Judicial Activity List -->
+<div class="bg-white dark:bg-surface-dark rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm overflow-hidden">
+<div class="px-4 py-3 border-b border-slate-200 dark:border-slate-700">
+<h3 class="text-sm font-semibold text-slate-900 dark:text-white">Retenciones Recientes</h3>
+</div>
+<ul class="divide-y divide-slate-200 dark:divide-slate-700">
+<li class="px-4 py-3 hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-3">
+<span class="material-icons text-slate-400 text-sm">lock</span>
+<div>
+<p class="text-sm font-medium text-slate-800 dark:text-slate-200">Jorge Diaz</p>
+<p class="text-xs text-slate-500">Exp: 992-2023 • Alimentos</p>
+</div>
+</div>
+<span class="text-sm font-bold text-primary">35%</span>
+</div>
+</li>
+<li class="px-4 py-3 hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-3">
+<span class="material-icons text-slate-400 text-sm">lock</span>
+<div>
+<p class="text-sm font-medium text-slate-800 dark:text-slate-200">Pedro Ruiz</p>
+<p class="text-xs text-slate-500">Exp: 104-2023 • Embargo</p>
+</div>
+</div>
+<span class="text-sm font-bold text-primary">S/ 500</span>
+</div>
+</li>
+<li class="px-4 py-3 hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-3">
+<span class="material-icons text-slate-400 text-sm">lock</span>
+<div>
+<p class="text-sm font-medium text-slate-800 dark:text-slate-200">Luis Torres</p>
+<p class="text-xs text-slate-500">Exp: 881-2022 • Alimentos</p>
+</div>
+</div>
+<span class="text-sm font-bold text-primary">28%</span>
+</div>
+</li>
+</ul>
+<div class="px-4 py-2 bg-slate-50 dark:bg-surface-lighter text-center">
+<a class="text-xs font-medium text-primary hover:text-primary-dark" href="#">Ver todas las retenciones</a>
+</div>
+</div>
+</div>
+</div>
+<!-- Footer -->
+<footer class="mt-8 pt-8 border-t border-slate-200 dark:border-slate-700 text-center sm:text-left">
+<div class="flex flex-col sm:flex-row justify-between items-center text-xs text-slate-500 dark:text-slate-400">
+<p>© 2023 NexaCorp Perú S.A. Todos los derechos reservados.</p>
+<div class="mt-2 sm:mt-0 flex items-center gap-4">
+<span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-green-500"></span> Sistema Operativo</span>
+<span>v4.3.1 (Build 2901)</span>
+</div>
+</div>
+</footer>
+</div>
+</main>
+<!-- Floating Action Button for Mobile -->
+<div class="fixed bottom-6 right-6 lg:hidden">
+<button class="bg-primary hover:bg-primary-dark text-white rounded-full p-4 shadow-lg shadow-primary/40 flex items-center justify-center">
+<span class="material-icons">add</span>
+</button>
+</div>
+</body></html>

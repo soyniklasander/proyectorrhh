@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>NexaCorp: Login Universal Inteligente</title>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<!-- Material Icons -->
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS Config -->
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#2c60ce",
+                        "primary-dark": "#1a4bb0",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#0f172a", // Deep navy/slate background
+                        "surface-dark": "#1e293b",    // Slightly lighter for cards
+                        "surface-darker": "#172033",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.5rem", "lg": "1rem", "xl": "1.5rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<style>
+        /* Custom subtle grid pattern for the background */
+        .bg-grid-pattern {
+            background-image: linear-gradient(to right, #1e293b 1px, transparent 1px),
+            linear-gradient(to bottom, #1e293b 1px, transparent 1px);
+            background-size: 40px 40px;
+        }
+    </style>
+</head>
+<body class="font-display bg-background-light dark:bg-background-dark text-slate-900 dark:text-white antialiased h-screen flex flex-col overflow-hidden">
+<!-- Background Decoration -->
+<div class="absolute inset-0 z-0 opacity-[0.03] pointer-events-none bg-grid-pattern"></div>
+<!-- Abstract Gradient Blob for aesthetic depth -->
+<div class="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-primary/20 rounded-full blur-[120px] pointer-events-none z-0"></div>
+<div class="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-indigo-900/30 rounded-full blur-[120px] pointer-events-none z-0"></div>
+<!-- Main Container -->
+<main class="relative z-10 flex-grow flex items-center justify-center p-6">
+<!-- Login Card -->
+<div class="w-full max-w-md bg-white dark:bg-surface-dark border border-slate-200 dark:border-slate-700/50 shadow-2xl rounded-xl overflow-hidden relative backdrop-blur-sm bg-opacity-95 dark:bg-opacity-95">
+<!-- Top Loading Bar (Simulating processing) -->
+<div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-primary to-transparent opacity-0 transition-opacity duration-300 group-focus-within:opacity-100"></div>
+<div class="p-8 sm:p-10">
+<!-- Header / Logo Area -->
+<div class="text-center mb-10">
+<div class="inline-flex items-center justify-center w-12 h-12 rounded-lg bg-primary/10 dark:bg-primary/20 text-primary mb-4">
+<span class="material-icons text-3xl">hexagon</span>
+</div>
+<h2 class="text-2xl font-bold tracking-tight text-slate-900 dark:text-white">
+                        NexaCorp
+                    </h2>
+<p class="mt-2 text-sm text-slate-500 dark:text-slate-400">
+                        Universal Secure Access
+                    </p>
+</div>
+<!-- Form -->
+<form action="#" class="space-y-6" method="POST">
+<!-- Email Input Group -->
+<div class="group">
+<label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2" for="email">
+                            Corporate Email
+                        </label>
+<div class="relative">
+<div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
+<span class="material-icons text-[20px]">alternate_email</span>
+</div>
+<input class="block w-full pl-10 pr-3 py-2.5 border border-slate-300 dark:border-slate-600 rounded-lg bg-slate-50 dark:bg-surface-darker text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-200 sm:text-sm" id="email" name="email" placeholder="name@company.com" required="" type="email"/>
+<!-- Smart Deduction Indicator (Hidden by default, shown conceptually) -->
+<div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+<!-- This icon represents the system "thinking" or validating the domain -->
+<span class="material-icons text-primary text-sm animate-pulse opacity-0 group-focus-within:opacity-100 transition-opacity duration-500 delay-1000">
+                                    domain_verification
+                                </span>
+</div>
+</div>
+<!-- Helper text for tenant discovery -->
+<p class="mt-2 text-xs text-slate-500 dark:text-slate-500 flex items-center gap-1 h-4">
+<!-- This area dynamically updates based on email domain -->
+<span class="inline-block w-1.5 h-1.5 rounded-full bg-primary/50"></span>
+<span>Detecting organization...</span>
+</p>
+</div>
+<!-- Password Input Group -->
+<div>
+<div class="flex items-center justify-between mb-2">
+<label class="block text-sm font-medium text-slate-700 dark:text-slate-300" for="password">
+                                Password
+                            </label>
+<a class="text-sm font-medium text-primary hover:text-primary-dark transition-colors" href="#">
+                                Forgot password?
+                            </a>
+</div>
+<div class="relative">
+<div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
+<span class="material-icons text-[20px]">lock_outline</span>
+</div>
+<input class="block w-full pl-10 pr-10 py-2.5 border border-slate-300 dark:border-slate-600 rounded-lg bg-slate-50 dark:bg-surface-darker text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-200 sm:text-sm" id="password" name="password" placeholder="••••••••" required="" type="password"/>
+<div class="absolute inset-y-0 right-0 pr-3 flex items-center cursor-pointer text-slate-400 hover:text-slate-300">
+<span class="material-icons text-[20px]">visibility_off</span>
+</div>
+</div>
+</div>
+<!-- Submit Button -->
+<div>
+<button class="w-full flex justify-center py-2.5 px-4 border border-transparent rounded-lg shadow-sm text-sm font-semibold text-white bg-primary hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary dark:focus:ring-offset-surface-dark transition-all duration-200 transform hover:scale-[1.01]" type="submit">
+                            Sign In
+                        </button>
+</div>
+</form>
+<!-- SSO Divider -->
+<div class="mt-8 relative">
+<div aria-hidden="true" class="absolute inset-0 flex items-center">
+<div class="w-full border-t border-slate-200 dark:border-slate-700"></div>
+</div>
+<div class="relative flex justify-center text-sm">
+<span class="px-3 bg-white dark:bg-surface-dark text-slate-500">
+                            Or continue with
+                        </span>
+</div>
+</div>
+<!-- SSO Options -->
+<div class="mt-6 grid grid-cols-2 gap-3">
+<button class="w-full inline-flex justify-center items-center py-2 px-4 border border-slate-300 dark:border-slate-600 rounded-lg shadow-sm bg-white dark:bg-surface-darker text-sm font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary dark:focus:ring-offset-surface-dark transition-colors" type="button">
+<img alt="Google Logo" class="h-5 w-5 mr-2" data-alt="Google logo icon" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAeOC3w5l5KR-Rr4ksYGE1kBSbGYQkAenANUdrpY1ENKb5Dz_5SHetfJ2Vlm22ENBnkt-o0j6PGYmwflT3uRgYv_s-eJ79FkRfE8zdK1o_zm8YaplUG3wGpMCBYCDBPofmwBoWcg0GZba9LWZfOZSsM6scpjnodensVI9G_7g2anqkdZeVSibTKdq453CKanCNmv8kKBBb1IzvPeDqqlS2GP2-4GRPhktgA4_cT5Sw8VK1HHyqo-ws0kfU-EJYYEZeaBSpUhyPcow-6"/>
+<span>Google</span>
+</button>
+<button class="w-full inline-flex justify-center items-center py-2 px-4 border border-slate-300 dark:border-slate-600 rounded-lg shadow-sm bg-white dark:bg-surface-darker text-sm font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary dark:focus:ring-offset-surface-dark transition-colors" type="button">
+<img alt="Microsoft Logo" class="h-5 w-5 mr-2 invert dark:invert-0" data-alt="Microsoft logo icon" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD6Cvaj_ne9F3cnvL1_hhtZHRU2DpPN8vCvrb48-6zPAXF1mka4Aw8ytOW7yQC_Pl6Omevg1PYmadHR8kY3JpEPONeCfta48L6TM0OOcqggfkfgy9v64FemGM4nRECl442pG3u6L1SEFKAd1YA6GAut0KvqhyaxhgkhrojqwuBxj0C3hgHfK0J857rHXh2j9INST7556Yl4C1wWROQiILEJSwtYTCmHhQ53FQS_N0RoFSmQ0F4bgY8A2FdHK-Gq2diBivQuAHh2hrRZ"/>
+<span>Microsoft</span>
+</button>
+</div>
+</div>
+<!-- Card Footer -->
+<div class="bg-slate-50 dark:bg-surface-darker/50 px-8 py-4 border-t border-slate-200 dark:border-slate-700/50 flex items-center justify-between text-xs">
+<a class="text-slate-500 dark:text-slate-400 hover:text-primary dark:hover:text-primary transition-colors" href="#">Privacy Policy</a>
+<a class="text-slate-500 dark:text-slate-400 hover:text-primary dark:hover:text-primary transition-colors" href="#">Help Center</a>
+</div>
+</div>
+<!-- Info Toast (Simulated "Smart Feature" visualization) -->
+<div class="absolute bottom-6 right-6 max-w-sm w-full bg-surface-dark border border-slate-700 rounded-lg shadow-lg p-4 flex items-start space-x-3 opacity-0 animate-[fadeIn_0.5s_ease-out_1s_forwards]">
+<div class="flex-shrink-0">
+<span class="material-icons text-primary">info</span>
+</div>
+<div class="flex-1 pt-0.5">
+<p class="text-sm font-medium text-white">Secure Multi-Tenant Access</p>
+<p class="mt-1 text-xs text-slate-400">Your organization settings are automatically applied upon email detection.</p>
+</div>
+<button class="flex-shrink-0 ml-auto text-slate-400 hover:text-white">
+<span class="material-icons text-sm">close</span>
+</button>
+</div>
+</main>
+<!-- Simple Animation Keyframes -->
+<style>
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</body></html>

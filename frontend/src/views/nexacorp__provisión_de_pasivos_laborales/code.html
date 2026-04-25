@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>NexaCorp - Provisión de Pasivos Laborales</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">tailwind.config = {darkMode: "class", theme: {extend: {colors: {primary: "#2c60ce", "background-light": "#f6f6f8", "background-dark": "#121720"}, fontFamily: {display: "Inter"}, borderRadius: {DEFAULT: "0.5rem", lg: "1rem", xl: "1.5rem", full: "9999px"}}}};</script>
+<style>
+        body { font-family: 'Manrope', sans-serif; }
+        .sticky-col { position: sticky; left: 0; z-index: 10; }
+        .scrollbar-hide::-webkit-scrollbar { display: none; }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-800 dark:text-slate-200 min-h-screen font-display">
+<!-- Sidebar Navigation -->
+<aside class="fixed left-0 top-0 h-full w-64 bg-white dark:bg-background-dark border-r border-primary/10 hidden lg:flex flex-col">
+<div class="p-6 border-b border-primary/10 flex items-center gap-3">
+<div class="w-8 h-8 bg-primary rounded flex items-center justify-center">
+<span class="material-icons text-white text-xl">account_balance</span>
+</div>
+<span class="text-xl font-bold tracking-tight text-primary">NexaCorp</span>
+</div>
+<nav class="flex-1 p-4 space-y-2">
+<a class="flex items-center gap-3 p-3 rounded-lg text-slate-400 hover:bg-primary/10 hover:text-primary transition-colors" href="#">
+<span class="material-icons">dashboard</span>
+<span class="font-medium text-sm">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 p-3 rounded-lg bg-primary/20 text-primary border border-primary/20" href="#">
+<span class="material-icons text-primary">analytics</span>
+<span class="font-medium text-sm">Provisiones REMYPE</span>
+</a>
+<a class="flex items-center gap-3 p-3 rounded-lg text-slate-400 hover:bg-primary/10 hover:text-primary transition-colors" href="#">
+<span class="material-icons">people</span>
+<span class="font-medium text-sm">Colaboradores</span>
+</a>
+<a class="flex items-center gap-3 p-3 rounded-lg text-slate-400 hover:bg-primary/10 hover:text-primary transition-colors" href="#">
+<span class="material-icons">receipt_long</span>
+<span class="font-medium text-sm">Planilla Mensual</span>
+</a>
+<a class="flex items-center gap-3 p-3 rounded-lg text-slate-400 hover:bg-primary/10 hover:text-primary transition-colors" href="#">
+<span class="material-icons">settings</span>
+<span class="font-medium text-sm">Configuración</span>
+</a>
+</nav>
+<div class="p-4 border-t border-primary/10">
+<div class="bg-primary/5 rounded-xl p-4">
+<p class="text-xs text-slate-500 mb-1">Usuario</p>
+<div class="flex items-center gap-3">
+<img alt="Profile" class="w-8 h-8 rounded-full" data-alt="Portrait of a financial analyst professional" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBcK2lCfi1RZK2T06xJmcM8kf4kXZxfqq8jAdyONPe1AInOrwagR50VhoZp-l8gAjpt0KKxK-loEQ-HEU70nrxZv8DnLUrzgnLH-unm-hsje3tbt2lw09VXHQ6CCHJ_hwIeJhMJkxgOs8mekB0vYGOY7gYjuTeaRfsm1jQC4Dt66hCMN2Hc0pTk464and13B1CVBvuTUWr1D8XLzg5zCv1GDvCs2oBthooikOa5wrtkuLS-O7T5LV9vizulJ5mZ-Z7igucBIHVKEVku"/>
+<div>
+<p class="text-sm font-semibold">Carlos Admin</p>
+<p class="text-[10px] text-primary">Tesorería Principal</p>
+</div>
+</div>
+</div>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="lg:ml-64 p-4 lg:p-8">
+<!-- Top Header -->
+<header class="flex flex-col md:flex-row md:items-center justify-between mb-8 gap-4">
+<div>
+<h1 class="text-2xl font-bold tracking-tight">Provisión de Beneficios Sociales</h1>
+<p class="text-slate-500 text-sm">Cálculo de pasivos laborales según régimen REMYPE - Periodo Mayo 2024</p>
+</div>
+<div class="flex items-center gap-3">
+<button class="flex items-center gap-2 px-4 py-2 rounded-lg bg-white dark:bg-background-dark border border-primary/20 text-sm font-semibold hover:bg-primary/5 transition-colors">
+<span class="material-icons text-sm">calendar_month</span>
+                    Mayo 2024
+                </button>
+<button class="flex items-center gap-2 px-4 py-2 rounded-lg bg-primary text-white text-sm font-semibold hover:opacity-90 transition-opacity">
+<span class="material-icons text-sm">file_download</span>
+                    Exportar Reporte
+                </button>
+</div>
+</header>
+<!-- KPI Cards -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+<div class="bg-white dark:bg-background-dark p-5 rounded-xl border border-primary/10">
+<div class="flex items-center justify-between mb-2">
+<span class="text-slate-500 text-xs font-semibold uppercase tracking-wider">Total CTS</span>
+<span class="material-icons text-primary/50">savings</span>
+</div>
+<div class="text-2xl font-bold">S/ 42,850.20</div>
+<div class="mt-2 text-[10px] text-green-500 flex items-center gap-1">
+<span class="material-icons text-[10px]">trending_up</span>
+                    +3.2% vs mes anterior
+                </div>
+</div>
+<div class="bg-white dark:bg-background-dark p-5 rounded-xl border border-primary/10">
+<div class="flex items-center justify-between mb-2">
+<span class="text-slate-500 text-xs font-semibold uppercase tracking-wider">Total Gratificación</span>
+<span class="material-icons text-primary/50">card_giftcard</span>
+</div>
+<div class="text-2xl font-bold">S/ 68,120.45</div>
+<div class="mt-2 text-[10px] text-green-500 flex items-center gap-1">
+<span class="material-icons text-[10px]">trending_up</span>
+                    +1.5% vs mes anterior
+                </div>
+</div>
+<div class="bg-white dark:bg-background-dark p-5 rounded-xl border border-primary/10">
+<div class="flex items-center justify-between mb-2">
+<span class="text-slate-500 text-xs font-semibold uppercase tracking-wider">Total Vacaciones</span>
+<span class="material-icons text-primary/50">beach_access</span>
+</div>
+<div class="text-2xl font-bold">S/ 25,440.00</div>
+<div class="mt-2 text-[10px] text-slate-400 flex items-center gap-1">
+<span class="material-icons text-[10px]">horizontal_rule</span>
+                    Sin cambios
+                </div>
+</div>
+<div class="bg-primary p-5 rounded-xl border border-primary">
+<div class="flex items-center justify-between mb-2">
+<span class="text-white/70 text-xs font-semibold uppercase tracking-wider">Pasivo Mensual Total</span>
+<span class="material-icons text-white/50">payments</span>
+</div>
+<div class="text-2xl font-bold text-white tracking-tight">S/ 136,410.65</div>
+<div class="mt-2 text-[10px] text-white/80 font-medium">Reserva neta a provisionar en tesorería</div>
+</div>
+</div>
+<!-- Filters Toolbar -->
+<div class="bg-white dark:bg-background-dark p-4 rounded-t-xl border border-primary/10 border-b-0 flex flex-wrap items-center justify-between gap-4">
+<div class="flex flex-wrap items-center gap-3">
+<div class="relative">
+<span class="material-icons absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-lg">search</span>
+<input class="pl-10 pr-4 py-2 bg-background-light dark:bg-background-dark border border-primary/10 rounded-lg text-sm focus:ring-1 focus:ring-primary focus:border-primary outline-none w-64" placeholder="Buscar colaborador..." type="text"/>
+</div>
+<select class="px-4 py-2 bg-background-light dark:bg-background-dark border border-primary/10 rounded-lg text-sm focus:ring-1 focus:ring-primary outline-none">
+<option>Todos los Regímenes</option>
+<option>General</option>
+<option>Pequeña Empresa</option>
+<option>Micro Empresa</option>
+</select>
+</div>
+<div class="text-xs text-slate-500">
+<span class="font-bold text-primary">156</span> Colaboradores Activos
+            </div>
+</div>
+<!-- High Density Table -->
+<div class="bg-white dark:bg-background-dark rounded-b-xl border border-primary/10 overflow-hidden">
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-primary/5 border-b border-primary/10">
+<th class="px-6 py-4 text-xs font-bold uppercase tracking-wider sticky-col bg-primary/5 z-20">Colaborador</th>
+<th class="px-6 py-4 text-xs font-bold uppercase tracking-wider">Régimen</th>
+<th class="px-6 py-4 text-xs font-bold uppercase tracking-wider text-right">Sueldo Base</th>
+<th class="px-6 py-4 text-xs font-bold uppercase tracking-wider text-right">Prov. CTS</th>
+<th class="px-6 py-4 text-xs font-bold uppercase tracking-wider text-right">Prov. Gratificación</th>
+<th class="px-6 py-4 text-xs font-bold uppercase tracking-wider text-right">Prov. Vacaciones</th>
+<th class="px-6 py-4 text-xs font-bold uppercase tracking-wider text-right">Total Pasivo</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-primary/5">
+<!-- General Regime Row -->
+<tr class="hover:bg-primary/5 transition-colors group">
+<td class="px-6 py-4 sticky-col bg-white dark:bg-background-dark group-hover:bg-primary/5 transition-colors">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-slate-200 dark:bg-slate-700 flex items-center justify-center text-xs font-bold">AL</div>
+<div>
+<p class="text-sm font-semibold">Alvarez, Lorena</p>
+<p class="text-[10px] text-slate-500">DNI: 45789012</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center px-2 py-1 rounded text-[10px] font-bold bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400">GENERAL</span>
+</td>
+<td class="px-6 py-4 text-sm font-medium text-right">S/ 4,500.00</td>
+<td class="px-6 py-4 text-sm font-medium text-right">S/ 437.50</td>
+<td class="px-6 py-4 text-sm font-medium text-right">S/ 750.00</td>
+<td class="px-6 py-4 text-sm font-medium text-right text-primary">S/ 375.00</td>
+<td class="px-6 py-4 text-sm font-bold text-right">S/ 1,562.50</td>
+</tr>
+<!-- Pequeña Regime Row (50% calc) -->
+<tr class="hover:bg-primary/5 transition-colors group">
+<td class="px-6 py-4 sticky-col bg-white dark:bg-background-dark group-hover:bg-primary/5 transition-colors">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-slate-200 dark:bg-slate-700 flex items-center justify-center text-xs font-bold">RC</div>
+<div>
+<p class="text-sm font-semibold">Rojas, Carlos</p>
+<p class="text-[10px] text-slate-500">DNI: 12345678</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center px-2 py-1 rounded text-[10px] font-bold bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400">PEQUEÑA</span>
+</td>
+<td class="px-6 py-4 text-sm font-medium text-right">S/ 2,800.00</td>
+<td class="px-6 py-4 text-sm font-medium text-right">S/ 136.11 <span class="text-[8px] text-slate-500 block">(50%)</span></td>
+<td class="px-6 py-4 text-sm font-medium text-right">S/ 233.33 <span class="text-[8px] text-slate-500 block">(50%)</span></td>
+<td class="px-6 py-4 text-sm font-medium text-right text-primary">S/ 116.67</td>
+<td class="px-6 py-4 text-sm font-bold text-right">S/ 486.11</td>
+</tr>
+<!-- Micro Regime Row (N/A) -->
+<tr class="hover:bg-primary/5 transition-colors group">
+<td class="px-6 py-4 sticky-col bg-white dark:bg-background-dark group-hover:bg-primary/5 transition-colors">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-slate-200 dark:bg-slate-700 flex items-center justify-center text-xs font-bold">ME</div>
+<div>
+<p class="text-sm font-semibold">Mendoza, Elena</p>
+<p class="text-[10px] text-slate-500">DNI: 87654321</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center px-2 py-1 rounded text-[10px] font-bold bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400">MICRO</span>
+</td>
+<td class="px-6 py-4 text-sm font-medium text-right">S/ 1,200.00</td>
+<td class="px-6 py-4 text-sm font-medium text-right text-slate-400/50 italic">N/A</td>
+<td class="px-6 py-4 text-sm font-medium text-right text-slate-400/50 italic">N/A</td>
+<td class="px-6 py-4 text-sm font-medium text-right text-primary">S/ 50.00</td>
+<td class="px-6 py-4 text-sm font-bold text-right">S/ 50.00</td>
+</tr>
+<!-- More rows to fill space -->
+<tr class="hover:bg-primary/5 transition-colors group">
+<td class="px-6 py-4 sticky-col bg-white dark:bg-background-dark group-hover:bg-primary/5 transition-colors">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-slate-200 dark:bg-slate-700 flex items-center justify-center text-xs font-bold">ST</div>
+<div>
+<p class="text-sm font-semibold">Salas, Tomas</p>
+<p class="text-[10px] text-slate-500">DNI: 34567891</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center px-2 py-1 rounded text-[10px] font-bold bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400">GENERAL</span>
+</td>
+<td class="px-6 py-4 text-sm font-medium text-right">S/ 5,200.00</td>
+<td class="px-6 py-4 text-sm font-medium text-right">S/ 505.55</td>
+<td class="px-6 py-4 text-sm font-medium text-right">S/ 866.67</td>
+<td class="px-6 py-4 text-sm font-medium text-right text-primary">S/ 433.33</td>
+<td class="px-6 py-4 text-sm font-bold text-right">S/ 1,805.55</td>
+</tr>
+<tr class="hover:bg-primary/5 transition-colors group">
+<td class="px-6 py-4 sticky-col bg-white dark:bg-background-dark group-hover:bg-primary/5 transition-colors">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-slate-200 dark:bg-slate-700 flex items-center justify-center text-xs font-bold">GL</div>
+<div>
+<p class="text-sm font-semibold">Gomez, Lucía</p>
+<p class="text-[10px] text-slate-500">DNI: 22334455</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center px-2 py-1 rounded text-[10px] font-bold bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400">PEQUEÑA</span>
+</td>
+<td class="px-6 py-4 text-sm font-medium text-right">S/ 3,100.00</td>
+<td class="px-6 py-4 text-sm font-medium text-right">S/ 150.69 <span class="text-[8px] text-slate-500 block">(50%)</span></td>
+<td class="px-6 py-4 text-sm font-medium text-right">S/ 258.33 <span class="text-[8px] text-slate-500 block">(50%)</span></td>
+<td class="px-6 py-4 text-sm font-medium text-right text-primary">S/ 129.17</td>
+<td class="px-6 py-4 text-sm font-bold text-right">S/ 538.19</td>
+</tr>
+</tbody>
+<!-- Footer Sticky Total Row -->
+<tfoot class="bg-primary/10 border-t-2 border-primary/20 sticky bottom-0">
+<tr>
+<td class="px-6 py-4 sticky-col bg-primary/10 text-sm font-bold">TOTALES MENSUALES</td>
+<td class="px-6 py-4 text-xs font-semibold text-slate-500">Consolidado NexaCorp</td>
+<td class="px-6 py-4 text-sm font-bold text-right">S/ 16,800.00</td>
+<td class="px-6 py-4 text-sm font-bold text-right">S/ 1,229.85</td>
+<td class="px-6 py-4 text-sm font-bold text-right">S/ 2,108.33</td>
+<td class="px-6 py-4 text-sm font-bold text-right text-primary">S/ 1,104.17</td>
+<td class="px-6 py-4 text-base font-extrabold text-right text-primary bg-primary/10">S/ 4,442.35</td>
+</tr>
+</tfoot>
+</table>
+</div>
+</div>
+<!-- System Alerts / Notifications -->
+<div class="mt-8 grid grid-cols-1 lg:grid-cols-2 gap-4">
+<div class="p-4 bg-primary/5 rounded-xl border border-primary/20 flex items-start gap-4">
+<div class="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center shrink-0">
+<span class="material-icons text-primary text-xl">info</span>
+</div>
+<div>
+<h4 class="text-sm font-bold mb-1">Nota de Auditoría</h4>
+<p class="text-xs text-slate-500 leading-relaxed">Los cálculos de Micro Empresa consideran únicamente la provisión de Vacaciones (15 días por año). CTS y Gratificaciones están excluidos según Ley REMYPE vigente para este periodo fiscal.</p>
+</div>
+</div>
+<div class="p-4 bg-white dark:bg-background-dark rounded-xl border border-primary/10 flex items-center justify-between">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-full bg-green-500/20 flex items-center justify-center shrink-0">
+<span class="material-icons text-green-500 text-xl">verified_user</span>
+</div>
+<div>
+<h4 class="text-sm font-bold mb-1">Fórmulas Verificadas</h4>
+<p class="text-[10px] text-slate-500">Última validación regulatoria: 15/05/2024</p>
+</div>
+</div>
+<button class="text-xs text-primary font-bold hover:underline">Ver Parámetros</button>
+</div>
+</div>
+</main>
+<!-- Floating Action Button for Mobile -->
+<button class="lg:hidden fixed bottom-6 right-6 w-14 h-14 bg-primary rounded-full shadow-lg shadow-primary/40 flex items-center justify-center text-white z-50">
+<span class="material-icons">add</span>
+</button>
+</body></html>
