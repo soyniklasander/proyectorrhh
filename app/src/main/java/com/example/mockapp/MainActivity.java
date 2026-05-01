@@ -7,6 +7,8 @@ import androidx.core.content.ContextCompat;
 import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.content.BroadcastReceiver;
+import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.location.LocationManager;
 import android.os.Build;
@@ -22,6 +24,15 @@ public class MainActivity extends AppCompatActivity {
     private Button startMockButton, stopMockButton;
     private LocationManager locationManager;
     private static final int PERMISSION_REQUEST_CODE = 1001;
+
+    private BroadcastReceiver errorReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if ("MOCK_LOCATION_ERROR".equals(intent.getAction())) {
+                Toast.makeText(MainActivity.this, "Habilita esta app en Opciones de Desarrollador -> Elegir aplicación para simular ubicación", Toast.LENGTH_LONG).show();
+            }
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +70,23 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        IntentFilter filter = new IntentFilter("MOCK_LOCATION_ERROR");
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            registerReceiver(errorReceiver, filter, Context.RECEIVER_NOT_EXPORTED);
+        } else {
+            registerReceiver(errorReceiver, filter);
+        }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        unregisterReceiver(errorReceiver);
+    }
+
     private boolean checkPermissions() {
         boolean fineLocation = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED;
         boolean postNotifications = true;
@@ -92,7 +120,7 @@ public class MainActivity extends AppCompatActivity {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 // Permissions granted
             } else {
-                Toast.makeText(this, "Permissions required for spoofing to work", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "Se requieren permisos para que la simulación funcione", Toast.LENGTH_LONG).show();
             }
         }
     }
@@ -102,7 +130,7 @@ public class MainActivity extends AppCompatActivity {
         String lngStr = lngEditText.getText().toString();
 
         if (latStr.isEmpty() || lngStr.isEmpty()) {
-            Toast.makeText(this, "Please enter latitude and longitude", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Por favor, introduce latitud y longitud", Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -121,18 +149,18 @@ public class MainActivity extends AppCompatActivity {
                 startService(serviceIntent);
             }
 
-            Toast.makeText(this, "Started Mock Location Service", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Servicio de Simulación Iniciado", Toast.LENGTH_SHORT).show();
 
         } catch (NumberFormatException e) {
-            Toast.makeText(this, "Invalid coordinates", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Coordenadas inválidas", Toast.LENGTH_SHORT).show();
         } catch (SecurityException e) {
-            Toast.makeText(this, "Please enable this app in Developer Options -> Select mock location app", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Habilita esta app en Opciones de Desarrollador -> Elegir aplicación para simular ubicación", Toast.LENGTH_LONG).show();
         }
     }
 
     private void stopMocking() {
         Intent serviceIntent = new Intent(this, MockLocationService.class);
         stopService(serviceIntent);
-        Toast.makeText(this, "Stopped Mock Location Service", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Servicio de Simulación Detenido", Toast.LENGTH_SHORT).show();
     }
 }
