@@ -56,7 +56,7 @@ public class MockLocationService extends Service {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             NotificationChannel serviceChannel = new NotificationChannel(
                     CHANNEL_ID,
-                    "Mock Location Service Channel",
+                    "Canal de Servicio de Ubicación Simulada",
                     NotificationManager.IMPORTANCE_DEFAULT
             );
 
@@ -75,8 +75,8 @@ public class MockLocationService extends Service {
         );
 
         return new NotificationCompat.Builder(this, CHANNEL_ID)
-                .setContentTitle("Spoofing GPS Location")
-                .setContentText("Mocking to: " + lat + ", " + lng)
+                .setContentTitle("Simulando Ubicación GPS")
+                .setContentText("Simulando en: " + lat + ", " + lng)
                 .setSmallIcon(android.R.drawable.ic_menu_mylocation)
                 .setContentIntent(pendingIntent)
                 .setOngoing(true)
@@ -107,7 +107,7 @@ public class MockLocationService extends Service {
             );
             locationManager.setTestProviderEnabled(MOCK_PROVIDER, true);
         } catch (SecurityException e) {
-            Log.e(TAG, "SecurityException: Developer Options -> Select mock location app not set.", e);
+            Log.e(TAG, "SecurityException: Opciones de desarrollador -> Seleccionar aplicación de ubicación de prueba no configurada.", e);
             stopSelf();
             return;
         } catch (IllegalArgumentException e) {

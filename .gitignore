@@ -12,3 +12,8 @@ tsconfig.tsbuildinfo
 
 backend/.wrangler/
 backend/local.db
+
+build/
+app/build/
+.gradle/
+local.properties

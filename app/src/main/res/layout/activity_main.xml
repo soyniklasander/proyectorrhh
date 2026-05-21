@@ -3,21 +3,28 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="24dp"
-    android:gravity="center">
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="GPS Spoofer"
-        android:textSize="28sp"
-        android:textStyle="bold"
-        android:layout_marginBottom="32dp"/>
+    android:padding="24dp">
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Latitude:"
+        android:text="Simulador GPS"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:layout_marginBottom="16dp"/>
+
+    <org.osmdroid.views.MapView
+        android:id="@+id/mapView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_marginBottom="16dp"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Latitud:"
         android:textStyle="bold"
         android:layout_marginBottom="4dp"/>
 
@@ -25,14 +32,14 @@
         android:id="@+id/latEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="e.g. 37.422"
+        android:hint="ej. 37.422"
         android:inputType="numberDecimal|numberSigned"
-        android:layout_marginBottom="16dp"/>
+        android:layout_marginBottom="8dp"/>
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Longitude:"
+        android:text="Longitud:"
         android:textStyle="bold"
         android:layout_marginBottom="4dp"/>
 
@@ -40,15 +47,15 @@
         android:id="@+id/lngEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="e.g. -122.084"
+        android:hint="ej. -122.084"
         android:inputType="numberDecimal|numberSigned"
-        android:layout_marginBottom="32dp"/>
+        android:layout_marginBottom="16dp"/>
 
     <Button
         android:id="@+id/startMockButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Start Spoofing"
+        android:text="Iniciar Simulación"
         android:padding="16dp"
         android:backgroundTint="#4CAF50"
         android:textColor="#FFFFFF"
@@ -58,11 +65,11 @@
         android:id="@+id/stopMockButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Stop Spoofing"
+        android:text="Detener Simulación"
         android:padding="16dp"
         android:backgroundTint="#F44336"
         android:textColor="#FFFFFF"
         android:textSize="18sp"
-        android:layout_marginTop="16dp"/>
+        android:layout_marginTop="8dp"/>
 
 </LinearLayout>
