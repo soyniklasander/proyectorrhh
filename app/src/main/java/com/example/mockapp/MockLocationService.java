@@ -56,7 +56,7 @@ public class MockLocationService extends Service {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             NotificationChannel serviceChannel = new NotificationChannel(
                     CHANNEL_ID,
-                    "Mock Location Service Channel",
+                    "Canal de Servicio de Ubicación Simulada",
                     NotificationManager.IMPORTANCE_DEFAULT
             );
 
@@ -75,8 +75,8 @@ public class MockLocationService extends Service {
         );
 
         return new NotificationCompat.Builder(this, CHANNEL_ID)
-                .setContentTitle("Spoofing GPS Location")
-                .setContentText("Mocking to: " + lat + ", " + lng)
+                .setContentTitle("Simulando Ubicación GPS")
+                .setContentText("Ubicación simulada en: " + String.format("%.5f, %.5f", lat, lng))
                 .setSmallIcon(android.R.drawable.ic_menu_mylocation)
                 .setContentIntent(pendingIntent)
                 .setOngoing(true)
@@ -107,11 +107,11 @@ public class MockLocationService extends Service {
             );
             locationManager.setTestProviderEnabled(MOCK_PROVIDER, true);
         } catch (SecurityException e) {
-            Log.e(TAG, "SecurityException: Developer Options -> Select mock location app not set.", e);
+            Log.e(TAG, "SecurityException: Opciones de desarrollador -> Aplicación de ubicación simulada no configurada.", e);
             stopSelf();
             return;
         } catch (IllegalArgumentException e) {
-            Log.i(TAG, "Test provider already exists");
+            Log.i(TAG, "El proveedor de prueba ya existe");
         }
 
         isMocking = true;
@@ -132,13 +132,13 @@ public class MockLocationService extends Service {
                         locationManager.setTestProviderLocation(MOCK_PROVIDER, mockLocation);
                         Thread.sleep(1000); // Update every second to keep connection alive
                     } catch (InterruptedException e) {
-                        Log.i(TAG, "Mocking thread interrupted.");
+                        Log.i(TAG, "Hilo de simulación interrumpido.");
                         break;
                     } catch (SecurityException e) {
-                        Log.e(TAG, "SecurityException while mocking", e);
+                        Log.e(TAG, "SecurityException al simular", e);
                         break;
                     } catch (Exception e) {
-                        Log.e(TAG, "Exception while mocking", e);
+                        Log.e(TAG, "Excepción al simular", e);
                     }
                 }
             }
@@ -157,7 +157,7 @@ public class MockLocationService extends Service {
         try {
             locationManager.removeTestProvider(MOCK_PROVIDER);
         } catch (Exception e) {
-            Log.e(TAG, "Failed to remove test provider", e);
+            Log.e(TAG, "Fallo al remover proveedor de prueba", e);
         }
 
         super.onDestroy();
