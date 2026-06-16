@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Ubicación Falsa</string>
+    <string name="start_mocking">Iniciar Simulación</string>
+    <string name="stop_mocking">Detener Simulación</string>
+    <string name="mock_location_error">Por favor, establece esta aplicación como "Aplicación para simular ubicación" en las Opciones de Desarrollador.</string>
+    <string name="permissions_required">Se requieren permisos de ubicación y notificaciones para funcionar.</string>
+    <string name="notification_channel_name">Servicio de Ubicación Simulada</string>
+    <string name="notification_title">Simulación de Ubicación Activa</string>
+    <string name="notification_content">La ubicación está siendo simulada.</string>
+</resources>
