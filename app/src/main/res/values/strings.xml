@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">MockApp</string>
+    <string name="start_mocking">Iniciar Simulación</string>
+    <string name="stop_mocking">Detener Simulación</string>
+    <string name="location_selected">Ubicación seleccionada: %1$s, %2$s</string>
+    <string name="permissions_required">Se requieren permisos de ubicación y notificaciones para funcionar.</string>
+    <string name="mock_location_error">Por favor, establece esta aplicación como la aplicación de ubicación simulada en Opciones de Desarrollador.</string>
+    <string name="notification_channel_name">Servicio de Ubicación Simulada</string>
+    <string name="notification_title">Ubicación Simulada Activa</string>
+    <string name="notification_text">Simulando ubicación en segundo plano...</string>
+</resources>
