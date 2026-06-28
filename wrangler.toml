@@ -16,10 +16,11 @@ id = "fc77679cb6c94ffbb09a750902e853cc"
 ENVIRONMENT = "production"
 API_VERSION = "v1"
 CORS_ORIGIN = "*"
-JWT_SECRET = "rrhhmod-super-secret-key-change-in-production-2024"
+JWT_SECRET = "dummy"
 
 # Build configuration
-build = "npm install && npm run build"
+[build]
+command = "echo 'noop'"
 
 [build.upload]
-format = "service-worker"
+format = "modules"
