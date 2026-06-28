@@ -1,0 +1,8 @@
+{
+  "name": "rrhhmod-root",
+  "private": true,
+  "scripts": {
+    "build": "mkdir -p dist && echo 'OK' > dist/index.html",
+    "deploy": "npm run build"
+  }
+}

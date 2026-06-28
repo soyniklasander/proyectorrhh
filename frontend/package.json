@@ -1,0 +1,6 @@
+{
+  "name": "dummy-frontend",
+  "scripts": {
+    "build": "mkdir -p dist && echo 'OK' > dist/index.html"
+  }
+}
