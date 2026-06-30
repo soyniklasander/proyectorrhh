@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">MockApp</string>
+    <string name="start_mock">Iniciar Simulación</string>
+    <string name="stop_mock">Detener</string>
+    <string name="mock_error">Por favor, habilita esta app como \"Aplicación de ubicación de prueba\" en las Opciones de Desarrollador.</string>
+    <string name="permission_required">Se requieren permisos para usar la aplicación.</string>
+</resources>
