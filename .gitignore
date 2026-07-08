@@ -1,14 +1,9 @@
-node_modules/
-dist/
-.env
-.dev.vars
-*.log
-.DS_Store
-.nyc_output
-coverage/
-.tmp/
-.cache/
-tsconfig.tsbuildinfo
+# Gradle build artifacts
+build/
+app/build/
+.gradle/
+local.properties
 
-backend/.wrangler/
-backend/local.db
+# Other things usually generated
+*.iml
+.idea/
