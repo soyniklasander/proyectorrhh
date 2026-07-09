@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Ubicación Falsa</string>
+    <string name="start_mocking">Iniciar Simulación</string>
+    <string name="stop_mocking">Detener Simulación</string>
+    <string name="open_dev_options">Abrir Opciones de Desarrollador</string>
+    <string name="mock_location_not_enabled">Debes seleccionar esta app como "App de ubicación de prueba" en las Opciones de desarrollador.</string>
+    <string name="permissions_required">Se requieren permisos de ubicación y notificaciones para funcionar correctamente.</string>
+    <string name="map_instruction">Toca en el mapa para seleccionar la ubicación a simular</string>
+    <string name="location_selected">Ubicación seleccionada: %1$s, %2$s</string>
+    <string name="notification_channel_name">Simulación de Ubicación</string>
+    <string name="notification_title">Simulando Ubicación</string>
+    <string name="notification_text">Se está enviando la ubicación falsa seleccionada</string>
+</resources>

@@ -1,68 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="24dp"
-    android:gravity="center">
+    tools:context=".MainActivity">
 
     <TextView
-        android:layout_width="wrap_content"
+        android:id="@+id/tvInstruction"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="GPS Spoofer"
-        android:textSize="28sp"
-        android:textStyle="bold"
-        android:layout_marginBottom="32dp"/>
+        android:layout_margin="16dp"
+        android:text="@string/map_instruction"
+        android:textAlignment="center"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <org.osmdroid.views.MapView
+        android:id="@+id/mapView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintBottom_toTopOf="@+id/tvLocation"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvInstruction" />
 
     <TextView
-        android:layout_width="match_parent"
+        android:id="@+id/tvLocation"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Latitude:"
-        android:textStyle="bold"
-        android:layout_marginBottom="4dp"/>
-
-    <EditText
-        android:id="@+id/latEditText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="e.g. 37.422"
-        android:inputType="numberDecimal|numberSigned"
-        android:layout_marginBottom="16dp"/>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Longitude:"
-        android:textStyle="bold"
-        android:layout_marginBottom="4dp"/>
-
-    <EditText
-        android:id="@+id/lngEditText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="e.g. -122.084"
-        android:inputType="numberDecimal|numberSigned"
-        android:layout_marginBottom="32dp"/>
+        android:layout_margin="16dp"
+        android:textAlignment="center"
+        android:textSize="14sp"
+        android:text="Ubicación no seleccionada"
+        app:layout_constraintBottom_toTopOf="@+id/btnAction"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/startMockButton"
-        android:layout_width="match_parent"
+        android:id="@+id/btnAction"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Start Spoofing"
-        android:padding="16dp"
-        android:backgroundTint="#4CAF50"
-        android:textColor="#FFFFFF"
-        android:textSize="18sp"/>
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:text="@string/start_mocking"
+        app:layout_constraintBottom_toTopOf="@+id/btnDevSettings"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/stopMockButton"
-        android:layout_width="match_parent"
+        android:id="@+id/btnDevSettings"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Stop Spoofing"
-        android:padding="16dp"
-        android:backgroundTint="#F44336"
-        android:textColor="#FFFFFF"
-        android:textSize="18sp"
-        android:layout_marginTop="16dp"/>
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:text="@string/open_dev_options"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
