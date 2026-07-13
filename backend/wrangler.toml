@@ -14,9 +14,5 @@ id = "fc77679cb6c94ffbb09a750902e853cc"
 
 [vars]
 ENVIRONMENT = "production"
-API_VERSION = "v1"
-CORS_ORIGIN = "*"
-JWT_SECRET = "rrhhmod-super-secret-key-change-in-production-2024"
 
-# Build configuration
-build = { command = "npm install && npm run build" }
+build = { command = "npm run build" }
