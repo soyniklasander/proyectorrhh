@@ -1,14 +1,36 @@
-node_modules/
-dist/
-.env
-.dev.vars
-*.log
-.DS_Store
-.nyc_output
-coverage/
-.tmp/
-.cache/
-tsconfig.tsbuildinfo
+# OS-specific
+*.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
 
-backend/.wrangler/
-backend/local.db
+# Gradle and Build Files
+build/
+app/build/
+.gradle/
+local.properties
+
+# IDE Configs
+/.idea/
+.idea/workspace.xml
+.idea/tasks.xml
+.idea/gradle.xml
+.idea/assetWizardSettings.xml
+.idea/dictionaries
+.idea/libraries
+.idea/caches
+.idea/modules.xml
+.idea/vcs.xml
+.idea/navEditor.xml
+.idea/codeStyles/
+*.iml
+*.iws
+
+# Test Configs and results
+test-results/
+
+# Log Files
+*.log
