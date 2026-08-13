@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">Ubicación Simulada</string>
+    <string name="btn_start_mocking">Iniciar Simulación</string>
+    <string name="btn_stop_mocking">Detener Simulación</string>
+    <string name="mock_location_not_enabled_title">Ubicación Simulada no habilitada</string>
+    <string name="mock_location_not_enabled_msg">Por favor, establece esta aplicación como la aplicación de ubicación simulada en las opciones de desarrollador.</string>
+    <string name="open_settings">Abrir Opciones</string>
+    <string name="cancel">Cancelar</string>
+    <string name="permissions_required">Permisos requeridos</string>
+    <string name="permissions_required_msg">La aplicación necesita permisos de ubicación y notificaciones para funcionar correctamente.</string>
+    <string name="grant">Conceder</string>
+    <string name="notification_channel_name">Servicio de Ubicación Simulada</string>
+    <string name="notification_title">Simulando Ubicación</string>
+    <string name="notification_text">La ubicación falsa está activa</string>
+</resources>
