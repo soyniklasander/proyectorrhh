@@ -1,14 +1,20 @@
-node_modules/
-dist/
-.env
-.dev.vars
-*.log
+*.iml
+.gradle
+/local.properties
+/.idea/caches
+/.idea/libraries
+/.idea/modules.xml
+/.idea/workspace.xml
+/.idea/navEditor.xml
+/.idea/assetWizardSettings.xml
 .DS_Store
-.nyc_output
-coverage/
-.tmp/
-.cache/
-tsconfig.tsbuildinfo
+/build
+/captures
+.externalNativeBuild
+.cxx
+local.properties
 
-backend/.wrangler/
-backend/local.db
+# Gradle
+.gradle/
+build/
+app/build/
