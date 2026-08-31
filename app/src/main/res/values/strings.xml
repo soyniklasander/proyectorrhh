@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">Simulador GPS</string>
+    <string name="start_mocking">Iniciar Simulación</string>
+    <string name="stop_mocking">Detener Simulación</string>
+    <string name="mock_location_error_title">Permiso Necesario</string>
+    <string name="mock_location_error_message">Debes configurar esta aplicación como \"Aplicación para simular ubicación\" en las Opciones de Desarrollador de tu dispositivo para poder falsificar la ubicación GPS.</string>
+    <string name="open_settings">Abrir Ajustes</string>
+    <string name="cancel">Cancelar</string>
+    <string name="notification_channel_name">Servicio de Simulación de Ubicación</string>
+    <string name="notification_title">Simulando ubicación...</string>
+    <string name="notification_text">El GPS está siendo modificado.</string>
+    <string name="location_selected">Ubicación seleccionada: %1$s, %2$s</string>
+    <string name="permissions_required">Se requieren permisos de ubicación y notificaciones para funcionar correctamente.</string>
+</resources>
