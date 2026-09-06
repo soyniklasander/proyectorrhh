@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">MockApp</string>
+    <string name="status_not_running">Estado: Detenido</string>
+    <string name="status_running">Estado: Simulando ubicación...</string>
+    <string name="btn_start">Iniciar Simulación</string>
+    <string name="btn_stop">Detener Simulación</string>
+    <string name="error_permissions">Se requieren permisos para continuar.</string>
+    <string name="error_mock_app">Por favor, configura esta app como la aplicación de ubicación de prueba en Opciones de Desarrollador.</string>
+    <string name="settings_button">Ir a Ajustes</string>
+    <string name="notification_title">Simulación activa</string>
+    <string name="notification_text">Se está enviando ubicación falsa</string>
+    <string name="notification_channel_name">Servicio de Ubicación Falsa</string>
+</resources>
