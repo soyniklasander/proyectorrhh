@@ -1,14 +1,7 @@
-node_modules/
-dist/
-.env
-.dev.vars
-*.log
-.DS_Store
-.nyc_output
-coverage/
-.tmp/
-.cache/
-tsconfig.tsbuildinfo
+# Build artifacts
+build/
+app/build/
+.gradle/
 
-backend/.wrangler/
-backend/local.db
+# Local configuration
+local.properties
