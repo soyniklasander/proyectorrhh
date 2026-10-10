@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Simulador GPS</string>
+    <string name="start_spoofing">Iniciar simulación</string>
+    <string name="stop_spoofing">Detener simulación</string>
+    <string name="mock_location_error">Por favor, selecciona esta aplicación como la aplicación de ubicación de prueba en las Opciones de Desarrollador.</string>
+    <string name="permissions_required">Se requieren permisos de ubicación y notificaciones para que la aplicación funcione.</string>
+    <string name="tap_to_select">Toca en el mapa para seleccionar una ubicación</string>
+    <string name="service_running">Simulando ubicación...</string>
+    <string name="service_channel_name">Servicio de ubicación de prueba</string>
+</resources>
