@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Ubicación Falsa</string>
+    <string name="start_mock">Iniciar Ubicación Falsa</string>
+    <string name="stop_mock">Detener Ubicación Falsa</string>
+    <string name="mock_active">Ubicación falsa activa</string>
+    <string name="mock_inactive">Ubicación falsa inactiva</string>
+    <string name="permission_required">Se requieren permisos para funcionar</string>
+    <string name="enable_mock_app">Por favor, selecciona esta aplicación como aplicación de ubicación de prueba en las Opciones de Desarrollador</string>
+    <string name="notification_channel_name">Servicio de Ubicación Falsa</string>
+</resources>
