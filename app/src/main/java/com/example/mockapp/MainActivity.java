@@ -1,138 +1,162 @@
 package com.example.mockapp;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-
 import android.Manifest;
+import android.app.AppOpsManager;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.PackageManager;
-import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
-import android.view.View;
+import android.provider.Settings;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.Toast;
+
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
+
+import org.osmdroid.config.Configuration;
+import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
+import org.osmdroid.util.GeoPoint;
+import org.osmdroid.views.MapView;
 
 public class MainActivity extends AppCompatActivity {
 
-    private EditText latEditText, lngEditText;
-    private Button startMockButton, stopMockButton;
-    private LocationManager locationManager;
-    private static final int PERMISSION_REQUEST_CODE = 1001;
+    private MapView map;
+    private Button btnStart;
+    private Button btnStop;
+    private boolean isMocking = false;
+
+    private final BroadcastReceiver errorReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if ("com.example.mockapp.MOCK_LOCATION_ERROR".equals(intent.getAction())) {
+                stopMocking();
+                Toast.makeText(MainActivity.this, R.string.mock_location_not_enabled, Toast.LENGTH_LONG).show();
+            }
+        }
+    };
+
+    private final ActivityResultLauncher<String[]> requestPermissionLauncher =
+            registerForActivityResult(new ActivityResultContracts.RequestMultiplePermissions(), result -> {
+                Boolean fineLocationGranted = result.getOrDefault(Manifest.permission.ACCESS_FINE_LOCATION, false);
+                Boolean coarseLocationGranted = result.getOrDefault(Manifest.permission.ACCESS_COARSE_LOCATION, false);
+
+                if (fineLocationGranted != null && fineLocationGranted && coarseLocationGranted != null && coarseLocationGranted) {
+                    setupMap();
+                } else {
+                    Toast.makeText(this, R.string.location_permission_required, Toast.LENGTH_SHORT).show();
+                }
+            });
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        Configuration.getInstance().load(getApplicationContext(), androidx.preference.PreferenceManager.getDefaultSharedPreferences(getApplicationContext()));
+
         setContentView(R.layout.activity_main);
 
-        latEditText = findViewById(R.id.latEditText);
-        lngEditText = findViewById(R.id.lngEditText);
-        startMockButton = findViewById(R.id.startMockButton);
-        stopMockButton = findViewById(R.id.stopMockButton);
+        map = findViewById(R.id.map);
+        btnStart = findViewById(R.id.btnStart);
+        btnStop = findViewById(R.id.btnStop);
 
-        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        checkPermissionsAndSetupMap();
 
-        startMockButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (checkPermissions()) {
-                    startMocking();
-                } else {
-                    requestPermissions();
-                }
+        btnStart.setOnClickListener(v -> {
+            if (isMockLocationEnabled()) {
+                startMocking();
+            } else {
+                Toast.makeText(this, R.string.mock_location_not_enabled, Toast.LENGTH_LONG).show();
+                startActivity(new Intent(Settings.ACTION_APPLICATION_DEVELOPMENT_SETTINGS));
             }
         });
 
-        stopMockButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                stopMocking();
-            }
-        });
+        btnStop.setOnClickListener(v -> stopMocking());
 
-        // Request permissions right away
-        if (!checkPermissions()) {
-            requestPermissions();
+        IntentFilter filter = new IntentFilter("com.example.mockapp.MOCK_LOCATION_ERROR");
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            registerReceiver(errorReceiver, filter, Context.RECEIVER_NOT_EXPORTED);
+        } else {
+            registerReceiver(errorReceiver, filter);
         }
     }
 
-    private boolean checkPermissions() {
-        boolean fineLocation = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED;
-        boolean postNotifications = true;
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            postNotifications = ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED;
-        }
-
-        return fineLocation && postNotifications;
-    }
-
-    private void requestPermissions() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            ActivityCompat.requestPermissions(this, new String[]{
+    private void checkPermissionsAndSetupMap() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED &&
+            ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            setupMap();
+        } else {
+            requestPermissionLauncher.launch(new String[]{
                     Manifest.permission.ACCESS_FINE_LOCATION,
                     Manifest.permission.ACCESS_COARSE_LOCATION,
                     Manifest.permission.POST_NOTIFICATIONS
-            }, PERMISSION_REQUEST_CODE);
-        } else {
-            ActivityCompat.requestPermissions(this, new String[]{
-                    Manifest.permission.ACCESS_FINE_LOCATION,
-                    Manifest.permission.ACCESS_COARSE_LOCATION
-            }, PERMISSION_REQUEST_CODE);
+            });
         }
     }
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode == PERMISSION_REQUEST_CODE) {
-            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                // Permissions granted
-            } else {
-                Toast.makeText(this, "Permissions required for spoofing to work", Toast.LENGTH_LONG).show();
+    private void setupMap() {
+        map.setTileSource(TileSourceFactory.MAPNIK);
+        map.setMultiTouchControls(true);
+        // Default center
+        map.getController().setZoom(15.0);
+        map.getController().setCenter(new GeoPoint(-12.0464, -77.0428)); // Lima, Peru
+    }
+
+    private boolean isMockLocationEnabled() {
+        AppOpsManager opsManager = (AppOpsManager) getSystemService(Context.APP_OPS_SERVICE);
+        if (opsManager != null) {
+            try {
+                return opsManager.checkOp(AppOpsManager.OPSTR_MOCK_LOCATION, android.os.Process.myUid(), getPackageName()) == AppOpsManager.MODE_ALLOWED;
+            } catch (Exception e) {
+                return false;
             }
         }
+        return false;
     }
 
     private void startMocking() {
-        String latStr = latEditText.getText().toString();
-        String lngStr = lngEditText.getText().toString();
+        GeoPoint center = (GeoPoint) map.getMapCenter();
+        Intent serviceIntent = new Intent(this, MockLocationService.class);
+        serviceIntent.putExtra("lat", center.getLatitude());
+        serviceIntent.putExtra("lon", center.getLongitude());
 
-        if (latStr.isEmpty() || lngStr.isEmpty()) {
-            Toast.makeText(this, "Please enter latitude and longitude", Toast.LENGTH_SHORT).show();
-            return;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            startForegroundService(serviceIntent);
+        } else {
+            startService(serviceIntent);
         }
 
-        try {
-            double lat = Double.parseDouble(latStr);
-            double lng = Double.parseDouble(lngStr);
-
-            // Start the foreground service
-            Intent serviceIntent = new Intent(this, MockLocationService.class);
-            serviceIntent.putExtra("lat", lat);
-            serviceIntent.putExtra("lng", lng);
-
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                startForegroundService(serviceIntent);
-            } else {
-                startService(serviceIntent);
-            }
-
-            Toast.makeText(this, "Started Mock Location Service", Toast.LENGTH_SHORT).show();
-
-        } catch (NumberFormatException e) {
-            Toast.makeText(this, "Invalid coordinates", Toast.LENGTH_SHORT).show();
-        } catch (SecurityException e) {
-            Toast.makeText(this, "Please enable this app in Developer Options -> Select mock location app", Toast.LENGTH_LONG).show();
-        }
+        isMocking = true;
+        btnStart.setEnabled(false);
+        btnStop.setEnabled(true);
     }
 
     private void stopMocking() {
-        Intent serviceIntent = new Intent(this, MockLocationService.class);
-        stopService(serviceIntent);
-        Toast.makeText(this, "Stopped Mock Location Service", Toast.LENGTH_SHORT).show();
+        stopService(new Intent(this, MockLocationService.class));
+        isMocking = false;
+        btnStart.setEnabled(true);
+        btnStop.setEnabled(false);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (map != null) map.onResume();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        if (map != null) map.onPause();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(errorReceiver);
     }
 }
