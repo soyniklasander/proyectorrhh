@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">Simulador de Ubicación</string>
+    <string name="start_simulation">Iniciar Simulación</string>
+    <string name="stop_simulation">Detener Simulación</string>
+    <string name="mock_location_permission_needed">Debes establecer esta app como la aplicación para simular ubicación en Opciones de Desarrollador.</string>
+    <string name="open_settings">Abrir Ajustes</string>
+    <string name="simulation_started">Simulación iniciada</string>
+    <string name="simulation_stopped">Simulación detenida</string>
+    <string name="notification_channel_name">Servicio de Ubicación Simulada</string>
+    <string name="notification_title">Simulando Ubicación</string>
+    <string name="notification_text">La aplicación está simulando tu ubicación en segundo plano.</string>
+    <string name="permissions_required">Se requieren permisos de ubicación y notificaciones.</string>
+</resources>
