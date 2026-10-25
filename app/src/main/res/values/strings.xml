@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Simulador GPS</string>
+    <string name="start_spoofing">Iniciar simulación</string>
+    <string name="stop_spoofing">Detener simulación</string>
+    <string name="mock_location_not_enabled">La aplicación no está configurada como la aplicación de ubicación de prueba en las Opciones de desarrollador.</string>
+    <string name="permissions_required">Se requieren permisos de ubicación para simular la posición.</string>
+    <string name="notification_channel_name">Servicio de Simulación GPS</string>
+    <string name="notification_title">Simulación GPS Activa</string>
+    <string name="notification_text">Simulando ubicación en segundo plano.</string>
+    <string name="error_mock_provider">Error al iniciar el proveedor de ubicación de prueba. Asegúrese de haber seleccionado esta app en las Opciones de Desarrollador.</string>
+</resources>
