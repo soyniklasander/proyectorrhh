@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Mock Location App</string>
+    <string name="start_mock">Iniciar Mock</string>
+    <string name="stop_mock">Detener Mock</string>
+    <string name="mock_location_not_enabled">La aplicación no está configurada como app de ubicación de prueba en las Opciones de Desarrollador.</string>
+    <string name="mock_service_running">Servicio de ubicación simulada en ejecución</string>
+    <string name="mock_service_description">Simulando ubicación en el punto seleccionado.</string>
+    <string name="permission_required">Se requieren permisos para que la aplicación funcione.</string>
+    <string name="developer_options_needed">Por favor, selecciona esta app en \"Seleccionar aplicación para simular ubicación\" en las Opciones de Desarrollador.</string>
+</resources>
