@@ -3,167 +3,158 @@ package com.example.mockapp;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ServiceInfo;
 import android.location.Location;
 import android.location.LocationManager;
+import android.location.provider.ProviderProperties;
 import android.os.Build;
+import android.os.Handler;
+import android.os.HandlerThread;
 import android.os.IBinder;
+import android.os.Looper;
 import android.os.SystemClock;
-import android.util.Log;
 
-import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
 
 public class MockLocationService extends Service {
 
-    private static final String TAG = "MockLocationService";
-    private static final String CHANNEL_ID = "MockLocationChannel";
-    private static final int NOTIFICATION_ID = 1;
-    private static final String MOCK_PROVIDER = LocationManager.GPS_PROVIDER;
-
     private LocationManager locationManager;
-    private Thread mockThread;
-    private volatile boolean isMocking = false;
+    private Handler handler;
+    private HandlerThread handlerThread;
     private double lat = 0.0;
-    private double lng = 0.0;
+    private double lon = 0.0;
+    private boolean isRunning = false;
+
+    private static final String CHANNEL_ID = "MockLocationChannel";
+
+    private final Runnable mockLocationRunnable = new Runnable() {
+        @Override
+        public void run() {
+            if (isRunning) {
+                try {
+                    Location mockLocation = new Location(LocationManager.GPS_PROVIDER);
+                    mockLocation.setLatitude(lat);
+                    mockLocation.setLongitude(lon);
+                    mockLocation.setAltitude(0.0);
+                    mockLocation.setAccuracy(5.0f);
+                    mockLocation.setTime(System.currentTimeMillis());
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+                        mockLocation.setElapsedRealtimeNanos(SystemClock.elapsedRealtimeNanos());
+                    }
+
+                    locationManager.setTestProviderLocation(LocationManager.GPS_PROVIDER, mockLocation);
+                } catch (SecurityException | IllegalArgumentException e) {
+                    sendErrorBroadcast();
+                    stopSelf();
+                    return;
+                }
+
+                handler.postDelayed(this, 1000);
+            }
+        }
+    };
 
     @Override
     public void onCreate() {
         super.onCreate();
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        handlerThread = new HandlerThread("MockLocationThread");
+        handlerThread.start();
+        handler = new Handler(handlerThread.getLooper());
     }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         if (intent != null) {
             lat = intent.getDoubleExtra("lat", 0.0);
-            lng = intent.getDoubleExtra("lng", 0.0);
+            lon = intent.getDoubleExtra("lon", 0.0);
         }
 
         createNotificationChannel();
-        Notification notification = createNotification();
-        startForeground(NOTIFICATION_ID, notification);
+        Notification notification = new NotificationCompat.Builder(this, CHANNEL_ID)
+                .setContentTitle(getString(R.string.mock_service_running))
+                .setContentText(getString(R.string.mock_service_description))
+                .setSmallIcon(android.R.drawable.ic_menu_mylocation)
+                .setOngoing(true)
+                .build();
 
-        startMocking();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            startForeground(1, notification, ServiceInfo.FOREGROUND_SERVICE_TYPE_LOCATION);
+        } else {
+            startForeground(1, notification);
+        }
+
+        if (!isRunning) {
+            setupMockProvider();
+            isRunning = true;
+            handler.post(mockLocationRunnable);
+        }
 
         return START_STICKY;
     }
 
+    private void setupMockProvider() {
+        try {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                locationManager.addTestProvider(LocationManager.GPS_PROVIDER, false, false, false, false, false, false, false, ProviderProperties.POWER_USAGE_LOW, ProviderProperties.ACCURACY_FINE);
+            } else {
+                locationManager.addTestProvider(LocationManager.GPS_PROVIDER, false, false, false, false, true, true, true, 1, 1);
+            }
+            locationManager.setTestProviderEnabled(LocationManager.GPS_PROVIDER, true);
+        } catch (IllegalArgumentException e) {
+            // Already exists
+            try {
+                locationManager.setTestProviderEnabled(LocationManager.GPS_PROVIDER, true);
+            } catch (Exception ex) {
+                sendErrorBroadcast();
+                stopSelf();
+            }
+        } catch (SecurityException e) {
+            sendErrorBroadcast();
+            stopSelf();
+        }
+    }
+
+    private void sendErrorBroadcast() {
+        Intent intent = new Intent("com.example.mockapp.MOCK_LOCATION_ERROR");
+        intent.setPackage(getPackageName());
+        sendBroadcast(intent);
+    }
+
     private void createNotificationChannel() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            NotificationChannel serviceChannel = new NotificationChannel(
+            NotificationChannel channel = new NotificationChannel(
                     CHANNEL_ID,
-                    "Mock Location Service Channel",
-                    NotificationManager.IMPORTANCE_DEFAULT
+                    "Mock Location Service",
+                    NotificationManager.IMPORTANCE_LOW
             );
-
             NotificationManager manager = getSystemService(NotificationManager.class);
             if (manager != null) {
-                manager.createNotificationChannel(serviceChannel);
+                manager.createNotificationChannel(channel);
             }
         }
-    }
-
-    private Notification createNotification() {
-        Intent notificationIntent = new Intent(this, MainActivity.class);
-        PendingIntent pendingIntent = PendingIntent.getActivity(
-                this, 0, notificationIntent,
-                PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT
-        );
-
-        return new NotificationCompat.Builder(this, CHANNEL_ID)
-                .setContentTitle("Spoofing GPS Location")
-                .setContentText("Mocking to: " + lat + ", " + lng)
-                .setSmallIcon(android.R.drawable.ic_menu_mylocation)
-                .setContentIntent(pendingIntent)
-                .setOngoing(true)
-                .build();
-    }
-
-    private void startMocking() {
-        if (isMocking) {
-            // Stop existing thread if starting a new location
-            isMocking = false;
-            if (mockThread != null) {
-                mockThread.interrupt();
-            }
-        }
-
-        try {
-            locationManager.addTestProvider(
-                MOCK_PROVIDER,
-                false,
-                false,
-                false,
-                false,
-                true,
-                true,
-                true,
-                android.location.provider.ProviderProperties.POWER_USAGE_LOW,
-                android.location.provider.ProviderProperties.ACCURACY_FINE
-            );
-            locationManager.setTestProviderEnabled(MOCK_PROVIDER, true);
-        } catch (SecurityException e) {
-            Log.e(TAG, "SecurityException: Developer Options -> Select mock location app not set.", e);
-            stopSelf();
-            return;
-        } catch (IllegalArgumentException e) {
-            Log.i(TAG, "Test provider already exists");
-        }
-
-        isMocking = true;
-        mockThread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                while (isMocking) {
-                    Location mockLocation = new Location(MOCK_PROVIDER);
-                    mockLocation.setLatitude(lat);
-                    mockLocation.setLongitude(lng);
-                    mockLocation.setAccuracy(3.0f);
-                    mockLocation.setTime(System.currentTimeMillis());
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-                        mockLocation.setElapsedRealtimeNanos(SystemClock.elapsedRealtimeNanos());
-                    }
-
-                    try {
-                        locationManager.setTestProviderLocation(MOCK_PROVIDER, mockLocation);
-                        Thread.sleep(1000); // Update every second to keep connection alive
-                    } catch (InterruptedException e) {
-                        Log.i(TAG, "Mocking thread interrupted.");
-                        break;
-                    } catch (SecurityException e) {
-                        Log.e(TAG, "SecurityException while mocking", e);
-                        break;
-                    } catch (Exception e) {
-                        Log.e(TAG, "Exception while mocking", e);
-                    }
-                }
-            }
-        });
-        mockThread.start();
     }
 
     @Override
     public void onDestroy() {
-        isMocking = false;
-        if (mockThread != null) {
-            mockThread.interrupt();
-            mockThread = null;
-        }
-
-        try {
-            locationManager.removeTestProvider(MOCK_PROVIDER);
-        } catch (Exception e) {
-            Log.e(TAG, "Failed to remove test provider", e);
-        }
-
         super.onDestroy();
+        isRunning = false;
+        if (handler != null) {
+            handler.removeCallbacksAndMessages(null);
+        }
+        if (handlerThread != null) {
+            handlerThread.quitSafely();
+        }
+        try {
+            locationManager.removeTestProvider(LocationManager.GPS_PROVIDER);
+        } catch (Exception e) {
+            // Ignorar
+        }
     }
 
-    @Nullable
     @Override
     public IBinder onBind(Intent intent) {
         return null;
